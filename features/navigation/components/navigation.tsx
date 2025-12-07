@@ -130,7 +130,7 @@ export function Navigation() {
                   {hasChildren && (
                     <div className="absolute left-0 mt-2 min-w-[200px] rounded-base border border-muted bg-neutral-surface dark:bg-neutral-bg shadow-elevated opacity-0 translate-y-1 pointer-events-none transition duration-motion ease-motion group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto">
                       <div className="py-2">
-                        {item.children.map((child) => (
+                        {item.children?.map((child) => (
                           <Link
                             key={child.href}
                             href={child.href}
@@ -201,7 +201,7 @@ export function Navigation() {
                   </Link>
                   {item.children?.length ? (
                     <div className="pl-3 pt-1 space-y-1">
-                      {item.children.map((child) => (
+                      {item.children?.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
