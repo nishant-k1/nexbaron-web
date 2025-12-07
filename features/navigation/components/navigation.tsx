@@ -74,7 +74,7 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-muted bg-neutral-surface/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/80 transition-colors',
+        'sticky top-0 z-50 w-full border-b border-muted bg-neutral-surface/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/80 transition-colors text-body',
         isScrolled && 'shadow-surface'
       )}
       role="navigation"
@@ -111,7 +111,7 @@ export function Navigation() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex lg:hidden items-center space-x-2">
+          <div className="flex lg:hidden items-center space-x-2 text-body">
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -119,6 +119,7 @@ export function Navigation() {
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
               aria-expanded={isOpen}
+              className="text-body"
             >
               {isOpen ? (
                 <X className="h-6 w-6" aria-hidden="true" />
@@ -131,7 +132,7 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-16 z-40 border-t border-muted bg-neutral-surface/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/80 shadow-surface">
+          <div className="lg:hidden fixed inset-x-0 top-16 z-40 border-t border-muted bg-neutral-surface/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/80 shadow-surface text-body">
             <div className="px-4 pt-3 pb-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navItems.map((item) => (
                 <Link
@@ -141,7 +142,7 @@ export function Navigation() {
                     'block px-3 py-2 rounded-base text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
                     pathname === item.href
                       ? 'bg-primary text-white'
-                      : 'text-body hover:bg-neutral-surface'
+                      : 'text-body hover:bg-neutral-surface/80 dark:hover:bg-neutral-bg/60'
                   )}
                   aria-current={pathname === item.href ? 'page' : undefined}
                 >
