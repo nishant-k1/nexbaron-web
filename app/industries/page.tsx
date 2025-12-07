@@ -62,7 +62,7 @@ export default function IndustriesPage() {
               {industries.map((industry) => (
                 <div
                   key={industry.title}
-                  className="bg-white p-6 rounded-lg shadow-surface hover:shadow-elevated transition-shadow"
+                  className="bg-neutral-surface p-6 rounded-lg shadow-surface hover:shadow-elevated transition-shadow"
                 >
                   <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                     {industry.title}

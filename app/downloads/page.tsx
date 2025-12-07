@@ -62,7 +62,7 @@ export default function DownloadsPage() {
           <SectionReveal>
             <div className="max-w-4xl mx-auto space-y-12">
               {downloadCategories.map((category) => (
-                <div key={category.title} className="bg-white p-6 rounded-lg shadow-surface">
+                <div key={category.title} className="bg-neutral-surface p-6 rounded-lg shadow-surface">
                   <h2 className="text-2xl font-heading font-semibold text-heading mb-2">
                     {category.title}
                   </h2>

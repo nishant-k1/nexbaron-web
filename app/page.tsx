@@ -58,7 +58,7 @@ export default function HomePage() {
               {features.map((feature, index) => (
                 <div
                   key={feature}
-                  className="bg-white p-6 rounded-lg shadow-surface"
+                  className="bg-neutral-surface p-6 rounded-lg shadow-surface"
                 >
                   <CheckCircle className="h-8 w-8 text-primary mb-4" />
                   <h3 className="text-lg font-heading font-semibold text-heading mb-2">
@@ -103,7 +103,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-surface">
+              <div className="bg-neutral-surface p-6 rounded-lg shadow-surface">
                 <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                   Engineering & Design
                 </h3>
@@ -111,7 +111,7 @@ export default function HomePage() {
                   Advanced engineering solutions with cutting-edge design methodologies.
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-surface">
+              <div className="bg-neutral-surface p-6 rounded-lg shadow-surface">
                 <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                   Compliance & Certification
                 </h3>
@@ -119,7 +119,7 @@ export default function HomePage() {
                   Ensuring all projects meet the highest standards of compliance and certification.
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-surface">
+              <div className="bg-neutral-surface p-6 rounded-lg shadow-surface">
                 <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                   Project Management
                 </h3>
