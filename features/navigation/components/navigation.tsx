@@ -38,6 +38,29 @@ export function Navigation() {
   }, [pathname])
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)')
+    const handleBreakpointChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setIsOpen(false)
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleBreakpointChange)
+    return () => mediaQuery.removeEventListener('change', handleBreakpointChange)
+  }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
     } else {
@@ -51,7 +74,7 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-muted bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/80 transition-colors',
+        'sticky top-0 z-50 w-full border-b border-muted bg-neutral-surface/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/80 transition-colors',
         isScrolled && 'shadow-surface'
       )}
       role="navigation"
@@ -68,7 +91,7 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          <div className="hidden lg:flex lg:items-center lg:space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -88,7 +111,7 @@ export function Navigation() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center space-x-2">
+          <div className="flex lg:hidden items-center space-x-2">
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -108,8 +131,8 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t border-muted">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="lg:hidden fixed inset-x-0 top-16 z-40 border-t border-muted bg-neutral-surface/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/80 shadow-surface">
+            <div className="px-4 pt-3 pb-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -118,7 +141,7 @@ export function Navigation() {
                     'block px-3 py-2 rounded-base text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
                     pathname === item.href
                       ? 'bg-primary text-white'
-                      : 'text-body hover:bg-surface'
+                      : 'text-body hover:bg-neutral-surface'
                   )}
                   aria-current={pathname === item.href ? 'page' : undefined}
                 >
