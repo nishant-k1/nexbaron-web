@@ -75,7 +75,7 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        "sticky top-0 z-50 w-full border-b border-muted bg-neutral-surface/98 dark:bg-neutral-bg/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/90 dark:supports-[backdrop-filter]:bg-neutral-bg/90 transition-colors text-body shadow-surface",
+        "sticky top-0 z-50 w-full border-b border-muted bg-neutral-surface dark:bg-neutral-bg backdrop-blur transition-colors text-body shadow-surface",
         isScrolled && "shadow-surface"
       )}
       role="navigation"
@@ -133,7 +133,7 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-16 z-40 border-t border-muted bg-neutral-surface/98 dark:bg-neutral-bg/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-surface/90 dark:supports-[backdrop-filter]:bg-neutral-bg/90 shadow-surface text-body">
+          <div className="lg:hidden fixed inset-x-0 top-16 z-40 border-t border-muted bg-neutral-surface dark:bg-neutral-bg backdrop-blur shadow-surface text-body">
             <div className="px-4 pt-3 pb-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navItems.map((item) => (
                 <Link
