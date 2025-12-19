@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { ContactForm } from "@/features/contact/components/contact-form";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -35,8 +36,19 @@ export default function ContactPage() {
       <section className="py-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
-            <div className="max-w-2xl mx-auto">
-              <ContactForm />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="hidden lg:block">
+                <Image
+                  src="/undraw_agreement_ftet.svg"
+                  alt="Contact us"
+                  width={300}
+                  height={300}
+                  className="w-full h-auto max-w-xs"
+                />
+              </div>
+              <div>
+                <ContactForm />
+              </div>
             </div>
           </SectionReveal>
         </div>
