@@ -73,7 +73,7 @@ export default function DownloadsPage() {
               {downloadCategories.map((category) => (
                 <div
                   key={category.title}
-                  className="bg-neutral-surface p-6 rounded-lg shadow-surface"
+                  className="bg-neutral-surface p-6 shadow-surface"
                 >
                   <h2 className="text-2xl font-heading font-semibold text-heading mb-2">
                     {category.title}
@@ -83,7 +83,7 @@ export default function DownloadsPage() {
                     {category.items.map((item) => (
                       <li
                         key={item.name}
-                        className="flex items-center justify-between p-4 border border-muted rounded-base hover:bg-neutral-surface transition-colors"
+                        className="flex items-center justify-between p-4 border-0 hover:bg-neutral-surface transition-colors"
                       >
                         <div className="flex items-center space-x-4">
                           <Download className="h-5 w-5 text-primary" />

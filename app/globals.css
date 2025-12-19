@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,57 +6,59 @@
 
 :root {
   /* Brand Colors */
-  --color-primary: #0E2A38;
-  --color-secondary: #A0A8AF;
-  
+  --color-primary: #0e2a38;
+  --color-secondary: #a0a8af;
+
   /* Neutral Colors */
-  --color-neutral-bg: #F5F5F5;
-  --color-neutral-surface: #ECECEC;
-  --color-neutral-foreground: #1A1A1A;
-  
+  --color-neutral-bg: #f5f5f5;
+  --color-neutral-surface: #ececec;
+  --color-neutral-foreground: #1a1a1a;
+
   /* Semantic Colors */
-  --color-heading: #0E2A38;
-  --color-body: #4A4A4A;
-  --color-border: #E0E0E0;
-  --color-muted: #A0A8AF;
-  
+  --color-heading: #0e2a38;
+  --color-body: #4a4a4a;
+  --color-border: #e0e0e0;
+  --color-muted: #a0a8af;
+
   /* Spacing */
   --spacing-section: 5rem;
   --spacing-component: 2rem;
-  
+
   /* Border Radius */
   --radius-base: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-  
+
   /* Typography */
   --font-heading: "Montserrat", sans-serif;
   --font-body: "Inter", sans-serif;
-  
+
   /* Shadows */
   --shadow-surface: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  
+  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
   /* Motion */
   --motion-duration: 300ms;
   --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="dark"] {
-  --color-primary: #0E2A38;
-  --color-secondary: #8A949C;
-  
-  --color-neutral-bg: #0A0F12;
-  --color-neutral-surface: #131B21;
-  --color-neutral-foreground: #FFFFFF;
-  
-  --color-heading: #FFFFFF;
-  --color-body: #E0E0E0;
-  --color-border: #2A2A2A;
-  --color-muted: #8A949C;
-  
+  --color-primary: #0e2a38;
+  --color-secondary: #8a949c;
+
+  --color-neutral-bg: #0a0f12;
+  --color-neutral-surface: #131b21;
+  --color-neutral-foreground: #ffffff;
+
+  --color-heading: #ffffff;
+  --color-body: #e0e0e0;
+  --color-border: #2a2a2a;
+  --color-muted: #8a949c;
+
   --shadow-surface: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -93,31 +95,31 @@ body {
   .bg-surface {
     background-color: var(--color-neutral-surface);
   }
-  
+
   .bg-primary {
     background-color: var(--color-primary);
   }
-  
+
   .text-heading {
     color: var(--color-heading);
   }
-  
+
   .text-body {
     color: var(--color-body);
   }
-  
+
   .border-muted {
     border-color: var(--color-border);
   }
-  
+
   .motion-fade {
     animation: fadeIn var(--motion-duration) var(--motion-easing);
   }
-  
+
   .motion-slide-up {
     animation: slideUp var(--motion-duration) var(--motion-easing);
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -126,7 +128,7 @@ body {
       opacity: 1;
     }
   }
-  
+
   @keyframes slideUp {
     from {
       opacity: 0;
@@ -148,10 +150,8 @@ body {
   padding: 8px 16px;
   text-decoration: none;
   z-index: 100;
-  border-radius: var(--radius-base);
 }
 
 .skip-to-content:focus {
   top: 0;
 }
-

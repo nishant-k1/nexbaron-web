@@ -77,7 +77,7 @@ export default function AboutPage() {
                 Our Values
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-neutral-surface p-6 rounded-lg shadow-surface">
+                <div className="bg-neutral-surface p-6 shadow-surface">
                   <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                     Excellence
                   </h3>
@@ -86,7 +86,7 @@ export default function AboutPage() {
                     highest standards of quality and performance.
                   </p>
                 </div>
-                <div className="bg-neutral-surface p-6 rounded-lg shadow-surface">
+                <div className="bg-neutral-surface p-6 shadow-surface">
                   <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                     Integrity
                   </h3>
@@ -95,7 +95,7 @@ export default function AboutPage() {
                     business operations and client relationships.
                   </p>
                 </div>
-                <div className="bg-neutral-surface p-6 rounded-lg shadow-surface">
+                <div className="bg-neutral-surface p-6 shadow-surface">
                   <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                     Innovation
                   </h3>
@@ -104,7 +104,7 @@ export default function AboutPage() {
                     technologies to deliver superior results.
                   </p>
                 </div>
-                <div className="bg-neutral-surface p-6 rounded-lg shadow-surface">
+                <div className="bg-neutral-surface p-6 shadow-surface">
                   <h3 className="text-xl font-heading font-semibold text-heading mb-3">
                     Compliance
                   </h3>

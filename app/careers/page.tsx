@@ -79,7 +79,7 @@ export default function CareersPage() {
                 encourage you to reach out to us.
               </p>
 
-              <div className="bg-surface p-6 rounded-lg mb-8">
+              <div className="bg-surface p-6 mb-8">
                 <p className="text-body mb-4">
                   Currently, we don't have any open positions listed. However,
                   we welcome inquiries from qualified candidates.

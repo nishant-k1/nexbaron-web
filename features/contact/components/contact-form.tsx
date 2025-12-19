@@ -1,28 +1,30 @@
-'use client'
+"use client";
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
-import { useState } from 'react'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
   company: z.string().optional(),
-  subject: z.string().min(5, 'Subject must be at least 5 characters'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-})
+  subject: z.string().min(5, "Subject must be at least 5 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
 
-type ContactFormData = z.infer<typeof contactSchema>
+type ContactFormData = z.infer<typeof contactSchema>;
 
 export function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
   const {
     register,
@@ -31,48 +33,48 @@ export function ContactForm() {
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
-  })
+  });
 
   const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
+      });
 
       if (response.ok) {
-        setSubmitStatus('success')
-        reset()
+        setSubmitStatus("success");
+        reset();
       } else {
-        setSubmitStatus('error')
+        setSubmitStatus("error");
       }
     } catch (error) {
-      setSubmitStatus('error')
+      setSubmitStatus("error");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
-    <div className="bg-neutral-surface p-8 rounded-lg shadow-surface">
+    <div className="bg-neutral-surface p-8 shadow-surface">
       <h2 className="text-2xl font-heading font-semibold text-heading mb-6">
         Send us a Message
       </h2>
 
-      {submitStatus === 'success' && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-base text-green-800 dark:bg-green-900/40 dark:border-green-700 dark:text-green-100">
+      {submitStatus === "success" && (
+        <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 dark:bg-green-900/40 dark:border-green-700 dark:text-green-100">
           Thank you for your message. We'll get back to you soon.
         </div>
       )}
 
-      {submitStatus === 'error' && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-base text-red-800 dark:bg-red-900/40 dark:border-red-700 dark:text-red-100">
+      {submitStatus === "error" && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 dark:bg-red-900/40 dark:border-red-700 dark:text-red-100">
           There was an error submitting your message. Please try again.
         </div>
       )}
@@ -85,12 +87,16 @@ export function ContactForm() {
             </Label>
             <Input
               id="name"
-              {...register('name')}
-              aria-invalid={errors.name ? 'true' : 'false'}
-              aria-describedby={errors.name ? 'name-error' : undefined}
+              {...register("name")}
+              aria-invalid={errors.name ? "true" : "false"}
+              aria-describedby={errors.name ? "name-error" : undefined}
             />
             {errors.name && (
-              <p id="name-error" className="mt-1 text-sm text-red-600" role="alert">
+              <p
+                id="name-error"
+                className="mt-1 text-sm text-red-600"
+                role="alert"
+              >
                 {errors.name.message}
               </p>
             )}
@@ -103,12 +109,16 @@ export function ContactForm() {
             <Input
               id="email"
               type="email"
-              {...register('email')}
-              aria-invalid={errors.email ? 'true' : 'false'}
-              aria-describedby={errors.email ? 'email-error' : undefined}
+              {...register("email")}
+              aria-invalid={errors.email ? "true" : "false"}
+              aria-describedby={errors.email ? "email-error" : undefined}
             />
             {errors.email && (
-              <p id="email-error" className="mt-1 text-sm text-red-600" role="alert">
+              <p
+                id="email-error"
+                className="mt-1 text-sm text-red-600"
+                role="alert"
+              >
                 {errors.email.message}
               </p>
             )}
@@ -118,19 +128,12 @@ export function ContactForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <Label htmlFor="phone">Phone</Label>
-            <Input
-              id="phone"
-              type="tel"
-              {...register('phone')}
-            />
+            <Input id="phone" type="tel" {...register("phone")} />
           </div>
 
           <div>
             <Label htmlFor="company">Company</Label>
-            <Input
-              id="company"
-              {...register('company')}
-            />
+            <Input id="company" {...register("company")} />
           </div>
         </div>
 
@@ -140,12 +143,16 @@ export function ContactForm() {
           </Label>
           <Input
             id="subject"
-            {...register('subject')}
-            aria-invalid={errors.subject ? 'true' : 'false'}
-            aria-describedby={errors.subject ? 'subject-error' : undefined}
+            {...register("subject")}
+            aria-invalid={errors.subject ? "true" : "false"}
+            aria-describedby={errors.subject ? "subject-error" : undefined}
           />
           {errors.subject && (
-            <p id="subject-error" className="mt-1 text-sm text-red-600" role="alert">
+            <p
+              id="subject-error"
+              className="mt-1 text-sm text-red-600"
+              role="alert"
+            >
               {errors.subject.message}
             </p>
           )}
@@ -158,22 +165,29 @@ export function ContactForm() {
           <Textarea
             id="message"
             rows={6}
-            {...register('message')}
-            aria-invalid={errors.message ? 'true' : 'false'}
-            aria-describedby={errors.message ? 'message-error' : undefined}
+            {...register("message")}
+            aria-invalid={errors.message ? "true" : "false"}
+            aria-describedby={errors.message ? "message-error" : undefined}
           />
           {errors.message && (
-            <p id="message-error" className="mt-1 text-sm text-red-600" role="alert">
+            <p
+              id="message-error"
+              className="mt-1 text-sm text-red-600"
+              role="alert"
+            >
               {errors.message.message}
             </p>
           )}
         </div>
 
-        <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto">
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full md:w-auto"
+        >
+          {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
       </form>
     </div>
-  )
+  );
 }
-
