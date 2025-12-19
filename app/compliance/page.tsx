@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { CheckCircle } from "lucide-react";
-import { AnimatedMeshBackground } from "@/components/motion/animated-mesh-background";
 
 export const metadata: Metadata = {
   title: "Compliance",
@@ -27,28 +26,26 @@ export default function CompliancePage() {
   return (
     <>
       {/* Hero */}
-      <AnimatedMeshBackground className="bg-primary">
-        <section className="relative text-white py-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionReveal>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-                Compliance & Certifications
-              </h1>
-              <p className="text-xl text-white/90 max-w-3xl">
-                Rigorous adherence to regulatory requirements and industry
-                standards.
-              </p>
-            </SectionReveal>
-          </div>
-        </section>
-      </AnimatedMeshBackground>
+      <section className="relative text-white py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionReveal>
+            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
+              Compliance & Certifications
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl">
+              Rigorous adherence to regulatory requirements and industry
+              standards.
+            </p>
+          </SectionReveal>
+        </div>
+      </section>
 
       {/* Compliance Content */}
       <section className="py-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-heading mb-6">
+              <h2 className="text-3xl md:text-4xl font-heading font-normal text-heading mb-6">
                 Our Compliance Commitment
               </h2>
               <p className="text-lg text-body mb-8">
@@ -65,7 +62,7 @@ export default function CompliancePage() {
                 undergo regular audits, and continuously improve our processes.
               </p>
 
-              <h3 className="text-2xl font-heading font-semibold text-heading mb-4">
+              <h3 className="text-2xl font-heading font-normal text-heading mb-4">
                 Certifications & Standards
               </h3>
               <ul className="space-y-3 mb-8">

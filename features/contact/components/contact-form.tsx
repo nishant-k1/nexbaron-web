@@ -62,19 +62,19 @@ export function ContactForm() {
   };
 
   return (
-    <div className="bg-neutral-surface p-8 shadow-surface">
-      <h2 className="text-2xl font-heading font-semibold text-heading mb-6">
+    <div className="bg-white/5 backdrop-blur-sm p-8 shadow-surface border-0">
+      <h2 className="text-2xl font-heading font-normal text-white mb-6">
         Send us a Message
       </h2>
 
       {submitStatus === "success" && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 dark:bg-green-900/40 dark:border-green-700 dark:text-green-100">
+        <div className="mb-6 p-4 bg-green-900/30 border border-green-700 text-green-100">
           Thank you for your message. We'll get back to you soon.
         </div>
       )}
 
       {submitStatus === "error" && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 dark:bg-red-900/40 dark:border-red-700 dark:text-red-100">
+        <div className="mb-6 p-4 bg-red-900/30 border border-red-700 text-red-100">
           There was an error submitting your message. Please try again.
         </div>
       )}

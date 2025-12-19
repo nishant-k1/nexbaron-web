@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AnimatedMeshBackground } from "@/components/motion/animated-mesh-background";
 
 export const metadata: Metadata = {
   title: "Downloads",
@@ -49,21 +48,18 @@ export default function DownloadsPage() {
   return (
     <>
       {/* Hero */}
-      <AnimatedMeshBackground className="bg-primary">
-        <section className="relative text-white py-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionReveal>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-                Downloads
-              </h1>
-              <p className="text-xl text-white/90 max-w-3xl">
-                Access company documents, brochures, and tender-related
-                materials.
-              </p>
-            </SectionReveal>
-          </div>
-        </section>
-      </AnimatedMeshBackground>
+      <section className="relative text-white py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionReveal>
+            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
+              Downloads
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl">
+              Access company documents, brochures, and tender-related materials.
+            </p>
+          </SectionReveal>
+        </div>
+      </section>
 
       {/* Downloads Content */}
       <section className="py-section">
@@ -73,25 +69,25 @@ export default function DownloadsPage() {
               {downloadCategories.map((category) => (
                 <div
                   key={category.title}
-                  className="bg-neutral-surface p-6 shadow-surface"
+                  className="bg-white/5 backdrop-blur-sm p-6 shadow-surface border-0"
                 >
-                  <h2 className="text-2xl font-heading font-semibold text-heading mb-2">
+                  <h2 className="text-2xl font-heading font-normal text-white mb-2">
                     {category.title}
                   </h2>
-                  <p className="text-body mb-6">{category.description}</p>
+                  <p className="text-white/90 mb-6">{category.description}</p>
                   <ul className="space-y-4">
                     {category.items.map((item) => (
                       <li
                         key={item.name}
-                        className="flex items-center justify-between p-4 border-0 hover:bg-neutral-surface transition-colors"
+                        className="flex items-center justify-between p-4 border-0 hover:bg-white/5 transition-colors"
                       >
                         <div className="flex items-center space-x-4">
                           <Download className="h-5 w-5 text-primary" />
                           <div>
-                            <p className="font-medium text-heading">
+                            <p className="font-normal text-white">
                               {item.name}
                             </p>
-                            <p className="text-sm text-body">
+                            <p className="text-sm text-white/80">
                               {item.size} • {item.format}
                             </p>
                           </div>

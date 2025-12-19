@@ -33,33 +33,17 @@
   --font-heading: "Montserrat", sans-serif;
   --font-body: "Inter", sans-serif;
 
-  /* Shadows */
-  --shadow-surface: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* Shadows - Dark mode shadows */
+  --shadow-surface: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -1px rgba(0, 0, 0, 0.3);
 
   /* Motion */
   --motion-duration: 300ms;
   --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme="dark"] {
-  --color-primary: #192d33;
-  --color-secondary: #8a949c;
-
-  --color-neutral-bg: #192d33;
-  --color-neutral-surface: #f1f9fa;
-  --color-neutral-foreground: #ffffff;
-
-  --color-heading: #ffffff;
-  --color-body: #e0e0e0;
-  --color-border: #2a3a40;
-  --color-muted: #8a949c;
-
-  --shadow-surface: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
-    0 2px 4px -1px rgba(0, 0, 0, 0.3);
-}
+/* Dark mode only - no theme switching */
 
 * {
   margin: 0;
@@ -89,6 +73,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  min-height: 100vh;
 }
 
 /* Container max-width override to match DiligenceSquared design */

@@ -4,30 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { ThemeToggle } from "@/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
+  { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
-  { href: "/projects", label: "Projects" },
-  {
-    href: "/downloads",
-    label: "Resources",
-    children: [
-      { href: "/downloads", label: "Downloads" },
-      { href: "/compliance", label: "Compliance" },
-    ],
-  },
-  {
-    href: "/about",
-    label: "Company",
-    children: [
-      { href: "/about", label: "About" },
-      { href: "/careers", label: "Careers" },
-    ],
-  },
+  { href: "/about", label: "About" },
 ];
 
 export function Navigation() {
@@ -85,7 +69,7 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        "sticky top-0 z-50 w-full border-b border-muted bg-neutral-surface dark:bg-neutral-bg backdrop-blur transition-colors text-body shadow-surface",
+        "sticky top-0 z-[100] w-full border-b border-white/10 bg-neutral-bg/80 backdrop-blur transition-colors text-body shadow-surface",
         isScrolled && "shadow-surface"
       )}
       role="navigation"
@@ -95,7 +79,7 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           <Link
             href="/"
-            className="flex items-center space-x-2 text-xl font-heading font-bold text-heading"
+            className="flex items-center space-x-2 text-xl font-heading font-normal text-heading"
             aria-label="Nexbaron Services Home"
           >
             <span>Nexbaron</span>
@@ -114,10 +98,8 @@ export function Navigation() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "inline-flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary dark:hover:text-heading focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-base px-2 py-1",
-                      isActive
-                        ? "text-primary dark:text-heading font-semibold"
-                        : "text-body"
+                      "inline-flex items-center gap-1 text-sm font-normal transition-colors hover:text-heading focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-base px-2 py-1",
+                      isActive ? "text-heading font-normal" : "text-body"
                     )}
                     aria-current={pathname === item.href ? "page" : undefined}
                   >
@@ -128,16 +110,16 @@ export function Navigation() {
                   </Link>
 
                   {hasChildren && (
-                    <div className="absolute left-0 mt-2 min-w-[200px] rounded-base border border-muted bg-neutral-surface dark:bg-neutral-bg shadow-elevated opacity-0 translate-y-1 pointer-events-none transition duration-motion ease-motion group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto">
+                    <div className="absolute left-0 mt-2 min-w-[200px] rounded-base border border-white/10 bg-neutral-bg/80 backdrop-blur-sm shadow-elevated opacity-0 translate-y-1 pointer-events-none transition duration-motion ease-motion group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto">
                       <div className="py-2">
                         {item.children?.map((child) => (
                           <Link
                             key={child.href}
                             href={child.href}
                             className={cn(
-                              "block px-4 py-2 text-sm rounded-base transition-colors hover:bg-neutral-surface/80 dark:hover:bg-neutral-bg/60",
+                              "block px-4 py-2 text-sm rounded-base transition-colors hover:bg-white/10",
                               pathname === child.href
-                                ? "text-primary dark:text-heading font-semibold"
+                                ? "text-heading font-normal"
                                 : "text-body"
                             )}
                             aria-current={
@@ -153,8 +135,11 @@ export function Navigation() {
                 </div>
               );
             })}
-            <ThemeToggle />
-            <Button asChild variant="default" className="ml-2 rounded-base">
+            <Button
+              asChild
+              variant="default"
+              className="ml-2 rounded-base bg-white/20 text-white hover:bg-white/30"
+            >
               <Link href="/contact" aria-label="Contact Nexbaron">
                 Contact
               </Link>
@@ -163,7 +148,6 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center space-x-2 text-body">
-            <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"
@@ -183,17 +167,17 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-16 z-40 border-t border-muted bg-neutral-surface dark:bg-neutral-bg backdrop-blur shadow-surface text-body">
+          <div className="lg:hidden fixed inset-x-0 top-16 z-[90] border-t border-white/10 bg-neutral-bg/80 backdrop-blur shadow-surface text-body">
             <div className="px-4 pt-3 pb-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navItems.map((item) => (
                 <div key={item.href}>
                   <Link
                     href={item.href}
                     className={cn(
-                      "block px-3 py-2 rounded-base text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                      "block px-3 py-2 rounded-base text-base font-normal transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
                       pathname === item.href
                         ? "bg-primary text-white"
-                        : "text-body hover:bg-neutral-surface/80 dark:hover:bg-neutral-bg/60"
+                        : "text-body hover:bg-white/10"
                     )}
                     aria-current={pathname === item.href ? "page" : undefined}
                   >
@@ -206,10 +190,10 @@ export function Navigation() {
                           key={child.href}
                           href={child.href}
                           className={cn(
-                            "block px-3 py-2 rounded-base text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                            "block px-3 py-2 rounded-base text-sm font-normal transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
                             pathname === child.href
                               ? "bg-primary/90 text-white"
-                              : "text-body hover:bg-neutral-surface/80 dark:hover:bg-neutral-bg/60"
+                              : "text-body hover:bg-white/10"
                           )}
                           aria-current={
                             pathname === child.href ? "page" : undefined
@@ -223,7 +207,10 @@ export function Navigation() {
                 </div>
               ))}
               <div className="pt-2">
-                <Button asChild className="w-full rounded-base">
+                <Button
+                  asChild
+                  className="w-full rounded-base bg-white/20 text-white hover:bg-white/30"
+                >
                   <Link href="/contact" aria-label="Contact Nexbaron">
                     Contact
                   </Link>

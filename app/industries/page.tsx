@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { SectionReveal } from "@/components/motion/section-reveal";
-import { AnimatedMeshBackground } from "@/components/motion/animated-mesh-background";
 
 export const metadata: Metadata = {
   title: "Industries",
@@ -50,20 +49,18 @@ export default function IndustriesPage() {
   return (
     <>
       {/* Hero */}
-      <AnimatedMeshBackground className="bg-primary">
-        <section className="relative text-white py-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionReveal>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-                Industries We Serve
-              </h1>
-              <p className="text-xl text-white/90 max-w-3xl">
-                Specialized infrastructure solutions across diverse industries.
-              </p>
-            </SectionReveal>
-          </div>
-        </section>
-      </AnimatedMeshBackground>
+      <section className="relative text-white py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionReveal>
+            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
+              Industries We Serve
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl">
+              Specialized infrastructure solutions across diverse industries.
+            </p>
+          </SectionReveal>
+        </div>
+      </section>
 
       {/* Industries Grid */}
       <section className="py-section">
@@ -73,12 +70,12 @@ export default function IndustriesPage() {
               {industries.map((industry) => (
                 <div
                   key={industry.title}
-                  className="bg-neutral-surface p-6 shadow-surface hover:shadow-elevated transition-shadow"
+                  className="bg-white/5 backdrop-blur-sm p-6 shadow-surface hover:shadow-elevated transition-shadow border-0"
                 >
-                  <h3 className="text-xl font-heading font-semibold text-heading mb-3">
+                  <h3 className="text-xl font-heading font-normal text-white mb-3">
                     {industry.title}
                   </h3>
-                  <p className="text-body">{industry.description}</p>
+                  <p className="text-white/90">{industry.description}</p>
                 </div>
               ))}
             </div>
