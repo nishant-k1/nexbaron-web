@@ -3,6 +3,7 @@ import { SectionReveal } from "@/components/motion/section-reveal";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -112,23 +113,14 @@ export default function HomePage() {
       <section className="py-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-heading font-normal text-heading mb-4">
-                Our Services
-              </h2>
-              <p className="text-lg text-body max-w-2xl mx-auto">
-                Comprehensive solutions tailored to meet your infrastructure
-                needs
-              </p>
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white/5 backdrop-blur-sm p-6 shadow-surface border-0">
-                <h3 className="text-xl font-heading font-normal text-white mb-3">
-                  Engineering & Design
+              <div className="p-0">
+                <h3 className="text-3xl md:text-4xl font-heading font-normal text-heading mb-4">
+                  Our Services
                 </h3>
-                <p className="text-white/90">
-                  Advanced engineering solutions with cutting-edge design
-                  methodologies.
+                <p className="text-lg text-body max-w-2xl">
+                  Comprehensive solutions tailored to meet your infrastructure
+                  needs
                 </p>
               </div>
               <div className="bg-white/5 backdrop-blur-sm p-6 shadow-surface border-0">
@@ -147,6 +139,33 @@ export default function HomePage() {
                 <p className="text-white/90">
                   End-to-end project management with meticulous attention to
                   detail.
+                </p>
+              </div>
+              <div className="bg-white/5 backdrop-blur-sm p-0 shadow-surface border-0 overflow-hidden">
+                <Image
+                  src="https://cdn.pixabay.com/photo/2024/03/22/12/21/ai-generated-8649580_1280.jpg"
+                  alt="Quality Assurance"
+                  width={800}
+                  height={600}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              <div className="bg-white/5 backdrop-blur-sm p-6 shadow-surface border-0">
+                <h3 className="text-xl font-heading font-normal text-white mb-3">
+                  Consulting Services
+                </h3>
+                <p className="text-white/90">
+                  Expert consulting services to guide your infrastructure
+                  decisions with strategic insights.
+                </p>
+              </div>
+              <div className="bg-white/5 backdrop-blur-sm p-6 shadow-surface border-0">
+                <h3 className="text-xl font-heading font-normal text-white mb-3">
+                  Technical Support
+                </h3>
+                <p className="text-white/90">
+                  Ongoing technical support and maintenance services for optimal
+                  performance and compliance.
                 </p>
               </div>
             </div>
