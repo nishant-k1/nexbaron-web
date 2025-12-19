@@ -68,17 +68,17 @@ export default function HomePage() {
         </section>
       </AnimatedMeshBackground>
       {/* Features Section */}
-      <section className="py-section bg-surface">
+      <section className="py-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature, index) => (
                 <div
                   key={feature}
-                  className="bg-neutral-surface p-6 shadow-surface border-0"
+                  className="bg-white/10 backdrop-blur-sm p-6 shadow-surface border border-white/20 rounded-lg"
                 >
-                  <CheckCircle className="h-8 w-8 text-primary mb-4" />
-                  <h3 className="text-lg font-heading font-semibold text-heading mb-2">
+                  <CheckCircle className="h-8 w-8 text-white mb-4" />
+                  <h3 className="text-lg font-heading font-semibold text-white mb-2">
                     {feature}
                   </h3>
                 </div>
@@ -116,38 +116,38 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-heading mb-4">
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-heading-dark mb-4">
                 Our Services
               </h2>
-              <p className="text-lg text-body max-w-2xl mx-auto">
+              <p className="text-lg text-body-dark max-w-2xl mx-auto">
                 Comprehensive solutions tailored to meet your infrastructure
                 needs
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-neutral-surface p-6 shadow-surface">
-                <h3 className="text-xl font-heading font-semibold text-heading mb-3">
+              <div className="bg-white p-6 shadow-surface rounded-lg">
+                <h3 className="text-xl font-heading font-semibold text-heading-dark mb-3">
                   Engineering & Design
                 </h3>
-                <p className="text-body">
+                <p className="text-body-dark">
                   Advanced engineering solutions with cutting-edge design
                   methodologies.
                 </p>
               </div>
-              <div className="bg-neutral-surface p-6 shadow-surface">
-                <h3 className="text-xl font-heading font-semibold text-heading mb-3">
+              <div className="bg-white p-6 shadow-surface rounded-lg">
+                <h3 className="text-xl font-heading font-semibold text-heading-dark mb-3">
                   Compliance & Certification
                 </h3>
-                <p className="text-body">
+                <p className="text-body-dark">
                   Ensuring all projects meet the highest standards of compliance
                   and certification.
                 </p>
               </div>
-              <div className="bg-neutral-surface p-6 shadow-surface">
-                <h3 className="text-xl font-heading font-semibold text-heading mb-3">
+              <div className="bg-white p-6 shadow-surface rounded-lg">
+                <h3 className="text-xl font-heading font-semibold text-heading-dark mb-3">
                   Project Management
                 </h3>
-                <p className="text-body">
+                <p className="text-body-dark">
                   End-to-end project management with meticulous attention to
                   detail.
                 </p>

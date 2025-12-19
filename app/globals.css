@@ -5,20 +5,20 @@
 @tailwind utilities;
 
 :root {
-  /* Brand Colors */
-  --color-primary: #0e2a38;
-  --color-secondary: #a0a8af;
+  /* Brand Colors - Matching DiligenceSquared */
+  --color-primary: #192d33; /* rgb(25, 45, 51) - dark blue-grey */
+  --color-secondary: #8a949c;
 
-  /* Neutral Colors */
-  --color-neutral-bg: #f5f5f5;
-  --color-neutral-surface: #ececec;
-  --color-neutral-foreground: #1a1a1a;
+  /* Neutral Colors - Matching DiligenceSquared */
+  --color-neutral-bg: #192d33; /* rgb(25, 45, 51) - dark blue-grey body */
+  --color-neutral-surface: #f1f9fa; /* rgb(241, 249, 250) - light grey sections */
+  --color-neutral-foreground: #ffffff;
 
-  /* Semantic Colors */
-  --color-heading: #0e2a38;
-  --color-body: #4a4a4a;
-  --color-border: #e0e0e0;
-  --color-muted: #a0a8af;
+  /* Semantic Colors - Updated for dark background */
+  --color-heading: #ffffff; /* White headings on dark background */
+  --color-body: #e0e0e0; /* Light grey body text on dark background */
+  --color-border: #2a3a40; /* Subtle border on dark background */
+  --color-muted: #8a949c;
 
   /* Spacing */
   --spacing-section: 5rem;
@@ -44,16 +44,16 @@
 }
 
 [data-theme="dark"] {
-  --color-primary: #0e2a38;
+  --color-primary: #192d33;
   --color-secondary: #8a949c;
 
-  --color-neutral-bg: #0a0f12;
-  --color-neutral-surface: #131b21;
+  --color-neutral-bg: #192d33;
+  --color-neutral-surface: #f1f9fa;
   --color-neutral-foreground: #ffffff;
 
   --color-heading: #ffffff;
   --color-body: #e0e0e0;
-  --color-border: #2a2a2a;
+  --color-border: #2a3a40;
   --color-muted: #8a949c;
 
   --shadow-surface: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
@@ -91,6 +91,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Container max-width override to match DiligenceSquared design */
+@layer components {
+  .container {
+    @media (min-width: 1024px) {
+      max-width: 980px;
+    }
+  }
+}
+
 @layer utilities {
   .bg-surface {
     background-color: var(--color-neutral-surface);
@@ -106,6 +115,15 @@ body {
 
   .text-body {
     color: var(--color-body);
+  }
+
+  /* Text colors for light sections */
+  .text-heading-dark {
+    color: #192d33; /* Dark heading on light background */
+  }
+
+  .text-body-dark {
+    color: #4a4a4a; /* Dark body text on light background */
   }
 
   .border-muted {
