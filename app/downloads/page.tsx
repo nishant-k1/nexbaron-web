@@ -1,60 +1,69 @@
-import { Metadata } from 'next'
-import { SectionReveal } from '@/components/motion/section-reveal'
-import { Download } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Metadata } from "next";
+import { SectionReveal } from "@/components/motion/section-reveal";
+import { Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AnimatedMeshBackground } from "@/components/motion/animated-mesh-background";
 
 export const metadata: Metadata = {
-  title: 'Downloads',
-  description: 'Download company brochures, compliance documents, and tender-related materials from Nexbaron Services.',
+  title: "Downloads",
+  description:
+    "Download company brochures, compliance documents, and tender-related materials from Nexbaron Services.",
   openGraph: {
-    title: 'Downloads | Nexbaron Services',
-    description: 'Company documents, brochures, and tender materials.',
+    title: "Downloads | Nexbaron Services",
+    description: "Company documents, brochures, and tender materials.",
   },
-}
+};
 
 const downloadCategories = [
   {
-    title: 'Company Brochures',
-    description: 'Download our company profile and service brochures.',
+    title: "Company Brochures",
+    description: "Download our company profile and service brochures.",
     items: [
-      { name: 'Company Profile', size: '2.5 MB', format: 'PDF' },
-      { name: 'Services Overview', size: '1.8 MB', format: 'PDF' },
+      { name: "Company Profile", size: "2.5 MB", format: "PDF" },
+      { name: "Services Overview", size: "1.8 MB", format: "PDF" },
     ],
   },
   {
-    title: 'Compliance Documents',
-    description: 'Access our compliance certificates and regulatory documents.',
+    title: "Compliance Documents",
+    description: "Access our compliance certificates and regulatory documents.",
     items: [
-      { name: 'ISO 9001 Certificate', size: '1.2 MB', format: 'PDF' },
-      { name: 'Compliance Statement', size: '0.9 MB', format: 'PDF' },
+      { name: "ISO 9001 Certificate", size: "1.2 MB", format: "PDF" },
+      { name: "Compliance Statement", size: "0.9 MB", format: "PDF" },
     ],
   },
   {
-    title: 'Tender Documents',
-    description: 'Download tender-related documents and submission guidelines.',
+    title: "Tender Documents",
+    description: "Download tender-related documents and submission guidelines.",
     items: [
-      { name: 'Tender Submission Guidelines', size: '1.5 MB', format: 'PDF' },
-      { name: 'Technical Specifications Template', size: '2.1 MB', format: 'PDF' },
+      { name: "Tender Submission Guidelines", size: "1.5 MB", format: "PDF" },
+      {
+        name: "Technical Specifications Template",
+        size: "2.1 MB",
+        format: "PDF",
+      },
     ],
   },
-]
+];
 
 export default function DownloadsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-primary text-white py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionReveal>
-            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-              Downloads
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl">
-              Access company documents, brochures, and tender-related materials.
-            </p>
-          </SectionReveal>
-        </div>
-      </section>
+      <AnimatedMeshBackground className="bg-primary">
+        <section className="relative text-white py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionReveal>
+              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+                Downloads
+              </h1>
+              <p className="text-xl text-white/90 max-w-3xl">
+                Access company documents, brochures, and tender-related
+                materials.
+              </p>
+            </SectionReveal>
+          </div>
+        </section>
+      </AnimatedMeshBackground>
 
       {/* Downloads Content */}
       <section className="py-section">
@@ -62,7 +71,10 @@ export default function DownloadsPage() {
           <SectionReveal>
             <div className="max-w-4xl mx-auto space-y-12">
               {downloadCategories.map((category) => (
-                <div key={category.title} className="bg-neutral-surface p-6 rounded-lg shadow-surface">
+                <div
+                  key={category.title}
+                  className="bg-neutral-surface p-6 rounded-lg shadow-surface"
+                >
                   <h2 className="text-2xl font-heading font-semibold text-heading mb-2">
                     {category.title}
                   </h2>
@@ -76,7 +88,9 @@ export default function DownloadsPage() {
                         <div className="flex items-center space-x-4">
                           <Download className="h-5 w-5 text-primary" />
                           <div>
-                            <p className="font-medium text-heading">{item.name}</p>
+                            <p className="font-medium text-heading">
+                              {item.name}
+                            </p>
                             <p className="text-sm text-body">
                               {item.size} • {item.format}
                             </p>
@@ -95,6 +109,5 @@ export default function DownloadsPage() {
         </div>
       </section>
     </>
-  )
+  );
 }
-
