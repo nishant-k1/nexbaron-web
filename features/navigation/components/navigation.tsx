@@ -69,8 +69,7 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        "sticky top-0 z-[100] w-full border-b border-white/10 bg-neutral-bg/80 backdrop-blur transition-colors text-body shadow-surface",
-        isScrolled && "shadow-surface"
+        "sticky top-0 z-[100] w-full bg-neutral-bg/80 backdrop-blur transition-colors text-body border-0"
       )}
       role="navigation"
       aria-label="Main navigation"
