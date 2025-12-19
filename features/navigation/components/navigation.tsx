@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -82,6 +82,7 @@ export function Navigation() {
             className="flex items-center space-x-2 text-xl font-heading font-normal text-heading"
             aria-label="Nexbaron Services Home"
           >
+            <Layers className="h-6 w-6" />
             <span>Nexbaron</span>
           </Link>
 
