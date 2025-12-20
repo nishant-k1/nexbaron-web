@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import { ThemeProvider } from "@/theme/theme-provider";
 import { Navigation } from "@/features/navigation/components/navigation";
 import { Footer } from "@/features/footer/components/footer";
-import { GlobalMeshBackground } from "@/components/motion/global-mesh-background";
+
+const GlobalMeshBackground = dynamic(
+  () =>
+    import("@/components/motion/global-mesh-background").then((mod) => ({
+      default: mod.GlobalMeshBackground,
+    })),
+  { ssr: false }
+);
 
 const inter = Inter({
   subsets: ["latin"],

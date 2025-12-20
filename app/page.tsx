@@ -76,9 +76,9 @@ export default function HomePage() {
                   className="bg-white/5 backdrop-blur-sm p-6 shadow-surface border-0"
                 >
                   <CheckCircle className="h-8 w-8 text-white mb-4" />
-                  <h3 className="text-lg font-heading font-normal text-white mb-2">
+                  <h2 className="text-lg font-heading font-normal text-white mb-2">
                     {feature}
-                  </h3>
+                  </h2>
                 </div>
               ))}
             </div>
@@ -102,7 +102,7 @@ export default function HomePage() {
                 expertise to every project.
               </p>
               <Button asChild>
-                <Link href="/about">Learn More</Link>
+                <Link href="/about">Learn More About Nexbaron Services</Link>
               </Button>
             </div>
           </SectionReveal>
