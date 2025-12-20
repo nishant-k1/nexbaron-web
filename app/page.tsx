@@ -145,8 +145,9 @@ export default function HomePage() {
                 <Image
                   src="https://cdn.pixabay.com/photo/2024/03/22/12/21/ai-generated-8649580_1280.jpg"
                   alt="Quality Assurance"
-                  width={800}
-                  height={600}
+                  width={400}
+                  height={300}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="w-full h-auto object-contain"
                 />
               </div>
