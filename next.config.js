@@ -18,7 +18,6 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
-    optimizeCss: true,
   },
 };
 
