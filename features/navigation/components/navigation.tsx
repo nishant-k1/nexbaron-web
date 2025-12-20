@@ -7,7 +7,13 @@ import { ChevronDown, Menu, X, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const navItems = [
+type NavItem = {
+  href: string;
+  label: string;
+  children?: NavItem[];
+};
+
+const navItems: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
