@@ -173,7 +173,7 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-16 z-[90] border-t border-white/10 bg-neutral-bg/80 backdrop-blur shadow-surface text-body">
+          <div className="lg:hidden fixed inset-x-0 top-16 z-[90] border-t border-white/10 bg-neutral-bg backdrop-blur-md shadow-surface text-body">
             <div className="px-4 pt-3 pb-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navItems.map((item) => (
                 <div key={item.href}>
