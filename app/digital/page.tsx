@@ -17,14 +17,23 @@ import Link from "next/link";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink } from "@/lib/divisions";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Nexbaron Digital | Business Websites, Local SEO & AI WhatsApp Automation",
   description:
     "Grow your business with Nexbaron Digital. High-converting websites, #1 Google Business Profile local SEO, WhatsApp CRM, AI Chatbots, and speed optimization for clinics, restaurants, law firms, and SMEs.",
   openGraph: {
+    type: "website",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/digital`,
     title: "Nexbaron Digital | Web, Local SEO & AI Automation",
     description: "Digital growth engine for SMEs and local service businesses.",
+    ...divisionOpenGraph("digital"),
+  },
+  twitter: {
+    title: "Nexbaron Digital | Web, Local SEO & AI Automation",
+    description: "Digital growth engine for SMEs and local service businesses.",
+    ...divisionTwitter("digital"),
   },
 };
 

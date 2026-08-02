@@ -5,6 +5,7 @@ import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { buildWhatsAppLink } from "@/lib/divisions";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "AI & WhatsApp CRM | Nexbaron Digital",
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI & WhatsApp CRM | Nexbaron Digital",
     description: "Automate customer conversations and capture leads 24/7 on WhatsApp.",
+    ...divisionOpenGraph("digital"),
   },
+  twitter: divisionTwitter("digital"),
 };
 
 const steps = [

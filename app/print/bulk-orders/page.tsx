@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { PageHero } from "@/components/sections/page-hero";
 import { LeadForm } from "@/features/contact/components/lead-form";
 import { buildWhatsAppLink } from "@/lib/divisions";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Bulk Orders & Commercial Pricing | Nexbaron Print",
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bulk Orders | Nexbaron Print",
     description: "Commercial bulk printing with dedicated pricing and delivery at scale.",
+    ...divisionOpenGraph("print"),
   },
+  twitter: divisionTwitter("print"),
 };
 
 const benefits = [

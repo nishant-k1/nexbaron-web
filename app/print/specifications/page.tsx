@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionHeading } from "@/components/sections/section-heading";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Paper Stocks & Finish Options | Nexbaron Print",
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Specifications | Nexbaron Print",
     description: "Paper stocks, finishes, and production standards from Nexbaron Print.",
+    ...divisionOpenGraph("print"),
   },
+  twitter: divisionTwitter("print"),
 };
 
 const stocks = [

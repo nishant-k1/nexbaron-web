@@ -5,6 +5,7 @@ import { CTABanner } from "@/components/sections/cta-banner";
 import { FeatureSection } from "@/components/sections/feature-section";
 import { PageHero } from "@/components/sections/page-hero";
 import { buildWhatsAppLink } from "@/lib/divisions";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Industry Solutions | Nexbaron Digital",
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Industry Solutions | Nexbaron Digital",
     description: "Industry-specific digital growth solutions for local businesses.",
+    ...divisionOpenGraph("digital"),
   },
+  twitter: divisionTwitter("digital"),
 };
 
 const industries = [

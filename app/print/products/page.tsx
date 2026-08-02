@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { printCategories, getProductsByCategory } from "@/lib/data/print-products";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Printing Services | Nexbaron Print",
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Printing Services | Nexbaron Print",
     description: "Complete commercial printing services from Nexbaron Print.",
+    ...divisionOpenGraph("print"),
   },
+  twitter: divisionTwitter("print"),
 };
 
 export default function PrintProductsPage() {

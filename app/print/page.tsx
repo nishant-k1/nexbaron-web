@@ -5,15 +5,25 @@ import Link from "next/link";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
 import { printProducts } from "@/lib/data/print-products";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Nexbaron Print | Visiting Cards, Letterheads, Bill Books & More",
   description:
     "Nexbaron Print delivers premium commercial printing: visiting cards, card holders, pamphlets & posters, letterheads, envelopes, bill books, stickers & labels, pens, and specialty print.",
   openGraph: {
+    type: "website",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print`,
     title: "Nexbaron Print | Premium Commercial Printing",
     description:
       "14 print services from visiting cards to bill books, stickers, and specialty products.",
+    ...divisionOpenGraph("print"),
+  },
+  twitter: {
+    title: "Nexbaron Print | Premium Commercial Printing",
+    description:
+      "14 print services from visiting cards to bill books, stickers, and specialty products.",
+    ...divisionTwitter("print"),
   },
 };
 

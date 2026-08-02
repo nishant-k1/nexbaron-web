@@ -6,6 +6,7 @@ import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { printProducts } from "@/lib/data/print-products";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 interface ProductPageProps {
   params: { slug: string };
@@ -26,7 +27,9 @@ export function generateMetadata({ params }: ProductPageProps): Metadata {
     openGraph: {
       title: `${product.name} | Nexbaron Print`,
       description: product.description,
+      ...divisionOpenGraph("print"),
     },
+    twitter: divisionTwitter("print"),
   };
 }
 

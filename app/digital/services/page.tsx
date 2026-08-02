@@ -5,6 +5,7 @@ import { CTABanner } from "@/components/sections/cta-banner";
 import { FeatureSection } from "@/components/sections/feature-section";
 import { PageHero } from "@/components/sections/page-hero";
 import { buildWhatsAppLink } from "@/lib/divisions";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Digital Services | Nexbaron Digital",
@@ -14,7 +15,9 @@ export const metadata: Metadata = {
     title: "Digital Services | Nexbaron Digital",
     description:
       "End-to-end digital growth services: websites, local SEO, WhatsApp automation, CRM and hosting.",
+    ...divisionOpenGraph("digital"),
   },
+  twitter: divisionTwitter("digital"),
 };
 
 const services = [

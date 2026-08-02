@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { PageHero } from "@/components/sections/page-hero";
 import { LeadForm } from "@/features/contact/components/lead-form";
 import { buildWhatsAppLink } from "@/lib/divisions";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Contact Digital Team | Nexbaron Digital",
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Digital Team | Nexbaron Digital",
     description: "Get a free growth audit and consultation from the Nexbaron Digital team.",
+    ...divisionOpenGraph("digital"),
   },
+  twitter: divisionTwitter("digital"),
 };
 
 const nextSteps = [
