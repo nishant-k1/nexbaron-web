@@ -1,0 +1,143 @@
+//@version=5
+strategy("Supply Demand Zone Strategy", overlay=true, calc_on_every_tick=true, initial_capital=100000, pyramiding=0, default_qty_type=strategy.percent_of_equity, default_qty_value=5)
+
+// === Inputs ===
+pivotLen       = input.int(5, "Pivot length", minval=2, tooltip="Bars on each side required to confirm pivot swing.")
+atrLen         = input.int(14, "ATR length")
+atrMult        = input.float(0.75, "Zone thickness (ATR multiplier)", minval=0.1, step=0.05)
+zoneLife       = input.int(200, "Max bars to keep zone", minval=10, maxval=2000)
+maxZones       = input.int(25, "Maximum zones to track", minval=5, maxval=40)
+confirmRsiLen  = input.int(14, "RSI confirmation length")
+confirmType    = input.string("RSI", "Confirmation type", options=["RSI", "Structure"], tooltip="RSI waits for momentum, Structure waits for close exiting the zone in trend direction.")
+rewardRisk     = input.float(2.0, "Reward/Risk ratio", minval=0.5, step=0.1)
+stopAtrMult    = input.float(1.2, "Stop ATR multiplier", minval=0.2, step=0.1)
+allowShorts    = input.bool(true, "Enable shorts from supply zones")
+allowLongs     = input.bool(true, "Enable longs from demand zones")
+extendRightBars = input.int(150, "Visual extension bars", minval=10, maxval=500)
+
+colSupply = color.new(color.red, 70)
+colDemand = color.new(color.green, 70)
+
+pivotHigh = ta.pivothigh(high, pivotLen, pivotLen)
+pivotLow  = ta.pivotlow(low, pivotLen, pivotLen)
+atrValue  = ta.atr(atrLen)
+rsiValue  = ta.rsi(close, confirmRsiLen)
+
+var demandBoxes   = array.new_box()
+var demandTop     = array.new_float()
+var demandBottom  = array.new_float()
+var demandCreated = array.new_int()
+
+var supplyBoxes   = array.new_box()
+var supplyTop     = array.new_float()
+var supplyBottom  = array.new_float()
+var supplyCreated = array.new_int()
+
+f_delete_zone(isDemand, idx) =>
+    if isDemand
+        box.delete(array.get(demandBoxes, idx))
+        array.remove(demandBoxes, idx)
+        array.remove(demandTop, idx)
+        array.remove(demandBottom, idx)
+        array.remove(demandCreated, idx)
+    else
+        box.delete(array.get(supplyBoxes, idx))
+        array.remove(supplyBoxes, idx)
+        array.remove(supplyTop, idx)
+        array.remove(supplyBottom, idx)
+        array.remove(supplyCreated, idx)
+
+// === Create zones ===
+if not na(pivotLow)
+    top = pivotLow + atrValue * atrMult
+    bottom = pivotLow
+    demandBox = box.new(bar_index - pivotLen, top, bar_index + extendRightBars, bottom, border_color=color.new(color.green, 0), bgcolor=colDemand)
+    array.push(demandBoxes, demandBox)
+    array.push(demandTop, top)
+    array.push(demandBottom, bottom)
+    array.push(demandCreated, bar_index)
+
+if not na(pivotHigh)
+    top = pivotHigh
+    bottom = pivotHigh - atrValue * atrMult
+    supplyBox = box.new(bar_index - pivotLen, top, bar_index + extendRightBars, bottom, border_color=color.new(color.red, 0), bgcolor=colSupply)
+    array.push(supplyBoxes, supplyBox)
+    array.push(supplyTop, top)
+    array.push(supplyBottom, bottom)
+    array.push(supplyCreated, bar_index)
+
+// Cap zone count
+while array.size(demandBoxes) > maxZones
+    f_delete_zone(true, 0)
+
+while array.size(supplyBoxes) > maxZones
+    f_delete_zone(false, 0)
+
+// === Maintain zones ===
+for i = array.size(demandBoxes) - 1 to 0
+    boxRef = array.get(demandBoxes, i)
+    if bar_index - array.get(demandCreated, i) > zoneLife or close < array.get(demandBottom, i)
+        f_delete_zone(true, i)
+    else
+        box.set_right(boxRef, bar_index + extendRightBars)
+
+for i = array.size(supplyBoxes) - 1 to 0
+    boxRef = array.get(supplyBoxes, i)
+    if bar_index - array.get(supplyCreated, i) > zoneLife or close > array.get(supplyTop, i)
+        f_delete_zone(false, i)
+    else
+        box.set_right(boxRef, bar_index + extendRightBars)
+
+// === Helpers ===
+confirmLong(zoneTop, zoneBottom) =>
+    inside = close <= zoneTop and close >= zoneBottom
+    confirmation = switch confirmType
+        "RSI" => rsiValue > 50 and close > open
+        => close > zoneTop
+    inside and confirmation
+
+confirmShort(zoneTop, zoneBottom) =>
+    inside = close >= zoneBottom and close <= zoneTop
+    confirmation = switch confirmType
+        "RSI" => rsiValue < 50 and close < open
+        => close < zoneBottom
+    inside and confirmation
+
+// === Trading logic ===
+var float longStop = na
+var float shortStop = na
+var float longProfit = na
+var float shortProfit = na
+
+longSignal = false
+shortSignal = false
+
+if allowLongs
+    for i = array.size(demandBoxes) - 1 to 0
+        top = array.get(demandTop, i)
+        bottom = array.get(demandBottom, i)
+        if confirmLong(top, bottom)
+            longSignal := true
+            longStop := bottom - atrValue * stopAtrMult
+            longProfit := close + (close - longStop) * rewardRisk
+            break
+
+if allowShorts
+    for i = array.size(supplyBoxes) - 1 to 0
+        top = array.get(supplyTop, i)
+        bottom = array.get(supplyBottom, i)
+        if confirmShort(top, bottom)
+            shortSignal := true
+            shortStop := top + atrValue * stopAtrMult
+            shortProfit := close - (shortStop - close) * rewardRisk
+            break
+
+if longSignal and strategy.position_size <= 0
+    strategy.entry("Demand Long", strategy.long)
+    strategy.exit("Demand Long Exit", "Demand Long", stop=longStop, limit=longProfit)
+
+if shortSignal and strategy.position_size >= 0
+    strategy.entry("Supply Short", strategy.short)
+    strategy.exit("Supply Short Exit", "Supply Short", stop=shortStop, limit=shortProfit)
+
+plot(rsiValue, "RSI", color=color.aqua, display=display.none)
