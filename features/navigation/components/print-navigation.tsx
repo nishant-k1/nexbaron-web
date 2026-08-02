@@ -1,10 +1,11 @@
 "use client";
 
-import { Menu, X, Printer, Calculator } from "lucide-react";
+import { Menu, X, Calculator } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
+import { BrandMark } from "@/components/brand/brand-mark";
 import { Button } from "@/components/ui/button";
 import { divisions } from "@/lib/divisions";
 
@@ -40,17 +41,10 @@ export function PrintNavigation() {
           {/* Logo & Division Switcher */}
           <div className="flex items-center gap-4">
             <Link href="/print" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 p-0.5 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                  <Printer className="w-5 h-5 text-amber-400" />
-                </div>
-              </div>
+              <BrandMark variant="print" />
               <div>
                 <span className="text-lg font-heading font-extrabold text-white tracking-tight flex items-center gap-1.5">
                   Nexbaron <span className="text-amber-400 font-mono text-sm">PRINT</span>
-                </span>
-                <span className="text-[10px] text-slate-400 block -mt-1 font-mono">
-                  Collaterals • Signage • Flex & Vinyl
                 </span>
               </div>
             </Link>

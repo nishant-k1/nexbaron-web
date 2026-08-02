@@ -1,10 +1,11 @@
 "use client";
 
-import { Menu, X, Monitor, MessageSquare } from "lucide-react";
+import { Menu, X, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
+import { BrandMark } from "@/components/brand/brand-mark";
 import { Button } from "@/components/ui/button";
 import { divisions, buildWhatsAppLink } from "@/lib/divisions";
 
@@ -40,17 +41,10 @@ export function DigitalNavigation() {
           {/* Logo & Division Switcher */}
           <div className="flex items-center gap-4">
             <Link href="/digital" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500 to-cyan-400 p-0.5 shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                  <Monitor className="w-5 h-5 text-teal-400" />
-                </div>
-              </div>
+              <BrandMark variant="digital" />
               <div>
                 <span className="text-lg font-heading font-extrabold text-white tracking-tight flex items-center gap-1.5">
                   Nexbaron <span className="text-teal-400 font-mono text-sm">DIGITAL</span>
-                </span>
-                <span className="text-[10px] text-slate-400 block -mt-1 font-mono">
-                  Web • SEO • AI Automation
                 </span>
               </div>
             </Link>

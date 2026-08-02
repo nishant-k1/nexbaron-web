@@ -1,16 +1,12 @@
 "use client";
 
-import { Menu, X, Building2, Monitor, Printer } from "lucide-react";
+import { Menu, X, Monitor, Printer } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
+import { BrandMark } from "@/components/brand/brand-mark";
 import { Button } from "@/components/ui/button";
-
-const navItems = [
-  { href: "/about", label: "About Group" },
-  { href: "/contact", label: "Contact Us" },
-];
 
 export function CorporateNavigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,40 +37,14 @@ export function CorporateNavigation() {
         <div className="flex items-center justify-between">
           {/* Corporate Brand Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-slate-700 via-teal-500 to-amber-500 p-0.5 shadow-lg group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Building2 className="w-5 h-5 text-white" />
-              </div>
-            </div>
+            <BrandMark />
             <div>
               <span className="text-lg font-heading font-extrabold text-white tracking-tight">
-                Nexbaron <span className="text-xs text-slate-400 font-mono">PRIVATE LIMITED</span>
-              </span>
-              <span className="text-[10px] text-slate-400 block -mt-1 font-mono">
-                Digital Services & Print Infrastructure
+                Nexbaron{" "}
+                <span className="text-sm text-slate-400 font-mono font-semibold">GROUP</span>
               </span>
             </div>
           </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`text-sm font-medium transition-colors hover:text-white ${
-                    isActive
-                      ? "text-white font-semibold underline decoration-teal-400 underline-offset-8"
-                      : "text-slate-300"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
 
           {/* Direct Division Switch Pill Group (primary CTAs) */}
           <div className="hidden md:flex items-center gap-3">
@@ -107,18 +77,7 @@ export function CorporateNavigation() {
         {/* Mobile Dropdown */}
         {isOpen && (
           <div className="md:hidden mt-4 rounded-2xl bg-slate-950/95 border border-white/10 p-6 space-y-4 backdrop-blur-2xl shadow-2xl">
-            <div className="space-y-3">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block text-base font-medium text-slate-200 hover:text-white py-1"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-            <div className="pt-4 border-t border-white/10 grid grid-cols-2 gap-3">
+            <div className="pt-0 grid grid-cols-2 gap-3">
               <Button asChild size="sm" className="bg-teal-500 text-slate-950 font-bold">
                 <Link href="/digital">Digital Division</Link>
               </Button>

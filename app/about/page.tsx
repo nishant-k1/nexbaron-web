@@ -26,7 +26,7 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
       {/* Hero */}
-      <section className="relative text-white py-16">
+      <section className="relative text-white pt-32 pb-16 md:pt-40">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
