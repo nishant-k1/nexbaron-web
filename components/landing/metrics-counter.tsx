@@ -1,8 +1,10 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { Building2, ShieldCheck, Award, Globe2 } from "lucide-react";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useRevealInView } from "@/hooks/use-reveal-in-view";
 
 interface MetricItem {
   id: string;
@@ -60,11 +62,10 @@ function CounterNumber({
   suffix?: string;
 }) {
   const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
+  const { ref, inView } = useRevealInView<HTMLSpanElement>();
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!inView) return;
     let start = 0;
     const duration = 2000; // ms
     const increment = value / (duration / 16);
@@ -80,7 +81,7 @@ function CounterNumber({
     }, 16);
 
     return () => clearInterval(timer);
-  }, [isInView, value]);
+  }, [inView, value]);
 
   return (
     <span ref={ref} className="font-bold tracking-tight">
@@ -91,6 +92,55 @@ function CounterNumber({
   );
 }
 
+function MetricCard({ metric, index }: { metric: MetricItem; index: number }) {
+  const { ref, inView } = useRevealInView<HTMLDivElement>();
+  const Icon = metric.icon;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="group relative p-8 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-teal-500/40 transition-all duration-300 shadow-lg hover:shadow-teal-500/10"
+    >
+      <div className="flex items-center justify-between mb-6">
+        <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 group-hover:scale-110 group-hover:bg-teal-500/20 transition-all duration-300">
+          <Icon className="w-6 h-6" />
+        </div>
+        <div className="h-2 w-2 rounded-full bg-teal-400 animate-ping opacity-75" />
+      </div>
+
+      <div className="text-4xl md:text-5xl font-heading font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-teal-200 mb-2">
+        <CounterNumber value={metric.value} prefix={metric.prefix} suffix={metric.suffix} />
+      </div>
+
+      <h3 className="text-lg font-medium text-white mb-2">{metric.label}</h3>
+      <p className="text-sm text-slate-400 leading-relaxed">{metric.description}</p>
+    </motion.div>
+  );
+}
+
+function MetricsHeading() {
+  const { ref, inView } = useRevealInView<HTMLDivElement>();
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 15 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+      transition={{ duration: 0.5 }}
+    >
+      <span className="text-xs uppercase tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
+        Proven Track Record
+      </span>
+      <h2 className="text-3xl md:text-4xl font-heading font-semibold text-white">
+        Engineering Trust at Scale
+      </h2>
+    </motion.div>
+  );
+}
+
 export function MetricsCounterSection() {
   return (
     <section className="py-20 relative overflow-hidden border-y border-white/10 bg-black/20 backdrop-blur-md">
@@ -98,53 +148,13 @@ export function MetricsCounterSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="text-xs uppercase tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
-              Proven Track Record
-            </span>
-            <h2 className="text-3xl md:text-4xl font-heading font-semibold text-white">
-              Engineering Trust at Scale
-            </h2>
-          </motion.div>
+          <MetricsHeading />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {metrics.map((metric, idx) => {
-            const Icon = metric.icon;
-            return (
-              <motion.div
-                key={metric.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group relative p-8 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-teal-500/40 transition-all duration-300 shadow-lg hover:shadow-teal-500/10"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 group-hover:scale-110 group-hover:bg-teal-500/20 transition-all duration-300">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div className="h-2 w-2 rounded-full bg-teal-400 animate-ping opacity-75" />
-                </div>
-
-                <div className="text-4xl md:text-5xl font-heading font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-teal-200 mb-2">
-                  <CounterNumber
-                    value={metric.value}
-                    prefix={metric.prefix}
-                    suffix={metric.suffix}
-                  />
-                </div>
-
-                <h3 className="text-lg font-medium text-white mb-2">{metric.label}</h3>
-                <p className="text-sm text-slate-400 leading-relaxed">{metric.description}</p>
-              </motion.div>
-            );
-          })}
+          {metrics.map((metric, idx) => (
+            <MetricCard key={metric.id} metric={metric} index={idx} />
+          ))}
         </div>
       </div>
     </section>

@@ -143,16 +143,22 @@ body {
 }
 
 .skip-to-content {
-  position: absolute;
-  top: -40px;
+  position: fixed;
+  top: 0;
   left: 0;
+  transform: translateY(-150%);
   background: var(--color-primary);
   color: white;
-  padding: 8px 16px;
+  padding: 10px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
   text-decoration: none;
+  border-radius: 0 0 10px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   z-index: 100;
 }
 
-.skip-to-content:focus {
-  top: 0;
+.skip-to-content:focus,
+.skip-to-content:focus-visible {
+  transform: translateY(0);
 }

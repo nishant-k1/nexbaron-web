@@ -5,6 +5,8 @@ import { Zap, Cpu, HardHat, Radio, ArrowUpRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
+import { useRevealInView } from "@/hooks/use-reveal-in-view";
+
 interface Sector {
   id: string;
   title: string;
@@ -70,6 +72,7 @@ const sectors: Sector[] = [
 
 export function IndustryShowcaseSection() {
   const [activeSector, setActiveSector] = useState<string>(sectors[0]!.id);
+  const heading = useRevealInView<HTMLDivElement>();
 
   return (
     <section className="py-24 relative overflow-hidden bg-neutral-bg">
@@ -80,9 +83,9 @@ export function IndustryShowcaseSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <motion.div
+              ref={heading.ref}
               initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              animate={heading.inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             >
               <span className="text-xs uppercase tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-flex items-center gap-1.5 mb-3">
                 <Sparkles className="w-3.5 h-3.5" /> Sector Expertise

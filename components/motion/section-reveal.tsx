@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useRevealInView } from "@/hooks/use-reveal-in-view";
 
 interface SectionRevealProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ interface SectionRevealProps {
 
 export function SectionReveal({ children, className, delay = 0 }: SectionRevealProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { ref, inView } = useRevealInView<HTMLElement>();
 
   if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
@@ -19,9 +21,9 @@ export function SectionReveal({ children, className, delay = 0 }: SectionRevealP
 
   return (
     <motion.section
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{
         duration: 0.4,
         delay,
