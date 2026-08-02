@@ -5,6 +5,8 @@ import Link from "next/link";
 
 import { buildWhatsAppLink } from "@/lib/divisions";
 
+import { SocialLinks } from "./social-links";
+
 const digitalLinks = {
   services: [
     { href: "/digital/services#websites", label: "Business Websites & Landing Pages" },
@@ -57,6 +59,9 @@ export function DigitalFooter() {
                 <MessageSquare className="w-3.5 h-3.5" />
                 Live WhatsApp Support
               </a>
+            </div>
+            <div className="pt-2">
+              <SocialLinks division="digital" />
             </div>
           </div>
 

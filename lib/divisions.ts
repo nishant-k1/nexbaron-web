@@ -12,6 +12,17 @@ interface DivisionConfig {
   tagline: string;
   whatsappNumber: string;
   nav: NavItem[];
+  social: {
+    instagram: string;
+    facebook: string;
+    linkedin: string;
+    x: string;
+    pinterest: string;
+    youtube: string;
+    whatsapp: string;
+    threads: string;
+    tiktok: string;
+  };
   otherDivision: {
     href: string;
     label: string;
@@ -34,6 +45,17 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
       { href: "/digital/contact", label: "Contact" },
     ],
     otherDivision: { href: "/print", label: "print ↗" },
+    social: {
+      instagram: "https://instagram.com/nexbarondigital",
+      facebook: "https://facebook.com/nexbarondigital",
+      linkedin: "https://linkedin.com/company/nexbarondigital",
+      x: "https://x.com/nexbarondigital",
+      pinterest: "https://pinterest.com/nexbarondigital",
+      youtube: "https://youtube.com/@nexbarondigital",
+      whatsapp: DIGITAL_WHATSAPP ? `https://wa.me/${DIGITAL_WHATSAPP}` : "https://wa.me",
+      threads: "https://threads.net/@nexbarondigital",
+      tiktok: "https://tiktok.com/@nexbarondigital",
+    },
   },
   print: {
     slug: "print",
@@ -47,6 +69,17 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
       { href: "/print/bulk-orders", label: "Bulk Orders" },
     ],
     otherDivision: { href: "/digital", label: "digital ↗" },
+    social: {
+      instagram: "https://instagram.com/nexbaronprint",
+      facebook: "https://facebook.com/nexbaronprint",
+      linkedin: "https://linkedin.com/company/nexbaronprint",
+      x: "https://x.com/nexbaronprint",
+      pinterest: "https://pinterest.com/nexbaronprint",
+      youtube: "https://youtube.com/@nexbaronprint",
+      whatsapp: PRINT_WHATSAPP ? `https://wa.me/${PRINT_WHATSAPP}` : "https://wa.me",
+      threads: "https://threads.net/@nexbaronprint",
+      tiktok: "https://tiktok.com/@nexbaronprint",
+    },
   },
 };
 

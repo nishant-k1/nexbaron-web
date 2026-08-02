@@ -3,6 +3,8 @@
 import { Building2, Monitor, Printer } from "lucide-react";
 import Link from "next/link";
 
+import { SocialLinks } from "./social-links";
+
 export function CorporateFooter() {
   const currentYear = new Date().getFullYear();
 
@@ -25,6 +27,20 @@ export function CorporateFooter() {
               infrastructure company delivering end-to-end digital solutions and physical print
               collateral.
             </p>
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[10px] uppercase font-mono tracking-wider text-teal-400">
+                  Nexbaron Digital
+                </span>
+                <SocialLinks division="digital" />
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[10px] uppercase font-mono tracking-wider text-amber-400">
+                  Nexbaron Print
+                </span>
+                <SocialLinks division="print" />
+              </div>
+            </div>
           </div>
 
           {/* Nexbaron Digital Division */}

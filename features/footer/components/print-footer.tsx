@@ -3,6 +3,8 @@
 import { Printer, Calculator } from "lucide-react";
 import Link from "next/link";
 
+import { SocialLinks } from "./social-links";
+
 const printLinks = {
   products: [
     { href: "/print/products/visiting-cards", label: "Visiting Cards" },
@@ -49,6 +51,9 @@ export function PrintFooter() {
                 <Calculator className="w-4 h-4" />
                 Launch Instant Print Quote
               </Link>
+            </div>
+            <div className="pt-2">
+              <SocialLinks division="print" />
             </div>
           </div>
 
