@@ -80,7 +80,7 @@ body {
 @layer components {
   .container {
     @media (min-width: 1024px) {
-      max-width: 980px;
+      max-width: 1280px;
     }
   }
 }
