@@ -1,215 +1,210 @@
 import { Metadata } from "next";
-import { SectionReveal } from "@/components/motion/section-reveal";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShieldCheck, Zap, Activity, CheckCircle2, Award } from "lucide-react";
-import { MetricsCounterSection } from "@/components/landing/metrics-counter";
-import { IndustryShowcaseSection } from "@/components/landing/industry-showcase";
-import { ServicesMatrixSection } from "@/components/landing/services-matrix";
-import { PartnerTestimonialsSection } from "@/components/landing/partner-testimonials";
+import { SectionReveal } from "@/components/motion/section-reveal";
+import { Monitor, Printer, ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Building2, Globe2 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Nexbaron Services | Leading Infrastructure Solutions & Engineering",
+  title: "Nexbaron Private Limited | Corporate Portal",
   description:
-    "Nexbaron Services Private Limited delivers world-class infrastructure solutions, compliance certification, smart energy grids, and turnkey project management.",
+    "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital (Web, Local SEO, AI Automation) and Nexbaron Print (Visiting Cards, Banners, Office Branding).",
   openGraph: {
-    title: "Nexbaron Services Private Limited | Leading Infrastructure Solutions",
+    title: "Nexbaron Private Limited | Digital & Print Infrastructure",
     description:
-      "World-class infrastructure solutions, smart automation, and compliance certification.",
+      "Official corporate gateway for Nexbaron Digital and Nexbaron Print.",
   },
 };
 
-export default function HomePage() {
+export default function CorporateGatewayPage() {
   return (
-    <>
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
-        {/* Glowing Background Radial Accents */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-teal-500/15 via-blue-600/10 to-purple-600/15 rounded-full blur-[140px] pointer-events-none" />
+    <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
+      {/* Background Ambient Lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-teal-500/10 via-slate-800/20 to-amber-500/10 rounded-full blur-[160px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Top Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/10 backdrop-blur-md">
+            <Building2 className="w-4 h-4 text-teal-400" />
+            <span className="text-xs uppercase font-mono tracking-widest text-slate-300 font-semibold">
+              Nexbaron Private Limited
+            </span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
+            One Enterprise. Two Autonomous{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-amber-400">
+              Divisions.
+            </span>
+          </h1>
+          <p className="text-lg text-slate-300 leading-relaxed">
+            Select your destination below to access dedicated commercial services, pricing, and project consultation tailored to your exact business needs.
+          </p>
+        </div>
+
+        {/* Dual Division Split Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+          
+          {/* Nexbaron Digital Card */}
           <SectionReveal>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              
-              {/* Left Hero Text Column */}
-              <div className="lg:col-span-7 space-y-8 text-left">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.05] border border-teal-500/30 backdrop-blur-md">
-                  <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-                  <span className="text-xs uppercase font-mono tracking-widest text-teal-300 font-semibold">
-                    ISO Certified Infrastructure Partner
+            <div className="group relative rounded-3xl p-8 sm:p-12 bg-slate-950/80 border border-teal-500/30 hover:border-teal-400/60 transition-all duration-300 backdrop-blur-2xl shadow-2xl hover:shadow-teal-500/10 flex flex-col justify-between h-full overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-teal-500/20 transition-all" />
+
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                    <Monitor className="w-8 h-8" />
+                  </div>
+                  <span className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full bg-teal-500/10 text-teal-300 border border-teal-500/20">
+                    Division 01
                   </span>
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-[1.1] tracking-tight">
-                  Engineering Next-Gen{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400">
-                    Infrastructure Solutions
-                  </span>
-                </h1>
-
-                <p className="text-lg md:text-xl text-slate-300 max-w-2xl font-normal leading-relaxed">
-                  Nexbaron Services Private Limited delivers end-to-end engineering excellence, ISO safety compliance, smart grid automation, and mission-critical project execution across industries.
+                <span className="text-xs font-mono font-semibold text-teal-400 uppercase tracking-widest mb-2 block">
+                  Web • Local SEO • AI & CRM
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
+                  Nexbaron Digital
+                </h2>
+                <p className="text-slate-300 text-sm leading-relaxed mb-8">
+                  The complete digital growth engine for small businesses, clinics, restaurants, law firms, CA practices, gyms, and local services. We build high-converting websites, rank #1 on Google Business Profiles, and automate customer leads via WhatsApp.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 py-6 rounded-xl shadow-lg shadow-teal-500/20 hover:scale-[1.02] transition-all"
-                  >
-                    <Link href="/services">
-                      Explore Capabilities
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-md"
-                  >
-                    <Link href="/compliance">Compliance Standards</Link>
-                  </Button>
-                </div>
-
-                {/* Hero Quick Badges */}
-                <div className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-slate-400 text-xs font-mono">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-teal-400" />
-                    <span>ISO 9001 Compliant</span>
+                <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
+                    <span>Business Websites & Conversion Landing Pages</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-teal-400" />
-                    <span>100% Audit Guarantee</span>
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
+                    <span>Google Business Profile & Local SEO Domination</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-teal-400" />
-                    <span>24/7 PMO Support</span>
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
+                    <span>WhatsApp Business CRM & AI Chatbots</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
+                    <span>Managed Hosting, Speed & Security Maintenance</span>
                   </div>
                 </div>
               </div>
 
-              {/* Right Visual Cyber Card */}
-              <div className="lg:col-span-5">
-                <div className="relative p-1 rounded-3xl bg-gradient-to-b from-teal-500/30 via-white/10 to-transparent shadow-2xl">
-                  <div className="rounded-[22px] bg-slate-950/80 backdrop-blur-2xl p-6 sm:p-8 space-y-6 border border-white/10">
-                    
-                    <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2.5 rounded-xl bg-teal-500/20 text-teal-400">
-                          <Zap className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-white">Live System Operations</h3>
-                          <p className="text-xs text-slate-400">Nexbaron PMO Command Center</p>
-                        </div>
-                      </div>
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                        Active Sync
-                      </span>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-300 font-medium">Grid Substation Automation</span>
-                          <span className="text-teal-400 font-mono">99.98% Efficiency</span>
-                        </div>
-                        <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-teal-400 to-cyan-400 w-[96%]" />
-                        </div>
-                      </div>
-
-                      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-300 font-medium">Safety Clearance Clearance</span>
-                          <span className="text-teal-400 font-mono">Verified (Zero Non-Conformity)</span>
-                        </div>
-                        <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 w-[100%]" />
-                        </div>
-                      </div>
-
-                      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-300 font-medium">Turnkey Asset Handover</span>
-                          <span className="text-teal-400 font-mono">On Schedule</span>
-                        </div>
-                        <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 w-[92%]" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2">
-                        <Award className="w-4 h-4 text-teal-400" />
-                        <span className="text-slate-200">ISO 14001 & 45001 Framework</span>
-                      </div>
-                      <span className="text-teal-300 font-mono">100% Compliant</span>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </SectionReveal>
-        </div>
-      </section>
-
-      {/* Metrics Section */}
-      <MetricsCounterSection />
-
-      {/* Industry Showcase */}
-      <IndustryShowcaseSection />
-
-      {/* Services Matrix */}
-      <ServicesMatrixSection />
-
-      {/* Partner & Testimonials */}
-      <PartnerTestimonialsSection />
-
-      {/* Call to Action Section */}
-      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-neutral-bg via-slate-900 to-neutral-bg border-t border-white/10">
-        <div className="absolute inset-0 bg-teal-500/5 blur-[100px] pointer-events-none" />
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <SectionReveal>
-            <div className="max-w-3xl mx-auto space-y-8">
-              <span className="text-xs uppercase tracking-widest text-teal-400 font-semibold px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block">
-                Start Your Project
-              </span>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-white leading-tight">
-                Ready to Build Industry-Leading Infrastructure?
-              </h2>
-              <p className="text-slate-300 text-lg leading-relaxed">
-                Connect with our expert engineering and compliance team today for a tailored technical consultation and project execution blueprint.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+              <div className="pt-4">
                 <Button
                   asChild
                   size="lg"
-                  className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 py-6 rounded-xl shadow-lg shadow-teal-500/20"
+                  className="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-teal-500/20 group-hover:scale-[1.01] transition-transform"
                 >
-                  <Link href="/contact">
-                    Request Technical Proposal
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                  <Link href="/digital">
+                    Enter Digital Division Portal
+                    <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>
                 </Button>
+              </div>
+            </div>
+          </SectionReveal>
+
+          {/* Nexbaron Print Card */}
+          <SectionReveal>
+            <div className="group relative rounded-3xl p-8 sm:p-12 bg-slate-950/80 border border-amber-500/30 hover:border-amber-400/60 transition-all duration-300 backdrop-blur-2xl shadow-2xl hover:shadow-amber-500/10 flex flex-col justify-between h-full overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-amber-500/20 transition-all" />
+
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
+                    <Printer className="w-8 h-8" />
+                  </div>
+                  <span className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                    Division 02
+                  </span>
+                </div>
+
+                <span className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-widest mb-2 block">
+                  Collaterals • Signage • Branding
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
+                  Nexbaron Print
+                </h2>
+                <p className="text-slate-300 text-sm leading-relaxed mb-8">
+                  Premium physical marketing collateral powerhouse. We manufacture high-end visiting cards, brochures, flyers, flex banners, vinyl graphics, acrylic signboards, and turnkey office exhibition branding.
+                </p>
+
+                <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Premium Visiting Cards & Letterheads</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Brochures, Pamphlets & Marketing Flyers</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Flex Banners, Vinyl Prints & Backlit Boards</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Turnkey Office Signage & Exhibition Stalls</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4">
                 <Button
                   asChild
                   size="lg"
-                  variant="outline"
-                  className="border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl"
+                  className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-amber-500/20 group-hover:scale-[1.01] transition-transform"
                 >
-                  <Link href="/projects">Explore Past Projects</Link>
+                  <Link href="/print">
+                    Enter Print Division Portal
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Link>
                 </Button>
               </div>
             </div>
           </SectionReveal>
+
         </div>
-      </section>
-    </>
+
+        {/* Corporate Trust Badges */}
+        <div className="border-t border-white/10 pt-12 text-center">
+          <p className="text-xs uppercase font-mono tracking-widest text-slate-400 mb-6">
+            Nexbaron Private Limited Quality Assurance Guarantee
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
+              <ShieldCheck className="w-5 h-5 text-teal-400 shrink-0" />
+              <div>
+                <div className="text-xs font-semibold text-white">ISO Compliant</div>
+                <div className="text-[10px] text-slate-400">Quality Management</div>
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
+              <Globe2 className="w-5 h-5 text-cyan-400 shrink-0" />
+              <div>
+                <div className="text-xs font-semibold text-white">100% Dedicated Funnels</div>
+                <div className="text-[10px] text-slate-400">Isolated Workflows</div>
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
+              <Sparkles className="w-5 h-5 text-amber-400 shrink-0" />
+              <div>
+                <div className="text-xs font-semibold text-white">Verified Production</div>
+                <div className="text-[10px] text-slate-400">Strict Quality Control</div>
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
+              <Building2 className="w-5 h-5 text-emerald-400 shrink-0" />
+              <div>
+                <div className="text-xs font-semibold text-white">SME & Enterprise</div>
+                <div className="text-[10px] text-slate-400">Scale on Demand</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   );
 }
