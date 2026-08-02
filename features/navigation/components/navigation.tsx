@@ -1,9 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+
+import { CorporateNavigation } from "./corporate-navigation";
 import { DigitalNavigation } from "./digital-navigation";
 import { PrintNavigation } from "./print-navigation";
-import { CorporateNavigation } from "./corporate-navigation";
 
 export function Navigation() {
   const pathname = usePathname();

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, ShieldCheck, Wrench, Layers, LineChart, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 
 interface ServiceTab {
@@ -33,7 +34,11 @@ const servicesData: ServiceTab[] = [
       "Structural Safety & Load-Bearing Clearance",
       "Hazardous Substance & OSHA Compliance Audits",
     ],
-    deliverables: ["Full Audit Documentation", "Regulatory Clearance Certificates", "Risk Mitigation Blueprint"],
+    deliverables: [
+      "Full Audit Documentation",
+      "Regulatory Clearance Certificates",
+      "Risk Mitigation Blueprint",
+    ],
     ctaLink: "/compliance",
   },
   {
@@ -50,7 +55,11 @@ const servicesData: ServiceTab[] = [
       "Seismic & Thermal Load Stress Simulation",
       "MEP (Mechanical, Electrical, Plumbing) System Architecture",
     ],
-    deliverables: ["3D BIM CAD Models", "Load Simulation Reports", "Stamped Engineering Blueprints"],
+    deliverables: [
+      "3D BIM CAD Models",
+      "Load Simulation Reports",
+      "Stamped Engineering Blueprints",
+    ],
     ctaLink: "/services#engineering",
   },
   {
@@ -84,15 +93,19 @@ const servicesData: ServiceTab[] = [
       "Green Energy Transition & Decarbonization Strategy",
       "Disaster Recovery & Redundancy Planning",
     ],
-    deliverables: ["Feasibility Study Dossier", "CAPEX/OPEX Optimization Roadmap", "Executive Briefing"],
+    deliverables: [
+      "Feasibility Study Dossier",
+      "CAPEX/OPEX Optimization Roadmap",
+      "Executive Briefing",
+    ],
     ctaLink: "/services#consulting",
   },
 ];
 
 export function ServicesMatrixSection() {
-  const [activeTab, setActiveTab] = useState<string>(servicesData[0].id);
+  const [activeTab, setActiveTab] = useState<string>(servicesData[0]!.id);
 
-  const currentService = servicesData.find((s) => s.id === activeTab) || servicesData[0];
+  const currentService = servicesData.find((s) => s.id === activeTab) || servicesData[0]!;
 
   return (
     <section className="py-24 relative overflow-hidden bg-black/30 backdrop-blur-md border-t border-white/10">
@@ -105,7 +118,8 @@ export function ServicesMatrixSection() {
             End-to-End Infrastructure Services
           </h2>
           <p className="text-slate-400 text-base">
-            Seamlessly integrating compliance, precision engineering, turnkey execution, and strategic advisory.
+            Seamlessly integrating compliance, precision engineering, turnkey execution, and
+            strategic advisory.
           </p>
         </div>
 
@@ -197,7 +211,10 @@ export function ServicesMatrixSection() {
               </h4>
               <ul className="space-y-4">
                 {currentService.deliverables.map((item, idx) => (
-                  <li key={idx} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                  <li
+                    key={idx}
+                    className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between"
+                  >
                     <span className="text-sm font-medium text-slate-200">{item}</span>
                     <span className="text-xs font-mono text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded border border-teal-500/20">
                       Verified

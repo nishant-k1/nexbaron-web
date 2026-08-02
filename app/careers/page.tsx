@@ -1,7 +1,8 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
+import Link from "next/link";
+
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -29,12 +30,9 @@ export default function CareersPage() {
       <section className="relative text-white py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
-            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
-              Careers
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">Careers</h1>
             <p className="text-xl text-white/90 max-w-3xl">
-              Join our team and be part of delivering excellence in
-              infrastructure solutions.
+              Join our team and be part of delivering excellence in infrastructure solutions.
             </p>
           </SectionReveal>
         </div>
@@ -49,10 +47,10 @@ export default function CareersPage() {
                 Why Join Nexbaron Services?
               </h2>
               <p className="text-lg text-body mb-8">
-                At Nexbaron Services Private Limited, we believe in fostering a
-                culture of excellence, innovation, and continuous learning. We
-                offer exciting career opportunities for professionals passionate
-                about infrastructure solutions, engineering, and compliance.
+                At Nexbaron Services Private Limited, we believe in fostering a culture of
+                excellence, innovation, and continuous learning. We offer exciting career
+                opportunities for professionals passionate about infrastructure solutions,
+                engineering, and compliance.
               </p>
 
               <h3 className="text-2xl font-heading font-normal text-heading mb-4">
@@ -71,15 +69,14 @@ export default function CareersPage() {
                 Open Positions
               </h3>
               <p className="text-body mb-6">
-                We are always looking for talented individuals to join our team.
-                If you don't see a position that matches your skills, we
-                encourage you to reach out to us.
+                We are always looking for talented individuals to join our team. If you don&apos;t
+                see a position that matches your skills, we encourage you to reach out to us.
               </p>
 
               <div className="bg-white/5 backdrop-blur-sm p-6 mb-8 border-0">
                 <p className="text-white/90 mb-4">
-                  Currently, we don't have any open positions listed. However,
-                  we welcome inquiries from qualified candidates.
+                  Currently, we don&apos;t have any open positions listed. However, we welcome
+                  inquiries from qualified candidates.
                 </p>
                 <Button asChild>
                   <Link href="/contact">Contact Us</Link>

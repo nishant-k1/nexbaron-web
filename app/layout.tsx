@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
 import dynamic from "next/dynamic";
+import { Inter, Montserrat } from "next/font/google";
+
 import "./globals.css";
-import { ThemeProvider } from "@/theme/theme-provider";
-import { Navigation } from "@/features/navigation/components/navigation";
 import { Footer } from "@/features/footer/components/footer";
+import { Navigation } from "@/features/navigation/components/navigation";
+import { ThemeProvider } from "@/theme/theme-provider";
 
 const GlobalMeshBackground = dynamic(
   () =>
     import("@/components/motion/global-mesh-background").then((mod) => ({
       default: mod.GlobalMeshBackground,
     })),
-  { ssr: false }
+  { ssr: false },
 );
 
 const inter = Inter({
@@ -20,7 +21,14 @@ const inter = Inter({
   display: "swap",
   weight: ["400", "500", "600", "700"],
   preload: false,
-  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+  fallback: [
+    "system-ui",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "sans-serif",
+  ],
   adjustFontFallback: true,
 });
 
@@ -30,45 +38,53 @@ const montserrat = Montserrat({
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
   preload: false,
-  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+  fallback: [
+    "system-ui",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "sans-serif",
+  ],
   adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
   title: {
-    default:
-      "Nexbaron Services Private Limited | Leading Infrastructure Solutions",
-    template: "%s | Nexbaron Services",
+    default: "Nexbaron Private Limited | Digital & Print Solutions",
+    template: "%s | Nexbaron",
   },
   description:
-    "Nexbaron Services Private Limited delivers world-class infrastructure solutions across multiple industries. Trusted partner for engineering excellence and compliance.",
+    "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital (business websites, local SEO, WhatsApp Business & AI automation) and Nexbaron Print (visiting cards, letterheads, bill books, stickers & labels, and commercial print).",
   keywords: [
-    "infrastructure",
-    "engineering",
-    "compliance",
-    "construction",
     "Nexbaron",
+    "Nexbaron Digital",
+    "Nexbaron Print",
+    "website design",
+    "local SEO",
+    "WhatsApp Business",
+    "visiting cards printing",
+    "letterhead printing",
+    "bill book printing",
+    "stickers & labels printing",
   ],
-  authors: [{ name: "Nexbaron Services Private Limited" }],
-  creator: "Nexbaron Services Private Limited",
-  publisher: "Nexbaron Services Private Limited",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"
-  ),
+  authors: [{ name: "Nexbaron Private Limited" }],
+  creator: "Nexbaron Private Limited",
+  publisher: "Nexbaron Private Limited",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"),
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: "/",
-    siteName: "Nexbaron Services",
-    title:
-      "Nexbaron Services Private Limited | Leading Infrastructure Solutions",
+    siteName: "Nexbaron",
+    title: "Nexbaron Private Limited | Digital & Print Solutions",
     description:
-      "World-class infrastructure solutions across multiple industries.",
+      "Nexbaron Digital grows your business online. Nexbaron Print manufactures premium physical marketing collateral. One enterprise, two autonomous divisions.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexbaron Services Private Limited",
-    description: "Leading Infrastructure Solutions",
+    title: "Nexbaron Private Limited",
+    description: "Digital & Print Solutions",
   },
   robots: {
     index: true,
@@ -95,33 +111,36 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Nexbaron Services Private Limited",
+  name: "Nexbaron Private Limited",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com",
-  logo: `${
-    process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"
-  }/logo.png`,
-  description: "Leading infrastructure solutions provider",
+  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/logo.png`,
+  description:
+    "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital and Nexbaron Print.",
   address: {
     "@type": "PostalAddress",
     addressCountry: "IN",
   },
+  subOrganization: [
+    {
+      "@type": "Organization",
+      name: "Nexbaron Digital",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/digital`,
+    },
+    {
+      "@type": "Organization",
+      name: "Nexbaron Print",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print`,
+    },
+  ],
   sameAs: [],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="dns-prefetch" href="https://cdn.pixabay.com" />
-        <link
-          rel="preconnect"
-          href="https://cdn.pixabay.com"
-          crossOrigin="anonymous"
-        />
+        <link rel="preconnect" href="https://cdn.pixabay.com" crossOrigin="anonymous" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Zap, Cpu, HardHat, Radio, ArrowUpRight, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface Sector {
   id: string;
@@ -69,7 +69,7 @@ const sectors: Sector[] = [
 ];
 
 export function IndustryShowcaseSection() {
-  const [activeSector, setActiveSector] = useState<string>(sectors[0].id);
+  const [activeSector, setActiveSector] = useState<string>(sectors[0]!.id);
 
   return (
     <section className="py-24 relative overflow-hidden bg-neutral-bg">
@@ -93,7 +93,8 @@ export function IndustryShowcaseSection() {
             </motion.div>
           </div>
           <p className="text-slate-400 max-w-md text-base leading-relaxed">
-            Delivering robust end-to-end infrastructure solutions tailored for complex industrial domains and rigorous regulatory environments.
+            Delivering robust end-to-end infrastructure solutions tailored for complex industrial
+            domains and rigorous regulatory environments.
           </p>
         </div>
 

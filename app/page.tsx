@@ -1,8 +1,18 @@
-import { Metadata } from "next";
+import {
+  Monitor,
+  Printer,
+  ArrowRight,
+  CheckCircle2,
+  ShieldCheck,
+  Sparkles,
+  Building2,
+  Globe2,
+} from "lucide-react";
+import { type Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
 import { SectionReveal } from "@/components/motion/section-reveal";
-import { Monitor, Printer, ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Building2, Globe2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Nexbaron Private Limited | Corporate Portal",
@@ -10,8 +20,7 @@ export const metadata: Metadata = {
     "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital (Web, Local SEO, AI Automation) and Nexbaron Print (Visiting Cards, Banners, Office Branding).",
   openGraph: {
     title: "Nexbaron Private Limited | Digital & Print Infrastructure",
-    description:
-      "Official corporate gateway for Nexbaron Digital and Nexbaron Print.",
+    description: "Official corporate gateway for Nexbaron Digital and Nexbaron Print.",
   },
 };
 
@@ -22,7 +31,6 @@ export default function CorporateGatewayPage() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-teal-500/10 via-slate-800/20 to-amber-500/10 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Top Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/10 backdrop-blur-md">
@@ -38,13 +46,13 @@ export default function CorporateGatewayPage() {
             </span>
           </h1>
           <p className="text-lg text-slate-300 leading-relaxed">
-            Select your destination below to access dedicated commercial services, pricing, and project consultation tailored to your exact business needs.
+            Select your destination below to access dedicated commercial services, pricing, and
+            project consultation tailored to your exact business needs.
           </p>
         </div>
 
         {/* Dual Division Split Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
-          
           {/* Nexbaron Digital Card */}
           <SectionReveal>
             <div className="group relative rounded-3xl p-8 sm:p-12 bg-slate-950/80 border border-teal-500/30 hover:border-teal-400/60 transition-all duration-300 backdrop-blur-2xl shadow-2xl hover:shadow-teal-500/10 flex flex-col justify-between h-full overflow-hidden">
@@ -67,7 +75,9 @@ export default function CorporateGatewayPage() {
                   Nexbaron Digital
                 </h2>
                 <p className="text-slate-300 text-sm leading-relaxed mb-8">
-                  The complete digital growth engine for small businesses, clinics, restaurants, law firms, CA practices, gyms, and local services. We build high-converting websites, rank #1 on Google Business Profiles, and automate customer leads via WhatsApp.
+                  The complete digital growth engine for small businesses, clinics, restaurants, law
+                  firms, CA practices, gyms, and local services. We build high-converting websites,
+                  rank #1 on Google Business Profiles, and automate customer leads via WhatsApp.
                 </p>
 
                 <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
@@ -121,31 +131,33 @@ export default function CorporateGatewayPage() {
                 </div>
 
                 <span className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-widest mb-2 block">
-                  Collaterals • Signage • Branding
+                  Cards • Stationery • Commercial Print
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
                   Nexbaron Print
                 </h2>
                 <p className="text-slate-300 text-sm leading-relaxed mb-8">
-                  Premium physical marketing collateral powerhouse. We manufacture high-end visiting cards, brochures, flyers, flex banners, vinyl graphics, acrylic signboards, and turnkey office exhibition branding.
+                  Premium commercial print specialist. We produce visiting cards, card holders,
+                  letterheads & envelopes, pamphlets & posters, bill books, tags, files, stickers &
+                  labels, and branded promotional merchandise.
                 </p>
 
                 <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>Premium Visiting Cards & Letterheads</span>
+                    <span>Premium Visiting Cards & Card Holders</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>Brochures, Pamphlets & Marketing Flyers</span>
+                    <span>Letterheads, Envelopes & Bill Books</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>Flex Banners, Vinyl Prints & Backlit Boards</span>
+                    <span>Pamphlets, Posters, Tags & Labels</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>Turnkey Office Signage & Exhibition Stalls</span>
+                    <span>Branded Pens, ATM Pouches & More</span>
                   </div>
                 </div>
               </div>
@@ -164,7 +176,6 @@ export default function CorporateGatewayPage() {
               </div>
             </div>
           </SectionReveal>
-
         </div>
 
         {/* Corporate Trust Badges */}
@@ -203,7 +214,6 @@ export default function CorporateGatewayPage() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

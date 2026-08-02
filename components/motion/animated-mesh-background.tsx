@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface AnimatedMeshBackgroundProps {
@@ -52,7 +53,7 @@ export function AnimatedMeshBackground({
 
     let width = 0;
     let height = 0;
-    let dpr = window.devicePixelRatio || 1;
+    const dpr = window.devicePixelRatio || 1;
     let isAnimating = false;
 
     const getSize = () => {
@@ -120,16 +121,18 @@ export function AnimatedMeshBackground({
 
       // Draw connections
       for (let i = 0; i < dots.length; i++) {
+        const dotA = dots[i]!;
         for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x;
-          const dy = dots[i].y - dots[j].y;
+          const dotB = dots[j]!;
+          const dx = dotA.x - dotB.x;
+          const dy = dotA.y - dotB.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < connectionDistance) {
             const opacity = Math.pow(1 - dist / connectionDistance, 2);
             const rgba = lineColor.match(/rgba?\(([^)]+)\)/);
             if (rgba) {
-              const values = rgba[1].split(",").map((v) => v.trim());
+              const values = (rgba[1] ?? "").split(",").map((v) => v.trim());
               const baseOpacity = parseFloat(values[3] || "1");
               ctx.strokeStyle = `rgba(${values[0]}, ${values[1]}, ${
                 values[2]
@@ -138,8 +141,8 @@ export function AnimatedMeshBackground({
               ctx.strokeStyle = lineColor;
             }
             ctx.beginPath();
-            ctx.moveTo(dots[i].x, dots[i].y);
-            ctx.lineTo(dots[j].x, dots[j].y);
+            ctx.moveTo(dotA.x, dotA.y);
+            ctx.lineTo(dotB.x, dotB.y);
             ctx.lineWidth = lineWidth;
             ctx.stroke();
           }

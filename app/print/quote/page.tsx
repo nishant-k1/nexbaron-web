@@ -1,29 +1,82 @@
 "use client";
 
-import { useState } from "react";
+import { Calculator, MessageSquare } from "lucide-react";
+import { useState, useEffect } from "react";
+
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
-import { Printer, Calculator, CheckCircle2, MessageSquare, ArrowRight, UploadCloud } from "lucide-react";
+import { buildWhatsAppLink } from "@/lib/divisions";
+
+const productOptions = [
+  { id: "visiting-cards", label: "Visiting Cards" },
+  { id: "card-holders", label: "Card Holders" },
+  { id: "pamphlets-posters", label: "Pamphlets & Posters" },
+  { id: "tags", label: "Tags" },
+  { id: "files", label: "Files" },
+  { id: "letter-heads", label: "Letter Heads" },
+  { id: "envelopes", label: "Envelopes" },
+  { id: "digital-paper-printing", label: "Digital Paper Printing" },
+  { id: "atm-pouches", label: "ATM Pouches" },
+  { id: "bill-books", label: "Bill Books" },
+  { id: "stickers-labels", label: "Stickers & Labels" },
+  { id: "pens", label: "Pens" },
+  { id: "shooting-targets", label: "Shooting Targets" },
+  { id: "sample-files", label: "Sample Files" },
+];
+
+const basePrices: Record<string, number> = {
+  "visiting-cards": 499,
+  "card-holders": 799,
+  "pamphlets-posters": 1499,
+  tags: 599,
+  files: 999,
+  "letter-heads": 899,
+  envelopes: 899,
+  "digital-paper-printing": 499,
+  "atm-pouches": 1199,
+  "bill-books": 1499,
+  "stickers-labels": 799,
+  pens: 1999,
+  "shooting-targets": 999,
+  "sample-files": 1499,
+};
+
+const stockOptions = [
+  { id: "standard", label: "Standard Stock" },
+  { id: "premium", label: "Premium Stock (+₹300)" },
+  { id: "luxury", label: "Luxury / Specialty (+₹500)" },
+];
+
+const finishOptions = [
+  { id: "none", label: "Standard" },
+  { id: "spot-uv", label: "Spot UV (+₹400)" },
+  { id: "gold-foil", label: "Gold Foil (+₹400)" },
+];
 
 export default function PrintQuotePage() {
   const [productType, setProductType] = useState<string>("visiting-cards");
   const [quantity, setQuantity] = useState<number>(500);
-  const [paperStock, setPaperStock] = useState<string>("350-matte");
+  const [paperStock, setPaperStock] = useState<string>("standard");
   const [finishing, setFinishing] = useState<string>("spot-uv");
 
-  // Estimation math
-  const getEstimatedPrice = () => {
-    let base = 500;
-    if (productType === "visiting-cards") base = 499;
-    if (productType === "brochures") base = 1499;
-    if (productType === "flex-banners") base = 999;
-    if (productType === "acrylic-signage") base = 3499;
+  useEffect(() => {
+    const param = new URLSearchParams(window.location.search).get("product");
+    if (param && basePrices[param]) {
+      setProductType(param);
+    }
+  }, []);
 
+  const productLabel = productOptions.find((p) => p.id === productType)?.label ?? productType;
+  const stockLabel = stockOptions.find((s) => s.id === paperStock)?.label ?? paperStock;
+  const finishLabel = finishOptions.find((f) => f.id === finishing)?.label ?? finishing;
+
+  const getEstimatedPrice = () => {
+    const base = basePrices[productType] ?? 500;
     const multiplier = quantity / 500;
-    const stockExtra = paperStock.includes("premium") ? 300 : 0;
+    const stockExtra = paperStock === "premium" ? 300 : paperStock === "luxury" ? 500 : 0;
     const finishExtra = finishing !== "none" ? 400 : 0;
 
-    return Math.round((base * multiplier) + stockExtra + finishExtra);
+    return Math.round(base * multiplier + stockExtra + finishExtra);
   };
 
   const estimatedPrice = getEstimatedPrice();
@@ -34,7 +87,6 @@ export default function PrintQuotePage() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-amber-500/10 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         <SectionReveal>
           <div className="max-w-3xl mx-auto text-center mb-12 space-y-4">
             <span className="text-xs uppercase font-mono tracking-widest text-amber-400 font-semibold px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 inline-block">
@@ -44,28 +96,22 @@ export default function PrintQuotePage() {
               Instant Print Custom Quote Builder
             </h1>
             <p className="text-slate-300 text-sm sm:text-base">
-              Select product parameters, stock options, and finishing specs to generate an estimated commercial quotation.
+              Select product, quantity, stock grade, and finishing options to generate an estimated
+              commercial quotation.
             </p>
           </div>
         </SectionReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          
           {/* Controls Column */}
           <div className="lg:col-span-7 rounded-3xl bg-white/[0.03] border border-white/10 p-8 backdrop-blur-xl space-y-8">
-            
             {/* Step 1: Product Selection */}
             <div>
               <label className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider block mb-3">
-                1. Select Product Category
+                1. Select Product
               </label>
               <div className="grid grid-cols-2 gap-3">
-                {[
-                  { id: "visiting-cards", label: "Visiting Cards" },
-                  { id: "brochures", label: "Brochures & Flyers" },
-                  { id: "flex-banners", label: "Flex Banners & Vinyl" },
-                  { id: "acrylic-signage", label: "Acrylic & Office Signage" },
-                ].map((item) => (
+                {productOptions.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setProductType(item.id)}
@@ -108,18 +154,13 @@ export default function PrintQuotePage() {
               </div>
             </div>
 
-            {/* Step 3: Paper / Material Stock */}
+            {/* Step 3: Stock / Material Grade */}
             <div>
               <label className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider block mb-3">
-                3. Paper Stock / Material Grade
+                3. Stock / Material Grade
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[
-                  { id: "350-matte", label: "350 GSM Matte Premium" },
-                  { id: "350-gloss", label: "350 GSM Gloss Finish" },
-                  { id: "premium-textured", label: "Textured Metallic Stock (+₹300)" },
-                  { id: "heavy-flex", label: "Star Flex Weatherproof (+₹300)" },
-                ].map((stock) => (
+                {stockOptions.map((stock) => (
                   <button
                     key={stock.id}
                     onClick={() => setPaperStock(stock.id)}
@@ -141,11 +182,7 @@ export default function PrintQuotePage() {
                 4. Finishing & Lamination
               </label>
               <div className="grid grid-cols-3 gap-3">
-                {[
-                  { id: "none", label: "Standard" },
-                  { id: "spot-uv", label: "Spot UV (+₹400)" },
-                  { id: "gold-foil", label: "Gold Foil (+₹400)" },
-                ].map((f) => (
+                {finishOptions.map((f) => (
                   <button
                     key={f.id}
                     onClick={() => setFinishing(f.id)}
@@ -160,7 +197,6 @@ export default function PrintQuotePage() {
                 ))}
               </div>
             </div>
-
           </div>
 
           {/* Estimate Display Column */}
@@ -178,25 +214,27 @@ export default function PrintQuotePage() {
 
               <div className="space-y-3 text-xs">
                 <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">Category:</span>
-                  <span className="text-white font-mono capitalize">{productType.replace("-", " ")}</span>
+                  <span className="text-slate-400">Product:</span>
+                  <span className="text-white font-mono">{productLabel}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-white/5">
                   <span className="text-slate-400">Quantity:</span>
                   <span className="text-amber-400 font-mono">{quantity} Units</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">Material Stock:</span>
-                  <span className="text-white font-mono">{paperStock}</span>
+                  <span className="text-slate-400">Stock Grade:</span>
+                  <span className="text-white font-mono">{stockLabel}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-white/5">
                   <span className="text-slate-400">Finishing:</span>
-                  <span className="text-white font-mono">{finishing}</span>
+                  <span className="text-white font-mono">{finishLabel}</span>
                 </div>
               </div>
 
               <div className="pt-4 text-center">
-                <span className="text-xs text-slate-400 block mb-1">Estimated Total (Excl. Tax)</span>
+                <span className="text-xs text-slate-400 block mb-1">
+                  Estimated Total (Excl. Tax)
+                </span>
                 <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-amber-500 font-mono">
                   ₹{estimatedPrice.toLocaleString()}
                 </div>
@@ -210,7 +248,10 @@ export default function PrintQuotePage() {
                 className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-amber-500/20"
               >
                 <a
-                  href={`https://wa.me/?text=Hi%20Nexbaron%20Print,%20I%20want%20to%20place%20an%20order%20for%20${quantity}%20units%20of%20${productType}%20estimated%20at%20₹${estimatedPrice}`}
+                  href={buildWhatsAppLink(
+                    "print",
+                    `Hi Nexbaron Print, I want to place an order for ${quantity} units of ${productLabel} (${stockLabel}, ${finishLabel}) estimated at ₹${estimatedPrice}`,
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2"
@@ -223,11 +264,8 @@ export default function PrintQuotePage() {
                 Express 24-hour turnaround available on confirmed orders.
               </p>
             </div>
-
           </div>
-
         </div>
-
       </div>
     </div>
   );

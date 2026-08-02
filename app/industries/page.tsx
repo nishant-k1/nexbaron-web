@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
+
 import { SectionReveal } from "@/components/motion/section-reveal";
 
 export const metadata: Metadata = {
@@ -7,8 +8,7 @@ export const metadata: Metadata = {
     "Nexbaron Services serves diverse industries including construction, manufacturing, energy, and infrastructure development.",
   openGraph: {
     title: "Industries | Nexbaron Services",
-    description:
-      "Serving diverse industries with specialized infrastructure solutions.",
+    description: "Serving diverse industries with specialized infrastructure solutions.",
   },
 };
 

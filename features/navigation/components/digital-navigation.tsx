@@ -1,18 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Menu, X, Monitor, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, Sparkles, Monitor, Smartphone, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
-const navItems = [
-  { href: "/digital", label: "Overview" },
-  { href: "/digital/services", label: "Digital Services" },
-  { href: "/digital/industries", label: "Industry Solutions" },
-  { href: "/digital/automation", label: "AI & WhatsApp CRM" },
-  { href: "/digital/contact", label: "Contact Digital Team" },
-];
+import { Button } from "@/components/ui/button";
+import { divisions, buildWhatsAppLink } from "@/lib/divisions";
+
+const navItems = divisions.digital.nav;
 
 export function DigitalNavigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +37,6 @@ export function DigitalNavigation() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
           {/* Logo & Division Switcher */}
           <div className="flex items-center gap-4">
             <Link href="/digital" className="flex items-center gap-2.5 group">
@@ -61,10 +56,10 @@ export function DigitalNavigation() {
             </Link>
 
             <Link
-              href="/print"
-              className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-amber-400 px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:border-amber-500/40 transition-all ml-3"
+              href={divisions.digital.otherDivision.href}
+              className="hidden lg:inline-flex text-[11px] font-mono text-slate-500 hover:text-amber-400 transition-colors ml-3"
             >
-              Switch to Print Division ↗
+              {divisions.digital.otherDivision.label}
             </Link>
           </div>
 
@@ -94,7 +89,10 @@ export function DigitalNavigation() {
               className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 rounded-lg shadow-md shadow-emerald-500/20"
             >
               <a
-                href="https://wa.me/?text=Hi%20Nexbaron%20Digital,%20I%20want%20to%20grow%20my%20business%20online"
+                href={buildWhatsAppLink(
+                  "digital",
+                  "Hi Nexbaron Digital, I want to grow my business online",
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5"
@@ -121,10 +119,10 @@ export function DigitalNavigation() {
             <div className="pb-3 border-b border-white/10 flex justify-between items-center">
               <span className="text-xs font-mono text-teal-400 uppercase">Nexbaron Digital</span>
               <Link
-                href="/print"
-                className="text-xs font-mono text-amber-400 underline"
+                href={divisions.digital.otherDivision.href}
+                className="text-xs font-mono text-slate-500 hover:text-amber-400 transition-colors"
               >
-                Switch to Print Division ↗
+                {divisions.digital.otherDivision.label}
               </Link>
             </div>
             <div className="space-y-3">
@@ -139,10 +137,7 @@ export function DigitalNavigation() {
               ))}
             </div>
             <div className="pt-4 border-t border-white/10">
-              <Button
-                asChild
-                className="w-full bg-teal-500 text-slate-950 font-bold"
-              >
+              <Button asChild className="w-full bg-teal-500 text-slate-950 font-bold">
                 <Link href="/digital/contact">Book Free Consultation</Link>
               </Button>
             </div>

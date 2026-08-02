@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
+
 import { SectionReveal } from "@/components/motion/section-reveal";
 
 export const metadata: Metadata = {
@@ -7,8 +8,7 @@ export const metadata: Metadata = {
     "Comprehensive infrastructure solutions including engineering, compliance, project management, and quality assurance services.",
   openGraph: {
     title: "Services | Nexbaron Services",
-    description:
-      "Comprehensive infrastructure solutions for your business needs.",
+    description: "Comprehensive infrastructure solutions for your business needs.",
   },
 };
 
@@ -52,12 +52,9 @@ export default function ServicesPage() {
       <section className="relative text-white py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
-            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
-              Our Services
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">Our Services</h1>
             <p className="text-xl text-white/90 max-w-3xl">
-              Comprehensive infrastructure solutions tailored to meet your
-              business needs.
+              Comprehensive infrastructure solutions tailored to meet your business needs.
             </p>
           </SectionReveal>
         </div>
@@ -68,7 +65,7 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
+              {services.map((service) => (
                 <div
                   key={service.title}
                   className="bg-white/5 backdrop-blur-sm p-6 shadow-surface hover:shadow-elevated transition-shadow border-0"

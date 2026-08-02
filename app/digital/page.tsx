@@ -1,16 +1,9 @@
-import { Metadata } from "next";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { SectionReveal } from "@/components/motion/section-reveal";
 import {
   Monitor,
   Search,
   MessageSquare,
   Zap,
-  CheckCircle2,
   ArrowRight,
-  TrendingUp,
-  ShieldCheck,
   Building,
   Utensils,
   Stethoscope,
@@ -18,6 +11,12 @@ import {
   Dumbbell,
   Briefcase,
 } from "lucide-react";
+import { type Metadata } from "next";
+import Link from "next/link";
+
+import { SectionReveal } from "@/components/motion/section-reveal";
+import { Button } from "@/components/ui/button";
+import { buildWhatsAppLink } from "@/lib/divisions";
 
 export const metadata: Metadata = {
   title: "Nexbaron Digital | Business Websites, Local SEO & AI WhatsApp Automation",
@@ -25,8 +24,7 @@ export const metadata: Metadata = {
     "Grow your business with Nexbaron Digital. High-converting websites, #1 Google Business Profile local SEO, WhatsApp CRM, AI Chatbots, and speed optimization for clinics, restaurants, law firms, and SMEs.",
   openGraph: {
     title: "Nexbaron Digital | Web, Local SEO & AI Automation",
-    description:
-      "Digital growth engine for SMEs and local service businesses.",
+    description: "Digital growth engine for SMEs and local service businesses.",
   },
 };
 
@@ -59,11 +57,27 @@ const digitalServices = [
 
 const targetIndustries = [
   { icon: Stethoscope, name: "Clinics & Doctors", detail: "Online appointments & local map rank" },
-  { icon: Utensils, name: "Restaurants & Cafes", detail: "Digital menu, table booking & Google reviews" },
-  { icon: Scale, name: "Law & CA Firms", detail: "High-trust professional website & client portal" },
-  { icon: Dumbbell, name: "Salons, Spas & Gyms", detail: "Membership booking & WhatsApp reminders" },
+  {
+    icon: Utensils,
+    name: "Restaurants & Cafes",
+    detail: "Digital menu, table booking & Google reviews",
+  },
+  {
+    icon: Scale,
+    name: "Law & CA Firms",
+    detail: "High-trust professional website & client portal",
+  },
+  {
+    icon: Dumbbell,
+    name: "Salons, Spas & Gyms",
+    detail: "Membership booking & WhatsApp reminders",
+  },
   { icon: Building, name: "Real Estate & Builders", detail: "Property landing pages & lead CRM" },
-  { icon: Briefcase, name: "Startups & SMEs", detail: "Turnkey digital footprint & launch package" },
+  {
+    icon: Briefcase,
+    name: "Startups & SMEs",
+    detail: "Turnkey digital footprint & launch package",
+  },
 ];
 
 export default function DigitalLandingPage() {
@@ -73,7 +87,6 @@ export default function DigitalLandingPage() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-teal-500/15 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Digital Hero */}
         <SectionReveal>
           <div className="max-w-4xl mx-auto text-center space-y-8 mb-20">
@@ -93,7 +106,8 @@ export default function DigitalLandingPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Transform your local business into a 24/7 lead machine. From high-speed custom websites and Google Business Profile optimization to instant WhatsApp AI chatbots.
+              Transform your local business into a 24/7 lead machine. From high-speed custom
+              websites and Google Business Profile optimization to instant WhatsApp AI chatbots.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
@@ -103,7 +117,10 @@ export default function DigitalLandingPage() {
                 className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 py-6 rounded-xl shadow-lg shadow-teal-500/20"
               >
                 <a
-                  href="https://wa.me/?text=Hi%20Nexbaron%20Digital,%20I%20want%20a%20free%20growth%20audit"
+                  href={buildWhatsAppLink(
+                    "digital",
+                    "Hi Nexbaron Digital, I want a free growth audit",
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
@@ -183,12 +200,13 @@ export default function DigitalLandingPage() {
                   <h3 className="text-xl font-heading font-semibold text-white mb-3">
                     {service.title}
                   </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed mb-6">
-                    {service.desc}
-                  </p>
+                  <p className="text-sm text-slate-300 leading-relaxed mb-6">{service.desc}</p>
 
                   <a
-                    href="https://wa.me/?text=Hi%20Nexbaron%20Digital"
+                    href={buildWhatsAppLink(
+                      "digital",
+                      "Hi Nexbaron Digital, I want to inquire about this service",
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-xs font-semibold text-teal-400 hover:text-teal-300"
@@ -224,12 +242,8 @@ export default function DigitalLandingPage() {
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-white mb-1">
-                      {ind.name}
-                    </h3>
-                    <p className="text-xs text-slate-400">
-                      {ind.detail}
-                    </p>
+                    <h3 className="text-base font-semibold text-white mb-1">{ind.name}</h3>
+                    <p className="text-xs text-slate-400">{ind.detail}</p>
                   </div>
                 </div>
               );
@@ -244,7 +258,8 @@ export default function DigitalLandingPage() {
               Ready to Outrank Competitors Online?
             </h2>
             <p className="text-sm text-slate-300">
-              Get a free video audit of your current Google ranking and website conversion speed within 2 hours.
+              Get a free video audit of your current Google ranking and website conversion speed
+              within 2 hours.
             </p>
             <Button
               asChild
@@ -252,7 +267,7 @@ export default function DigitalLandingPage() {
               className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8"
             >
               <a
-                href="https://wa.me/?text=Hi%20Nexbaron%20Digital,%20send%20me%20a%20free%20audit"
+                href={buildWhatsAppLink("digital", "Hi Nexbaron Digital, send me a free audit")}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -261,7 +276,6 @@ export default function DigitalLandingPage() {
             </Button>
           </div>
         </section>
-
       </div>
     </div>
   );

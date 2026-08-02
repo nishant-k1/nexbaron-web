@@ -1,6 +1,7 @@
-import { Metadata } from "next";
-import { SectionReveal } from "@/components/motion/section-reveal";
 import { Download } from "lucide-react";
+import { type Metadata } from "next";
+
+import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -51,9 +52,7 @@ export default function DownloadsPage() {
       <section className="relative text-white py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
-            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
-              Downloads
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">Downloads</h1>
             <p className="text-xl text-white/90 max-w-3xl">
               Access company documents, brochures, and tender-related materials.
             </p>
@@ -84,9 +83,7 @@ export default function DownloadsPage() {
                         <div className="flex items-center space-x-4">
                           <Download className="h-5 w-5 text-primary" />
                           <div>
-                            <p className="font-normal text-white">
-                              {item.name}
-                            </p>
+                            <p className="font-normal text-white">{item.name}</p>
                             <p className="text-sm text-white/80">
                               {item.size} • {item.format}
                             </p>

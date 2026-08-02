@@ -1,13 +1,14 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -22,9 +23,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const {
     register,
@@ -54,7 +53,7 @@ export function ContactForm() {
       } else {
         setSubmitStatus("error");
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -63,13 +62,11 @@ export function ContactForm() {
 
   return (
     <div className="bg-white/5 backdrop-blur-sm p-8 shadow-surface border-0">
-      <h2 className="text-2xl font-heading font-normal text-white mb-6">
-        Send us a Message
-      </h2>
+      <h2 className="text-2xl font-heading font-normal text-white mb-6">Send us a Message</h2>
 
       {submitStatus === "success" && (
         <div className="mb-6 p-4 bg-green-900/30 border border-green-700 text-green-100">
-          Thank you for your message. We'll get back to you soon.
+          Thank you for your message. We&apos;ll get back to you soon.
         </div>
       )}
 
@@ -92,11 +89,7 @@ export function ContactForm() {
               aria-describedby={errors.name ? "name-error" : undefined}
             />
             {errors.name && (
-              <p
-                id="name-error"
-                className="mt-1 text-sm text-red-600"
-                role="alert"
-              >
+              <p id="name-error" className="mt-1 text-sm text-red-600" role="alert">
                 {errors.name.message}
               </p>
             )}
@@ -114,11 +107,7 @@ export function ContactForm() {
               aria-describedby={errors.email ? "email-error" : undefined}
             />
             {errors.email && (
-              <p
-                id="email-error"
-                className="mt-1 text-sm text-red-600"
-                role="alert"
-              >
+              <p id="email-error" className="mt-1 text-sm text-red-600" role="alert">
                 {errors.email.message}
               </p>
             )}
@@ -148,11 +137,7 @@ export function ContactForm() {
             aria-describedby={errors.subject ? "subject-error" : undefined}
           />
           {errors.subject && (
-            <p
-              id="subject-error"
-              className="mt-1 text-sm text-red-600"
-              role="alert"
-            >
+            <p id="subject-error" className="mt-1 text-sm text-red-600" role="alert">
               {errors.subject.message}
             </p>
           )}
@@ -170,21 +155,13 @@ export function ContactForm() {
             aria-describedby={errors.message ? "message-error" : undefined}
           />
           {errors.message && (
-            <p
-              id="message-error"
-              className="mt-1 text-sm text-red-600"
-              role="alert"
-            >
+            <p id="message-error" className="mt-1 text-sm text-red-600" role="alert">
               {errors.message.message}
             </p>
           )}
         </div>
 
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full md:w-auto"
-        >
+        <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto">
           {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
       </form>

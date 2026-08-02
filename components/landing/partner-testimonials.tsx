@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, ChevronLeft, ChevronRight, Star, ShieldCheck, Building, CheckCircle } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight, Star, ShieldCheck } from "lucide-react";
+import { useState } from "react";
 
 interface Testimonial {
   id: string;
@@ -65,12 +65,11 @@ export function PartnerTestimonialsSection() {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const current = testimonials[currentIndex];
+  const current = testimonials[currentIndex]!;
 
   return (
     <section className="py-24 relative overflow-hidden bg-neutral-bg">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Compliance / Certification Badges Bar */}
         <div className="mb-20">
           <p className="text-center text-xs uppercase tracking-widest text-slate-400 mb-8 font-mono">
@@ -153,7 +152,6 @@ export function PartnerTestimonialsSection() {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

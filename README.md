@@ -17,11 +17,13 @@ Frontend application for Nexbaron Services Private Limited built with Next.js 14
 ## Getting Started
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Copy environment variables:
+
 ```bash
 cp .env.example .env
 ```
@@ -29,6 +31,7 @@ cp .env.example .env
 3. Update `.env` with your configuration.
 
 4. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -57,4 +60,3 @@ npm start
 ## Deployment
 
 The application is optimized for deployment on Vercel or any VPS with Node.js support.
-

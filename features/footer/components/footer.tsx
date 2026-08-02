@@ -1,9 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+
+import { CorporateFooter } from "./corporate-footer";
 import { DigitalFooter } from "./digital-footer";
 import { PrintFooter } from "./print-footer";
-import { CorporateFooter } from "./corporate-footer";
 
 export function Footer() {
   const pathname = usePathname();

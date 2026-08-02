@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
 import { Building2, ShieldCheck, Award, Globe2 } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
 
 interface MetricItem {
   id: string;
@@ -50,7 +50,15 @@ const metrics: MetricItem[] = [
   },
 ];
 
-function CounterNumber({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
+function CounterNumber({
+  value,
+  prefix = "",
+  suffix = "",
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+}) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
@@ -87,7 +95,7 @@ export function MetricsCounterSection() {
   return (
     <section className="py-20 relative overflow-hidden border-y border-white/10 bg-black/20 backdrop-blur-md">
       <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 via-blue-500/5 to-purple-500/5 pointer-events-none" />
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <motion.div
@@ -125,15 +133,15 @@ export function MetricsCounterSection() {
                 </div>
 
                 <div className="text-4xl md:text-5xl font-heading font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-teal-200 mb-2">
-                  <CounterNumber value={metric.value} prefix={metric.prefix} suffix={metric.suffix} />
+                  <CounterNumber
+                    value={metric.value}
+                    prefix={metric.prefix}
+                    suffix={metric.suffix}
+                  />
                 </div>
 
-                <h3 className="text-lg font-medium text-white mb-2">
-                  {metric.label}
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  {metric.description}
-                </p>
+                <h3 className="text-lg font-medium text-white mb-2">{metric.label}</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">{metric.description}</p>
               </motion.div>
             );
           })}

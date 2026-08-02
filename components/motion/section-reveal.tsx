@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface SectionRevealProps {
@@ -9,11 +10,7 @@ interface SectionRevealProps {
   delay?: number;
 }
 
-export function SectionReveal({
-  children,
-  className,
-  delay = 0,
-}: SectionRevealProps) {
+export function SectionReveal({ children, className, delay = 0 }: SectionRevealProps) {
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion) {

@@ -1,15 +1,16 @@
 "use client";
 
+import { Printer, Calculator } from "lucide-react";
 import Link from "next/link";
-import { Printer, Calculator, PhoneCall, Package } from "lucide-react";
 
 const printLinks = {
   products: [
-    { href: "/print/products/visiting-cards", label: "Visiting Cards & Stationeries" },
-    { href: "/print/products/collaterals", label: "Brochures, Flyers & Posters" },
-    { href: "/print/products/signage", label: "Flex Banners & Vinyl Prints" },
-    { href: "/print/products/office-branding", label: "Acrylic Boards & Office Branding" },
-    { href: "/print/products/exhibitions", label: "Exhibition Standees & Backdrops" },
+    { href: "/print/products/visiting-cards", label: "Visiting Cards" },
+    { href: "/print/products/card-holders", label: "Card Holders" },
+    { href: "/print/products/pamphlets-posters", label: "Pamphlets & Posters" },
+    { href: "/print/products/letter-heads", label: "Letterheads & Envelopes" },
+    { href: "/print/products/stickers-labels", label: "Stickers & Labels" },
+    { href: "/print/products/bill-books", label: "Bill Books" },
   ],
   services: [
     { href: "/print/quote", label: "Instant Custom Print Calculator" },
@@ -25,7 +26,6 @@ export function PrintFooter() {
     <footer className="relative text-slate-300 mt-auto border-t border-amber-500/20 bg-slate-950/90 backdrop-blur-xl">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          
           {/* Brand Column */}
           <div className="space-y-4">
             <Link href="/print" className="flex items-center gap-2">
@@ -37,7 +37,9 @@ export function PrintFooter() {
               </span>
             </Link>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Premium physical marketing collaterals, visiting cards, flex banners, vinyl prints, acrylic signages, and corporate office branding for commercial enterprises.
+              Premium physical marketing collaterals: visiting cards, card holders, pamphlets &
+              posters, tags, files, letterheads, envelopes, bill books, stickers & labels, branded
+              pens and more.
             </p>
             <div className="pt-2">
               <Link
@@ -58,7 +60,10 @@ export function PrintFooter() {
             <ul className="space-y-2.5">
               {printLinks.products.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-xs text-slate-400 hover:text-white transition-colors">
+                  <Link
+                    href={link.href}
+                    className="text-xs text-slate-400 hover:text-white transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -74,7 +79,10 @@ export function PrintFooter() {
             <ul className="space-y-2.5">
               {printLinks.services.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-xs text-slate-400 hover:text-white transition-colors">
+                  <Link
+                    href={link.href}
+                    className="text-xs text-slate-400 hover:text-white transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -88,8 +96,12 @@ export function PrintFooter() {
               Looking for Websites?
             </h4>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
-              <span className="text-xs font-medium text-white block">Need Digital Marketing & Web Apps?</span>
-              <p className="text-[11px] text-slate-400">Websites, Google Business Profile, WhatsApp CRM, and SEO.</p>
+              <span className="text-xs font-medium text-white block">
+                Need Digital Marketing & Web Apps?
+              </span>
+              <p className="text-[11px] text-slate-400">
+                Websites, Google Business Profile, WhatsApp CRM, and SEO.
+              </p>
               <Link
                 href="/digital"
                 className="inline-block text-xs font-mono text-teal-400 hover:underline pt-1"
@@ -98,15 +110,20 @@ export function PrintFooter() {
               </Link>
             </div>
           </div>
-
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-          <p>© {currentYear} Nexbaron Print Division (Nexbaron Private Limited). All rights reserved.</p>
+          <p>
+            © {currentYear} Nexbaron Print Division (Nexbaron Private Limited). All rights reserved.
+          </p>
           <div className="flex items-center gap-4 font-mono text-[11px]">
-            <Link href="/privacy" className="hover:text-slate-300">Privacy Policy</Link>
+            <Link href="/privacy" className="hover:text-slate-300">
+              Privacy Policy
+            </Link>
             <span>•</span>
-            <Link href="/terms" className="hover:text-slate-300">Terms of Service</Link>
+            <Link href="/terms" className="hover:text-slate-300">
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>

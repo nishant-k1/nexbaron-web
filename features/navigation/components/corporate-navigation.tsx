@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Menu, X, Building2, Monitor, Printer } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Shield, ArrowRight, Building2, Monitor, Printer } from "lucide-react";
+import { useState, useEffect } from "react";
+
 import { Button } from "@/components/ui/button";
 
 const navItems = [
@@ -41,7 +42,6 @@ export function CorporateNavigation() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
           {/* Corporate Brand Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-slate-700 via-teal-500 to-amber-500 p-0.5 shadow-lg group-hover:scale-105 transition-transform">
@@ -68,7 +68,9 @@ export function CorporateNavigation() {
                   key={item.href}
                   href={item.href}
                   className={`text-sm font-medium transition-colors hover:text-white ${
-                    isActive ? "text-white font-semibold underline decoration-teal-400 underline-offset-8" : "text-slate-300"
+                    isActive
+                      ? "text-white font-semibold underline decoration-teal-400 underline-offset-8"
+                      : "text-slate-300"
                   }`}
                 >
                   {item.label}
