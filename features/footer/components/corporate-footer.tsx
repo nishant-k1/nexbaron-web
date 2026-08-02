@@ -1,7 +1,9 @@
 "use client";
 
-import { Building2, Monitor, Printer } from "lucide-react";
+import { Monitor, Printer } from "lucide-react";
 import Link from "next/link";
+
+import { BrandMark } from "@/components/brand/brand-mark";
 
 import { SocialLinks } from "./social-links";
 
@@ -15,9 +17,7 @@ export function CorporateFooter() {
           {/* Company Info */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-slate-800 border border-white/10 text-white">
-                <Building2 className="w-5 h-5" />
-              </div>
+              <BrandMark />
               <span className="text-xl font-heading font-bold text-white tracking-tight">
                 Nexbaron <span className="text-xs text-slate-400 font-mono">PRIVATE LIMITED</span>
               </span>
@@ -117,21 +117,6 @@ export function CorporateFooter() {
               <li>
                 <Link href="/about" className="hover:text-white">
                   About Nexbaron Group
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers" className="hover:text-white">
-                  Careers & Hiring
-                </Link>
-              </li>
-              <li>
-                <Link href="/compliance" className="hover:text-white">
-                  Legal & Compliance
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white">
-                  Corporate Contact
                 </Link>
               </li>
             </ul>
