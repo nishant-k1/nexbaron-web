@@ -9,7 +9,7 @@ const digitalLinks = {
   services: [
     { href: "/digital/services#websites", label: "Business Websites & Landing Pages" },
     { href: "/digital/services#local-seo", label: "Google Business Profile & Local SEO" },
-    { href: "/digital/services#automation", label: "WhatsApp & AI Chatbots" },
+    { href: "/digital/automation", label: "AI Chatbots & WhatsApp CRM" },
     { href: "/digital/services#crm", label: "CRM & Lead Automation" },
     { href: "/digital/services#maintenance", label: "Hosting, Speed & Maintenance" },
   ],
@@ -132,6 +132,10 @@ export function DigitalFooter() {
             <span>•</span>
             <Link href="/terms" className="hover:text-slate-300">
               Terms of Service
+            </Link>
+            <span>•</span>
+            <Link href="/sitemap.xml" className="hover:text-slate-300">
+              Sitemap
             </Link>
           </div>
         </div>

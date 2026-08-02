@@ -124,6 +124,10 @@ export function PrintFooter() {
             <Link href="/terms" className="hover:text-slate-300">
               Terms of Service
             </Link>
+            <span>•</span>
+            <Link href="/sitemap.xml" className="hover:text-slate-300">
+              Sitemap
+            </Link>
           </div>
         </div>
       </div>

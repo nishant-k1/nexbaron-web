@@ -8,9 +8,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/", label: "Corporate Home" },
-  { href: "/digital", label: "Nexbaron Digital" },
-  { href: "/print", label: "Nexbaron Print" },
   { href: "/about", label: "About Group" },
   { href: "/contact", label: "Contact Us" },
 ];
@@ -79,8 +76,8 @@ export function CorporateNavigation() {
             })}
           </nav>
 
-          {/* Direct Division Switch Pill Group */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Direct Division Switch Pill Group (primary CTAs) */}
+          <div className="hidden md:flex items-center gap-3">
             <Link
               href="/digital"
               className="flex items-center gap-1.5 text-xs font-mono font-medium px-3.5 py-1.5 rounded-lg bg-teal-500/10 text-teal-300 border border-teal-500/30 hover:bg-teal-500/20 transition-all"
