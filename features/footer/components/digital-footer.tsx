@@ -62,9 +62,9 @@ export function DigitalFooter() {
 
           {/* Services */}
           <div>
-            <h4 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
+            <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
               Digital Solutions
-            </h4>
+            </h3>
             <ul className="space-y-2.5">
               {digitalLinks.services.map((link) => (
                 <li key={link.href}>
@@ -81,9 +81,9 @@ export function DigitalFooter() {
 
           {/* Industries */}
           <div>
-            <h4 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
+            <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
               Tailored Industries
-            </h4>
+            </h3>
             <ul className="space-y-2.5">
               {digitalLinks.industries.map((link) => (
                 <li key={link.href}>
@@ -100,9 +100,9 @@ export function DigitalFooter() {
 
           {/* Division Switch & Contact Info */}
           <div className="space-y-4">
-            <h4 className="text-xs uppercase font-mono font-semibold text-slate-400 tracking-wider">
+            <h3 className="text-xs uppercase font-mono font-semibold text-slate-400 tracking-wider">
               Other Services
-            </h4>
+            </h3>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
               <span className="text-xs font-medium text-white block">
                 Need Physical Marketing Materials?

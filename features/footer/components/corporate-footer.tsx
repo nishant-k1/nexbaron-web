@@ -29,10 +29,10 @@ export function CorporateFooter() {
 
           {/* Nexbaron Digital Division */}
           <div>
-            <h4 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4 flex items-center gap-1.5">
+            <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4 flex items-center gap-1.5">
               <Monitor className="w-4 h-4" />
               Nexbaron Digital
-            </h4>
+            </h3>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/digital/services" className="hover:text-white">
@@ -59,10 +59,10 @@ export function CorporateFooter() {
 
           {/* Nexbaron Print Division */}
           <div>
-            <h4 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4 flex items-center gap-1.5">
+            <h3 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4 flex items-center gap-1.5">
               <Printer className="w-4 h-4" />
               Nexbaron Print
-            </h4>
+            </h3>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/print/products/visiting-cards" className="hover:text-white">
@@ -94,9 +94,9 @@ export function CorporateFooter() {
 
           {/* Group Corporate */}
           <div>
-            <h4 className="text-xs uppercase font-mono font-semibold text-slate-300 tracking-wider mb-4">
+            <h3 className="text-xs uppercase font-mono font-semibold text-slate-300 tracking-wider mb-4">
               Corporate & Support
-            </h4>
+            </h3>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/about" className="hover:text-white">

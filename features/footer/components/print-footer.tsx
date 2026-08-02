@@ -54,9 +54,9 @@ export function PrintFooter() {
 
           {/* Print Products */}
           <div>
-            <h4 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4">
+            <h3 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4">
               Print Catalog
-            </h4>
+            </h3>
             <ul className="space-y-2.5">
               {printLinks.products.map((link) => (
                 <li key={link.href}>
@@ -73,9 +73,9 @@ export function PrintFooter() {
 
           {/* Specifications & Tools */}
           <div>
-            <h4 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4">
+            <h3 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4">
               Quote & Specifications
-            </h4>
+            </h3>
             <ul className="space-y-2.5">
               {printLinks.services.map((link) => (
                 <li key={link.href}>
@@ -92,9 +92,9 @@ export function PrintFooter() {
 
           {/* Division Switch */}
           <div className="space-y-4">
-            <h4 className="text-xs uppercase font-mono font-semibold text-slate-400 tracking-wider">
+            <h3 className="text-xs uppercase font-mono font-semibold text-slate-400 tracking-wider">
               Looking for Websites?
-            </h4>
+            </h3>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
               <span className="text-xs font-medium text-white block">
                 Need Digital Marketing & Web Apps?
