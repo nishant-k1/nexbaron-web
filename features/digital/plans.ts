@@ -130,7 +130,6 @@ export const plans: Plan[] = [
     addOns: [
       { id: "growth-ads", label: "Google Ads setup", price: 4999, type: "oneTime" },
       { id: "growth-city", label: "Extra city coverage", price: 3000, type: "monthly" },
-      { id: "growth-payment", label: "Payment link in chat", price: 2000, type: "oneTime" },
     ],
     ctaLabel: "Start With Growth",
   },
