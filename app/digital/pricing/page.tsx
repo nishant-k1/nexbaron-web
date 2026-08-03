@@ -1,10 +1,9 @@
-import { ArrowRight, CheckCircle2, Rocket, MapPin, TrendingUp } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { type Metadata } from "next";
-import Link from "next/link";
 
-import { SectionReveal } from "@/components/motion/section-reveal";
 import { PageHero } from "@/components/sections/page-hero";
-import { Button } from "@/components/ui/button";
+import { PlansGrid } from "@/features/digital/components/plans-grid";
+import { plans } from "@/features/digital/plans";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -18,105 +17,6 @@ export const metadata: Metadata = {
   },
   twitter: divisionTwitter("digital"),
 };
-
-interface Plan {
-  id: string;
-  name: string;
-  oneTime: string;
-  monthly: string;
-  monthlyName: string;
-  tagline: string;
-  forWho: string[];
-  timeline: string;
-  featured?: boolean;
-  features: string[];
-  addOns: string[];
-  icon: React.ElementType;
-  ctaLabel: string;
-}
-
-const plans: Plan[] = [
-  {
-    id: "launch",
-    name: "Launch",
-    oneTime: "₹24,999",
-    monthly: "₹1,499",
-    monthlyName: "Care",
-    tagline: "Get your business online, professionally.",
-    forWho: [
-      "New salons & cafes",
-      "Freelancers",
-      "Home-service businesses",
-      "Shops getting online for the first time",
-    ],
-    timeline: "Live in 7 days",
-    icon: Rocket,
-    features: [
-      "Professional business website (up to 4 pages)",
-      "Mobile-perfect design",
-      "Your logo, colors & business photos",
-      "\u201cWhatsApp us\u201d button on every page",
-      "Google Business Profile created & verified",
-      "Every enquiry emailed straight to you",
-    ],
-    addOns: ["Extra pages (₹999/page)", "Additional photos (₹499)", "Domain setup (₹999 one-time)"],
-    ctaLabel: "Start With Launch",
-  },
-  {
-    id: "growth",
-    name: "Growth",
-    oneTime: "₹39,999",
-    monthly: "₹3,999",
-    monthlyName: "Growth Care",
-    tagline: "Generate more calls, WhatsApp enquiries, and Google leads every month.",
-    forWho: [
-      "Restaurants & cafes",
-      "Clinics & doctors",
-      "Salons, spas & gyms",
-      "Law & CA firms",
-      "Local businesses relying on Google searches",
-    ],
-    timeline: "Live in 7–10 days · ranking builds over 60–90 days",
-    featured: true,
-    icon: MapPin,
-    features: [
-      "Everything in Launch",
-      "Google Business Profile optimization",
-      "Review system — we ask after every sale",
-      "Rank for \u201cnear me\u201d searches in your city",
-      "WhatsApp booking & no-show reminders",
-      "24/7 automatic answers (hours, address, prices)",
-      "Plain-English monthly ranking report",
-    ],
-    addOns: ["Google Ads setup (separate)", "Extra city coverage", "Payment link in chat"],
-    ctaLabel: "Start With Growth",
-  },
-  {
-    id: "scale",
-    name: "Scale",
-    oneTime: "₹59,999",
-    monthly: "₹7,999",
-    monthlyName: "Business Partner",
-    tagline: "Your outsourced digital growth team.",
-    forWho: [
-      "Multi-location businesses",
-      "Growing practices that have outgrown DIY",
-      "Owners who want it handled, not managed",
-    ],
-    timeline: "First 30 days: foundation + audit + plan",
-    icon: TrendingUp,
-    features: [
-      "Everything in Growth",
-      "Dedicated growth manager",
-      "Monthly strategy session & growth plan",
-      "Unlimited content & page updates",
-      "Quarterly competitor review",
-      "Campaign & offer pages (seasonal, launches)",
-    ],
-    addOns: ["Same-day priority support", "Multi-location campaigns", "Advanced reporting"],
-    ctaLabel: "Start With Scale",
-  },
-];
 
 const comparisonRows = [
   { feature: "Professional website", launch: true, growth: true, scale: true },
@@ -165,114 +65,7 @@ export default function DigitalServicesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-            {plans.map((plan) => {
-              const Icon = plan.icon;
-              return (
-                <SectionReveal key={plan.id}>
-                  <div
-                    id={plan.id}
-                    className={`h-full flex flex-col p-8 rounded-2xl backdrop-blur-md border transition-all duration-300 scroll-mt-28 ${
-                      plan.featured
-                        ? "bg-teal-500/10 border-teal-500/40 shadow-2xl shadow-teal-500/10"
-                        : "bg-white/[0.03] border-white/10 hover:border-teal-500/40 hover:bg-white/[0.06]"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      {plan.featured && (
-                        <span className="text-[10px] font-mono text-slate-950 px-2.5 py-1 rounded bg-teal-400 font-semibold">
-                          Most Popular
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-xl font-heading font-semibold text-white mb-1">
-                      {plan.name}
-                    </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed mb-4">{plan.tagline}</p>
-
-                    <div className="mb-4">
-                      <span className="text-3xl font-heading font-extrabold text-white">
-                        {plan.oneTime}
-                      </span>
-                      <span className="text-xs text-slate-400 ml-1">one-time</span>
-                      <div className="text-sm text-slate-300 mt-1">
-                        + {plan.monthly}
-                        <span className="text-xs text-slate-400">/month · {plan.monthlyName}</span>
-                      </div>
-                    </div>
-
-                    <div className="mb-4">
-                      <span className="text-[10px] font-mono text-teal-400 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20 inline-block">
-                        {plan.timeline}
-                      </span>
-                    </div>
-
-                    <div className="mb-6">
-                      <span className="text-[10px] uppercase tracking-wider font-mono font-semibold text-slate-500">
-                        Best for
-                      </span>
-                      <ul className="mt-2 space-y-1.5">
-                        {plan.forWho.map((item) => (
-                          <li key={item} className="text-xs text-slate-400 leading-relaxed">
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <ul className="space-y-2.5 mb-6 pt-4 border-t border-white/10">
-                      {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2.5">
-                          <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-                          <span className="text-xs text-slate-300">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="mb-6">
-                      <span className="text-[10px] uppercase tracking-wider font-mono font-semibold text-slate-500">
-                        Add-ons
-                      </span>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {plan.addOns.map((addOn) => (
-                          <span
-                            key={addOn}
-                            className="text-[10px] font-mono text-slate-400 px-2.5 py-1 rounded bg-white/5 border border-white/10"
-                          >
-                            {addOn}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mt-auto pt-4">
-                      <Button
-                        asChild
-                        size="lg"
-                        className={`w-full font-bold px-8 rounded-xl shadow-lg ${
-                          plan.featured
-                            ? "bg-teal-500 hover:bg-teal-400 text-slate-950 shadow-teal-500/20"
-                            : "bg-teal-500/10 border border-teal-500/30 text-teal-300 hover:bg-teal-500/20"
-                        }`}
-                      >
-                        <Link
-                          href={`/digital/contact?plan=${plan.id}`}
-                          className="inline-flex items-center justify-center gap-2"
-                        >
-                          {plan.ctaLabel}
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </SectionReveal>
-              );
-            })}
-          </div>
+          <PlansGrid />
         </section>
 
         {/* Comparison Table */}
