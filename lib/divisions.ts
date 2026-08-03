@@ -41,6 +41,7 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
     whatsappNumber: DIGITAL_WHATSAPP,
     nav: [
       { href: "/digital/solutions", label: "Solutions" },
+      { href: "/digital/who-we-help", label: "Who We Help" },
       { href: "/digital/process", label: "Our Process" },
       { href: "/digital/pricing", label: "Pricing" },
     ],
