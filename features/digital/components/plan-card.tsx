@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, Minus, Plus, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,13 @@ interface PlanCardProps {
   oneTimeTotal: number;
   monthlyTotal: number;
   serviceSelection: Record<string, boolean>;
+  addOnSelection: Record<string, boolean>;
+  addOnCounts: Record<string, number>;
   inherited: InheritedView | null;
   inheritedOn: boolean;
   onToggleService: (id: string) => void;
+  onToggleAddOn: (id: string) => void;
+  onSetAddOnCount: (id: string, count: number) => void;
   onToggleInherited: () => void;
 }
 
@@ -23,9 +27,13 @@ export function PlanCard({
   oneTimeTotal,
   monthlyTotal,
   serviceSelection,
+  addOnSelection,
+  addOnCounts,
   inherited,
   inheritedOn,
   onToggleService,
+  onToggleAddOn,
+  onSetAddOnCount,
   onToggleInherited,
 }: PlanCardProps) {
   const Icon = plan.icon;
@@ -33,8 +41,10 @@ export function PlanCard({
   const inheritedActive = inherited !== null && inheritedOn && inherited.anySelected;
 
   const selectedCount =
-    Object.values(serviceSelection).filter(Boolean).length + (inheritedActive ? 1 : 0);
-  const totalCount = plan.services.length + (inherited ? 1 : 0);
+    Object.values(serviceSelection).filter(Boolean).length +
+    (inheritedActive ? 1 : 0) +
+    Object.values(addOnSelection).filter(Boolean).length;
+  const totalCount = plan.services.length + (inherited ? 1 : 0) + plan.addOns.length;
 
   return (
     <div
@@ -74,19 +84,6 @@ export function PlanCard({
         <span className="text-[10px] font-mono text-teal-400 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20 inline-block">
           {plan.timeline}
         </span>
-      </div>
-
-      <div className="mb-6">
-        <span className="text-[10px] uppercase tracking-wider font-mono font-semibold text-slate-500">
-          Best for
-        </span>
-        <ul className="mt-2 space-y-1.5">
-          {plan.forWho.map((item) => (
-            <li key={item} className="text-xs text-slate-400 leading-relaxed">
-              {item}
-            </li>
-          ))}
-        </ul>
       </div>
 
       {(inherited || plan.services.length > 0) && (
@@ -199,6 +196,121 @@ export function PlanCard({
               );
             })}
           </div>
+
+          {plan.addOns.length > 0 && (
+            <div className="pt-4">
+              <span className="text-[10px] uppercase tracking-wider font-mono font-semibold text-slate-500 block mb-2">
+                Add-on options
+              </span>
+              <div className="space-y-2">
+                {plan.addOns.map((addOn) => {
+                  const isSelected = addOnSelection[addOn.id] ?? false;
+                  const count = addOnCounts[addOn.id] ?? 0;
+
+                  if (addOn.unitLabel) {
+                    return (
+                      <div
+                        key={addOn.id}
+                        className={`flex items-center gap-3 py-2 px-3 rounded-xl border transition-all duration-200 ${
+                          isSelected
+                            ? "bg-amber-500/10 border-amber-500/30"
+                            : "bg-white/[0.02] border-white/10"
+                        }`}
+                      >
+                        <span className="flex-1 min-w-0">
+                          <span className="block text-xs text-slate-200">{addOn.label}</span>
+                          <span className="text-[10px] font-mono text-amber-400/80">
+                            {isSelected
+                              ? `+${formatINR(addOn.price * count)}`
+                              : `+${formatINR(addOn.price)}`}{" "}
+                            <span className="text-slate-500">
+                              {addOn.type === "oneTime" ? "one-time" : "/month"} ·{" "}
+                              {formatINR(addOn.price)} {addOn.unitLabel}
+                            </span>
+                          </span>
+                        </span>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => onSetAddOnCount(addOn.id, count - 1)}
+                            disabled={count === 0}
+                            aria-label={`Remove ${addOn.label}`}
+                            className="w-7 h-7 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <input
+                            type="number"
+                            min={0}
+                            value={count}
+                            onChange={(e) =>
+                              onSetAddOnCount(
+                                addOn.id,
+                                Math.max(0, Math.floor(Number(e.target.value) || 0)),
+                              )
+                            }
+                            aria-label={`Number of ${addOn.label}`}
+                            className="w-12 h-7 text-center text-sm font-mono bg-white/[0.03] border border-white/10 rounded-lg text-white focus:outline-none focus:border-amber-500/40 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => onSetAddOnCount(addOn.id, count + 1)}
+                            aria-label={`Add ${addOn.label}`}
+                            className="w-7 h-7 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08] hover:text-white flex items-center justify-center transition-colors"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <button
+                      key={addOn.id}
+                      type="button"
+                      role="switch"
+                      aria-checked={isSelected}
+                      onClick={() => onToggleAddOn(addOn.id)}
+                      className={`w-full flex items-center gap-3 text-left py-2 px-3 rounded-xl border transition-all duration-200 ${
+                        isSelected
+                          ? "bg-amber-500/10 border-amber-500/30"
+                          : "bg-white/[0.02] border-white/10 opacity-70 hover:opacity-100"
+                      }`}
+                    >
+                      <span className="flex-1 min-w-0">
+                        <span
+                          className={`block text-xs ${
+                            isSelected ? "text-slate-200" : "text-slate-400"
+                          }`}
+                        >
+                          {addOn.label}
+                        </span>
+                        <span className="text-[10px] font-mono text-amber-400/80">
+                          +{formatINR(addOn.price)}{" "}
+                          <span className="text-slate-500">
+                            {addOn.type === "oneTime" ? "one-time" : "/month"}
+                          </span>
+                        </span>
+                      </span>
+                      <span
+                        className={`relative shrink-0 w-10 h-6 rounded-full transition-colors duration-200 ${
+                          isSelected ? "bg-amber-500" : "bg-white/10 border border-white/10"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <span
+                          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${
+                            isSelected ? "translate-x-4" : ""
+                          }`}
+                        />
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
 

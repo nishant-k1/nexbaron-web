@@ -7,6 +7,7 @@ export interface PlanService {
   label: string;
   price: number;
   type: BillingType;
+  unitLabel?: string;
 }
 
 export interface InheritedService {
@@ -22,13 +23,12 @@ export interface Plan {
   monthly: number;
   monthlyName: string;
   tagline: string;
-  forWho: string[];
   timeline: string;
   featured?: boolean;
   inherited?: InheritedService;
   icon: React.ElementType;
   services: PlanService[];
-  addOns: string[];
+  addOns: PlanService[];
   ctaLabel: string;
 }
 
@@ -40,12 +40,6 @@ export const plans: Plan[] = [
     monthly: 1499,
     monthlyName: "Care",
     tagline: "Get your business online, professionally.",
-    forWho: [
-      "New salons & cafes",
-      "Freelancers",
-      "Home-service businesses",
-      "Shops getting online for the first time",
-    ],
     timeline: "Live in 7 days",
     icon: Rocket,
     services: [
@@ -76,7 +70,17 @@ export const plans: Plan[] = [
         type: "monthly",
       },
     ],
-    addOns: ["Extra pages (₹999/page)", "Additional photos (₹499)", "Domain setup (₹999 one-time)"],
+    addOns: [
+      {
+        id: "launch-extra-pages",
+        label: "Extra pages",
+        price: 999,
+        type: "oneTime",
+        unitLabel: "per page",
+      },
+      { id: "launch-photos", label: "Additional photos", price: 499, type: "oneTime" },
+      { id: "launch-domain", label: "Domain setup", price: 999, type: "oneTime" },
+    ],
     ctaLabel: "Start With Launch",
   },
   {
@@ -86,13 +90,6 @@ export const plans: Plan[] = [
     monthly: 3999,
     monthlyName: "Growth Care",
     tagline: "Generate more calls, WhatsApp enquiries, and Google leads every month.",
-    forWho: [
-      "Restaurants & cafes",
-      "Clinics & doctors",
-      "Salons, spas & gyms",
-      "Law & CA firms",
-      "Local businesses relying on Google searches",
-    ],
     timeline: "Live in 7–10 days · ranking builds over 60–90 days",
     featured: true,
     inherited: { label: "Everything in Launch", oneTime: 24999, monthly: 1499 },
@@ -130,7 +127,11 @@ export const plans: Plan[] = [
       },
       { id: "report", label: "Plain-English monthly ranking report", price: 499, type: "monthly" },
     ],
-    addOns: ["Google Ads setup (separate)", "Extra city coverage", "Payment link in chat"],
+    addOns: [
+      { id: "growth-ads", label: "Google Ads setup", price: 4999, type: "oneTime" },
+      { id: "growth-city", label: "Extra city coverage", price: 3000, type: "monthly" },
+      { id: "growth-payment", label: "Payment link in chat", price: 2000, type: "oneTime" },
+    ],
     ctaLabel: "Start With Growth",
   },
   {
@@ -140,11 +141,6 @@ export const plans: Plan[] = [
     monthly: 7999,
     monthlyName: "Business Partner",
     tagline: "Your outsourced digital growth team.",
-    forWho: [
-      "Multi-location businesses",
-      "Growing practices that have outgrown DIY",
-      "Owners who want it handled, not managed",
-    ],
     timeline: "First 30 days: foundation + audit + plan",
     inherited: { label: "Everything in Growth", oneTime: 39999, monthly: 3999 },
     icon: TrendingUp,
@@ -175,7 +171,11 @@ export const plans: Plan[] = [
         type: "oneTime",
       },
     ],
-    addOns: ["Same-day priority support", "Multi-location campaigns", "Advanced reporting"],
+    addOns: [
+      { id: "scale-support", label: "Same-day priority support", price: 5000, type: "monthly" },
+      { id: "scale-multi", label: "Multi-location campaigns", price: 8000, type: "oneTime" },
+      { id: "scale-reporting", label: "Advanced reporting", price: 4000, type: "monthly" },
+    ],
     ctaLabel: "Start With Scale",
   },
 ];
