@@ -1,5 +1,6 @@
 import { CreditCard, ImagePlus, MessageSquare, ShieldCheck, Upload } from "lucide-react";
 import { type Metadata } from "next";
+import { redirect } from "next/navigation";
 
 import { PageHero } from "@/components/sections/page-hero";
 import { OnboardingWizard } from "@/features/onboarding/components/onboarding-wizard";
@@ -42,6 +43,10 @@ export default function DigitalOnboardingPage({
   searchParams: { plan?: string };
 }) {
   const initialPlan = searchParams.plan;
+
+  if (!initialPlan || !["launch", "growth", "scale"].includes(initialPlan)) {
+    redirect("/digital/pricing");
+  }
 
   return (
     <div className="relative overflow-hidden">
@@ -124,7 +129,7 @@ export default function DigitalOnboardingPage({
           <div className="lg:col-span-8">
             <div id="onboarding" className="scroll-mt-28">
               <OnboardingWizard initialPlan={initialPlan} />
-            </div>
+            </div>{" "}
           </div>
         </div>
       </div>

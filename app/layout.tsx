@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
+import { AuthProvider } from "@/features/auth/auth-context";
 import { Footer } from "@/features/footer/components/footer";
 import { Navigation } from "@/features/navigation/components/navigation";
 import { ThemeProvider } from "@/theme/theme-provider";
@@ -150,15 +151,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.variable} ${montserrat.variable} font-body`}>
         <ThemeProvider>
-          <GlobalMeshBackground />
-          <a href="#main-content" className="skip-to-content">
-            Skip to main content
-          </a>
-          <Navigation />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <AuthProvider>
+            <GlobalMeshBackground />
+            <a href="#main-content" className="skip-to-content">
+              Skip to main content
+            </a>
+            <Navigation />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -6,11 +6,14 @@ import {
   ArrowRight,
   CheckCircle2,
   CreditCard,
+  Lock,
   MessageSquare,
+  RefreshCcw,
   Rocket,
   Upload,
 } from "lucide-react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -18,7 +21,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/features/auth/auth-context";
+import { AuthGate } from "@/features/auth/components/auth-gate";
+import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
+import { loadPlanSelection } from "@/features/digital/lib/plan-selection";
+import {
+  computePrepared,
+  createDefaultSelection,
+  selectionFromSaved,
+  type PlanSelection,
+} from "@/features/digital/plan-summary";
+import { formatINR, plans } from "@/features/digital/plans";
 import { buildWhatsAppLink } from "@/lib/divisions";
+import {
+  getDraft,
+  resetPlanDraft,
+  saveDraft,
+  selectionToDraftState,
+  type DraftFields,
+} from "@/lib/draft";
 
 type PlanId = "launch" | "growth" | "scale";
 
@@ -61,6 +82,7 @@ const wizardSchema = z.object({
   businessName: z.string().min(2, "Please enter your business name"),
   ownerName: z.string().min(2, "Please enter your name"),
   phone: z.string().min(7, "Enter a valid WhatsApp number"),
+  email: z.string().email("Enter a valid email").optional().or(z.literal("")),
   city: z.string().min(2, "Please enter your city"),
   services: z.string().min(5, "Tell us what you offer (minimum 5 characters)"),
   hours: z.string().optional(),
@@ -89,26 +111,268 @@ const paymentMethods = [
 ] as const;
 
 export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
+  const router = useRouter();
+  const { user, initialized } = useAuth();
   const [step, setStep] = useState(0);
   const [logoFiles, setLogoFiles] = useState<string[]>([]);
   const [photoFiles, setPhotoFiles] = useState<string[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<string>("UPI");
   const [confirmed, setConfirmed] = useState(false);
+  const [locked, setLocked] = useState(true);
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+  const [showAuthGate, setShowAuthGate] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const [loadedDraft, setLoadedDraft] = useState(false);
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const getPlan = (id: string) => plans.find((p) => p.id === id) ?? plans[0]!;
+  const planId = (initialPlan || "launch") as string;
+
+  const [selections, setSelections] = useState<Record<string, PlanSelection>>(() => {
+    const loaded = loadPlanSelection();
+    return Object.fromEntries(
+      plans.map((plan) => [plan.id, selectionFromSaved(plan, loaded?.plans[plan.id])]),
+    );
+  });
+
+  const getSelection = (id: string): PlanSelection =>
+    selections[id] ?? createDefaultSelection(getPlan(id));
+
+  const toggleService = (id: string, serviceId: string) => {
+    setSelections((prev) => {
+      const current = prev[id] ?? createDefaultSelection(getPlan(id));
+      const next = new Set(current.selected);
+      if (next.has(serviceId)) {
+        next.delete(serviceId);
+      } else {
+        next.add(serviceId);
+      }
+      return { ...prev, [id]: { ...current, selected: next } };
+    });
+  };
+
+  const toggleAddOn = (id: string, addOnId: string) => {
+    setSelections((prev) => {
+      const current = prev[id] ?? createDefaultSelection(getPlan(id));
+      const next = new Set(current.addOns);
+      if (next.has(addOnId)) {
+        next.delete(addOnId);
+      } else {
+        next.add(addOnId);
+      }
+      return { ...prev, [id]: { ...current, addOns: next } };
+    });
+  };
+
+  const setAddOnCount = (id: string, addOnId: string, count: number) => {
+    setSelections((prev) => {
+      const current = prev[id] ?? createDefaultSelection(getPlan(id));
+      const next = new Set(current.addOns);
+      const nextCounts = { ...current.addOnCounts };
+      if (count > 0) {
+        next.add(addOnId);
+        nextCounts[addOnId] = count;
+      } else {
+        next.delete(addOnId);
+        delete nextCounts[addOnId];
+      }
+      return { ...prev, [id]: { ...current, addOns: next, addOnCounts: nextCounts } };
+    });
+  };
+
+  const toggleInherited = (id: string) => {
+    setSelections((prev) => {
+      const current = prev[id] ?? createDefaultSelection(getPlan(id));
+      return { ...prev, [id]: { ...current, inheritedOn: !current.inheritedOn } };
+    });
+  };
 
   const {
     register,
     handleSubmit,
     trigger,
     getValues,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<WizardValues>({
     resolver: zodResolver(wizardSchema),
     defaultValues: { plan: initialPlan || "" },
   });
 
-  const selectedPlan = (watch("plan") || initialPlan || "") as PlanId;
-  const plan = planOptions[selectedPlan] ?? planOptions.growth;
+  const prepared = useMemo(
+    () => computePrepared(plans, (id) => getSelection(id)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selections],
+  );
+
+  const chosen = prepared.find((p) => p.plan.id === planId) ?? prepared[0]!;
+
+  // Load the server draft for a signed-in user and prefill the form + selections.
+  useEffect(() => {
+    if (!initialized || !user || loadedDraft) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const draft = await getDraft("digital");
+        if (cancelled) return;
+        setLoadedDraft(true);
+        if (draft) {
+          setSelections((prev) => ({
+            ...prev,
+            ...Object.fromEntries(
+              plans.map((plan) => [plan.id, selectionFromSaved(plan, draft.plans?.[plan.id])]),
+            ),
+          }));
+          reset({
+            plan: draft.planId || initialPlan || "",
+            businessName: draft.fields?.businessName || "",
+            ownerName: draft.fields?.ownerName || user.name || "",
+            phone: draft.fields?.phone || user.phone || "",
+            email: draft.fields?.email || user.email || "",
+            city: draft.fields?.city || "",
+            services: draft.fields?.services || "",
+            hours: draft.fields?.hours || "",
+            address: draft.fields?.address || "",
+            visitorAction: draft.fields?.visitorAction || "",
+            notes: draft.fields?.notes || "",
+          });
+          setStep(draft.step || 0);
+        } else {
+          // First-time signed-in user: prefill from the account.
+          reset({
+            plan: initialPlan || "",
+            ownerName: user.name || "",
+            phone: user.phone || "",
+            email: user.email || "",
+          });
+        }
+      } catch {
+        // fall back to account prefill
+        setLoadedDraft(true);
+        reset({
+          plan: initialPlan || "",
+          ownerName: user.name || "",
+          phone: user.phone || "",
+          email: user.email || "",
+        });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [initialized, user, loadedDraft, initialPlan, reset]);
+
+  // Debounced: persist the draft + form fields to the server as the user edits.
+  useEffect(() => {
+    if (!initialized || !user || !loadedDraft || confirmed) return;
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(async () => {
+      setSaving(true);
+      const values = getValues();
+      const fields: DraftFields = {
+        businessName: values.businessName,
+        ownerName: values.ownerName,
+        phone: values.phone,
+        email: values.email,
+        city: values.city,
+        services: values.services,
+        hours: values.hours,
+        address: values.address,
+        visitorAction: values.visitorAction,
+        notes: values.notes,
+      };
+      try {
+        await saveDraft(
+          {
+            planId,
+            plans: Object.fromEntries(
+              plans.map((plan) => [plan.id, selectionToDraftState(getSelection(plan.id))]),
+            ),
+            fields,
+            step,
+          },
+          "digital",
+        );
+        setSavedAt(new Date());
+      } catch {
+        // silent — retried on next change
+      } finally {
+        setSaving(false);
+      }
+    }, 800);
+    return () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selections, step, initialized, user, loadedDraft, confirmed, getValues]);
+
+  const unlockEditing = () => {
+    setLocked(false);
+    setShowUpdateDialog(false);
+  };
+
+  const startFresh = async () => {
+    setShowUpdateDialog(false);
+    try {
+      await resetPlanDraft("digital");
+      // Keep the entered business details; reset the plan + selections locally.
+      setSelections(() =>
+        Object.fromEntries(plans.map((plan) => [plan.id, createDefaultSelection(plan)])),
+      );
+      setLocked(true);
+      router.push("/digital/pricing");
+    } catch {
+      router.push("/digital/pricing");
+    }
+  };
+
+  if (initialized && !user) {
+    return (
+      <div className="rounded-3xl bg-white/[0.03] border border-white/10 p-8 md:p-12 backdrop-blur-xl text-center">
+        <div className="mx-auto w-16 h-16 rounded-full bg-teal-500/10 border border-teal-500/30 flex items-center justify-center mb-6">
+          <Lock className="w-8 h-8 text-teal-400" />
+        </div>
+        <h2 className="text-2xl font-heading font-bold text-white mb-3">Sign in to continue</h2>
+        <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+          You need an account to save your progress and complete your{" "}
+          {planOptions[planId as PlanId]?.name ?? "chosen"} plan. Login or create one in a few
+          seconds.
+        </p>
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <Button
+            size="lg"
+            className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-xl"
+            onClick={() => setShowAuthGate(true)}
+          >
+            Sign in or create account
+          </Button>
+        </div>
+        <AuthGate
+          open={showAuthGate}
+          onClose={() => setShowAuthGate(false)}
+          onSuccess={() => setShowAuthGate(false)}
+        />
+      </div>
+    );
+  }
+  const summary = {
+    plan: chosen.plan,
+    oneTimeTotal: chosen.oneTimeTotal,
+    monthlyTotal: chosen.monthlyTotal,
+    services: chosen.plan.services.filter((s) => chosen.serviceSelection[s.id]),
+    addOns: chosen.plan.addOns
+      .filter((s) => chosen.addOnSelection[s.id])
+      .map((s) => ({ ...s, count: chosen.addOnCounts[s.id] ?? 1 })),
+    inheritedActive: chosen.inherited?.active ?? false,
+    inheritedLabel: chosen.inherited?.anySelected ? chosen.inherited.label : null,
+    inheritedPrice: {
+      oneTime: chosen.inherited?.oneTime ?? 0,
+      monthly: chosen.inherited?.monthly ?? 0,
+    },
+  };
+
+  const plan = planOptions[planId as PlanId] ?? planOptions.growth;
 
   const stepFields: (keyof WizardValues)[][] = [
     [
@@ -116,6 +380,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
       "businessName",
       "ownerName",
       "phone",
+      "email",
       "city",
       "services",
       "hours",
@@ -146,15 +411,26 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
 
   const onSubmit = () => {
     const values = getValues();
+    const included = [
+      ...(summary.inheritedActive && summary.inheritedLabel
+        ? [`— ${summary.inheritedLabel} included`]
+        : []),
+      ...summary.services.map((s) => `— ${s.label}`),
+      ...summary.addOns.map((a) => `— ${a.label} (${a.count}×)`),
+    ];
     const message = [
       "New order — Nexbaron Digital",
       "",
-      `Plan: ${plan.name} (${plan.oneTime} one-time + ${plan.monthly}/mo · ${plan.monthlyName})`,
+      `Plan: ${plan.name} (${formatINR(summary.oneTimeTotal)} one-time + ${formatINR(
+        summary.monthlyTotal,
+      )}/mo · ${plan.monthlyName})`,
       `Business: ${values.businessName}`,
       `Owner: ${values.ownerName}`,
       `WhatsApp: ${values.phone}`,
+      values.email ? `Email: ${values.email}` : null,
       `City: ${values.city}`,
       `Services: ${values.services}`,
+      included.length > 0 ? `Selected services:\n${included.join("\n")}` : null,
       values.hours ? `Hours: ${values.hours}` : null,
       values.address ? `Address: ${values.address}` : null,
       `Visitors should: ${values.visitorAction}`,
@@ -241,6 +517,21 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             style={{ width: `${((step + 1) / stepNames.length) * 100}%` }}
           />
         </div>
+        {savedAt && (
+          <div className="mt-2 flex items-center gap-1.5 text-[10px] font-mono text-slate-500">
+            {saving ? (
+              <>
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                Saving your progress…
+              </>
+            ) : (
+              <>
+                <span className="w-2 h-2 rounded-full bg-teal-400" />
+                Saved {savedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="p-8">
@@ -259,37 +550,88 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               <Label htmlFor="plan">
                 Your Plan <span className="text-red-500">*</span>
               </Label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2">
-                {(Object.keys(planOptions) as PlanId[]).map((id) => {
-                  const option = planOptions[id];
-                  const active = selectedPlan === id;
-                  return (
-                    <label
-                      key={id}
-                      className={`cursor-pointer rounded-2xl border p-4 transition-all ${
-                        active
-                          ? "border-teal-500/60 bg-teal-500/10"
-                          : "border-white/10 bg-white/[0.02] hover:border-teal-500/40"
-                      }`}
-                    >
-                      <input type="radio" value={id} className="sr-only" {...register("plan")} />
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-heading font-bold text-white">
-                          {option.name}
-                        </span>
-                        {option.featured && (
-                          <span className="text-[9px] font-mono text-slate-950 px-1.5 py-0.5 rounded bg-teal-400 font-semibold">
-                            Popular
-                          </span>
-                        )}
+              <input type="hidden" value={initialPlan} {...register("plan")} />
+              <div className="mt-2">
+                <div
+                  className={`rounded-2xl border p-6 ${
+                    plan.featured
+                      ? "border-teal-500/40 bg-teal-500/10"
+                      : "border-white/10 bg-white/[0.02]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-sm font-heading font-bold text-white">
+                      {summary.plan.name}
+                    </span>
+                    {plan.featured && (
+                      <span className="text-[9px] font-mono text-slate-950 px-1.5 py-0.5 rounded bg-teal-400 font-semibold">
+                        Popular
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xl font-heading font-extrabold text-white">
+                    {formatINR(summary.oneTimeTotal)}
+                    <span className="text-xs text-slate-400 ml-1 font-normal">one-time</span>
+                  </div>
+                  <div className="text-sm text-slate-300 mt-0.5">
+                    + {formatINR(summary.monthlyTotal)}
+                    <span className="text-xs text-slate-400">/month · {plan.monthlyName}</span>
+                  </div>
+                  <div className="text-[10px] font-mono text-teal-400 mt-2">{plan.timeline}</div>
+                </div>
+
+                {summary.inheritedActive && summary.inheritedLabel && (
+                  <div className="mt-3 p-4 rounded-xl border border-teal-500/20 bg-teal-500/5">
+                    <div className="text-xs font-semibold text-teal-200">
+                      {summary.inheritedLabel} included
+                    </div>
+                    <div className="text-[10px] font-mono text-teal-500/80 mt-0.5">
+                      {formatINR(summary.inheritedPrice.oneTime)} one-time ·{" "}
+                      {formatINR(summary.inheritedPrice.monthly)}/month
+                    </div>
+                  </div>
+                )}
+
+                <div className="mt-4">
+                  {locked && (
+                    <div className="mb-3 p-4 rounded-xl border border-amber-500/30 bg-amber-500/10">
+                      <div className="flex items-start gap-3">
+                        <Lock className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <p className="text-xs font-semibold text-amber-200">
+                            Your plan & services are locked
+                          </p>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Your chosen package is saved. Use this only if you want to change what
+                            it includes.
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setShowUpdateDialog(true)}
+                          className="shrink-0 rounded-lg border-amber-500/40 text-amber-300 hover:bg-amber-500/10 hover:text-amber-200"
+                        >
+                          Update Your Plan
+                        </Button>
                       </div>
-                      <div className="text-xs text-slate-300">
-                        {option.oneTime}
-                        <span className="text-slate-500"> + {option.monthly}/mo</span>
-                      </div>
-                    </label>
-                  );
-                })}
+                    </div>
+                  )}
+                  <PlanServicesEditor
+                    plan={summary.plan}
+                    serviceSelection={chosen.serviceSelection}
+                    addOnSelection={chosen.addOnSelection}
+                    addOnCounts={chosen.addOnCounts}
+                    inherited={chosen.inherited}
+                    inheritedOn={getSelection(summary.plan.id).inheritedOn}
+                    disabled={locked}
+                    onToggleService={(id) => toggleService(summary.plan.id, id)}
+                    onToggleAddOn={(id) => toggleAddOn(summary.plan.id, id)}
+                    onSetAddOnCount={(id, count) => setAddOnCount(summary.plan.id, id, count)}
+                    onToggleInherited={() => toggleInherited(summary.plan.id)}
+                  />
+                </div>
               </div>
               {errors.plan && (
                 <p className="mt-1 text-sm text-red-400" role="alert">
@@ -348,6 +690,22 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                 {errors.phone && (
                   <p className="mt-1 text-sm text-red-400" role="alert">
                     {errors.phone.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="email">Email (optional)</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@business.com"
+                  className="mt-2 rounded-lg"
+                  aria-invalid={errors.email ? "true" : "false"}
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-400" role="alert">
+                    {errors.email.message}
                   </p>
                 )}
               </div>
@@ -537,17 +895,19 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               <div className="flex flex-wrap items-end justify-between gap-4 mt-4">
                 <div>
                   <div className="text-3xl font-heading font-extrabold text-white">
-                    {plan.oneTime}
+                    {formatINR(summary.oneTimeTotal)}
                     <span className="text-xs text-slate-400 ml-1 font-normal">one-time</span>
                   </div>
                   <div className="text-sm text-slate-300 mt-1">
-                    + {plan.monthly}
+                    + {formatINR(summary.monthlyTotal)}
                     <span className="text-xs text-slate-400">/month · {plan.monthlyName}</span>
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-xs text-slate-400">Pay now</div>
-                  <div className="text-xl font-heading font-bold text-teal-300">{plan.oneTime}</div>
+                  <div className="text-xl font-heading font-bold text-teal-300">
+                    {formatINR(summary.oneTimeTotal)}
+                  </div>
                   <div className="text-[11px] text-slate-400">Monthly care billed from month 2</div>
                 </div>
               </div>
@@ -627,6 +987,60 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
           )}
         </div>
       </form>
+
+      {showUpdateDialog && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Update your plan"
+        >
+          <button
+            className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+            onClick={() => setShowUpdateDialog(false)}
+            aria-label="Close"
+          />
+          <div className="relative w-full max-w-md rounded-3xl bg-slate-900 border border-teal-500/30 shadow-2xl shadow-teal-500/10 p-8">
+            <h3 className="text-lg font-heading font-bold text-white mb-2">Update Your Plan</h3>
+            <p className="text-sm text-slate-400 leading-relaxed mb-6">
+              Your current package and selections are saved. How would you like to proceed?
+            </p>
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={unlockEditing}
+                className="w-full text-left rounded-2xl border border-teal-500/40 bg-teal-500/10 p-4 hover:bg-teal-500/15 transition-colors"
+              >
+                <div className="text-sm font-semibold text-teal-200 flex items-center gap-2">
+                  <RefreshCcw className="w-4 h-4" /> Continue editing my plan
+                </div>
+                <div className="text-[11px] text-slate-400 mt-1">
+                  Unlock the services & add-ons below to adjust them, then keep your progress.
+                </div>
+              </button>
+              <button
+                type="button"
+                onClick={startFresh}
+                className="w-full text-left rounded-2xl border border-white/10 bg-white/[0.02] p-4 hover:bg-white/5 transition-colors"
+              >
+                <div className="text-sm font-semibold text-slate-200 flex items-center gap-2">
+                  <ArrowLeft className="w-4 h-4" /> Start from scratch
+                </div>
+                <div className="text-[11px] text-slate-400 mt-1">
+                  Go back to the pricing page and pick a different package. Your business details
+                  are kept.
+                </div>
+              </button>
+            </div>
+            <button
+              onClick={() => setShowUpdateDialog(false)}
+              className="mt-5 w-full text-center text-xs text-slate-500 hover:text-slate-300"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

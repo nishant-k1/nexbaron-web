@@ -1,0 +1,387 @@
+"use client";
+
+import { Loader2, Mail, MessageSquare, Phone, User, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { apiRequest, type AuthUser } from "@/lib/api";
+
+type Channel = "email" | "phone" | null;
+
+interface AuthGateProps {
+  open: boolean;
+  onClose: () => void;
+  onSuccess: (result: { token: string; user: AuthUser }) => void;
+}
+
+enum Step {
+  Method,
+  Contact,
+}
+
+export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
+  const [step, setStep] = useState<Step>(Step.Method);
+  const [channel, setChannel] = useState<Channel>(null);
+  const [name, setName] = useState("");
+  const [target, setTarget] = useState("");
+  const [code, setCode] = useState("");
+  const [sentCode, setSentCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [countdown, setCountdown] = useState(0);
+  const targetRef = useRef<HTMLInputElement>(null);
+
+  const reset = () => {
+    setStep(Step.Method);
+    setChannel(null);
+    setName("");
+    setTarget("");
+    setCode("");
+    setSentCode(null);
+    setError(null);
+  };
+
+  useEffect(() => {
+    if (open) reset();
+  }, [open]);
+
+  useEffect(() => {
+    if (step === Step.Contact) {
+      targetRef.current?.focus();
+    }
+  }, [step]);
+
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
+  if (!open) return null;
+
+  const isEmail = channel === "email";
+
+  const requestOtp = async () => {
+    if (!target.trim()) {
+      setError(isEmail ? "Please enter your email." : "Please enter your WhatsApp number.");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await apiRequest<{ success: boolean; devCode?: string; message?: string }>(
+        "/api/digital/auth/request-otp",
+        {
+          method: "POST",
+          body: JSON.stringify({ channel, target, name, division: "digital" }),
+        },
+      );
+      setSentCode(data.devCode ?? null);
+      setCountdown(30);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not send the code.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const confirmCode = async () => {
+    if (!code.trim()) {
+      setError("Please enter the verification code.");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await apiRequest<{
+        success: boolean;
+        token: string;
+        user: AuthUser;
+      }>("/api/digital/auth/verify", {
+        method: "POST",
+        body: JSON.stringify({ channel, target, code, name, division: "digital" }),
+      });
+      onSuccess({ token: data.token, user: data.user });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not verify the code.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    if (!clientId) {
+      setError("Google sign-in isn't configured. Use email or phone for now.");
+      return;
+    }
+    setError(null);
+    setLoading(true);
+
+    const win = window as unknown as { google?: { accounts?: { id?: unknown } } };
+    const decodeJwt = (token: string) => {
+      const part = token.split(".")[1];
+      const base64 = (part ?? "").replace(/-/g, "+").replace(/_/g, "/");
+      return JSON.parse(window.atob(base64));
+    };
+
+    if (!win.google?.accounts?.id) {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.onload = () => renderGoogleButton(clientId, decodeJwt);
+      document.head.appendChild(script);
+    } else {
+      renderGoogleButton(clientId, decodeJwt);
+    }
+  };
+
+  const renderGoogleButton = (
+    clientId: string,
+    decodeJwt: (t: string) => { name?: string; email: string; sub: string; picture?: string },
+  ) => {
+    const w = window as unknown as {
+      google: {
+        accounts: {
+          id: {
+            initialize: (config: {
+              client_id: string;
+              callback: (response: { credential: string }) => void;
+            }) => void;
+            prompt: (
+              listener: (notification: {
+                isNotDisplayed: () => boolean;
+                isSkippedMoment: () => boolean;
+              }) => void,
+            ) => void;
+            disableAutoSelect: () => void;
+          };
+        };
+      };
+    };
+    w.google.accounts.id.initialize({
+      client_id: clientId,
+      callback: (response: { credential: string }) =>
+        handleGoogleCredential(response.credential, decodeJwt),
+    });
+    w.google.accounts.id.disableAutoSelect();
+    w.google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        setLoading(false);
+        setError("Google didn't open a sign-in window. Try again, or use email or phone.");
+      }
+    });
+  };
+
+  const handleGoogleCredential = async (
+    credential: string,
+    decodeJwt: (t: string) => { name?: string; email: string; sub: string; picture?: string },
+  ) => {
+    const payload = decodeJwt(credential);
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await apiRequest<{ success: boolean; token: string; user: AuthUser }>(
+        "/api/digital/auth/google",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            name: payload.name,
+            email: payload.email,
+            googleId: payload.sub,
+            photo: payload.picture,
+            division: "digital",
+          }),
+        },
+      );
+      onSuccess({ token: data.token, user: data.user });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not sign in with Google.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Sign in or create an account"
+    >
+      <button
+        className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+        onClick={onClose}
+        aria-label="Close sign-in"
+      />
+      <div className="relative w-full max-w-md rounded-3xl bg-slate-900 border border-teal-500/30 shadow-2xl shadow-teal-500/10 p-8">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors"
+          aria-label="Close"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        <div className="flex items-center gap-3 mb-5">
+          <div className="p-2.5 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+            <User className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 className="text-lg font-heading font-bold text-white">
+              {step === Step.Method ? "Continue to onboarding" : "Verify it's you"}
+            </h2>
+            <p className="text-[11px] text-slate-400">
+              {step === Step.Method
+                ? "Create an account or sign in to save your plan."
+                : `We saved your package — let's verify your ${isEmail ? "email" : "phone"}.`}
+            </p>
+          </div>
+        </div>
+
+        {error && (
+          <div className="mb-4 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-300">
+            {error}
+          </div>
+        )}
+
+        {step === Step.Method && (
+          <div className="space-y-3">
+            <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-1">
+              Sign in with
+            </div>
+            <Button
+              variant="outline"
+              className="w-full justify-start gap-3 h-12 rounded-xl border-white/15 hover:bg-white/5"
+              onClick={() => handleGoogleSignIn()}
+            >
+              <span className="w-5 h-5 grid place-items-center">
+                <span className="text-base leading-none font-bold">G</span>
+              </span>
+              Continue with Google
+            </Button>
+
+            <div className="flex items-center gap-3 my-2">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-[10px] font-mono text-slate-500">OR</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+
+            <Button
+              className="w-full justify-start gap-3 h-12 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold"
+              onClick={() => {
+                setChannel("email");
+                setStep(Step.Contact);
+              }}
+            >
+              <Mail className="w-4 h-4" /> Continue with Email
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full justify-start gap-3 h-12 rounded-xl border-white/15 hover:border-teal-500/40"
+              onClick={() => {
+                setChannel("phone");
+                setStep(Step.Contact);
+              }}
+            >
+              <Phone className="w-4 h-4 text-teal-400" /> Continue with Phone
+            </Button>
+            <p className="text-center text-[10px] text-slate-500 pt-1">
+              We&apos;ll send a one-time passcode to verify &mdash; no password needed.
+            </p>
+          </div>
+        )}
+
+        {step === Step.Contact && (
+          <div className="space-y-4">
+            <div>
+              <label className="text-xs font-medium text-slate-300 block mb-1.5">
+                Your Name
+                <span className="text-slate-500 font-normal"> (can edit later)</span>
+              </label>
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Full name"
+                className="rounded-xl"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-medium text-slate-300 block mb-1.5">
+                {isEmail ? "Email address" : "WhatsApp number"}
+              </label>
+              <Input
+                ref={targetRef}
+                value={target}
+                onChange={(e) => setTarget(e.target.value)}
+                placeholder={isEmail ? "you@business.com" : "10-digit mobile number"}
+                type={isEmail ? "email" : "tel"}
+                className="rounded-xl"
+                onKeyDown={(e) => e.key === "Enter" && requestOtp()}
+              />
+            </div>
+
+            {sentCode !== null && (
+              <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-xs text-teal-200 flex gap-2">
+                <MessageSquare className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>
+                  Dev mode code: <span className="font-mono font-bold">{sentCode}</span> — in
+                  production this is sent automatically.
+                </span>
+              </div>
+            )}
+
+            {sentCode === null ? (
+              <Button
+                onClick={requestOtp}
+                disabled={loading}
+                className="w-full h-12 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold"
+              >
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Send verification code"}
+                {!loading && <MessageSquare className="w-4 h-4 ml-2" />}
+              </Button>
+            ) : (
+              <div className="space-y-3">
+                <label className="text-xs font-medium text-slate-300 block mb-1.5">
+                  Verification code
+                </label>
+                <Input
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="000000"
+                  inputMode="numeric"
+                  className="rounded-xl text-center font-mono tracking-widest"
+                  onKeyDown={(e) => e.key === "Enter" && confirmCode()}
+                />
+                <Button
+                  onClick={confirmCode}
+                  disabled={loading}
+                  className="w-full h-12 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold"
+                >
+                  {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify & continue"}
+                </Button>
+                <div className="flex items-center justify-between">
+                  <button
+                    onClick={() => setSentCode(null)}
+                    className="text-xs text-teal-400 hover:text-teal-300 disabled:opacity-40"
+                    disabled={countdown > 0}
+                  >
+                    {countdown > 0 ? `Resend in ${countdown}s` : "Resend code"}
+                  </button>
+                  <button
+                    onClick={() => setStep(Step.Method)}
+                    className="text-xs text-slate-400 hover:text-white"
+                  >
+                    Change method
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
