@@ -202,7 +202,7 @@ const careItems = [
   {
     icon: RefreshCw,
     title: "Updates",
-    description: "WordPress, plugins, and themes kept up to date automatically.",
+    description: "Your platform, code, and features kept up to date automatically.",
   },
   {
     icon: Eye,

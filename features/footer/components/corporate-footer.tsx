@@ -71,7 +71,7 @@ export function CorporateFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/digital/pricing#faq" className="hover:text-white">
+                <Link href="/digital/faq" className="hover:text-white">
                   Questions & Answers
                 </Link>
               </li>

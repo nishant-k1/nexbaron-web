@@ -40,9 +40,9 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
     tagline: "Plans • Websites • WhatsApp Growth",
     whatsappNumber: DIGITAL_WHATSAPP,
     nav: [
-      { href: "/digital/pricing", label: "Pricing" },
       { href: "/digital/process", label: "Our Process" },
-      { href: "/digital/results", label: "Results" },
+      { href: "/digital/pricing", label: "Pricing" },
+      { href: "/digital/solutions", label: "Solutions" },
     ],
     otherDivision: { href: "/print", label: "print ↗" },
     social: {

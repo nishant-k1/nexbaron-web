@@ -293,14 +293,14 @@ const carePlans = [
     price: "₹1,499",
     note: "per month",
     description: "Keep your digital presence online, updated, and backed up.",
-    href: "/digital/pricing#care-plans",
+    href: "/digital/pricing",
   },
   {
     name: "Growth Care",
     price: "₹3,999",
     note: "per month",
     description: "Digital presence care plus Google visibility and review management.",
-    href: "/digital/pricing#care-plans",
+    href: "/digital/pricing",
     featured: true,
   },
   {
@@ -308,7 +308,7 @@ const carePlans = [
     price: "₹7,999",
     note: "per month",
     description: "Enquiries handled, bookings automated, a dedicated contact.",
-    href: "/digital/pricing#care-plans",
+    href: "/digital/pricing",
   },
 ];
 
