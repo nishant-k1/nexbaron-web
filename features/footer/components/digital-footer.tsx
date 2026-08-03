@@ -8,19 +8,17 @@ import { buildWhatsAppLink } from "@/lib/divisions";
 import { SocialLinks } from "./social-links";
 
 const digitalLinks = {
-  services: [
-    { href: "/digital/services#websites", label: "Business Websites & Landing Pages" },
-    { href: "/digital/services#local-seo", label: "Google Business Profile & Local SEO" },
-    { href: "/digital/automation", label: "AI Chatbots & WhatsApp CRM" },
-    { href: "/digital/services#crm", label: "CRM & Lead Automation" },
-    { href: "/digital/services#maintenance", label: "Hosting, Speed & Maintenance" },
+  plans: [
+    { href: "/digital/pricing#plans", label: "Launch" },
+    { href: "/digital/pricing#plans", label: "Growth" },
+    { href: "/digital/pricing#plans", label: "Scale" },
   ],
   industries: [
-    { href: "/digital/industries#clinics", label: "Clinics & Healthcare" },
-    { href: "/digital/industries#restaurants", label: "Restaurants & Cafes" },
-    { href: "/digital/industries#real-estate", label: "Real Estate & Construction" },
-    { href: "/digital/industries#law-ca", label: "Law & CA Firms" },
-    { href: "/digital/industries#salons-gyms", label: "Salons, Spas & Gyms" },
+    { href: "/digital/who-we-help#clinics", label: "Clinics & Healthcare" },
+    { href: "/digital/who-we-help#restaurants", label: "Restaurants & Cafes" },
+    { href: "/digital/who-we-help#real-estate", label: "Real Estate & Construction" },
+    { href: "/digital/who-we-help#law-ca", label: "Law & CA Firms" },
+    { href: "/digital/who-we-help#salons-gyms", label: "Salons, Spas & Gyms" },
   ],
 };
 
@@ -42,9 +40,8 @@ export function DigitalFooter() {
               </span>
             </Link>
             <p className="text-xs text-slate-400 leading-relaxed">
-              The complete digital growth engine for small businesses, clinics, restaurants, law
-              firms, and growth startups. High-converting websites, WhatsApp CRM, and #1 local SEO
-              ranking.
+              Fixed-price growth plans for local businesses. No jargon, no lock-in, no vanishing
+              after launch.
             </p>
             <div className="pt-2 flex items-center gap-3">
               <a
@@ -57,7 +54,7 @@ export function DigitalFooter() {
                 className="text-xs font-mono font-medium px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all flex items-center gap-1.5"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                Live WhatsApp Support
+                Message Us on WhatsApp
               </a>
             </div>
             <div className="pt-2">
@@ -65,14 +62,14 @@ export function DigitalFooter() {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Popular Plans */}
           <div>
             <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
-              Digital Solutions
+              Popular Plans
             </h3>
             <ul className="space-y-2.5">
-              {digitalLinks.services.map((link) => (
-                <li key={link.href}>
+              {digitalLinks.plans.map((link) => (
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-xs text-slate-400 hover:text-white transition-colors"
@@ -84,10 +81,10 @@ export function DigitalFooter() {
             </ul>
           </div>
 
-          {/* Industries */}
+          {/* Who We Help */}
           <div>
             <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
-              Tailored Industries
+              Who We Help
             </h3>
             <ul className="space-y-2.5">
               {digitalLinks.industries.map((link) => (

@@ -4,16 +4,15 @@ import { type Metadata } from "next";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionHeading } from "@/components/sections/section-heading";
-import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "AI & WhatsApp CRM | Nexbaron Digital",
+  title: "WhatsApp That Answers Your Customers 24/7 | Nexbaron Digital",
   description:
-    "24/7 WhatsApp AI chatbots, lead capture, appointment booking, and CRM automation that grow your local business while you sleep.",
+    "Your business answers customers on WhatsApp at any hour — instant replies, self-booking, and reminders that stop no-shows. Included in Growth and Scale plans.",
   openGraph: {
-    title: "AI & WhatsApp CRM | Nexbaron Digital",
-    description: "Automate customer conversations and capture leads 24/7 on WhatsApp.",
+    title: "WhatsApp That Answers Your Customers 24/7 | Nexbaron Digital",
+    description: "Answers your customers, books appointments, and stops no-shows — 24/7.",
     ...divisionOpenGraph("digital"),
   },
   twitter: divisionTwitter("digital"),
@@ -22,58 +21,58 @@ export const metadata: Metadata = {
 const steps = [
   {
     number: "01",
-    title: "Connect",
+    title: "We Handle the Setup",
     description:
-      "We set up your WhatsApp Business profile and connect it to your website, forms, and team inbox in one place.",
+      "We set up your WhatsApp Business profile and connect it to your website and forms, so every enquiry lands in one inbox.",
   },
   {
     number: "02",
-    title: "Automate",
+    title: "It Answers For You",
     description:
-      "AI chatbots answer FAQs, capture lead details, and book appointments instantly — in your brand's voice, 24/7.",
+      "Your customers get instant replies to common questions at any hour — even at 3am on a Sunday.",
   },
   {
     number: "03",
-    title: "Convert",
+    title: "Every Enquiry Becomes a Customer",
     description:
-      "Every conversation flows into your CRM with automatic follow-ups, so no enquiry ever slips through the cracks.",
+      "Customers book themselves and reminders stop no-shows. Nothing is forgotten, no one is missed.",
   },
 ];
 
 const capabilities = [
   {
     icon: Bot,
-    title: "24/7 AI Chatbot",
+    title: "Answers your customers at 3am",
     description:
-      "Instant, human-sounding replies to common questions at any hour — never miss a customer again.",
+      "Instant replies to common questions at any hour — you never miss a customer again.",
   },
   {
     icon: BellRing,
-    title: "Instant Lead Alerts",
+    title: "You get notified the second someone enquires",
     description:
-      "Every enquiry notifies your team on WhatsApp in real time, ready to act while the customer is hot.",
+      "Every enquiry pings your phone on WhatsApp right away, ready to act while the customer is still interested.",
   },
   {
     icon: CalendarClock,
-    title: "Appointment Booking",
-    description: "Customers book slots in-chat; reminders cut no-shows automatically.",
+    title: "Customers book themselves, reminders stop no-shows",
+    description: "Clients pick their own slot; automatic reminders cut no-shows.",
   },
   {
     icon: Users,
-    title: "Human Handoff",
+    title: "Real staff take over when needed",
     description:
-      "Complex questions seamlessly transfer to your team with full conversation context.",
+      "Complex questions hand off to your team with the full conversation, so nobody starts over.",
   },
   {
     icon: Zap,
-    title: "Broadcast Campaigns",
-    description: "Send offers and updates to your customer list in seconds, right from WhatsApp.",
+    title: "Send an offer to every customer in one tap",
+    description: "Announce a sale or new service to your whole customer list in seconds.",
   },
   {
     icon: MessageSquare,
-    title: "CRM Sync",
+    title: "Every conversation, saved in one place",
     description:
-      "All conversations and leads recorded in one simple pipeline your team can act on.",
+      "All chats and enquiries recorded neatly, so your team can act and nothing slips through.",
   },
 ];
 
@@ -82,19 +81,15 @@ export default function DigitalAutomationPage() {
     <div className="relative overflow-hidden">
       <PageHero
         accent="digital"
-        eyebrow="AI & WhatsApp Automation"
+        eyebrow="WhatsApp, Working For You 24/7"
         title="Your Business, Answering"
         highlight="24/7 on WhatsApp"
-        description="The most under-used sales channel in local business. We turn WhatsApp into a lead machine that books appointments, answers questions, and follows up — automatically."
+        description="The most under-used channel in local business. We turn WhatsApp into a service that answers your customers, books their appointments, and reminds them to show up — automatically."
         primaryCta={{
-          label: "See It In Action",
-          href: buildWhatsAppLink(
-            "digital",
-            "Hi Nexbaron Digital, show me how the WhatsApp chatbot works",
-          ),
-          external: true,
+          label: "See the Growth Plan",
+          href: "/digital/pricing#plans",
         }}
-        secondaryCta={{ label: "Talk to an Expert", href: "/digital/contact" }}
+        secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
@@ -102,8 +97,8 @@ export default function DigitalAutomationPage() {
           <SectionHeading
             accent="digital"
             eyebrow="How It Works"
-            title="From First Message to Closed Lead"
-            description="Three steps to an always-on sales team that never sleeps, never misses a call, and never forgets a follow-up."
+            title="From First Message to Booked Customer"
+            description="Three steps to a business that answers at any hour, never misses an enquiry, and never forgets a follow-up."
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {steps.map((step) => (
@@ -122,8 +117,8 @@ export default function DigitalAutomationPage() {
         <section className="py-16 border-t border-white/10">
           <SectionHeading
             accent="digital"
-            eyebrow="Capabilities"
-            title="What Your WhatsApp Sales Machine Does"
+            eyebrow="What's Included"
+            title="What It Does For Your Business"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {capabilities.map((capability) => {
@@ -148,14 +143,10 @@ export default function DigitalAutomationPage() {
 
         <CTABanner
           accent="digital"
-          title="Ready to Never Miss a Lead Again?"
-          description="Get a free WhatsApp automation demo for your business, delivered in under 2 hours."
-          ctaLabel="Get Free Demo"
-          href={buildWhatsAppLink(
-            "digital",
-            "Hi Nexbaron Digital, I want a free WhatsApp automation demo",
-          )}
-          external
+          title="Ready to Answer Customers at Any Hour?"
+          description="This is included in the Growth plan — no separate setup, no extra fees."
+          ctaLabel="See the Growth Plan"
+          href="/digital/pricing#plans"
         />
       </div>
     </div>

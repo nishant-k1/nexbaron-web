@@ -16,6 +16,25 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
   swcMinify: true,
+  async redirects() {
+    return [
+      {
+        source: "/digital/services",
+        destination: "/digital/pricing",
+        permanent: true,
+      },
+      {
+        source: "/digital/plans",
+        destination: "/digital/pricing",
+        permanent: true,
+      },
+      {
+        source: "/digital/industries",
+        destination: "/digital/who-we-help",
+        permanent: true,
+      },
+    ];
+  },
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },

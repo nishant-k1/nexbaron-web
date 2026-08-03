@@ -51,23 +51,23 @@ export function CorporateFooter() {
             </h3>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
-                <Link href="/digital/services" className="hover:text-white">
-                  Websites & Landing Pages
+                <Link href="/digital/pricing" className="hover:text-white">
+                  Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/digital/services#local-seo" className="hover:text-white">
-                  Google Business Profile & SEO
+                <Link href="/digital/who-we-help" className="hover:text-white">
+                  Who We Help
                 </Link>
               </li>
               <li>
-                <Link href="/digital/services#automation" className="hover:text-white">
-                  WhatsApp & AI Automation
+                <Link href="/digital/pricing#faq" className="hover:text-white">
+                  Questions & Answers
                 </Link>
               </li>
               <li>
                 <Link href="/digital/contact" className="hover:text-white">
-                  Book Growth Consultation
+                  Start in 7 Days
                 </Link>
               </li>
             </ul>

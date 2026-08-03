@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { Button } from "@/components/ui/button";
-import { divisions, buildWhatsAppLink } from "@/lib/divisions";
+import { divisions } from "@/lib/divisions";
 
 const navItems = divisions.digital.nav;
 
@@ -80,20 +80,12 @@ export function DigitalNavigation() {
             <Button
               asChild
               size="sm"
-              className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 rounded-lg shadow-md shadow-emerald-500/20"
+              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-4 rounded-lg shadow-md shadow-teal-500/20"
             >
-              <a
-                href={buildWhatsAppLink(
-                  "digital",
-                  "Hi Nexbaron Digital, I want to grow my business online",
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5"
-              >
+              <Link href="/digital/pricing" className="flex items-center gap-1.5">
                 <MessageSquare className="w-4 h-4" />
-                WhatsApp Growth Audit
-              </a>
+                Start in 7 Days
+              </Link>
             </Button>
           </div>
 
@@ -132,7 +124,7 @@ export function DigitalNavigation() {
             </div>
             <div className="pt-4 border-t border-white/10">
               <Button asChild className="w-full bg-teal-500 text-slate-950 font-bold">
-                <Link href="/digital/contact">Book Free Consultation</Link>
+                <Link href="/digital/pricing">Start in 7 Days</Link>
               </Button>
             </div>
           </div>

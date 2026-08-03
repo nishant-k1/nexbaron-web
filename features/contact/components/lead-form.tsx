@@ -17,11 +17,12 @@ interface FieldConfig {
   name: string;
   label: string;
   type: "text" | "tel" | "textarea" | "select";
-  options?: string[];
+  options?: string[] | { value: string; label: string }[];
   placeholder?: string;
 }
 
 const digitalSchema = z.object({
+  plan: z.string().optional(),
   name: z.string().min(2, "Please enter your name"),
   businessType: z.string().min(1, "Select your business type"),
   city: z.string().min(2, "Please enter your city"),
@@ -43,6 +44,17 @@ const printSchema = z.object({
 
 const fieldConfigs: Record<DivisionSlug, FieldConfig[]> = {
   digital: [
+    {
+      name: "plan",
+      label: "Which plan are you considering?",
+      type: "select",
+      options: [
+        { value: "launch", label: "Launch (₹24,999 + ₹1,499/mo)" },
+        { value: "growth", label: "Growth (₹39,999 + ₹3,999/mo)" },
+        { value: "scale", label: "Scale (₹59,999 + ₹7,999/mo)" },
+        { value: "not-sure", label: "Not sure yet" },
+      ],
+    },
     {
       name: "name",
       label: "Name",
@@ -75,12 +87,11 @@ const fieldConfigs: Record<DivisionSlug, FieldConfig[]> = {
       label: "What do you need?",
       type: "select",
       options: [
-        "New business website",
-        "Landing page",
-        "Google Business Profile & Local SEO",
-        "WhatsApp Business & AI Chatbot",
-        "Hosting / Maintenance",
-        "Full digital growth audit",
+        "Get found on Google",
+        "A website that brings in customers",
+        "Answer customers on WhatsApp",
+        "Bookings that never get missed",
+        "Not sure — I need a recommendation",
       ],
     },
   ],
@@ -143,10 +154,12 @@ export function LeadForm({
   division,
   heading,
   subheading,
+  initialPlan,
 }: {
   division: DivisionSlug;
   heading: string;
   subheading?: string;
+  initialPlan?: string;
 }) {
   const classes = accent[division];
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -159,6 +172,7 @@ export function LeadForm({
     reset,
   } = useForm<LeadValues>({
     resolver: zodResolver(schemas[division] as unknown as z.ZodType<LeadValues>),
+    defaultValues: initialPlan ? { plan: initialPlan } : undefined,
   });
 
   const onSubmit = async (data: LeadValues) => {
@@ -240,11 +254,17 @@ export function LeadForm({
                   <option value="" disabled>
                     Select...
                   </option>
-                  {field.options?.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
+                  {field.options?.map((option) =>
+                    typeof option === "string" ? (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ) : (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ),
+                  )}
                 </select>
               ) : (
                 <Input

@@ -1,4 +1,4 @@
-import { MessageSquare, Clock, ShieldCheck, PhoneCall } from "lucide-react";
+import { MessageSquare, Clock, ShieldCheck, CalendarClock, PhoneCall } from "lucide-react";
 import { type Metadata } from "next";
 
 import { PageHero } from "@/components/sections/page-hero";
@@ -7,12 +7,12 @@ import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Contact Digital Team | Nexbaron Digital",
+  title: "Start in 7 Days | Nexbaron Digital",
   description:
-    "Book a free growth audit or get a quote for websites, local SEO, WhatsApp automation, and CRM from Nexbaron Digital.",
+    "Tell us about your business and get a clear plan recommendation. Fixed-price plans that get you found on Google, answered on WhatsApp, and live in 7 days.",
   openGraph: {
-    title: "Contact Digital Team | Nexbaron Digital",
-    description: "Get a free growth audit and consultation from the Nexbaron Digital team.",
+    title: "Start in 7 Days | Nexbaron Digital",
+    description: "Tell us about your business — we'll reply within 2 hours.",
     ...divisionOpenGraph("digital"),
   },
   twitter: divisionTwitter("digital"),
@@ -21,33 +21,45 @@ export const metadata: Metadata = {
 const nextSteps = [
   {
     icon: Clock,
-    title: "Response in 2 hours",
-    description: "On business days we respond within 2 hours with a clear next step.",
+    title: "Reply within 2 hours",
+    description: "On business days we reply within 2 hours with a clear next step.",
   },
   {
     icon: MessageSquare,
-    title: "Free growth audit",
-    description: "We review your website and Google ranking and tell you exactly what to fix.",
+    title: "A quick chat about your business",
+    description:
+      "A short call to understand where you are and what you want — no jargon, no pressure.",
   },
   {
     icon: ShieldCheck,
-    title: "No pressure, no lock-in",
-    description: "A clear proposal, honest advice, and zero obligation to continue.",
+    title: "You pick a fixed-price plan",
+    description: "A clear published price, honest advice, and zero lock-in. You stay in control.",
+  },
+  {
+    icon: CalendarClock,
+    title: "We launch in 7 days",
+    description:
+      "Your website live, found on Google, answering on WhatsApp — then we keep growing it.",
   },
 ];
 
-export default function DigitalContactPage() {
+export default function DigitalContactPage({ searchParams }: { searchParams: { plan?: string } }) {
+  const initialPlan = searchParams.plan;
+
   return (
     <div className="relative overflow-hidden">
       <PageHero
         accent="digital"
-        eyebrow="Contact Digital Team"
-        title="Let's Grow Your Business"
-        highlight="Online"
-        description="Tell us about your business and get a free growth audit. Prefer WhatsApp? Message us and we'll take it from there."
+        eyebrow="Get Started"
+        title="Start in 7 Days"
+        highlight="Fixed-Price Plans"
+        description="Tell us about your business and we'll recommend the right plan. Prefer WhatsApp? Message us and we'll take it from there."
         primaryCta={{
           label: "Chat on WhatsApp",
-          href: buildWhatsAppLink("digital", "Hi Nexbaron Digital, I want a free growth audit"),
+          href: buildWhatsAppLink(
+            "digital",
+            "Hi Nexbaron Digital, I want to grow my business online",
+          ),
           external: true,
         }}
       />
@@ -100,8 +112,9 @@ export default function DigitalContactPage() {
           <div className="lg:col-span-7">
             <LeadForm
               division="digital"
-              heading="Request Your Free Growth Audit"
-              subheading="Takes less than a minute. We'll reply on WhatsApp with your custom plan."
+              initialPlan={initialPlan}
+              heading="Tell us about your business"
+              subheading="We'll reply within 2 hours on a business day with a clear recommendation."
             />
           </div>
         </div>

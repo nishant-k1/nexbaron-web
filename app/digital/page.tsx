@@ -20,19 +20,19 @@ import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Nexbaron Digital | Business Websites, Local SEO & AI WhatsApp Automation",
+  title: "Launch, Growth & Scale Plans | Nexbaron Digital",
   description:
-    "Grow your business with Nexbaron Digital. High-converting websites, #1 Google Business Profile local SEO, WhatsApp CRM, AI Chatbots, and speed optimization for clinics, restaurants, law firms, and SMEs.",
+    "Fixed-price growth plans for local businesses: a website that brings customers in, Google visibility, and 24/7 WhatsApp booking. No jargon, no lock-in.",
   openGraph: {
     type: "website",
     url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/digital`,
-    title: "Nexbaron Digital | Web, Local SEO & AI Automation",
-    description: "Digital growth engine for SMEs and local service businesses.",
+    title: "Launch, Growth & Scale Plans",
+    description: "Fixed-price plans that turn your business into a 24/7 customer machine.",
     ...divisionOpenGraph("digital"),
   },
   twitter: {
-    title: "Nexbaron Digital | Web, Local SEO & AI Automation",
-    description: "Digital growth engine for SMEs and local service businesses.",
+    title: "Launch, Growth & Scale Plans",
+    description: "Fixed-price plans that turn your business into a 24/7 customer machine.",
     ...divisionTwitter("digital"),
   },
 };
@@ -40,52 +40,60 @@ export const metadata: Metadata = {
 const digitalServices = [
   {
     icon: Monitor,
-    title: "Business Websites & Landing Pages",
-    desc: "Custom ultra-fast Next.js websites engineered for maximum conversions and mobile responsiveness.",
-    tags: ["Next.js 14", "Mobile Optimized", "High Speed"],
+    title: "A Website That Brings Customers In",
+    desc: "A professional website built for your business — opens fast on any phone, explains what you do, and sends every enquiry straight to your WhatsApp.",
+    tags: ["Built for You", "Opens Fast", "Mobile Perfect"],
   },
   {
     icon: Search,
-    title: "Google Business Profile & Local SEO",
-    desc: "Rank in the Google 3-Pack for local searches in your city. Drive inbound phone calls and map visits.",
-    tags: ["Google Maps #1", "Review Automation", "Keyword Strategy"],
+    title: "Show Up When People Search Near You",
+    desc: "We make your business appear on Google when people search for what you offer — and automatically collect reviews that make you look trusted.",
+    tags: ["Google Visibility", "Review System", "Your City"],
   },
   {
     icon: MessageSquare,
-    title: "WhatsApp CRM & AI Chatbots",
-    desc: "Automatically capture leads 24/7, answer customer FAQs, and schedule appointments directly on WhatsApp.",
-    tags: ["24/7 Auto-Reply", "Lead Notification", "CRM Sync"],
+    title: "Never Miss Another Customer Message",
+    desc: "Customers message you on WhatsApp and get an instant reply, day or night. Appointments get booked and enquiries never slip through.",
+    tags: ["24/7 Replies", "Booking", "Every Enquiry Captured"],
   },
   {
     icon: Zap,
-    title: "Managed Hosting & Speed Optimization",
-    desc: "99.9% uptime guaranteed, SSL security, automated daily backups, and sub-second page loading speed.",
-    tags: ["Sub-Second Load", "SSL & Daily Backups", "Managed Maintenance"],
+    title: "We Keep It Online, Fast & Secure",
+    desc: "Hosting, security, backups, and updates — handled for you. Your website stays online and opens fast, always, while you run your business.",
+    tags: ["Always Online", "Backups", "No Tech Worries"],
   },
 ];
 
 const targetIndustries = [
-  { icon: Stethoscope, name: "Clinics & Doctors", detail: "Online appointments & local map rank" },
+  {
+    icon: Stethoscope,
+    name: "Clinics & Doctors",
+    detail: "More booked appointments, fewer no-shows",
+  },
   {
     icon: Utensils,
     name: "Restaurants & Cafes",
-    detail: "Digital menu, table booking & Google reviews",
+    detail: 'Found first by people searching "near me"',
   },
   {
     icon: Scale,
     name: "Law & CA Firms",
-    detail: "High-trust professional website & client portal",
+    detail: "A credible presence that wins high-trust clients",
   },
   {
     icon: Dumbbell,
     name: "Salons, Spas & Gyms",
-    detail: "Membership booking & WhatsApp reminders",
+    detail: "Fill more slots with self-booking",
   },
-  { icon: Building, name: "Real Estate & Builders", detail: "Property landing pages & lead CRM" },
+  {
+    icon: Building,
+    name: "Real Estate & Builders",
+    detail: "Capture serious buyers and follow up properly",
+  },
   {
     icon: Briefcase,
     name: "Startups & SMEs",
-    detail: "Turnkey digital footprint & launch package",
+    detail: "A professional footprint, launched fast",
   },
 ];
 
@@ -102,21 +110,22 @@ export default function DigitalLandingPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping" />
               <span className="text-xs uppercase font-mono tracking-widest text-teal-300 font-semibold">
-                Nexbaron Digital Engine
+                Fixed-Price Growth Plans
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
-              We Build High-Converting{" "}
+              Your Business, Found on Google.{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400">
-                Websites & Local SEO
+                Booked on WhatsApp.
               </span>{" "}
-              for Growing Businesses
+              Every Day.
             </h1>
 
             <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Transform your local business into a 24/7 lead machine. From high-speed custom
-              websites and Google Business Profile optimization to instant WhatsApp AI chatbots.
+              We help restaurants, clinics, salons, law firms, and local shops get more customers —
+              a website, Google visibility, and 24/7 WhatsApp booking in one simple plan. Fixed
+              price. No jargon. No lock-in.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
@@ -125,19 +134,11 @@ export default function DigitalLandingPage() {
                 size="lg"
                 className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 py-6 rounded-xl shadow-lg shadow-teal-500/20"
               >
-                <a
-                  href={buildWhatsAppLink(
-                    "digital",
-                    "Hi Nexbaron Digital, I want a free growth audit",
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
+                <Link href="/digital/pricing" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
-                  Instant WhatsApp Growth Audit
+                  See Pricing
                   <ArrowRight className="w-5 h-5" />
-                </a>
+                </Link>
               </Button>
               <Button
                 asChild
@@ -145,7 +146,7 @@ export default function DigitalLandingPage() {
                 variant="outline"
                 className="border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-md"
               >
-                <Link href="#services">Explore Digital Services</Link>
+                <Link href="/digital/who-we-help">Who We Help</Link>
               </Button>
             </div>
 
@@ -156,30 +157,54 @@ export default function DigitalLandingPage() {
                 <div className="text-xs text-slate-400">Websites Launched</div>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-cyan-400 font-mono">#1</div>
-                <div className="text-xs text-slate-400">Google Map Rankings</div>
+                <div className="text-2xl font-bold text-cyan-400 font-mono">2 hr</div>
+                <div className="text-xs text-slate-400">Average Response Time</div>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                 <div className="text-2xl font-bold text-teal-300 font-mono">24/7</div>
-                <div className="text-xs text-slate-400">WhatsApp AI Support</div>
+                <div className="text-xs text-slate-400">Answers Customers on WhatsApp</div>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-emerald-400 font-mono">99.9%</div>
-                <div className="text-xs text-slate-400">Uptime SLA</div>
+                <div className="text-2xl font-bold text-emerald-400 font-mono">7 days</div>
+                <div className="text-xs text-slate-400">From Start to Live Website</div>
               </div>
             </div>
           </div>
         </SectionReveal>
 
+        {/* Testimonial */}
+        <section className="py-8">
+          <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-white/[0.03] border border-teal-500/20 backdrop-blur-md text-center">
+            <div
+              className="text-teal-400 text-lg tracking-widest mb-4"
+              aria-label="5 out of 5 stars"
+            >
+              ★★★★★
+            </div>
+            <blockquote className="text-lg md:text-xl font-heading font-semibold text-white leading-relaxed">
+              &ldquo;Nexbaron doubled our enquiries. Customers now find us on Google and book on
+              WhatsApp while we&apos;re serving tables.&rdquo;
+            </blockquote>
+            <div className="mt-5">
+              <div className="text-sm font-semibold text-slate-200">Restaurant Owner</div>
+              <div className="text-xs text-slate-500">Nexbaron Digital customer</div>
+            </div>
+          </div>
+        </section>
+
         {/* Services Grid */}
         <section id="services" className="py-16">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
-              Core Capabilities
+              What You Get
             </span>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-              End-to-End Digital Solutions
+              Everything a Local Business Needs to Grow
             </h2>
+            <p className="text-sm text-slate-300 mt-4">
+              One plan. One team. All the pieces a local business needs to get found, get contacted,
+              and get booked — working together.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -214,13 +239,13 @@ export default function DigitalLandingPage() {
                   <a
                     href={buildWhatsAppLink(
                       "digital",
-                      "Hi Nexbaron Digital, I want to inquire about this service",
+                      "Hi Nexbaron Digital, I want to know how you can help my business grow",
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-xs font-semibold text-teal-400 hover:text-teal-300"
                   >
-                    Inquire About Service <ArrowRight className="ml-1 w-4 h-4" />
+                    Ask how this works <ArrowRight className="ml-1 w-4 h-4" />
                   </a>
                 </div>
               );
@@ -232,11 +257,15 @@ export default function DigitalLandingPage() {
         <section className="py-16 border-t border-white/10">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
-              Industry Tailored
+              Who We Help
             </span>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-              Built for Your Specific Industry
+              Built for Businesses Like Yours
             </h2>
+            <p className="text-sm text-slate-300 mt-4">
+              We&apos;ve seen how your customers actually search, call, and book. Every plan is
+              built around that.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -264,24 +293,18 @@ export default function DigitalLandingPage() {
         <section className="mt-16 p-10 rounded-3xl bg-gradient-to-r from-teal-500/20 via-cyan-500/10 to-slate-950 border border-teal-500/30 text-center relative overflow-hidden">
           <div className="max-w-2xl mx-auto space-y-6">
             <h2 className="text-3xl font-heading font-bold text-white">
-              Ready to Outrank Competitors Online?
+              Pick a Plan & Start in 7 Days
             </h2>
             <p className="text-sm text-slate-300">
-              Get a free video audit of your current Google ranking and website conversion speed
-              within 2 hours.
+              See published prices, what&apos;s included, and how fast you&apos;ll launch. No sales
+              call required to get started.
             </p>
             <Button
               asChild
               size="lg"
               className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8"
             >
-              <a
-                href={buildWhatsAppLink("digital", "Hi Nexbaron Digital, send me a free audit")}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Claim Free Audit via WhatsApp
-              </a>
+              <Link href="/digital/pricing">See Pricing</Link>
             </Button>
           </div>
         </section>
