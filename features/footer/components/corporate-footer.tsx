@@ -56,8 +56,18 @@ export function CorporateFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/digital/who-we-help" className="hover:text-white">
-                  Who We Help
+                <Link href="/digital/process" className="hover:text-white">
+                  Our Process
+                </Link>
+              </li>
+              <li>
+                <Link href="/digital/why-nexbaron" className="hover:text-white">
+                  Why Nexbaron
+                </Link>
+              </li>
+              <li>
+                <Link href="/digital/results" className="hover:text-white">
+                  Results
                 </Link>
               </li>
               <li>
@@ -115,8 +125,8 @@ export function CorporateFooter() {
             </h3>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
-                <Link href="/about" className="hover:text-white">
-                  About Nexbaron Group
+                <Link href="/digital/why-nexbaron" className="hover:text-white">
+                  Why Nexbaron
                 </Link>
               </li>
             </ul>

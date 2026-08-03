@@ -81,6 +81,55 @@ export function DigitalFooter() {
             </ul>
           </div>
 
+          {/* Explore */}
+          <div>
+            <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
+              Explore
+            </h3>
+            <ul className="space-y-2.5">
+              <li>
+                <Link
+                  href="/digital/pricing"
+                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                >
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/digital/process"
+                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                >
+                  Our Process
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/digital/why-nexbaron"
+                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                >
+                  Why Nexbaron
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/digital/results"
+                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                >
+                  Results
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/digital/contact"
+                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
           {/* Who We Help */}
           <div>
             <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">

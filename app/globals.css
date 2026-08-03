@@ -142,6 +142,42 @@ body {
       transform: translateY(0);
     }
   }
+
+  @keyframes flowDown {
+    0% {
+      stroke-dashoffset: 9;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes travelDot {
+    0% {
+      top: -6px;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      top: calc(100% - 6px);
+      opacity: 0;
+    }
+  }
+
+  .process-flow-line {
+    stroke: rgb(148 163 184 / 0.28);
+    stroke-width: 1;
+  }
+
+  .process-travel-dot {
+    top: -6px;
+    animation: travelDot 12s ease-in-out infinite;
+  }
 }
 
 .skip-to-content {
