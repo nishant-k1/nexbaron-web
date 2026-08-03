@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowRight, Minus, Plus, ShieldCheck } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import type { InheritedView } from "@/features/digital/components/plans-grid";
+import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
+import type { InheritedView } from "@/features/digital/plan-summary";
 import { formatINR, type Plan } from "@/features/digital/plans";
 
 interface PlanCardProps {
@@ -20,6 +20,7 @@ interface PlanCardProps {
   onToggleAddOn: (id: string) => void;
   onSetAddOnCount: (id: string, count: number) => void;
   onToggleInherited: () => void;
+  onSelectPlan: () => void;
 }
 
 export function PlanCard({
@@ -35,16 +36,9 @@ export function PlanCard({
   onToggleAddOn,
   onSetAddOnCount,
   onToggleInherited,
+  onSelectPlan,
 }: PlanCardProps) {
   const Icon = plan.icon;
-
-  const inheritedActive = inherited !== null && inheritedOn && inherited.anySelected;
-
-  const selectedCount =
-    Object.values(serviceSelection).filter(Boolean).length +
-    (inheritedActive ? 1 : 0) +
-    Object.values(addOnSelection).filter(Boolean).length;
-  const totalCount = plan.services.length + (inherited ? 1 : 0) + plan.addOns.length;
 
   return (
     <div
@@ -88,249 +82,36 @@ export function PlanCard({
 
       {(inherited || plan.services.length > 0) && (
         <div className="mb-6 pt-4 border-t border-white/10">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[10px] uppercase tracking-wider font-mono font-semibold text-slate-500">
-              Customize your services
-            </span>
-            <span className="text-[10px] font-mono text-slate-500">
-              {selectedCount}/{totalCount} selected
-            </span>
-          </div>
-
-          {inherited && (
-            <button
-              type="button"
-              role="switch"
-              aria-checked={inheritedOn}
-              disabled={!inherited.anySelected}
-              onClick={onToggleInherited}
-              className={`w-full flex items-center gap-3 text-left py-2.5 px-3 mb-2 rounded-xl border transition-all duration-200 ${
-                inheritedOn && inherited.anySelected
-                  ? "bg-teal-500/5 border-teal-500/20"
-                  : "bg-white/[0.02] border-white/10 opacity-70 hover:opacity-100"
-              }`}
-            >
-              <ShieldCheck
-                className={`w-4 h-4 shrink-0 ${
-                  inheritedOn && inherited.anySelected ? "text-teal-400" : "text-slate-500"
-                }`}
-              />
-              <span className="flex-1 min-w-0">
-                <span
-                  className={`block text-xs font-medium ${
-                    inheritedOn && inherited.anySelected
-                      ? "text-teal-200"
-                      : "text-slate-400 line-through"
-                  }`}
-                >
-                  {inherited.label}
-                </span>
-                <span className="text-[10px] font-mono text-teal-400/80">
-                  {formatINR(inherited.oneTime)} <span className="text-slate-500">one-time</span>
-                  {" · "}
-                  {formatINR(inherited.monthly)}
-                  <span className="text-slate-500">/month</span>
-                </span>
-              </span>
-              {inherited.anySelected && (
-                <span
-                  className={`relative shrink-0 w-10 h-6 rounded-full transition-colors duration-200 ${
-                    inheritedOn ? "bg-teal-500" : "bg-white/10 border border-white/10"
-                  }`}
-                  aria-hidden="true"
-                >
-                  <span
-                    className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${
-                      inheritedOn ? "translate-x-4" : ""
-                    }`}
-                  />
-                </span>
-              )}
-            </button>
-          )}
-
-          <div className="space-y-2">
-            {plan.services.map((service) => {
-              const isSelected = serviceSelection[service.id] ?? false;
-              return (
-                <button
-                  key={service.id}
-                  type="button"
-                  role="switch"
-                  aria-checked={isSelected}
-                  onClick={() => onToggleService(service.id)}
-                  className={`w-full flex items-center gap-3 text-left py-2 px-3 rounded-xl border transition-all duration-200 ${
-                    isSelected
-                      ? "bg-teal-500/10 border-teal-500/30"
-                      : "bg-white/[0.02] border-white/10 opacity-70 hover:opacity-100"
-                  }`}
-                >
-                  <span className="flex-1 min-w-0">
-                    <span
-                      className={`block text-xs ${
-                        isSelected ? "text-slate-200" : "text-slate-400 line-through"
-                      }`}
-                    >
-                      {service.label}
-                    </span>
-                    <span className="text-[10px] font-mono text-teal-400/80">
-                      {formatINR(service.price)}{" "}
-                      <span className="text-slate-500">
-                        {service.type === "oneTime" ? "one-time" : "/month"}
-                      </span>
-                    </span>
-                  </span>
-                  <span
-                    className={`relative shrink-0 w-10 h-6 rounded-full transition-colors duration-200 ${
-                      isSelected ? "bg-teal-500" : "bg-white/10 border border-white/10"
-                    }`}
-                    aria-hidden="true"
-                  >
-                    <span
-                      className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${
-                        isSelected ? "translate-x-4" : ""
-                      }`}
-                    />
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {plan.addOns.length > 0 && (
-            <div className="pt-4">
-              <span className="text-[10px] uppercase tracking-wider font-mono font-semibold text-slate-500 block mb-2">
-                Add-on options
-              </span>
-              <div className="space-y-2">
-                {plan.addOns.map((addOn) => {
-                  const isSelected = addOnSelection[addOn.id] ?? false;
-                  const count = addOnCounts[addOn.id] ?? 0;
-
-                  if (addOn.unitLabel) {
-                    return (
-                      <div
-                        key={addOn.id}
-                        className={`flex items-center gap-3 py-2 px-3 rounded-xl border transition-all duration-200 ${
-                          isSelected
-                            ? "bg-amber-500/10 border-amber-500/30"
-                            : "bg-white/[0.02] border-white/10"
-                        }`}
-                      >
-                        <span className="flex-1 min-w-0">
-                          <span className="block text-xs text-slate-200">{addOn.label}</span>
-                          <span className="text-[10px] font-mono text-amber-400/80">
-                            {isSelected
-                              ? `+${formatINR(addOn.price * count)}`
-                              : `+${formatINR(addOn.price)}`}{" "}
-                            <span className="text-slate-500">
-                              {addOn.type === "oneTime" ? "one-time" : "/month"} ·{" "}
-                              {formatINR(addOn.price)} {addOn.unitLabel}
-                            </span>
-                          </span>
-                        </span>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <button
-                            type="button"
-                            onClick={() => onSetAddOnCount(addOn.id, count - 1)}
-                            disabled={count === 0}
-                            aria-label={`Remove ${addOn.label}`}
-                            className="w-7 h-7 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
-                          >
-                            <Minus className="w-3.5 h-3.5" />
-                          </button>
-                          <input
-                            type="number"
-                            min={0}
-                            value={count}
-                            onChange={(e) =>
-                              onSetAddOnCount(
-                                addOn.id,
-                                Math.max(0, Math.floor(Number(e.target.value) || 0)),
-                              )
-                            }
-                            aria-label={`Number of ${addOn.label}`}
-                            className="w-12 h-7 text-center text-sm font-mono bg-white/[0.03] border border-white/10 rounded-lg text-white focus:outline-none focus:border-amber-500/40 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => onSetAddOnCount(addOn.id, count + 1)}
-                            aria-label={`Add ${addOn.label}`}
-                            className="w-7 h-7 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08] hover:text-white flex items-center justify-center transition-colors"
-                          >
-                            <Plus className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <button
-                      key={addOn.id}
-                      type="button"
-                      role="switch"
-                      aria-checked={isSelected}
-                      onClick={() => onToggleAddOn(addOn.id)}
-                      className={`w-full flex items-center gap-3 text-left py-2 px-3 rounded-xl border transition-all duration-200 ${
-                        isSelected
-                          ? "bg-amber-500/10 border-amber-500/30"
-                          : "bg-white/[0.02] border-white/10 opacity-70 hover:opacity-100"
-                      }`}
-                    >
-                      <span className="flex-1 min-w-0">
-                        <span
-                          className={`block text-xs ${
-                            isSelected ? "text-slate-200" : "text-slate-400"
-                          }`}
-                        >
-                          {addOn.label}
-                        </span>
-                        <span className="text-[10px] font-mono text-amber-400/80">
-                          +{formatINR(addOn.price)}{" "}
-                          <span className="text-slate-500">
-                            {addOn.type === "oneTime" ? "one-time" : "/month"}
-                          </span>
-                        </span>
-                      </span>
-                      <span
-                        className={`relative shrink-0 w-10 h-6 rounded-full transition-colors duration-200 ${
-                          isSelected ? "bg-amber-500" : "bg-white/10 border border-white/10"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        <span
-                          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${
-                            isSelected ? "translate-x-4" : ""
-                          }`}
-                        />
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+          <PlanServicesEditor
+            plan={plan}
+            serviceSelection={serviceSelection}
+            addOnSelection={addOnSelection}
+            addOnCounts={addOnCounts}
+            inherited={inherited}
+            inheritedOn={inheritedOn}
+            onToggleService={onToggleService}
+            onToggleAddOn={onToggleAddOn}
+            onSetAddOnCount={onSetAddOnCount}
+            onToggleInherited={onToggleInherited}
+          />
         </div>
       )}
 
       <div className="mt-auto pt-4">
         <Button
-          asChild
+          type="button"
           size="lg"
-          className={`w-full font-bold px-8 rounded-xl shadow-lg ${
+          onClick={onSelectPlan}
+          className={`w-full font-bold px-8 rounded-xl shadow-lg cursor-pointer ${
             plan.featured
               ? "bg-teal-500 hover:bg-teal-400 text-slate-950 shadow-teal-500/20"
               : "bg-teal-500/10 border border-teal-500/30 text-teal-300 hover:bg-teal-500/20"
           }`}
         >
-          <Link
-            href={`/digital/contact?plan=${plan.id}`}
-            className="inline-flex items-center justify-center gap-2"
-          >
+          <span className="inline-flex items-center justify-center gap-2">
             {plan.ctaLabel}
             <ArrowRight className="w-4 h-4" />
-          </Link>
+          </span>
         </Button>
       </div>
     </div>

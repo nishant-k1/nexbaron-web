@@ -1,9 +1,12 @@
+import Link from "next/link";
+
 import { SectionReveal } from "@/components/motion/section-reveal";
 
 export interface ProcessTimelineStep {
   number: string;
   title: string;
   description: string;
+  href?: string;
 }
 
 interface ProcessTimelineProps {
@@ -53,12 +56,30 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
                     isEven ? "md:col-start-1 md:pr-0 md:text-right" : "md:col-start-2 md:pl-0"
                   }
                 >
-                  <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md h-full">
-                    <h3 className="text-lg font-heading font-semibold text-white mb-2">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">{step.description}</p>
-                  </div>
+                  {step.href ? (
+                    <Link
+                      href={step.href}
+                      className="block p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 hover:bg-white/[0.06] transition-all duration-300 backdrop-blur-md h-full group"
+                    >
+                      <h3 className="text-lg font-heading font-semibold text-white mb-2 flex items-center gap-2 justify-start md:justify-end">
+                        {step.title}
+                        <span
+                          aria-hidden
+                          className="text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                        >
+                          →
+                        </span>
+                      </h3>
+                      <p className="text-sm text-slate-300 leading-relaxed">{step.description}</p>
+                    </Link>
+                  ) : (
+                    <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md h-full">
+                      <h3 className="text-lg font-heading font-semibold text-white mb-2">
+                        {step.title}
+                      </h3>
+                      <p className="text-sm text-slate-300 leading-relaxed">{step.description}</p>
+                    </div>
+                  )}
                 </div>
               </li>
             </SectionReveal>

@@ -45,44 +45,52 @@ const steps = [
     number: "1",
     title: "Choose your package",
     description: "Pick Launch, Growth, or Scale. No sales call, no pressure.",
+    href: "/digital/pricing",
   },
   {
     number: "2",
     title: "Complete a 10-minute onboarding form",
     description: "Tell us your services, hours, address, and what you want visitors to do.",
+    href: "/digital/onboarding",
   },
   {
     number: "3",
     title: "Upload your photos & business details",
     description:
       "Photos, services, and anything you want on your site. No logo yet? We design one for you.",
+    href: "/digital/onboarding",
   },
   {
     number: "4",
     title: "Complete payment",
     description:
       "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is booked.",
+    href: "/digital/onboarding",
   },
   {
     number: "5",
     title: "We start building",
     description:
       "Your digital presence takes shape — designed around how your customers actually search.",
+    href: "/digital/why-nexbaron",
   },
   {
     number: "6",
     title: "Review your digital presence",
     description: "See it live, request tweaks, and approve the final version.",
+    href: "/digital/solutions",
   },
   {
     number: "7",
     title: "Go live",
     description: "Your digital presence is published — approved by you, on time.",
+    href: "/digital/solutions",
   },
   {
     number: "8",
     title: "Monthly growth begins",
     description: "Google visibility, WhatsApp answers, and monthly care keep it working.",
+    href: "/digital/results",
   },
 ];
 
