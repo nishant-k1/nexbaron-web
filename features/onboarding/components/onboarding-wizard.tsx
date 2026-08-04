@@ -22,7 +22,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/auth-context";
-import { AuthGate } from "@/features/auth/components/auth-gate";
 import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
 import { loadPlanSelection } from "@/features/digital/lib/plan-selection";
 import {
@@ -112,7 +111,7 @@ const paymentMethods = [
 
 export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
   const router = useRouter();
-  const { user, initialized } = useAuth();
+  const { user, initialized, openSignIn } = useAuth();
   const [step, setStep] = useState(0);
   const [logoFiles, setLogoFiles] = useState<string[]>([]);
   const [photoFiles, setPhotoFiles] = useState<string[]>([]);
@@ -120,7 +119,6 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
   const [confirmed, setConfirmed] = useState(false);
   const [locked, setLocked] = useState(true);
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
-  const [showAuthGate, setShowAuthGate] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<Date | null>(null);
   const [loadedDraft, setLoadedDraft] = useState(false);
@@ -343,16 +341,11 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
           <Button
             size="lg"
             className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-xl"
-            onClick={() => setShowAuthGate(true)}
+            onClick={() => openSignIn(planId)}
           >
             Sign in or create account
           </Button>
         </div>
-        <AuthGate
-          open={showAuthGate}
-          onClose={() => setShowAuthGate(false)}
-          onSuccess={() => setShowAuthGate(false)}
-        />
       </div>
     );
   }

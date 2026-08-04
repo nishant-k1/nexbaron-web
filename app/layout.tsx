@@ -4,6 +4,8 @@ import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import { AuthProvider } from "@/features/auth/auth-context";
+import { AuthGateController } from "@/features/auth/components/auth-gate-controller";
+import { GoogleOneTap } from "@/features/auth/components/google-one-tap";
 import { Footer } from "@/features/footer/components/footer";
 import { Navigation } from "@/features/navigation/components/navigation";
 import { ThemeProvider } from "@/theme/theme-provider";
@@ -153,6 +155,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AuthProvider>
             <GlobalMeshBackground />
+            <GoogleOneTap />
+            <AuthGateController />
             <a href="#main-content" className="skip-to-content">
               Skip to main content
             </a>

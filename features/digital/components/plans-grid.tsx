@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import { useAuth } from "@/features/auth/auth-context";
-import { AuthGate } from "@/features/auth/components/auth-gate";
 import { PlanCard } from "@/features/digital/components/plan-card";
 import { savePlanSelection } from "@/features/digital/lib/plan-selection";
 import {
@@ -13,13 +12,10 @@ import {
   type PlanSelection,
 } from "@/features/digital/plan-summary";
 import { plans } from "@/features/digital/plans";
-import { type AuthUser } from "@/lib/api";
 
 export function PlansGrid() {
   const router = useRouter();
-  const { user, signIn } = useAuth();
-  const [authOpen, setAuthOpen] = useState(false);
-  const [pendingPlan, setPendingPlan] = useState<string | null>(null);
+  const { user, openSignIn } = useAuth();
   const getPlan = (id: string) => plans.find((p) => p.id === id) ?? plans[0]!;
   const getSelection = (id: string): PlanSelection =>
     selections[id] ?? createDefaultSelection(getPlan(id));
@@ -98,22 +94,11 @@ export function PlansGrid() {
     if (user) {
       router.push(`/digital/onboarding?plan=${planId}`);
     } else {
-      setPendingPlan(planId);
-      setAuthOpen(true);
+      // Persist across the Google full-page redirect round-trip; the global
+      // dialog's OTP path navigates via the context pendingPlan.
+      window.sessionStorage.setItem("nexbaron-pending-plan", planId);
+      openSignIn(planId);
     }
-  };
-
-  const handleAuthSuccess = ({ token, user: authUser }: { token: string; user: AuthUser }) => {
-    signIn(token, authUser);
-    setAuthOpen(false);
-    if (pendingPlan) {
-      router.push(`/digital/onboarding?plan=${pendingPlan}`);
-    }
-  };
-
-  const handleAuthClose = () => {
-    setAuthOpen(false);
-    setPendingPlan(null);
   };
 
   const prepared = useMemo<ReturnType<typeof computePrepared>>(
@@ -157,8 +142,6 @@ export function PlansGrid() {
           },
         )}
       </div>
-
-      <AuthGate open={authOpen} onClose={handleAuthClose} onSuccess={handleAuthSuccess} />
     </>
   );
 }

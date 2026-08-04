@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/features/auth/auth-context";
 import { apiRequest, type AuthUser } from "@/lib/api";
 
 type Channel = "email" | "phone" | null;
@@ -21,6 +22,7 @@ enum Step {
 }
 
 export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
+  const { user } = useAuth();
   const [step, setStep] = useState<Step>(Step.Method);
   const [channel, setChannel] = useState<Channel>(null);
   const [name, setName] = useState("");
@@ -45,6 +47,12 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
   useEffect(() => {
     if (open) reset();
   }, [open]);
+
+  useEffect(() => {
+    // If sign-in completes elsewhere (e.g. the global One Tap popup) while the
+    // dialog is open, close it instead of leaving it stuck on screen.
+    if (user && open) onClose();
+  }, [user, open, onClose]);
 
   useEffect(() => {
     if (step === Step.Contact) {
@@ -110,96 +118,41 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
     }
   };
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     if (!clientId) {
       setError("Google sign-in isn't configured. Use email or phone for now.");
       return;
     }
     setError(null);
-    setLoading(true);
-
-    const win = window as unknown as { google?: { accounts?: { id?: unknown } } };
-    const decodeJwt = (token: string) => {
-      const part = token.split(".")[1];
-      const base64 = (part ?? "").replace(/-/g, "+").replace(/_/g, "/");
-      return JSON.parse(window.atob(base64));
-    };
-
-    if (!win.google?.accounts?.id) {
-      const script = document.createElement("script");
-      script.src = "https://accounts.google.com/gsi/client";
-      script.async = true;
-      script.onload = () => renderGoogleButton(clientId, decodeJwt);
-      document.head.appendChild(script);
-    } else {
-      renderGoogleButton(clientId, decodeJwt);
-    }
-  };
-
-  const renderGoogleButton = (
-    clientId: string,
-    decodeJwt: (t: string) => { name?: string; email: string; sub: string; picture?: string },
-  ) => {
-    const w = window as unknown as {
-      google: {
-        accounts: {
-          id: {
-            initialize: (config: {
-              client_id: string;
-              callback: (response: { credential: string }) => void;
-            }) => void;
-            prompt: (
-              listener: (notification: {
-                isNotDisplayed: () => boolean;
-                isSkippedMoment: () => boolean;
-              }) => void,
-            ) => void;
-            disableAutoSelect: () => void;
-          };
-        };
-      };
-    };
-    w.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: (response: { credential: string }) =>
-        handleGoogleCredential(response.credential, decodeJwt),
-    });
-    w.google.accounts.id.disableAutoSelect();
-    w.google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        setLoading(false);
-        setError("Google didn't open a sign-in window. Try again, or use email or phone.");
-      }
-    });
-  };
-
-  const handleGoogleCredential = async (
-    credential: string,
-    decodeJwt: (t: string) => { name?: string; email: string; sub: string; picture?: string },
-  ) => {
-    const payload = decodeJwt(credential);
-    setLoading(true);
-    setError(null);
     try {
-      const data = await apiRequest<{ success: boolean; token: string; user: AuthUser }>(
-        "/api/digital/auth/google",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            name: payload.name,
-            email: payload.email,
-            googleId: payload.sub,
-            photo: payload.picture,
-            division: "digital",
-          }),
-        },
+      // Plain OAuth2 Authorization Code flow. This is a direct browser
+      // navigation to accounts.google.com — NO Google Identity Services
+      // script and NO FedCM, so it works even when Chrome blocks or disables
+      // third-party sign-in for the site. The authorization code comes back
+      // as a query param on /api/auth/google/callback, which exchanges it for
+      // tokens server-side.
+      const state = crypto.randomUUID();
+      window.sessionStorage.setItem("nexbaron-oauth-state", state);
+      // Remember where to come back after the round-trip.
+      window.sessionStorage.setItem(
+        "nexbaron-auth-return",
+        window.location.pathname + window.location.search,
       );
-      onSuccess({ token: data.token, user: data.user });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not sign in with Google.");
-    } finally {
-      setLoading(false);
+
+      const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
+      authUrl.searchParams.set("client_id", clientId);
+      authUrl.searchParams.set(
+        "redirect_uri",
+        `${window.location.origin}/api/auth/google/callback`,
+      );
+      authUrl.searchParams.set("response_type", "code");
+      authUrl.searchParams.set("scope", "openid email profile");
+      authUrl.searchParams.set("prompt", "select_account");
+      authUrl.searchParams.set("state", state);
+      window.location.href = authUrl.toString();
+    } catch {
+      setError("Google sign-in didn't start. Try again, or use email or phone.");
     }
   };
 

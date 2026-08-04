@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/features/auth/auth-context";
-import { AuthGate } from "@/features/auth/components/auth-gate";
-import { type AuthUser } from "@/lib/api";
 
 function initials(name: string): string {
   return name
@@ -19,9 +17,8 @@ function initials(name: string): string {
 }
 
 export function UserMenu() {
-  const { user, signOut, signIn, initialized } = useAuth();
+  const { user, signOut, initialized, openSignIn } = useAuth();
   const [open, setOpen] = useState(false);
-  const [showAuthGate, setShowAuthGate] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -43,22 +40,12 @@ export function UserMenu() {
 
   if (!user) {
     return (
-      <>
-        <button
-          onClick={() => setShowAuthGate(true)}
-          className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-teal-400 hover:text-teal-300 border border-teal-500/40 hover:border-teal-500/70 transition-colors"
-        >
-          <User className="w-4 h-4" /> Sign in
-        </button>
-        <AuthGate
-          open={showAuthGate}
-          onClose={() => setShowAuthGate(false)}
-          onSuccess={({ token, user: authUser }: { token: string; user: AuthUser }) => {
-            signIn(token, authUser);
-            setShowAuthGate(false);
-          }}
-        />
-      </>
+      <button
+        onClick={() => openSignIn()}
+        className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-teal-400 hover:text-teal-300 border border-teal-500/40 hover:border-teal-500/70 transition-colors"
+      >
+        <User className="w-4 h-4" /> Sign in
+      </button>
     );
   }
 
