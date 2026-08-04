@@ -3,30 +3,24 @@ import { type NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, company, subject, message, division } = body;
+    const { name, message } = body;
 
     // Validate required fields
     if (!name || !message) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // In production, this would send to the backend API
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
+    // Forward the full submitted payload so division-specific fields
+    // (plan, businessType, city, goal, requirement, quantity, deadline,
+    // deliveryPincode, etc.) are preserved as a lead in the CRM.
     const response = await fetch(`${backendUrl}/api/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name,
-        email,
-        phone,
-        company,
-        subject,
-        message,
-        division,
-      }),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
