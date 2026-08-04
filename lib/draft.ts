@@ -43,6 +43,8 @@ export async function getDraft(
 ): Promise<ServerDraft | null> {
   const data = await apiRequest<{ success: boolean; draft: ServerDraft | null }>(
     `/api/digital/drafts/${division}`,
+    {},
+    division,
   );
   return data.draft;
 }
@@ -57,6 +59,7 @@ export async function saveDraft(
       method: "PUT",
       body: JSON.stringify(payload),
     },
+    division,
   );
   return data.draft;
 }
@@ -67,6 +70,7 @@ export async function resetPlanDraft(
   const data = await apiRequest<{ success: boolean; draft: ServerDraft }>(
     `/api/digital/drafts/${division}/reset-plan`,
     { method: "POST" },
+    division,
   );
   return data.draft;
 }

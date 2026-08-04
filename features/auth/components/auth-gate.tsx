@@ -22,7 +22,7 @@ enum Step {
 }
 
 export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
-  const { user } = useAuth();
+  const { user, division } = useAuth();
   const [step, setStep] = useState<Step>(Step.Method);
   const [channel, setChannel] = useState<Channel>(null);
   const [name, setName] = useState("");
@@ -82,8 +82,9 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
         "/api/digital/auth/request-otp",
         {
           method: "POST",
-          body: JSON.stringify({ channel, target, name, division: "digital" }),
+          body: JSON.stringify({ channel, target, name, division }),
         },
+        division,
       );
       setSentCode(data.devCode ?? null);
       setCountdown(30);
@@ -106,10 +107,14 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
         success: boolean;
         token: string;
         user: AuthUser;
-      }>("/api/digital/auth/verify", {
-        method: "POST",
-        body: JSON.stringify({ channel, target, code, name, division: "digital" }),
-      });
+      }>(
+        "/api/digital/auth/verify",
+        {
+          method: "POST",
+          body: JSON.stringify({ channel, target, code, name, division }),
+        },
+        division,
+      );
       onSuccess({ token: data.token, user: data.user });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not verify the code.");
@@ -132,7 +137,7 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
       // third-party sign-in for the site. The authorization code comes back
       // as a query param on /api/auth/google/callback, which exchanges it for
       // tokens server-side.
-      const state = crypto.randomUUID();
+      const state = JSON.stringify({ nonce: crypto.randomUUID(), division });
       window.sessionStorage.setItem("nexbaron-oauth-state", state);
       // Remember where to come back after the round-trip.
       window.sessionStorage.setItem(
@@ -183,12 +188,12 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
           </div>
           <div>
             <h2 className="text-lg font-heading font-bold text-white">
-              {step === Step.Method ? "Continue to onboarding" : "Verify it's you"}
+              {step === Step.Method ? "Continue with Nexbaron" : "Verify it's you"}
             </h2>
             <p className="text-[11px] text-slate-400">
               {step === Step.Method
-                ? "Create an account or sign in to save your plan."
-                : `We saved your package — let's verify your ${isEmail ? "email" : "phone"}.`}
+                ? "Create an account or sign in to continue."
+                : `We saved your details — let's verify your ${isEmail ? "email" : "phone"}.`}
             </p>
           </div>
         </div>

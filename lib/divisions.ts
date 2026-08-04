@@ -1,5 +1,10 @@
 export type DivisionSlug = "digital" | "print";
 
+export function getDivisionFromPath(pathname: string): DivisionSlug {
+  if (pathname === "/print" || pathname.startsWith("/print")) return "print";
+  return "digital";
+}
+
 interface NavItem {
   href: string;
   label: string;

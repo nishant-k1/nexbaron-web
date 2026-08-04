@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { Button } from "@/components/ui/button";
+import { UserMenu } from "@/features/auth/components/user-menu";
 import { divisions } from "@/lib/divisions";
 
 const navItems = divisions.print.nav;
@@ -77,6 +78,7 @@ export function PrintNavigation() {
 
           {/* Action CTAs */}
           <div className="hidden md:flex items-center gap-3">
+            <UserMenu />
             <Button
               asChild
               size="sm"
@@ -122,7 +124,8 @@ export function PrintNavigation() {
                 </Link>
               ))}
             </div>
-            <div className="pt-4 border-t border-white/10">
+            <div className="pt-4 border-t border-white/10 space-y-3">
+              <UserMenu />
               <Button asChild className="w-full bg-amber-500 text-slate-950 font-bold">
                 <Link href="/print/quote">Calculate Print Order</Link>
               </Button>

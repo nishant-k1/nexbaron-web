@@ -246,7 +246,7 @@ export function LeadForm({
               ) : field.type === "select" ? (
                 <select
                   id={field.name}
-                  className="mt-2 flex h-10 w-full border border-white/20 bg-transparent px-3 py-2 text-sm text-white placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg aria-[invalid=true]:border-red-500 [&>option]:text-slate-900"
+                  className="mt-2 flex h-10 w-full cursor-pointer border border-white/20 bg-transparent px-3 py-2 text-sm text-white placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg aria-[invalid=true]:border-red-500 [&>option]:text-slate-900"
                   aria-invalid={errors[field.name] ? "true" : "false"}
                   defaultValue=""
                   {...register(field.name)}

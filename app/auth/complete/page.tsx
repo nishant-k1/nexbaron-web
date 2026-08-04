@@ -5,6 +5,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/features/auth/auth-context";
 import type { AuthUser } from "@/lib/api";
+import { getDivisionFromPath, type DivisionSlug } from "@/lib/divisions";
 
 const PENDING_PLAN_KEY = "nexbaron-pending-plan";
 const RETURN_KEY = "nexbaron-auth-return";
@@ -24,6 +25,7 @@ function CompleteInner() {
     const userRaw = params.get("user");
     const error = params.get("error");
     const pendingPlan = readAndClear(PENDING_PLAN_KEY);
+    const returnPath = readAndClear(RETURN_KEY);
 
     if (error) {
       setFatalError(error);
@@ -42,8 +44,12 @@ function CompleteInner() {
       return;
     }
 
-    const returnPath = readAndClear(RETURN_KEY) ?? "/digital";
-    router.replace(pendingPlan ? `/digital/onboarding?plan=${pendingPlan}` : returnPath);
+    const division: DivisionSlug =
+      (JSON.parse(userRaw ?? "{}") as { division?: DivisionSlug }).division ??
+      (returnPath ? getDivisionFromPath(returnPath) : "digital");
+    router.replace(
+      pendingPlan ? `/digital/onboarding?plan=${pendingPlan}` : (returnPath ?? `/${division}`),
+    );
   }, [params, router, signIn]);
 
   if (fatalError) {

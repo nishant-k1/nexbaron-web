@@ -1,43 +1,64 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
-export const AUTH_TOKEN_KEY = "nexbaron-auth-token";
+export type Division = "digital" | "print";
+
+const AUTH_TOKEN_KEY_PREFIX = "nexbaron-auth-token";
+
+export function authTokenKey(division: Division): string {
+  return `${AUTH_TOKEN_KEY_PREFIX}-${division}`;
+}
 
 export interface AuthUser {
   id: string;
   name: string;
   email: string | null;
   phone: string | null;
-  division: "digital" | "print";
+  division: Division;
   photo?: string | null;
 }
 
-export function getToken(): string | null {
+export function getToken(division: Division): string | null {
   if (typeof window === "undefined") return null;
-  return window.localStorage.getItem(AUTH_TOKEN_KEY);
+  const scoped = window.localStorage.getItem(authTokenKey(division));
+  if (scoped) return scoped;
+  // Backwards compatibility: a token saved before division scoping lived under
+  // the unscoped key. Treat it as the digital session.
+  if (division === "digital") {
+    return window.localStorage.getItem(AUTH_TOKEN_KEY_PREFIX);
+  }
+  return null;
 }
 
-export function setToken(token: string | null): void {
+export function setToken(token: string | null, division: Division): void {
   if (typeof window === "undefined") return;
+  const key = authTokenKey(division);
   if (token) {
-    window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+    window.localStorage.setItem(key, token);
+    if (division === "digital") {
+      window.localStorage.removeItem(AUTH_TOKEN_KEY_PREFIX);
+    }
   } else {
-    window.localStorage.removeItem(AUTH_TOKEN_KEY);
+    window.localStorage.removeItem(key);
   }
 }
 
-export function getAuthHeaders(): Record<string, string> {
-  const token = getToken();
+export function getAuthHeaders(division: Division): Record<string, string> {
+  const token = getToken(division);
   return {
     "Content-Type": "application/json",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }
 
-export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
+export async function apiRequest<T>(
+  path: string,
+  options: RequestInit = {},
+  division: Division = "digital",
+): Promise<T> {
   const response = await fetch(`${API_URL}${path}`, {
     ...options,
     headers: {
-      ...getAuthHeaders(),
+      ...getAuthHeaders(division),
       ...(options.headers ?? {}),
     },
   });

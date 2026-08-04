@@ -1,13 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import { apiRequest, getToken, setToken, type AuthUser } from "@/lib/api";
+import { getDivisionFromPath, type DivisionSlug } from "@/lib/divisions";
 import { decodeGoogleJwt } from "@/lib/google";
 
 interface AuthContextValue {
   user: AuthUser | null;
+  division: DivisionSlug;
   initialized: boolean;
   signIn: (token: string, user: AuthUser) => void;
   signOut: () => void;
@@ -24,42 +26,54 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const division = getDivisionFromPath(pathname ?? "");
   const [user, setUser] = useState<AuthUser | null>(null);
   const [initialized, setInitialized] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
   const [pendingPlan, setPendingPlan] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
-    const token = getToken();
+    const token = getToken(division);
     if (!token) {
       setUser(null);
       setInitialized(true);
       return;
     }
     try {
-      const data = await apiRequest<{ success: boolean; user: AuthUser }>("/api/digital/auth/me");
-      setUser(data.user);
+      const data = await apiRequest<{ success: boolean; user: AuthUser }>(
+        "/api/digital/auth/me",
+        {},
+        division,
+      );
+      if (data.user.division !== division) {
+        // Token belongs to the other division — treat this division as signed out.
+        setToken(null, division);
+        setUser(null);
+      } else {
+        setUser(data.user);
+      }
     } catch {
-      setToken(null);
+      setToken(null, division);
       setUser(null);
     } finally {
       setInitialized(true);
     }
-  }, []);
+  }, [division]);
 
   useEffect(() => {
     refresh();
   }, [refresh]);
 
   const signIn = useCallback((token: string, nextUser: AuthUser) => {
-    setToken(token);
+    setToken(token, nextUser.division);
     setUser(nextUser);
   }, []);
 
   const signOut = useCallback(() => {
-    setToken(null);
+    setToken(null, division);
     setUser(null);
-  }, []);
+  }, [division]);
 
   const googleSignIn = useCallback(
     async (credential: string): Promise<{ token: string; user: AuthUser } | null> => {
@@ -74,9 +88,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               email: payload.email,
               googleId: payload.sub,
               photo: payload.picture,
-              division: "digital",
+              division,
             }),
           },
+          division,
         );
         signIn(data.token, data.user);
         return { token: data.token, user: data.user };
@@ -84,7 +99,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return null;
       }
     },
-    [signIn],
+    [signIn, division],
   );
 
   const openSignIn = useCallback((planId?: string) => {
@@ -119,6 +134,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo(
     () => ({
       user,
+      division,
       initialized,
       signIn,
       signOut,
@@ -132,6 +148,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }),
     [
       user,
+      division,
       initialized,
       signIn,
       signOut,

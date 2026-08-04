@@ -2,10 +2,11 @@
 
 import { LogOut, User } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/features/auth/auth-context";
+import { getDivisionFromPath, type DivisionSlug } from "@/lib/divisions";
 
 function initials(name: string): string {
   return name
@@ -16,8 +17,20 @@ function initials(name: string): string {
     .join("");
 }
 
+const DIVISION_HOME: Record<DivisionSlug, string> = {
+  digital: "/digital",
+  print: "/print",
+};
+
+const DIVISION_ACCOUNT: Record<DivisionSlug, { label: string; href: string }> = {
+  digital: { label: "Your plan", href: "/digital/pricing" },
+  print: { label: "Your orders", href: "/print/bulk-orders" },
+};
+
 export function UserMenu() {
   const { user, signOut, initialized, openSignIn } = useAuth();
+  const pathname = usePathname();
+  const division = getDivisionFromPath(pathname ?? "");
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -90,18 +103,18 @@ export function UserMenu() {
             role="menuitem"
             onClick={() => {
               setOpen(false);
-              router.push("/digital/pricing");
+              router.push(DIVISION_ACCOUNT[division].href);
             }}
             className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-teal-300 hover:bg-white/5"
           >
-            <User className="w-4 h-4" /> Your plan
+            <User className="w-4 h-4" /> {DIVISION_ACCOUNT[division].label}
           </button>
           <button
             role="menuitem"
             onClick={() => {
               setOpen(false);
               signOut();
-              router.push("/digital");
+              router.push(DIVISION_HOME[division]);
             }}
             className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-slate-300 hover:bg-white/5"
           >

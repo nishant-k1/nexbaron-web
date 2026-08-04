@@ -37,6 +37,17 @@ export async function GET(req: NextRequest): Promise<Response> {
     return redirectTo("/auth/complete", { error: "Google sign-in was cancelled." });
   }
 
+  // The client encodes { nonce, division } in the OAuth state so we can create
+  // the user under the right division (digital vs print).
+  const state = req.nextUrl.searchParams.get("state");
+  let division: "digital" | "print" = "digital";
+  try {
+    const parsed = state ? (JSON.parse(state) as { division?: "digital" | "print" }) : null;
+    if (parsed?.division) division = parsed.division;
+  } catch {
+    // fall through with digital
+  }
+
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
@@ -94,7 +105,7 @@ export async function GET(req: NextRequest): Promise<Response> {
         email: payload.email,
         googleId: payload.sub,
         photo: payload.picture,
-        division: "digital",
+        division,
       }),
     });
   } catch {
