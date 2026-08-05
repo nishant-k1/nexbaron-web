@@ -27,14 +27,7 @@ export interface AuthUser {
 
 export function getToken(division: Division): string | null {
   if (typeof window === "undefined") return null;
-  const scoped = window.localStorage.getItem(authTokenKey(division));
-  if (scoped) return scoped;
-  // Backwards compatibility: a token saved before division scoping lived under
-  // the unscoped key. Treat it as the digital session.
-  if (division === "digital") {
-    return window.localStorage.getItem(AUTH_TOKEN_KEY_PREFIX);
-  }
-  return null;
+  return window.localStorage.getItem(authTokenKey(division));
 }
 
 export function setToken(token: string | null, division: Division): void {
