@@ -104,10 +104,7 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
   },
   icons: {
-    icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
-    ],
+    icon: "/favicon.ico",
   },
 };
 
@@ -144,8 +141,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="dns-prefetch" href="https://cdn.pixabay.com" />
         <link rel="preconnect" href="https://cdn.pixabay.com" crossOrigin="anonymous" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

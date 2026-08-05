@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
   description:
     "Nexbaron Print delivers premium commercial printing: visiting cards, card holders, letterheads, envelopes, bill books, stickers & labels, pens, and specialty print.",
+  icons: {
+    icon: "/favicon-print.svg",
+  },
   openGraph: {
     type: "website",
     url: `${siteUrl}/print`,

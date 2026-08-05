@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
   description:
     "Fixed-price growth plans that get your business found on Google and answering customers on WhatsApp 24/7. Published prices, no jargon, no lock-in. Live in as little as 7 days.",
+  icons: {
+    icon: "/favicon-digital.svg",
+  },
   openGraph: {
     type: "website",
     url: `${siteUrl}/digital`,
