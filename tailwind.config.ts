@@ -10,6 +10,10 @@ const config: Config = {
     "./theme/**/*.{js,ts,jsx,tsx,mdx}",
     "./lib/**/*.{js,ts,jsx,tsx,mdx}",
     "./hooks/**/*.{js,ts,jsx,tsx,mdx}",
+    "./navigation/**/*.{js,ts,jsx,tsx,mdx}",
+    "./auth/**/*.{js,ts,jsx,tsx,mdx}",
+    "./footer/**/*.{js,ts,jsx,tsx,mdx}",
+    "./contact/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     container: {
