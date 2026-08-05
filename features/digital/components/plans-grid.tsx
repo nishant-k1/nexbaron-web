@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
-import { useAuth } from "@/features/auth/auth-context";
+import { useAuth } from "@/auth/auth-context";
 import { PlanCard } from "@/features/digital/components/plan-card";
 import { usePlans } from "@/features/digital/lib/catalog";
 import { savePlanSelection } from "@/features/digital/lib/plan-selection";

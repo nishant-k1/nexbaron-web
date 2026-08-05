@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { useAuth } from "@/auth/auth-context";
 import { LaunchTracker } from "@/components/tracking/launch-tracker";
-import { useAuth } from "@/features/auth/auth-context";
 import { fetchMyOrder, type MyOrder } from "@/features/digital/lib/orders";
 import { buildStageSchedule } from "@/features/digital/plan-summary";
 

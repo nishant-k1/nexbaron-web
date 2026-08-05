@@ -3,7 +3,7 @@ import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { PageHero } from "@/components/sections/page-hero";
-import { OnboardingWizard } from "@/features/onboarding/components/onboarding-wizard";
+import { OnboardingWizard } from "@/features/digital/onboarding/components/onboarding-wizard";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 

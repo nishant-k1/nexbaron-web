@@ -3,11 +3,11 @@ import dynamic from "next/dynamic";
 import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
-import { AuthProvider } from "@/features/auth/auth-context";
-import { AuthGateController } from "@/features/auth/components/auth-gate-controller";
-import { GoogleOneTap } from "@/features/auth/components/google-one-tap";
-import { Footer } from "@/features/footer/components/footer";
-import { Navigation } from "@/features/navigation/components/navigation";
+import { AuthProvider } from "@/auth/auth-context";
+import { AuthGateController } from "@/auth/components/auth-gate-controller";
+import { GoogleOneTap } from "@/auth/components/google-one-tap";
+import { Footer } from "@/footer/components/footer";
+import { Navigation } from "@/navigation/components/navigation";
 import { ThemeProvider } from "@/theme/theme-provider";
 
 const GlobalMeshBackground = dynamic(

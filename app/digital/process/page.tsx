@@ -26,7 +26,7 @@ import { PageHero } from "@/components/sections/page-hero";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { Button } from "@/components/ui/button";
-import { CustomerProjectTracker } from "@/features/onboarding/components/customer-project-tracker";
+import { CustomerProjectTracker } from "@/features/digital/onboarding/components/customer-project-tracker";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {

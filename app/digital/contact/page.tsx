@@ -2,7 +2,7 @@ import { MessageSquare, Clock, ShieldCheck, CalendarClock, PhoneCall } from "luc
 import { type Metadata } from "next";
 
 import { PageHero } from "@/components/sections/page-hero";
-import { LeadForm } from "@/features/contact/components/lead-form";
+import { LeadForm } from "@/contact/components/lead-form";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 

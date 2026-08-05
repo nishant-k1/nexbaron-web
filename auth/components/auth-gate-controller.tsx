@@ -1,7 +1,7 @@
 "use client";
 
-import { useAuth } from "@/features/auth/auth-context";
-import { AuthGate } from "@/features/auth/components/auth-gate";
+import { useAuth } from "@/auth/auth-context";
+import { AuthGate } from "@/auth/components/auth-gate";
 
 /**
  * The single, app-wide sign-in dialog. Mounted once in the root layout inside

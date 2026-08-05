@@ -3,9 +3,9 @@
 import { Loader2, Mail, MessageSquare, Phone, User, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { useAuth } from "@/auth/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/features/auth/auth-context";
 import { apiRequest, type AuthUser } from "@/lib/api";
 import { getGoogleClientId } from "@/lib/google";
 

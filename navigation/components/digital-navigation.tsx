@@ -5,8 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
+import { UserMenu } from "@/auth/components/user-menu";
 import { BrandMark } from "@/components/brand/brand-mark";
-import { UserMenu } from "@/features/auth/components/user-menu";
 import { divisions } from "@/lib/divisions";
 
 const navItems = divisions.digital.nav;

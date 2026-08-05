@@ -4,8 +4,8 @@ import { FileText, Loader2, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { useAuth } from "@/auth/auth-context";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/features/auth/auth-context";
 import { getMyPrintQuotes, type PrintQuote } from "@/features/print/lib/quotes";
 
 const STATUS_LABELS: Record<PrintQuote["status"], string> = {

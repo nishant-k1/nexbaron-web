@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { useAuth } from "@/features/auth/auth-context";
+import { useAuth } from "@/auth/auth-context";
 import type { DivisionSlug } from "@/lib/divisions";
 
 function initials(name: string): string {
