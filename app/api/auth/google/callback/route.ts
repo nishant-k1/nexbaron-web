@@ -119,15 +119,18 @@ function googleOAuthConfig(division: Division): {
   clientId: string | undefined;
   clientSecret: string | undefined;
 } {
-  return division === "digital"
-    ? {
-        clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET_DIGITAL,
-      }
-    : {
-        clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET_PRINT,
-      };
+  const brandClientId =
+    division === "digital"
+      ? process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL
+      : process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT;
+  const brandSecret =
+    division === "digital"
+      ? process.env.GOOGLE_CLIENT_SECRET_DIGITAL
+      : process.env.GOOGLE_CLIENT_SECRET_PRINT;
+  // Fall back to generic credentials when brand-specific ones are not set
+  const clientId = brandClientId || process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  const clientSecret = brandSecret || process.env.GOOGLE_CLIENT_SECRET;
+  return { clientId, clientSecret };
 }
 
 function redirectToComplete(origin: string, params: Record<string, string>): NextResponse {
