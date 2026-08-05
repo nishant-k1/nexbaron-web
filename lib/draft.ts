@@ -40,7 +40,7 @@ export type DraftPayload = Partial<{
 
 export async function getDraft(): Promise<ServerDraft | null> {
   const data = await apiRequest<{ success: boolean; draft: ServerDraft | null }>(
-    "/api/digital/drafts",
+    "/digital/drafts",
     {},
     "digital",
   );
@@ -49,7 +49,7 @@ export async function getDraft(): Promise<ServerDraft | null> {
 
 export async function saveDraft(payload: DraftPayload): Promise<ServerDraft> {
   const data = await apiRequest<{ success: boolean; draft: ServerDraft }>(
-    "/api/digital/drafts",
+    "/digital/drafts",
     {
       method: "PUT",
       body: JSON.stringify(payload),
@@ -61,7 +61,7 @@ export async function saveDraft(payload: DraftPayload): Promise<ServerDraft> {
 
 export async function resetPlanDraft(): Promise<ServerDraft> {
   const data = await apiRequest<{ success: boolean; draft: ServerDraft }>(
-    "/api/digital/drafts/reset-plan",
+    "/digital/drafts/reset-plan",
     { method: "POST" },
     "digital",
   );

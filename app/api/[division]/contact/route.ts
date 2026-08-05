@@ -14,7 +14,7 @@ export async function POST(request: NextRequest, { params }: { params: { divisio
 
     // Forward to the brand-scoped backend endpoint so the lead lands in the
     // correct division database.
-    const response = await fetch(`${backendUrl}/api/${division}/contact`, {
+    const response = await fetch(`${backendUrl}/${division}/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

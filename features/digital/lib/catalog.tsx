@@ -113,7 +113,7 @@ export function PlansProvider({ children }: { children: ReactNode }) {
 
     (async () => {
       try {
-        const response = await fetch(`${getApiUrl("digital")}/api/digital/catalog`, {
+        const response = await fetch(`${getApiUrl("digital")}/digital/catalog`, {
           headers: { Accept: "application/json" },
         });
         if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);

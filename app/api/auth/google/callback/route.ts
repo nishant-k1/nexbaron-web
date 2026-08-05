@@ -75,7 +75,7 @@ export async function GET(request: NextRequest): Promise<Response> {
 
   let backend: Response;
   try {
-    backend = await fetch(`${getApiUrl(division)}/api/${division}/auth/google`, {
+    backend = await fetch(`${getApiUrl(division)}/${division}/auth/google`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ credential: tokens.id_token }),

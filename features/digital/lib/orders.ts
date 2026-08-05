@@ -26,7 +26,7 @@ export async function fetchMyOrder(
 ): Promise<MyOrder | null> {
   if (!getToken(division)) return null;
   const data = await apiRequest<{ success: boolean; order: MyOrder | null }>(
-    "/api/digital/payments/orders/mine",
+    "/digital/payments/orders/mine",
     { method: "GET" },
     division,
   );

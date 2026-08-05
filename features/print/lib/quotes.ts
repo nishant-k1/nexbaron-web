@@ -66,12 +66,12 @@ export interface PrintQuote {
 }
 
 export async function getPrintCatalog(): Promise<PrintCatalog> {
-  return apiRequest<PrintCatalog>("/api/print/catalog", {}, "print");
+  return apiRequest<PrintCatalog>("/print/catalog", {}, "print");
 }
 
 export async function submitPrintQuote(input: PrintQuoteInput): Promise<SubmitQuoteResponse> {
   return apiRequest<SubmitQuoteResponse>(
-    "/api/print/quotes",
+    "/print/quotes",
     {
       method: "POST",
       body: JSON.stringify(input),
@@ -82,7 +82,7 @@ export async function submitPrintQuote(input: PrintQuoteInput): Promise<SubmitQu
 
 export async function getMyPrintQuotes(): Promise<PrintQuote[]> {
   const data = await apiRequest<{ success: boolean; quotes: PrintQuote[] }>(
-    "/api/print/quotes/mine",
+    "/print/quotes/mine",
     {},
     "print",
   );

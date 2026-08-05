@@ -56,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     try {
       const data = await apiRequest<{ success: boolean; user: AuthUser }>(
-        `/api/${requestedDivision}/auth/me`,
+        `/${requestedDivision}/auth/me`,
         {},
         requestedDivision,
       );
@@ -100,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!division) return null;
       try {
         const data = await apiRequest<{ success: boolean; token: string; user: AuthUser }>(
-          `/api/${division}/auth/google`,
+          `/${division}/auth/google`,
           {
             method: "POST",
             body: JSON.stringify({ credential }),

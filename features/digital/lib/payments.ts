@@ -63,7 +63,7 @@ export async function createCheckout(payload: {
   selections: CheckoutSelections;
   customer: CheckoutCustomer;
 }): Promise<CreateCheckoutResponse> {
-  return apiRequest<CreateCheckoutResponse>("/api/digital/payments/create-order", {
+  return apiRequest<CreateCheckoutResponse>("/digital/payments/create-order", {
     method: "POST",
     body: JSON.stringify(payload),
   });
@@ -74,7 +74,7 @@ export async function verifyPayment(payload: {
   razorpay_payment_id: string;
   razorpay_signature: string;
 }): Promise<VerifyPaymentResponse> {
-  return apiRequest<VerifyPaymentResponse>("/api/digital/payments/verify", {
+  return apiRequest<VerifyPaymentResponse>("/digital/payments/verify", {
     method: "POST",
     body: JSON.stringify(payload),
   });

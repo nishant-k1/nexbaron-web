@@ -94,7 +94,7 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
     setError(null);
     try {
       const data = await apiRequest<{ success: boolean; devCode?: string; message?: string }>(
-        `/api/${division}/auth/request-otp`,
+        `/${division}/auth/request-otp`,
         {
           method: "POST",
           body: JSON.stringify({ channel, target, name }),
@@ -125,7 +125,7 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
         token: string;
         user: AuthUser;
       }>(
-        `/api/${division}/auth/verify`,
+        `/${division}/auth/verify`,
         {
           method: "POST",
           body: JSON.stringify({ channel, target, code, name }),
