@@ -121,16 +121,12 @@ function googleOAuthConfig(division: Division): {
 } {
   return division === "digital"
     ? {
-        clientId:
-          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL ||
-          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET_DIGITAL || process.env.GOOGLE_CLIENT_SECRET,
+        clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET_DIGITAL,
       }
     : {
-        clientId:
-          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT ||
-          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET_PRINT || process.env.GOOGLE_CLIENT_SECRET,
+        clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET_PRINT,
       };
 }
 
