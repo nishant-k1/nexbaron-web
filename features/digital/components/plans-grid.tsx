@@ -7,8 +7,10 @@ import { useAuth } from "@/features/auth/auth-context";
 import { PlanCard } from "@/features/digital/components/plan-card";
 import { savePlanSelection } from "@/features/digital/lib/plan-selection";
 import {
+  computeLaunchTimeline,
   computePrepared,
   createDefaultSelection,
+  type LaunchTimeline,
   type PlanSelection,
 } from "@/features/digital/plan-summary";
 import { plans } from "@/features/digital/plans";
@@ -107,6 +109,15 @@ export function PlansGrid() {
     [selections],
   );
 
+  const launchTimelines = useMemo<Record<string, LaunchTimeline>>(() => {
+    const map: Record<string, LaunchTimeline> = {};
+    for (const plan of plans) {
+      map[plan.id] = computeLaunchTimeline(plans, getSelection, plan.id);
+    }
+    return map;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selections]);
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
@@ -125,6 +136,7 @@ export function PlansGrid() {
               <PlanCard
                 key={plan.id}
                 plan={plan}
+                launchTimeline={launchTimelines[plan.id]}
                 oneTimeTotal={oneTimeTotal}
                 monthlyTotal={monthlyTotal}
                 serviceSelection={serviceSelection}

@@ -1,14 +1,16 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CalendarCheck } from "lucide-react";
 
+import { formatCalendarDate } from "@/components/tracking/launch-tracker";
 import { Button } from "@/components/ui/button";
 import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
-import type { InheritedView } from "@/features/digital/plan-summary";
+import type { InheritedView, LaunchTimeline } from "@/features/digital/plan-summary";
 import { formatINR, type Plan } from "@/features/digital/plans";
 
 interface PlanCardProps {
   plan: Plan;
+  launchTimeline?: LaunchTimeline;
   oneTimeTotal: number;
   monthlyTotal: number;
   serviceSelection: Record<string, boolean>;
@@ -25,6 +27,7 @@ interface PlanCardProps {
 
 export function PlanCard({
   plan,
+  launchTimeline,
   oneTimeTotal,
   monthlyTotal,
   serviceSelection,
@@ -75,8 +78,17 @@ export function PlanCard({
       </div>
 
       <div className="mb-4">
-        <span className="text-[10px] font-mono text-teal-400 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20 inline-block">
-          {plan.timeline}
+        <span className="text-[10px] font-mono text-teal-400 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20 inline-flex items-center gap-1.5">
+          {plan.timelineMode === "phased" ? (
+            plan.timeline
+          ) : launchTimeline ? (
+            <>
+              <CalendarCheck className="w-3 h-3" />
+              Web live by {formatCalendarDate(launchTimeline.launchDate)}
+            </>
+          ) : (
+            plan.timeline
+          )}
         </span>
       </div>
 

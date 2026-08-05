@@ -165,7 +165,7 @@ const industries = [
     planId: "launch",
     ctaLabel: "See Startup Package",
     features: [
-      "A credible footprint live in 7 days",
+      "A credible footprint live on a confirmed date",
       "Your logo, brand, and message done right",
       "Customers can reach you instantly on WhatsApp",
       "Looks professional on every device",

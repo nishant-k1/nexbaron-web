@@ -1,4 +1,12 @@
-import { type BillingType, type Plan } from "@/features/digital/plans";
+import {
+  DEFAULT_EXPECTATIONS,
+  type BillingType,
+  type Plan,
+  type PlanService,
+  type TimelineExpectation,
+} from "@/features/digital/plans";
+
+export const LAUNCH_FIXED_DAYS = 4;
 
 export interface PlanSelection {
   selected: Set<string>;
@@ -158,4 +166,140 @@ export function computePrepared(
   }
 
   return result;
+}
+
+export function addDays(date: Date, days: number): Date {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+export function collectBuildServices(
+  plans: Plan[],
+  byId: (id: string) => PlanSelection,
+  planId: string,
+): PlanService[] {
+  const idx = plans.findIndex((p) => p.id === planId);
+  if (idx < 0) return [];
+  const selection = byId(planId);
+  const services: PlanService[] = [];
+
+  if (idx > 0) {
+    const lower = plans[idx - 1];
+    if (lower) {
+      const lowerSelection = byId(lower.id);
+      if (selection.inheritedOn || lowerSelection.inheritedOn) {
+        services.push(...collectBuildServices(plans, byId, lower.id));
+      }
+    }
+  }
+
+  const activePlan = plans[idx];
+  if (activePlan) {
+    for (const s of activePlan.services) {
+      if (selection.selected.has(s.id)) services.push(s);
+    }
+    for (const a of activePlan.addOns) {
+      if (selection.addOns.has(a.id)) {
+        const count = Math.max(1, selection.addOnCounts[a.id] ?? 1);
+        for (let i = 0; i < count; i++) services.push(a);
+      }
+    }
+  }
+  return services;
+}
+
+export interface LaunchTimeline {
+  launchDays: number;
+  launchDate: Date;
+  expectations: TimelineExpectation[];
+}
+
+export function computeLaunchTimeline(
+  plans: Plan[],
+  byId: (id: string) => PlanSelection,
+  planId: string,
+  from = new Date(),
+): LaunchTimeline {
+  const plan = plans.find((p) => p.id === planId);
+  if (!plan) {
+    return { launchDays: 7, launchDate: addDays(from, 7), expectations: DEFAULT_EXPECTATIONS };
+  }
+
+  if (plan.timelineMode === "phased") {
+    const days = plan.foundationDays ?? 30;
+    return {
+      launchDays: days,
+      launchDate: addDays(from, days),
+      expectations: [...(plan.expectations ?? []), ...DEFAULT_EXPECTATIONS],
+    };
+  }
+
+  const services = collectBuildServices(plans, byId, planId);
+  const critical = services
+    .filter((s) => !s.parallel && (s.deliverDays ?? 0) > 0)
+    .reduce((sum, s) => sum + (s.deliverDays ?? 0), 0);
+  const launchDays = Math.max(1, Math.round(LAUNCH_FIXED_DAYS + critical));
+
+  return {
+    launchDays,
+    launchDate: addDays(from, launchDays),
+    expectations: [...(plan.expectations ?? []), ...DEFAULT_EXPECTATIONS],
+  };
+}
+
+export interface LaunchStageRow {
+  key: string;
+  label: string;
+  caption: string;
+  dayLabel: string;
+  startDay: number;
+  endDay: number;
+}
+
+export function buildStageSchedule(launchDays: number): LaunchStageRow[] {
+  const buildEnd = Math.max(2, launchDays - 3);
+  const reviewStart = buildEnd + 1;
+  return [
+    {
+      key: "payment",
+      label: "You book & pay online",
+      caption: "You choose a plan, pay online, and get a GST invoice instantly.",
+      dayLabel: "Today",
+      startDay: 0,
+      endDay: 0,
+    },
+    {
+      key: "kickoff",
+      label: "Kickoff & content",
+      caption: "We send a short form for your business details, photos, and content.",
+      dayLabel: "Day 1",
+      startDay: 1,
+      endDay: 1,
+    },
+    {
+      key: "build",
+      label: "Design & build",
+      caption: "We design and build your website and prepare your Google Business Profile.",
+      dayLabel: launchDays <= 4 ? `Days 2–${launchDays}` : `Days 2–${buildEnd}`,
+      startDay: 2,
+      endDay: buildEnd,
+    },
+    {
+      key: "review",
+      label: "Review & revisions",
+      caption: "You see a live preview, mark tweaks, and we refine.",
+      dayLabel: `Days ${reviewStart}–${launchDays - 1}`,
+      startDay: reviewStart,
+      endDay: launchDays - 1,
+    },
+    {
+      key: "launch",
+      label: "Go live",
+      caption: "Your website is published and your Google Business Profile is submitted.",
+      dayLabel: `Day ${launchDays}`,
+      startDay: launchDays,
+      endDay: launchDays,
+    },
+  ];
 }

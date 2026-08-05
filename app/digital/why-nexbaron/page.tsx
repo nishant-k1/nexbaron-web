@@ -41,7 +41,7 @@ const reasons = [
     icon: Rocket,
     title: "Fast Delivery",
     description:
-      "Launch in 7 days. Growth in 7–10 days. We move fast because we know your time is your business.",
+      "A launch date that's actually confirmed. We work to get you live in about a week because we know your time is your business.",
   },
   {
     icon: Users,

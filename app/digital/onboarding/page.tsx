@@ -10,7 +10,7 @@ import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Start Your Plan | Onboarding | Nexbaron Digital",
   description:
-    "You've chosen your plan. Now complete the short onboarding: your business details, photos, and payment — and we'll have you live in 7 days.",
+    "You've chosen your plan. Now complete the short onboarding: your business details, photos, and payment — settle everything in a few minutes and your launch date is confirmed when you pay.",
   openGraph: {
     title: "Start Your Plan | Nexbaron Digital",
     description: "Three short steps: business details, photos, and payment.",
@@ -55,7 +55,7 @@ export default function DigitalOnboardingPage({
         eyebrow="Start Your Plan"
         title="Three Steps. Then We"
         highlight="Build."
-        description="Your plan is chosen. Now the short onboarding — business details, photos, and payment. After that, your 7-day build clock starts."
+        description="Your plan is chosen. Now the short onboarding — business details, photos, and payment. After that, your build clock starts on a confirmed date."
         primaryCta={{ label: "Start Onboarding Below", href: "#onboarding" }}
       />
 

@@ -4,9 +4,9 @@ import {
   ArrowRight,
   CheckCircle2,
   ShieldCheck,
-  Sparkles,
   Building2,
-  Globe2,
+  Receipt,
+  Tag,
 } from "lucide-react";
 import { type Metadata } from "next";
 import Link from "next/link";
@@ -75,27 +75,27 @@ export default function CorporateGatewayPage() {
                   Nexbaron Digital
                 </h2>
                 <p className="text-slate-300 text-sm leading-relaxed mb-8">
-                  The complete digital growth engine for small businesses, clinics, restaurants, law
-                  firms, CA practices, gyms, and local services. We build high-converting websites,
-                  rank #1 on Google Business Profiles, and automate customer leads via WhatsApp.
+                  The complete digital growth partner for small businesses, clinics, restaurants,
+                  law firms, CA practices, gyms, and local services. We build high-converting
+                  websites, get you found on Google, and answer every customer enquiry on WhatsApp.
                 </p>
 
                 <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
-                    <span>Business Websites & Conversion Landing Pages</span>
+                    <span>Business Websites & Enquiry-Capturing Pages</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
-                    <span>Google Business Profile & Local SEO Domination</span>
+                    <span>Google Business Profile & Local Visibility</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
-                    <span>WhatsApp Business CRM & AI Chatbots</span>
+                    <span>WhatsApp Automation That Answers 24/7</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
-                    <span>Managed Hosting, Speed & Security Maintenance</span>
+                    <span>Hosting, Speed & Security Handled for You</span>
                   </div>
                 </div>
               </div>
@@ -178,38 +178,40 @@ export default function CorporateGatewayPage() {
           </SectionReveal>
         </div>
 
-        {/* Corporate Trust Badges */}
+        {/* Corporate Legitimacy Strip */}
         <div className="border-t border-white/10 pt-12 text-center">
           <p className="text-xs uppercase font-mono tracking-widest text-slate-400 mb-6">
-            Nexbaron Private Limited Quality Assurance Guarantee
+            Nexbaron Private Limited — Registered & GST-Compliant
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
-              <ShieldCheck className="w-5 h-5 text-teal-400 shrink-0" />
+              <Building2 className="w-5 h-5 text-teal-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">ISO Compliant</div>
-                <div className="text-[10px] text-slate-400">Quality Management</div>
+                <div className="text-xs font-semibold text-white">GSTIN-Registered</div>
+                <div className="text-[10px] text-slate-400">Nexbaron Private Limited</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
-              <Globe2 className="w-5 h-5 text-cyan-400 shrink-0" />
+              <Receipt className="w-5 h-5 text-cyan-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">100% Dedicated Funnels</div>
-                <div className="text-[10px] text-slate-400">Isolated Workflows</div>
+                <div className="text-xs font-semibold text-white">GST Invoice</div>
+                <div className="text-[10px] text-slate-400">On every payment</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
-              <Sparkles className="w-5 h-5 text-amber-400 shrink-0" />
+              <Tag className="w-5 h-5 text-amber-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">Verified Production</div>
-                <div className="text-[10px] text-slate-400">Strict Quality Control</div>
+                <div className="text-xs font-semibold text-white">Fixed Pricing</div>
+                <div className="text-[10px] text-slate-400">Published, no hidden costs</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
-              <Building2 className="w-5 h-5 text-emerald-400 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">SME & Enterprise</div>
-                <div className="text-[10px] text-slate-400">Scale on Demand</div>
+                <div className="text-xs font-semibold text-white">You Own It</div>
+                <div className="text-[10px] text-slate-400">
+                  Website, domain & content — always yours
+                </div>
               </div>
             </div>
           </div>

@@ -136,7 +136,7 @@ export default function DigitalLandingPage() {
               >
                 <Link href="/digital/pricing" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
-                  See Pricing
+                  Choose Your Plan
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </Button>
@@ -150,47 +150,27 @@ export default function DigitalLandingPage() {
               </Button>
             </div>
 
-            {/* Quick Metrics */}
-            <div className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center max-w-3xl mx-auto">
+            {/* Honest commitments */}
+            <div className="pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center max-w-3xl mx-auto">
               <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-teal-400 font-mono">150+</div>
-                <div className="text-xs text-slate-400">Websites Launched</div>
+                <div className="text-2xl font-bold text-teal-400 font-mono">Confirmed date</div>
+                <div className="text-xs text-slate-400">Launch by a real calendar date</div>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-cyan-400 font-mono">2 hr</div>
-                <div className="text-xs text-slate-400">Average Response Time</div>
+                <div className="text-2xl font-bold text-cyan-400 font-mono">Fixed price</div>
+                <div className="text-xs text-slate-400">No hidden costs, no lock-in</div>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                 <div className="text-2xl font-bold text-teal-300 font-mono">24/7</div>
-                <div className="text-xs text-slate-400">Answers Customers on WhatsApp</div>
+                <div className="text-xs text-slate-400">Answers customers on WhatsApp</div>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-emerald-400 font-mono">7 days</div>
-                <div className="text-xs text-slate-400">From Start to Live Website</div>
+                <div className="text-2xl font-bold text-emerald-400 font-mono">GST invoice</div>
+                <div className="text-xs text-slate-400">Every payment, proper invoice</div>
               </div>
             </div>
           </div>
         </SectionReveal>
-
-        {/* Testimonial */}
-        <section className="py-8">
-          <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-white/[0.03] border border-teal-500/20 backdrop-blur-md text-center">
-            <div
-              className="text-teal-400 text-lg tracking-widest mb-4"
-              aria-label="5 out of 5 stars"
-            >
-              ★★★★★
-            </div>
-            <blockquote className="text-lg md:text-xl font-heading font-semibold text-white leading-relaxed">
-              &ldquo;Nexbaron doubled our enquiries. Customers now find us on Google and book on
-              WhatsApp while we&apos;re serving tables.&rdquo;
-            </blockquote>
-            <div className="mt-5">
-              <div className="text-sm font-semibold text-slate-200">Restaurant Owner</div>
-              <div className="text-xs text-slate-500">Nexbaron Digital customer</div>
-            </div>
-          </div>
-        </section>
 
         {/* Services Grid */}
         <section id="services" className="py-16">
@@ -293,18 +273,18 @@ export default function DigitalLandingPage() {
         <section className="mt-16 p-10 rounded-3xl bg-gradient-to-r from-teal-500/20 via-cyan-500/10 to-slate-950 border border-teal-500/30 text-center relative overflow-hidden">
           <div className="max-w-2xl mx-auto space-y-6">
             <h2 className="text-3xl font-heading font-bold text-white">
-              Pick a Plan & Start in 7 Days
+              Pick a Plan & Get a Confirmed Launch Date
             </h2>
             <p className="text-sm text-slate-300">
-              See published prices, what&apos;s included, and how fast you&apos;ll launch. No sales
-              call required to get started.
+              See published prices, what&apos;s included, and the exact date you&apos;ll launch. No
+              sales call required to get started.
             </p>
             <Button
               asChild
               size="lg"
               className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8"
             >
-              <Link href="/digital/pricing">See Pricing</Link>
+              <Link href="/digital/pricing">Choose Your Plan</Link>
             </Button>
           </div>
         </section>

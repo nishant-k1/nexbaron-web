@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | Nexbaron Digital",
   },
   description:
-    "Fixed-price growth plans that get your business found on Google and answering customers on WhatsApp 24/7. Published prices, no jargon, no lock-in. Live in as little as 7 days.",
+    "Fixed-price growth plans that get your business found on Google and answering customers on WhatsApp 24/7. Published prices, no jargon, no lock-in. Your launch date is confirmed when you pay.",
   icons: {
     icon: "/favicon-digital.svg",
   },
@@ -18,12 +18,12 @@ export const metadata: Metadata = {
     type: "website",
     url: `${siteUrl}/digital`,
     title: "Nexbaron Digital | Fixed-Price Growth Plans",
-    description: "Found on Google. Booked on WhatsApp. Live in 7 days.",
+    description: "Found on Google. Booked on WhatsApp. A launch date you can count on.",
     ...divisionOpenGraph("digital"),
   },
   twitter: {
     title: "Nexbaron Digital | Fixed-Price Growth Plans",
-    description: "Found on Google. Booked on WhatsApp. Live in 7 days.",
+    description: "Found on Google. Booked on WhatsApp. A launch date you can count on.",
     ...divisionTwitter("digital"),
   },
 };

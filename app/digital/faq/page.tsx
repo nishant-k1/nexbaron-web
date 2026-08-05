@@ -23,7 +23,7 @@ const faqs = [
   {
     question: "How long does it take to launch?",
     answer:
-      "Launch goes live in 7 days. Growth takes 7\u201310 days, and Scale starts with a 30-day foundation phase. We'll confirm a date before you pay anything.",
+      "Your launch date is confirmed the moment you pay. Launch typically ships in about a week, Growth in one to two weeks, and Scale starts with a 30-day foundation phase. You'll see your exact date before you pay anything.",
   },
   {
     question: "Who writes the content?",

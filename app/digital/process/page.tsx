@@ -114,14 +114,14 @@ const firstWeek = [
   },
   {
     day: "Day 3–4",
-    title: "We build your digital presence & Google Business Profile",
+    title: "We build your website & prepare your Google Business Profile",
     description:
-      "Your digital presence takes shape around how customers search, and we prepare your Google Business Profile with photos, categories, and services.",
+      "Your website takes shape around how customers search, and we prepare your Google Business Profile with photos, categories, and services.",
   },
   {
     day: "Day 5",
     title: "First draft for your review",
-    description: "See your digital presence live, request tweaks, and approve.",
+    description: "See your website live, request tweaks, and approve.",
   },
   {
     day: "Day 6",
@@ -131,7 +131,8 @@ const firstWeek = [
   {
     day: "Day 7",
     title: "Go live",
-    description: "Your digital presence is published and your Google Business Profile is verified.",
+    description:
+      "Your website is published. Your Google Business Profile is submitted for verification — Google usually verifies within 3–10 business days.",
   },
 ];
 
@@ -223,14 +224,14 @@ const timelines = [
   {
     icon: Rocket,
     title: "Launch digital presence",
-    value: "7 days",
-    note: "From your form to a live, professional digital presence.",
+    value: "~1 week",
+    note: "The exact date is confirmed the moment you pay.",
   },
   {
     icon: TrendingUp,
     title: "Growth digital presence",
-    value: "7–10 days",
-    note: "The digital presence, plus ranking that builds over 60–90 days.",
+    value: "~1–2 weeks",
+    note: "The digital presence, plus ranking that builds over 4–8 weeks.",
   },
   {
     icon: CalendarClock,
@@ -247,8 +248,8 @@ const timelines = [
   {
     icon: Timer,
     title: "Replies to you",
-    value: "Within 2 working hours",
-    note: "Every message you send gets a real answer, fast.",
+    value: "Same day",
+    note: "Every message you send is answered personally, the same day.",
   },
 ];
 
@@ -363,7 +364,7 @@ export default function DigitalProcessPage() {
             accent="digital"
             eyebrow="Right After Purchase"
             title="Your First Week, Day by Day"
-            description="This is the part nobody shows you. Here's what actually happens in the 7 days after you choose a plan."
+            description="This is the part nobody shows you. Here's exactly what happens between choosing a plan and going live — day by day, on your confirmed date."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {firstWeek.map((item) => (

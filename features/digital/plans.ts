@@ -2,18 +2,31 @@ import { Rocket, MapPin, TrendingUp } from "lucide-react";
 
 export type BillingType = "oneTime" | "monthly";
 
+export type ServiceStage = "design" | "build" | "setup";
+
 export interface PlanService {
   id: string;
   label: string;
   price: number;
   type: BillingType;
   unitLabel?: string;
+  /** Calendar days this service contributes when it is on the critical path to launch. */
+  deliverDays?: number;
+  /** True for work that runs alongside the critical path (does not extend the headline date). */
+  parallel?: boolean;
+  /** Which pipeline stage this work belongs to (used by the launch tracker). */
+  stage?: ServiceStage;
 }
 
 export interface InheritedService {
   label: string;
   oneTime: number;
   monthly: number;
+}
+
+export interface TimelineExpectation {
+  label: string;
+  note: string;
 }
 
 export interface Plan {
@@ -30,7 +43,33 @@ export interface Plan {
   services: PlanService[];
   addOns: PlanService[];
   ctaLabel: string;
+  /** Phased plans (e.g. Scale) don't promise a single launch date — they run a foundation phase. */
+  timelineMode?: "phased";
+  foundationDays?: number;
+  /** Google-controlled outcomes shown as ranges, never as "by" dates. */
+  expectations?: TimelineExpectation[];
 }
+
+export const LAUNCH_STAGES: { key: ServiceStage; label: string }[] = [
+  { key: "design", label: "Design & Branding" },
+  { key: "build", label: "Build & Setup" },
+  { key: "setup", label: "Google & Integrations" },
+];
+
+export const DEFAULT_EXPECTATIONS: TimelineExpectation[] = [
+  {
+    label: "Google Business Profile",
+    note: "Submitted for verification within 2 days. Google usually verifies in 3–10 business days.",
+  },
+  {
+    label: "Keyword ranking",
+    note: "\u201cNear me\u201d ranking builds over 4–8 weeks. We track it and report monthly.",
+  },
+  {
+    label: "Reviews",
+    note: "We ask happy customers for reviews after every sale.",
+  },
+];
 
 export const plans: Plan[] = [
   {
@@ -40,7 +79,7 @@ export const plans: Plan[] = [
     monthly: 1499,
     monthlyName: "Care",
     tagline: "Get your business online, professionally.",
-    timeline: "Live in 7 days",
+    timeline: "Website live in ~7 days · visibility builds after",
     icon: Rocket,
     services: [
       {
@@ -48,26 +87,51 @@ export const plans: Plan[] = [
         label: "Professional business website (up to 4 pages)",
         price: 18000,
         type: "oneTime",
+        deliverDays: 3,
+        stage: "build",
       },
-      { id: "mobile-design", label: "Mobile-perfect design", price: 3000, type: "oneTime" },
-      { id: "logo", label: "Your logo, colors & business photos", price: 2000, type: "oneTime" },
+      {
+        id: "mobile-design",
+        label: "Mobile-perfect design",
+        price: 3000,
+        type: "oneTime",
+        deliverDays: 1,
+        stage: "design",
+      },
+      {
+        id: "logo",
+        label: "Your logo, colors & business photos",
+        price: 2000,
+        type: "oneTime",
+        deliverDays: 1,
+        parallel: true,
+        stage: "design",
+      },
       {
         id: "whatsapp-btn",
         label: "\u201cWhatsApp us\u201d button on every page",
         price: 999,
         type: "oneTime",
+        deliverDays: 0,
+        stage: "build",
       },
       {
         id: "gbp-setup",
-        label: "Google Business Profile created & verified",
+        label: "Google Business Profile created & submitted",
         price: 1000,
         type: "oneTime",
+        deliverDays: 1,
+        parallel: true,
+        stage: "setup",
       },
       {
         id: "enquiries",
         label: "Every enquiry emailed straight to you",
         price: 1499,
         type: "monthly",
+        deliverDays: 0.5,
+        parallel: true,
+        stage: "setup",
       },
     ],
     addOns: [
@@ -77,9 +141,26 @@ export const plans: Plan[] = [
         price: 999,
         type: "oneTime",
         unitLabel: "per page",
+        deliverDays: 0.5,
+        stage: "build",
       },
-      { id: "launch-photos", label: "Additional photos", price: 499, type: "oneTime" },
-      { id: "launch-domain", label: "Domain setup", price: 999, type: "oneTime" },
+      {
+        id: "launch-photos",
+        label: "Additional photos",
+        price: 499,
+        type: "oneTime",
+        deliverDays: 0.25,
+        stage: "build",
+      },
+      {
+        id: "launch-domain",
+        label: "Domain setup",
+        price: 999,
+        type: "oneTime",
+        deliverDays: 0.5,
+        parallel: true,
+        stage: "setup",
+      },
     ],
     ctaLabel: "Start With Launch",
   },
@@ -90,7 +171,7 @@ export const plans: Plan[] = [
     monthly: 3999,
     monthlyName: "Growth Care",
     tagline: "Generate more calls, WhatsApp enquiries, and Google leads every month.",
-    timeline: "Live in 7–10 days · ranking builds over 60–90 days",
+    timeline: "Website live in ~9 days · rankings over 4–8 weeks",
     featured: true,
     inherited: { label: "Everything in Launch", oneTime: 24999, monthly: 1499 },
     icon: MapPin,
@@ -100,36 +181,70 @@ export const plans: Plan[] = [
         label: "Google Business Profile optimization",
         price: 15000,
         type: "oneTime",
+        deliverDays: 1,
+        stage: "setup",
       },
       {
         id: "reviews",
         label: "Review system — we ask after every sale",
         price: 800,
         type: "monthly",
+        deliverDays: 0.5,
+        parallel: true,
+        stage: "setup",
       },
       {
         id: "rank",
         label: "Rank for \u201cnear me\u201d searches in your city",
         price: 1000,
         type: "monthly",
+        deliverDays: 0,
+        stage: "setup",
       },
       {
         id: "whatsapp-booking",
         label: "WhatsApp booking & no-show reminders",
         price: 800,
         type: "monthly",
+        deliverDays: 1,
+        stage: "setup",
       },
       {
         id: "auto-answers",
         label: "24/7 automatic answers (hours, address, prices)",
         price: 900,
         type: "monthly",
+        deliverDays: 0.5,
+        parallel: true,
+        stage: "setup",
       },
-      { id: "report", label: "Plain-English monthly ranking report", price: 499, type: "monthly" },
+      {
+        id: "report",
+        label: "Plain-English monthly ranking report",
+        price: 499,
+        type: "monthly",
+        deliverDays: 0,
+        stage: "setup",
+      },
     ],
     addOns: [
-      { id: "growth-ads", label: "Google Ads setup", price: 4999, type: "oneTime" },
-      { id: "growth-city", label: "Extra city coverage", price: 3000, type: "monthly" },
+      {
+        id: "growth-ads",
+        label: "Google Ads setup",
+        price: 4999,
+        type: "oneTime",
+        deliverDays: 1.5,
+        stage: "build",
+      },
+      {
+        id: "growth-city",
+        label: "Extra city coverage",
+        price: 3000,
+        type: "monthly",
+        deliverDays: 0.5,
+        parallel: true,
+        stage: "setup",
+      },
     ],
     ctaLabel: "Start With Growth",
   },
@@ -140,9 +255,21 @@ export const plans: Plan[] = [
     monthly: 7999,
     monthlyName: "Business Partner",
     tagline: "Your outsourced digital growth team.",
-    timeline: "First 30 days: foundation + audit + plan",
+    timeline: "30-day foundation: audit → strategy → growth plan",
+    timelineMode: "phased",
+    foundationDays: 30,
     inherited: { label: "Everything in Growth", oneTime: 39999, monthly: 3999 },
     icon: TrendingUp,
+    expectations: [
+      {
+        label: "Foundation & audit",
+        note: "First 30 days: foundation, audit, and your growth plan for the year.",
+      },
+      {
+        label: "Growth manager",
+        note: "A dedicated contact plus monthly strategy sessions from month one.",
+      },
+    ],
     services: [
       { id: "manager", label: "Dedicated growth manager", price: 1500, type: "monthly" },
       {
@@ -168,11 +295,20 @@ export const plans: Plan[] = [
         label: "Campaign & offer pages (seasonal, launches)",
         price: 9000,
         type: "oneTime",
+        deliverDays: 3,
+        stage: "build",
       },
     ],
     addOns: [
       { id: "scale-support", label: "Same-day priority support", price: 5000, type: "monthly" },
-      { id: "scale-multi", label: "Multi-location campaigns", price: 8000, type: "oneTime" },
+      {
+        id: "scale-multi",
+        label: "Multi-location campaigns",
+        price: 8000,
+        type: "oneTime",
+        deliverDays: 2,
+        stage: "build",
+      },
       { id: "scale-reporting", label: "Advanced reporting", price: 4000, type: "monthly" },
     ],
     ctaLabel: "Start With Scale",

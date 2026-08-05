@@ -77,7 +77,7 @@ export function CorporateFooter() {
               </li>
               <li>
                 <Link href="/digital/contact" className="hover:text-white">
-                  Start in 7 Days
+                  Choose a Plan
                 </Link>
               </li>
             </ul>

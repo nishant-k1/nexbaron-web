@@ -18,6 +18,7 @@ import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { formatCalendarDate } from "@/components/tracking/launch-tracker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,6 +27,7 @@ import { useAuth } from "@/features/auth/auth-context";
 import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
 import { loadPlanSelection } from "@/features/digital/lib/plan-selection";
 import {
+  computeLaunchTimeline,
   computePrepared,
   createDefaultSelection,
   selectionFromSaved,
@@ -42,7 +44,6 @@ interface PlanOption {
   oneTime: string;
   monthly: string;
   monthlyName: string;
-  timeline: string;
   featured?: boolean;
 }
 
@@ -52,14 +53,12 @@ const planOptions: Record<PlanId, PlanOption> = {
     oneTime: "₹24,999",
     monthly: "₹1,499",
     monthlyName: "Care",
-    timeline: "Live in 7 days",
   },
   growth: {
     name: "Growth",
     oneTime: "₹39,999",
     monthly: "₹3,999",
     monthlyName: "Growth Care",
-    timeline: "Live in 7–10 days · ranking builds over 60–90 days",
     featured: true,
   },
   scale: {
@@ -67,7 +66,6 @@ const planOptions: Record<PlanId, PlanOption> = {
     oneTime: "₹59,999",
     monthly: "₹7,999",
     monthlyName: "Business Partner",
-    timeline: "First 30 days: foundation + audit + plan",
   },
 };
 
@@ -203,6 +201,17 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
 
   const chosen = prepared.find((p) => p.plan.id === planId) ?? prepared[0]!;
   const dialogChosen = prepared.find((p) => p.plan.id === dialogPlanId) ?? prepared[0]!;
+
+  const launchTimeline = useMemo(
+    () => computeLaunchTimeline(plans, getSelection, planId),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selections, planId],
+  );
+
+  const launchLabel =
+    chosen.plan.timelineMode === "phased"
+      ? chosen.plan.timeline
+      : `Web live by ${formatCalendarDate(launchTimeline.launchDate)}`;
 
   // Load the server draft for a signed-in user and prefill the form + selections.
   useEffect(() => {
@@ -441,7 +450,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
         <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
           We received your {plan.name} order. Look for a reply on WhatsApp shortly — we&apos;ll send
           a secure payment link (UPI or card), and your GST invoice comes with it. Once paid, your
-          7-day build clock starts.
+          build clock starts on a confirmed date.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Button
@@ -565,9 +574,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                         + {formatINR(summary.monthlyTotal)}
                         <span className="text-xs text-slate-400">/month · {plan.monthlyName}</span>
                       </div>
-                      <div className="text-[10px] font-mono text-teal-400 mt-2">
-                        {plan.timeline}
-                      </div>
+                      <div className="text-[10px] font-mono text-teal-400 mt-2">{launchLabel}</div>
                     </div>
                     <Button
                       type="button"
@@ -850,7 +857,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                   <Rocket className="w-4 h-4 inline mr-2 text-teal-400" />
                   {plan.name} Plan
                 </span>
-                <span className="text-xs font-mono text-teal-300">{plan.timeline}</span>
+                <span className="text-xs font-mono text-teal-300">{launchLabel}</span>
               </div>
               <div className="flex flex-wrap items-end justify-between gap-4 mt-4">
                 <div>
@@ -910,7 +917,12 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-                  Your 7-day build clock starts the moment payment clears.
+                  Your build clock starts on a confirmed date the moment payment clears.{" "}
+                  {chosen.plan.timelineMode !== "phased" && (
+                    <span className="text-teal-300 font-semibold">
+                      If you pay today: {launchLabel}.
+                    </span>
+                  )}
                 </li>
               </ul>
             </div>
@@ -1018,7 +1030,11 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                         <span className="text-[10px] text-slate-400">/month</span>
                       </div>
                       <div className="text-[10px] font-mono text-teal-400 mt-2">
-                        {prep.plan.timeline}
+                        {prep.plan.timelineMode === "phased"
+                          ? prep.plan.timeline
+                          : `Web live by ${formatCalendarDate(
+                              computeLaunchTimeline(plans, getSelection, prep.plan.id).launchDate,
+                            )}`}
                       </div>
                     </button>
                   );

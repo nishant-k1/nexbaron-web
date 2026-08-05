@@ -6,36 +6,55 @@ import { SectionHeading } from "@/components/sections/section-heading";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Results | Nexbaron Digital",
+  title: "What to Expect | Nexbaron Digital",
   description:
-    "Real outcomes from real businesses — more traffic, more leads, more reviews. Results that speak for themselves.",
+    "From order to online: what your website launch and Google visibility actually look like with Nexbaron Digital — with honest timelines you can rely on.",
   openGraph: {
-    title: "Results | Nexbaron Digital",
-    description: "Real outcomes from real businesses.",
+    title: "What to Expect | Nexbaron Digital",
+    description: "One clear path from order to online.",
     ...divisionOpenGraph("digital"),
   },
   twitter: divisionTwitter("digital"),
 };
 
-const results = [
+const journeySteps = [
   {
-    industry: "Dental Clinic",
-    before: ["No website", "No Google Business Profile", "Zero online visibility"],
+    phase: "Your Website",
+    before: [
+      "No website, or one that looks dated",
+      "Customers can't find what you offer",
+      "Enquiries go nowhere after hours",
+    ],
     after: [
-      "Professional website launched",
-      "Google Business Profile optimized & verified",
-      "85+ reviews accumulated",
-      "Appearing in local searches",
+      "A professional website, live by a date we confirm before you pay",
+      "Every enquiry reaches you instantly, even at night",
+      "Looks perfect on every phone, tablet, and computer",
     ],
   },
   {
-    industry: "Restaurant",
-    before: ["No online menu", "No Google Business Profile", "Customers couldn't find them online"],
+    phase: "Google Visibility",
+    before: [
+      "Invisible when people search \u201cnear me\u201d",
+      "No Google Business Profile",
+      "No reviews to build trust",
+    ],
     after: [
-      "Mobile-friendly online menu",
-      "Google Business Profile updated",
-      "More direct enquiries",
-      "Higher foot traffic",
+      "Google Business Profile created and submitted for verification (Google usually verifies in 3\u201310 business days)",
+      "Ranking improves over the following weeks \u2014 we track it and report monthly",
+      "We ask happy customers for reviews after every sale",
+    ],
+  },
+  {
+    phase: "WhatsApp & Bookings",
+    before: [
+      "Missed messages at night",
+      "No-shows and double bookings",
+      "The same questions answered over and over",
+    ],
+    after: [
+      "24/7 automatic answers for hours, address, and prices",
+      "Customers book themselves \u2014 reminders cut no-shows",
+      "Every enquiry captured, followed up, and never lost",
     ],
   },
 ];
@@ -45,10 +64,10 @@ export default function ResultsPage() {
     <div className="relative overflow-hidden">
       <PageHero
         accent="digital"
-        eyebrow="Results"
-        title="Outcomes, Not Portfolios."
-        highlight="Real Numbers."
-        description="We don't showcase projects — we show results. More traffic, more leads, more reviews."
+        eyebrow="What to Expect"
+        title="From Order to Online."
+        highlight="One Clear Path."
+        description="No mystery, no surprises. Here's exactly what changes when you work with us — from the day you choose a plan to your website going live and your business getting found."
         primaryCta={{ label: "See Pricing", href: "/digital/pricing" }}
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
@@ -56,18 +75,16 @@ export default function ResultsPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <SectionHeading
           accent="digital"
-          eyebrow="What Results Look Like"
+          eyebrow="What Your Launch Looks Like"
           title="Before and After"
-          description="Every result starts with where the business was — and ends with where it is now."
+          description="The problems every local business has — and the outcome you can expect from us, in plain English."
         />
 
         <div className="space-y-12">
-          {results.map((result) => (
-            <SectionReveal key={result.industry}>
+          {journeySteps.map((result) => (
+            <SectionReveal key={result.phase}>
               <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10">
-                <h3 className="text-2xl font-heading font-bold text-white mb-6">
-                  {result.industry}
-                </h3>
+                <h3 className="text-2xl font-heading font-bold text-white mb-6">{result.phase}</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>

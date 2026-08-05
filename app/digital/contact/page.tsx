@@ -7,12 +7,12 @@ import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Start in 7 Days | Nexbaron Digital",
+  title: "Get Started | Nexbaron Digital",
   description:
-    "Tell us about your business and get a clear plan recommendation. Fixed-price plans that get you found on Google, answered on WhatsApp, and live in 7 days.",
+    "Tell us about your business and get a clear plan recommendation. Fixed-price plans that get you found on Google, answered on WhatsApp, with your website live on a date we confirm before you pay.",
   openGraph: {
-    title: "Start in 7 Days | Nexbaron Digital",
-    description: "Tell us about your business — we'll reply within 2 hours.",
+    title: "Get Started | Nexbaron Digital",
+    description: "Tell us about your business — we reply the same day.",
     ...divisionOpenGraph("digital"),
   },
   twitter: divisionTwitter("digital"),
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 const nextSteps = [
   {
     icon: Clock,
-    title: "Reply within 2 hours",
-    description: "On business days we reply within 2 hours with a clear next step.",
+    title: "Reply the same day",
+    description: "We reply with a clear next step the same day, every time.",
   },
   {
     icon: MessageSquare,
@@ -37,9 +37,9 @@ const nextSteps = [
   },
   {
     icon: CalendarClock,
-    title: "We launch in 7 days",
+    title: "Your website, live by a confirmed date",
     description:
-      "Your website live, found on Google, answering on WhatsApp — then we keep growing it.",
+      "We confirm your exact launch date before you pay — then we build, you approve, and we go live.",
   },
 ];
 
@@ -51,7 +51,7 @@ export default function DigitalContactPage({ searchParams }: { searchParams: { p
       <PageHero
         accent="digital"
         eyebrow="Get Started"
-        title="Start in 7 Days"
+        title="Get Started"
         highlight="Fixed-Price Plans"
         description="Tell us about your business and we'll recommend the right plan. Prefer WhatsApp? Message us and we'll take it from there."
         primaryCta={{
@@ -114,7 +114,7 @@ export default function DigitalContactPage({ searchParams }: { searchParams: { p
               division="digital"
               initialPlan={initialPlan}
               heading="Tell us about your business"
-              subheading="We'll reply within 2 hours on a business day with a clear recommendation."
+              subheading="We'll reply the same day with a clear recommendation."
             />
           </div>
         </div>

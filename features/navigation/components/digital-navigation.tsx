@@ -86,7 +86,7 @@ export function DigitalNavigation() {
             >
               <Link href="/digital/pricing" className="flex items-center gap-1.5">
                 <MessageSquare className="w-4 h-4" />
-                Start in 7 Days
+                Choose a Plan
               </Link>
             </Button>
           </div>
@@ -127,7 +127,7 @@ export function DigitalNavigation() {
             <div className="pt-4 border-t border-white/10 space-y-3">
               <UserMenu />
               <Button asChild className="w-full bg-teal-500 text-slate-950 font-bold">
-                <Link href="/digital/pricing">Start in 7 Days</Link>
+                <Link href="/digital/pricing">Choose a Plan</Link>
               </Button>
             </div>
           </div>
