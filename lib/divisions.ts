@@ -51,6 +51,8 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
       { href: "/digital/who-we-help", label: "Who We Help" },
       { href: "/digital/process", label: "Our Process" },
       { href: "/digital/pricing", label: "Pricing" },
+      { href: "/digital/about", label: "About" },
+      { href: "/digital/contact", label: "Contact" },
     ],
     otherDivision: { href: "/print", label: "print ↗" },
     social: {
@@ -74,6 +76,8 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
     nav: [
       { href: "/print/products", label: "Services" },
       { href: "/print/specifications", label: "Specifications" },
+      { href: "/print/about", label: "About" },
+      { href: "/print/contact", label: "Contact" },
     ],
     otherDivision: { href: "/digital", label: "digital ↗" },
     social: {

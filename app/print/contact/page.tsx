@@ -7,15 +7,15 @@ import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Nexbaron Digital",
+  title: "Contact Us | Nexbaron Print",
   description:
-    "Have a question about our websites, SEO, or WhatsApp growth plans? Get in touch and we'll reply the same day.",
+    "Have a question about visiting cards, brochures, signage, or any printing requirement? Get in touch and we'll get back with a clear answer.",
   openGraph: {
-    title: "Contact Us | Nexbaron Digital",
-    description: "Have a question? We reply the same day.",
-    ...divisionOpenGraph("digital"),
+    title: "Contact Us | Nexbaron Print",
+    description: "Have a printing question? We'll get back to you.",
+    ...divisionOpenGraph("print"),
   },
-  twitter: divisionTwitter("digital"),
+  twitter: divisionTwitter("print"),
 };
 
 const nextSteps = [
@@ -26,9 +26,9 @@ const nextSteps = [
   },
   {
     icon: MessageSquare,
-    title: "Clear, honest advice",
+    title: "Clear specifications and pricing",
     description:
-      "No jargon, no pressure — just straightforward answers about what will work for your business.",
+      "We'll confirm sizes, stocks, finishes, and pricing — no ambiguity, no hidden costs.",
   },
   {
     icon: PhoneCall,
@@ -38,20 +38,20 @@ const nextSteps = [
   },
 ];
 
-export default function DigitalContactPage() {
+export default function PrintContactPage() {
   return (
     <div className="relative overflow-hidden">
       <PageHero
-        accent="digital"
+        accent="print"
         eyebrow="Contact Us"
         title="Get in Touch"
         highlight="We're Here to Help"
-        description="Have a question about websites, SEO, or growing your business online? Drop us a message and we'll get back to you the same day."
+        description="Have a question about printing, materials, or delivery? Drop us a message and we'll get back to you the same day."
         primaryCta={{
           label: "Chat on WhatsApp",
           href: buildWhatsAppLink(
-            "digital",
-            "Hi Nexbaron Digital, I have a question about your services",
+            "print",
+            "Hi Nexbaron Print, I have a question about your printing services",
           ),
           external: true,
         }}
@@ -67,7 +67,7 @@ export default function DigitalContactPage() {
                   const Icon = step.icon;
                   return (
                     <div key={step.title} className="flex items-start gap-4">
-                      <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 shrink-0">
+                      <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
                         <Icon className="w-5 h-5" />
                       </div>
                       <div>
@@ -89,12 +89,12 @@ export default function DigitalContactPage() {
               </p>
               <a
                 href={buildWhatsAppLink(
-                  "digital",
-                  "Hi Nexbaron Digital, I'd like to know more about your services",
+                  "print",
+                  "Hi Nexbaron Print, I'd like to know more about your printing services",
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-teal-400 hover:text-teal-300"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-amber-400 hover:text-amber-300"
               >
                 <PhoneCall className="w-4 h-4" />
                 Start a WhatsApp conversation
@@ -104,7 +104,7 @@ export default function DigitalContactPage() {
 
           <div className="lg:col-span-7">
             <ContactForm
-              division="digital"
+              division="print"
               heading="Send us a message"
               subheading="Fill in the form below and we'll get back to you the same day."
             />
