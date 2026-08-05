@@ -26,6 +26,7 @@ import { PageHero } from "@/components/sections/page-hero";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { Button } from "@/components/ui/button";
+import { CustomerProjectTracker } from "@/features/onboarding/components/customer-project-tracker";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -366,20 +367,26 @@ export default function DigitalProcessPage() {
             title="Your First Week, Day by Day"
             description="This is the part nobody shows you. Here's exactly what happens between choosing a plan and going live — day by day, on your confirmed date."
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {firstWeek.map((item) => (
-              <div
-                key={item.day}
-                className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all backdrop-blur-md group"
-              >
-                <div className="text-[10px] font-mono font-semibold text-teal-400 mb-3">
-                  {item.day}
-                </div>
-                <h3 className="text-lg font-heading font-semibold text-white mb-2">{item.title}</h3>
-                <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
+          <CustomerProjectTracker
+            fallback={
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {firstWeek.map((item) => (
+                  <div
+                    key={item.day}
+                    className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all backdrop-blur-md group"
+                  >
+                    <div className="text-[10px] font-mono font-semibold text-teal-400 mb-3">
+                      {item.day}
+                    </div>
+                    <h3 className="text-lg font-heading font-semibold text-white mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            }
+          />
         </section>
 
         <section className="py-16 border-t border-white/10">

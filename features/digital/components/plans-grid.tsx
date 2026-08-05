@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 
 import { useAuth } from "@/features/auth/auth-context";
 import { PlanCard } from "@/features/digital/components/plan-card";
+import { usePlans } from "@/features/digital/lib/catalog";
 import { savePlanSelection } from "@/features/digital/lib/plan-selection";
 import {
   computeLaunchTimeline,
@@ -13,11 +14,11 @@ import {
   type LaunchTimeline,
   type PlanSelection,
 } from "@/features/digital/plan-summary";
-import { plans } from "@/features/digital/plans";
 
 export function PlansGrid() {
   const router = useRouter();
   const { user, openSignIn } = useAuth();
+  const { plans } = usePlans();
   const getPlan = (id: string) => plans.find((p) => p.id === id) ?? plans[0]!;
   const getSelection = (id: string): PlanSelection =>
     selections[id] ?? createDefaultSelection(getPlan(id));
@@ -105,8 +106,7 @@ export function PlansGrid() {
 
   const prepared = useMemo<ReturnType<typeof computePrepared>>(
     () => computePrepared(plans, (id) => getSelection(id)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selections],
+    [plans, selections],
   );
 
   const launchTimelines = useMemo<Record<string, LaunchTimeline>>(() => {
@@ -115,8 +115,7 @@ export function PlansGrid() {
       map[plan.id] = computeLaunchTimeline(plans, getSelection, plan.id);
     }
     return map;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selections]);
+  }, [plans, selections]);
 
   return (
     <>

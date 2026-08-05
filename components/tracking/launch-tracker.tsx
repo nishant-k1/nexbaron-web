@@ -7,12 +7,35 @@ import { addDays } from "@/features/digital/plan-summary";
 
 type StageState = "done" | "current" | "upcoming";
 
-function resolveState(row: LaunchStageRow, today: Date, startDate: Date): StageState {
-  const rowEnd = addDays(startDate, row.endDay);
-  const rowStart = addDays(startDate, row.startDay);
-  if (today >= rowEnd) return "done";
-  if (today >= rowStart) return "current";
-  return "upcoming";
+function floorToDay(date: Date): Date {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+// A stage is "started" once its start day has arrived. The deepest started
+// stage becomes the running dot (end of the highlighted line); earlier started
+// stages are "done" and later ones are "upcoming". This guarantees a blinking
+// current dot always sits at the tip of the highlighted progress line.
+export function resolveStageStates(
+  stages: LaunchStageRow[],
+  today: Date,
+  startDate: Date,
+): StageState[] {
+  const t = floorToDay(today);
+  const started = stages.map((row) => t >= floorToDay(addDays(startDate, row.startDay)));
+  let currentIdx = -1;
+  for (let i = 0; i < started.length; i++) {
+    if (started[i]) currentIdx = i;
+  }
+  if (currentIdx < 0 && stages.length > 0) currentIdx = 0;
+  return stages.map((_, i) =>
+    i < currentIdx ? "done" : i === currentIdx ? "current" : "upcoming",
+  );
+}
+
+function resolveState(row: LaunchStageRow, states: StageState[], index: number): StageState {
+  return states[index] ?? "upcoming";
 }
 
 export function formatCalendarDate(date: Date): string {
@@ -21,6 +44,13 @@ export function formatCalendarDate(date: Date): string {
     day: "numeric",
     month: "short",
   }).format(date);
+}
+
+function remainingDays(launchDate: Date, today: Date): number {
+  const t = floorToDay(today);
+  const l = floorToDay(launchDate);
+  const diff = Math.round((l.getTime() - t.getTime()) / 86400000);
+  return Math.max(0, diff);
 }
 
 interface LaunchTrackerProps {
@@ -33,7 +63,6 @@ interface LaunchTrackerProps {
 }
 
 export function LaunchTracker({
-  launchDays,
   launchDate,
   stages,
   startDate = new Date(),
@@ -42,6 +71,9 @@ export function LaunchTracker({
 }: LaunchTrackerProps) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  const stageStates = resolveStageStates(stages, today, startDate);
+  const daysLeft = remainingDays(launchDate, today);
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md overflow-hidden">
@@ -58,20 +90,27 @@ export function LaunchTracker({
           </div>
           <div className="flex items-center gap-2 text-sm text-slate-300">
             <Clock className="w-4 h-4 text-slate-400" />
-            {launchDays} days to launch
+            {daysLeft > 0 ? `${daysLeft} days to launch` : "Launch day"}
           </div>
         </div>
       )}
 
       <ol className="p-6 space-y-0">
         {stages.map((row, index) => {
-          const state = resolveState(row, today, startDate);
+          const state = resolveState(row, stageStates, index);
+          const next = stages[index + 1];
+          const nextState = next ? resolveState(next, stageStates, index + 1) : state;
+          const lineActive = nextState === "done" || nextState === "current";
           return (
             <li key={row.key} className="relative flex gap-4 pb-6 last:pb-0">
               {index < stages.length - 1 && (
                 <span
                   aria-hidden
-                  className="absolute left-[15px] top-8 bottom-0 w-px bg-white/10"
+                  className={
+                    lineActive
+                      ? "absolute left-[15px] top-8 bottom-0 w-px bg-gradient-to-b from-teal-400/70 to-teal-400/40"
+                      : "absolute left-[15px] top-8 bottom-0 w-px bg-white/10"
+                  }
                 />
               )}
               <div className="relative z-10 mt-0.5 flex h-8 w-8 items-center justify-center rounded-full border shrink-0">
@@ -81,6 +120,7 @@ export function LaunchTracker({
                   </span>
                 ) : state === "current" ? (
                   <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-teal-500/20 border border-teal-400">
+                    <span className="absolute h-8 w-8 rounded-full bg-teal-400/30 animate-ping" />
                     <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
                   </span>
                 ) : (

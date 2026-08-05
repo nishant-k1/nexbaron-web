@@ -1,4 +1,4 @@
-import { CreditCard, ImagePlus, MessageSquare, ShieldCheck, Upload } from "lucide-react";
+import { CreditCard, MessageSquare, Upload } from "lucide-react";
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -105,24 +105,6 @@ export default function DigitalOnboardingPage({
                 <MessageSquare className="w-4 h-4" />
                 Get help on WhatsApp
               </a>
-            </div>
-
-            <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <div className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  <span className="text-white font-semibold">You&apos;re in control.</span> Cancel
-                  anytime with 30 days&apos; notice. No lock-in. You own your website, domain, and
-                  content forever.
-                </p>
-              </div>
-              <div className="flex items-start gap-3 mt-4">
-                <ImagePlus className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  <span className="text-white font-semibold">No logo?</span> We design a simple one
-                  for you — no delays, no blocking the process.
-                </p>
-              </div>
             </div>
           </div>
 

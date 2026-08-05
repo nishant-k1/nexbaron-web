@@ -1,12 +1,11 @@
 "use client";
 
-import { Menu, X, MessageSquare } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
-import { Button } from "@/components/ui/button";
 import { UserMenu } from "@/features/auth/components/user-menu";
 import { divisions } from "@/lib/divisions";
 
@@ -79,16 +78,6 @@ export function DigitalNavigation() {
           {/* Action CTAs */}
           <div className="hidden md:flex items-center gap-3">
             <UserMenu />
-            <Button
-              asChild
-              size="sm"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-4 rounded-lg shadow-md shadow-teal-500/20"
-            >
-              <Link href="/digital/pricing" className="flex items-center gap-1.5">
-                <MessageSquare className="w-4 h-4" />
-                Choose a Plan
-              </Link>
-            </Button>
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -126,9 +115,6 @@ export function DigitalNavigation() {
             </div>
             <div className="pt-4 border-t border-white/10 space-y-3">
               <UserMenu />
-              <Button asChild className="w-full bg-teal-500 text-slate-950 font-bold">
-                <Link href="/digital/pricing">Choose a Plan</Link>
-              </Button>
             </div>
           </div>
         )}

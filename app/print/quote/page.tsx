@@ -1,11 +1,12 @@
 "use client";
 
-import { Calculator, MessageSquare } from "lucide-react";
+import { Loader2, MessageSquare } from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
-import { buildWhatsAppLink } from "@/lib/divisions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const productOptions = [
   { id: "visiting-cards", label: "Visiting Cards" },
@@ -58,6 +59,10 @@ export default function PrintQuotePage() {
   const [quantity, setQuantity] = useState<number>(500);
   const [paperStock, setPaperStock] = useState<string>("standard");
   const [finishing, setFinishing] = useState<string>("spot-uv");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   useEffect(() => {
     const param = new URLSearchParams(window.location.search).get("product");
@@ -70,16 +75,43 @@ export default function PrintQuotePage() {
   const stockLabel = stockOptions.find((s) => s.id === paperStock)?.label ?? paperStock;
   const finishLabel = finishOptions.find((f) => f.id === finishing)?.label ?? finishing;
 
-  const getEstimatedPrice = () => {
+  const estimatedPrice = (() => {
     const base = basePrices[productType] ?? 500;
     const multiplier = quantity / 500;
     const stockExtra = paperStock === "premium" ? 300 : paperStock === "luxury" ? 500 : 0;
     const finishExtra = finishing !== "none" ? 400 : 0;
-
     return Math.round(base * multiplier + stockExtra + finishExtra);
-  };
+  })();
 
-  const estimatedPrice = getEstimatedPrice();
+  const submitQuote = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !phone.trim()) return;
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          division: "print",
+          source: "quote-builder",
+          name,
+          phone,
+          requirement: `${productLabel}`,
+          quantity: String(quantity),
+          message: `Print quote request — Product: ${productLabel} | Quantity: ${quantity} units | Stock: ${stockLabel} | Finishing: ${finishLabel} | Estimated: ₹${estimatedPrice.toLocaleString()}`,
+        }),
+      });
+      if (!response.ok) throw new Error("Failed to submit");
+      setSubmitStatus("success");
+      setName("");
+      setPhone("");
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
@@ -104,7 +136,7 @@ export default function PrintQuotePage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Controls Column */}
-          <div className="lg:col-span-7 rounded-3xl bg-white/[0.03] border border-white/10 p-8 backdrop-blur-xl space-y-8">
+          <div className="lg:col-span-12 rounded-3xl bg-white/[0.03] border border-white/10 p-8 backdrop-blur-xl space-y-8">
             {/* Step 1: Product Selection */}
             <div>
               <label className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider block mb-3">
@@ -197,72 +229,95 @@ export default function PrintQuotePage() {
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Estimate Display Column */}
-          <div className="lg:col-span-5 rounded-3xl bg-slate-950/90 border border-amber-500/30 p-8 backdrop-blur-xl flex flex-col justify-between shadow-2xl">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-                <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400">
-                  <Calculator className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-white">Estimated Quotation</h3>
-                  <p className="text-xs text-slate-400">Nexbaron Print Division Commercial Rate</p>
-                </div>
-              </div>
-
-              <div className="space-y-3 text-xs">
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">Product:</span>
-                  <span className="text-white font-mono">{productLabel}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">Quantity:</span>
-                  <span className="text-amber-400 font-mono">{quantity} Units</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">Stock Grade:</span>
-                  <span className="text-white font-mono">{stockLabel}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">Finishing:</span>
-                  <span className="text-white font-mono">{finishLabel}</span>
-                </div>
-              </div>
-
-              <div className="pt-4 text-center">
-                <span className="text-xs text-slate-400 block mb-1">
-                  Estimated Total (Excl. Tax)
-                </span>
-                <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-amber-500 font-mono">
-                  ₹{estimatedPrice.toLocaleString()}
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-8 space-y-3">
-              <Button
-                asChild
-                size="lg"
-                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-amber-500/20"
-              >
-                <a
-                  href={buildWhatsAppLink(
-                    "print",
-                    `Hi Nexbaron Print, I want to place an order for ${quantity} units of ${productLabel} (${stockLabel}, ${finishLabel}) estimated at ₹${estimatedPrice}`,
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2"
-                >
-                  <MessageSquare className="w-5 h-5" />
-                  Order / Confirm via WhatsApp
-                </a>
-              </Button>
-              <p className="text-[11px] text-slate-400 text-center">
-                Express 24-hour turnaround available on confirmed orders.
+            {/* Step 5: Your details & submit */}
+            <div className="pt-8 border-t border-white/10">
+              <label className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider block mb-3">
+                5. Your Details — Get Your Quote
+              </label>
+              <p className="text-sm text-slate-300 mb-4">
+                Share where to send your quote. Our team confirms the best price and turnaround and
+                reaches back on WhatsApp.
               </p>
+              <form onSubmit={submitQuote} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="quote-name">
+                      Name <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="quote-name"
+                      className="mt-2 rounded-lg"
+                      placeholder="Your name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="quote-phone">
+                      WhatsApp Number <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="quote-phone"
+                      type="tel"
+                      className="mt-2 rounded-lg"
+                      placeholder="10-digit mobile number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2 text-sm bg-white/[0.03] border border-white/10 rounded-xl p-4 space-y-1.5">
+                  <p className="text-xs font-mono text-amber-400 mb-2">Your selection</p>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Product</span>
+                    <span className="text-white font-mono">{productLabel}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Quantity</span>
+                    <span className="text-amber-400 font-mono">{quantity} Units</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Stock</span>
+                    <span className="text-white font-mono">{stockLabel}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Finishing</span>
+                    <span className="text-white font-mono">{finishLabel}</span>
+                  </div>
+                </div>
+
+                {submitStatus === "success" && (
+                  <p className="text-sm text-emerald-400">
+                    Thanks! Your quote request is in — we&apos;ll WhatsApp you back shortly.
+                  </p>
+                )}
+                {submitStatus === "error" && (
+                  <p className="text-sm text-red-400">
+                    Something went wrong sending your request. Please try again.
+                  </p>
+                )}
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting || !name.trim() || !phone.trim()}
+                  className="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-amber-500/20 disabled:opacity-60"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sending…
+                    </>
+                  ) : (
+                    <>
+                      <MessageSquare className="w-4 h-4 mr-2" /> Get My Quote
+                    </>
+                  )}
+                </Button>
+              </form>
             </div>
           </div>
         </div>

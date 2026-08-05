@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { PlansProvider } from "@/features/digital/lib/catalog";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com";
@@ -29,5 +30,5 @@ export const metadata: Metadata = {
 };
 
 export default function DigitalLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return <PlansProvider>{children}</PlansProvider>;
 }

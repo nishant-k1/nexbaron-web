@@ -18,22 +18,30 @@ import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { formatCalendarDate } from "@/components/tracking/launch-tracker";
+import { formatCalendarDate, LaunchTracker } from "@/components/tracking/launch-tracker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/auth-context";
 import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
-import { loadPlanSelection } from "@/features/digital/lib/plan-selection";
+import { usePlans } from "@/features/digital/lib/catalog";
 import {
+  createCheckout,
+  verifyPayment,
+  type VerifyPaymentResponse,
+} from "@/features/digital/lib/payments";
+import { loadPlanSelection } from "@/features/digital/lib/plan-selection";
+import { loadRazorpayScript, type RazorpayPaymentResponse } from "@/features/digital/lib/razorpay";
+import {
+  buildStageSchedule,
   computeLaunchTimeline,
   computePrepared,
   createDefaultSelection,
   selectionFromSaved,
   type PlanSelection,
 } from "@/features/digital/plan-summary";
-import { formatINR, plans } from "@/features/digital/plans";
+import { formatINR } from "@/features/digital/plans";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { getDraft, saveDraft, selectionToDraftState, type DraftFields } from "@/lib/draft";
 
@@ -96,20 +104,18 @@ const visitorActions = [
   "Send an enquiry",
 ];
 
-const paymentMethods = [
-  { value: "UPI", label: "UPI (GPay, PhonePe, Paytm)", icon: CreditCard },
-  { value: "Card", label: "Debit / Credit Card", icon: CreditCard },
-  { value: "Bank transfer", label: "Bank Transfer", icon: CreditCard },
-] as const;
-
 export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
   const router = useRouter();
   const { user, initialized, openSignIn } = useAuth();
+  const { plans } = usePlans();
   const [step, setStep] = useState(0);
   const [logoFiles, setLogoFiles] = useState<string[]>([]);
   const [photoFiles, setPhotoFiles] = useState<string[]>([]);
-  const [paymentMethod, setPaymentMethod] = useState<string>("UPI");
   const [confirmed, setConfirmed] = useState(false);
+  const [paying, setPaying] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [paidOrder, setPaidOrder] = useState<VerifyPaymentResponse | null>(null);
+  const [confirmedLaunchDays, setConfirmedLaunchDays] = useState(7);
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
   const [dialogPlanId, setDialogPlanId] = useState<PlanId>((initialPlan as PlanId) || "launch");
   const [saving, setSaving] = useState(false);
@@ -195,8 +201,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
 
   const prepared = useMemo(
     () => computePrepared(plans, (id) => getSelection(id)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selections],
+    [plans, selections],
   );
 
   const chosen = prepared.find((p) => p.plan.id === planId) ?? prepared[0]!;
@@ -204,8 +209,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
 
   const launchTimeline = useMemo(
     () => computeLaunchTimeline(plans, getSelection, planId),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selections, planId],
+    [plans, selections, planId],
   );
 
   const launchLabel =
@@ -404,40 +408,105 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
 
   const goBack = () => setStep((s) => Math.max(s - 1, 0));
 
-  const onSubmit = () => {
+  const handlePayment = async (): Promise<void> => {
+    const valid = await trigger(stepFields[2]);
+    if (!valid) return;
     const values = getValues();
-    const included = [
-      ...(summary.inheritedActive && summary.inheritedLabel
-        ? [`— ${summary.inheritedLabel} included`]
-        : []),
-      ...summary.services.map((s) => `— ${s.label}`),
-      ...summary.addOns.map((a) => `— ${a.label} (${a.count}×)`),
-    ];
-    const message = [
-      "New order — Nexbaron Digital",
-      "",
-      `Plan: ${plan.name} (${formatINR(summary.oneTimeTotal)} one-time + ${formatINR(
-        summary.monthlyTotal,
-      )}/mo · ${plan.monthlyName})`,
-      `Business: ${values.businessName}`,
-      `Owner: ${values.ownerName}`,
-      `WhatsApp: ${values.phone}`,
-      values.email ? `Email: ${values.email}` : null,
-      `City: ${values.city}`,
-      `Services: ${values.services}`,
-      included.length > 0 ? `Selected services:\n${included.join("\n")}` : null,
-      values.hours ? `Hours: ${values.hours}` : null,
-      values.address ? `Address: ${values.address}` : null,
-      `Visitors should: ${values.visitorAction}`,
-      `Logo/photos: ${logoFiles.join(", ") || "none yet"}`,
-      values.notes ? `Notes: ${values.notes}` : null,
-      `Payment method: ${paymentMethod}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    setPaying(true);
+    setPaymentError(null);
 
-    window.open(buildWhatsAppLink("digital", message), "_blank");
-    setConfirmed(true);
+    try {
+      const checkout = await createCheckout({
+        planId,
+        selections: {
+          planId,
+          plans: Object.fromEntries(
+            plans.map((p) => {
+              const selection = getSelection(p.id);
+              return [
+                p.id,
+                {
+                  selected: Array.from(selection.selected),
+                  addOns: Array.from(selection.addOns),
+                  addOnCounts: selection.addOnCounts,
+                  inheritedOn: selection.inheritedOn,
+                },
+              ];
+            }),
+          ),
+        },
+        customer: {
+          name: values.ownerName,
+          email: values.email || undefined,
+          phone: values.phone,
+          company: values.businessName,
+          city: values.city,
+          services: values.services,
+          notes: values.notes,
+          address: values.address,
+        },
+      });
+
+      // Dev/test mode (no live Razorpay keys yet): simulate a successful
+      // payment so the whole flow is tappable end-to-end.
+      if (checkout.devMode) {
+        setConfirmedLaunchDays(checkout.launchDays);
+        const verified = await verifyPayment({
+          razorpay_order_id: checkout.razorpayOrderId,
+          razorpay_payment_id: "dev_payment",
+          razorpay_signature: "dev_signature",
+        });
+        setPaidOrder(verified);
+        setConfirmed(true);
+        return;
+      }
+
+      const ready = await loadRazorpayScript();
+      if (!ready || !window.Razorpay) {
+        setPaymentError(
+          "We couldn't load the secure payment window. Please try again or message us on WhatsApp.",
+        );
+        return;
+      }
+
+      const rzp = new window.Razorpay({
+        key: checkout.razorpayKeyId,
+        amount: checkout.amount * 100,
+        currency: "INR",
+        name: "Nexbaron Digital",
+        description: `${plan.name} plan — ${checkout.invoiceNumber}`,
+        order_id: checkout.razorpayOrderId,
+        prefill: {
+          name: values.ownerName,
+          email: values.email || undefined,
+          contact: values.phone,
+        },
+        theme: { color: "#14b8a6" },
+        handler: async (response: RazorpayPaymentResponse) => {
+          try {
+            setConfirmedLaunchDays(checkout.launchDays);
+            const verified = await verifyPayment(response);
+            setPaidOrder(verified);
+            setConfirmed(true);
+          } catch {
+            setPaymentError(
+              "Payment succeeded but we couldn't confirm it yet. Your invoice is on its way — message us on WhatsApp and we'll sort it immediately.",
+            );
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            setPaying(false);
+          },
+        },
+      });
+      rzp.open();
+    } catch (error) {
+      setPaymentError(
+        error instanceof Error ? error.message : "Could not start checkout. Please try again.",
+      );
+      setPaying(false);
+    }
   };
 
   if (confirmed) {
@@ -446,12 +515,33 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
         <div className="mx-auto w-16 h-16 rounded-full bg-teal-500/10 border border-teal-500/30 flex items-center justify-center mb-6">
           <CheckCircle2 className="w-8 h-8 text-teal-400" />
         </div>
-        <h2 className="text-2xl font-heading font-bold text-white mb-3">Order Sent on WhatsApp</h2>
+        <h2 className="text-2xl font-heading font-bold text-white mb-3">
+          Payment Received. Your Launch Is Booked.
+        </h2>
         <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-          We received your {plan.name} order. Look for a reply on WhatsApp shortly — we&apos;ll send
-          a secure payment link (UPI or card), and your GST invoice comes with it. Once paid, your
-          build clock starts on a confirmed date.
+          Your {plan.name} plan is confirmed and your GST invoice is on its way to your email.
+          {paidOrder?.launchDate && (
+            <span className="text-teal-300 font-semibold">
+              {" "}
+              Your launch date: {formatCalendarDate(new Date(paidOrder.launchDate))}.
+            </span>
+          )}
         </p>
+        {paidOrder?.invoiceNumber && (
+          <div className="mt-4 inline-block px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono text-slate-300">
+            Invoice {paidOrder.invoiceNumber}
+          </div>
+        )}
+        {paidOrder?.launchDate && (
+          <div className="mt-8 text-left">
+            <LaunchTracker
+              launchDays={confirmedLaunchDays}
+              launchDate={new Date(paidOrder.launchDate)}
+              stages={buildStageSchedule(confirmedLaunchDays)}
+              prefix="Your Launch Timeline"
+            />
+          </div>
+        )}
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Button
             asChild
@@ -461,7 +551,11 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             <a
               href={buildWhatsAppLink(
                 "digital",
-                "Hi Nexbaron Digital, I just sent my order for the " + plan.name + " plan.",
+                "Hi Nexbaron Digital, I just paid for the " +
+                  plan.name +
+                  " plan (invoice " +
+                  (paidOrder?.invoiceNumber ?? "") +
+                  ").",
               )}
               target="_blank"
               rel="noopener noreferrer"
@@ -529,7 +623,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
         )}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="p-8">
+      <form onSubmit={handleSubmit(handlePayment)} className="p-8">
         {step === 0 && (
           <div className="space-y-6">
             <div>
@@ -846,8 +940,8 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             <div>
               <h2 className="text-2xl font-heading font-bold text-white mb-1">Payment</h2>
               <p className="text-sm text-slate-400">
-                Confirm your order — we send a secure payment link on WhatsApp with your GST
-                invoice.
+                Pay securely online with UPI, debit/credit card, or netbanking. Your GST invoice is
+                emailed instantly after payment.
               </p>
             </div>
 
@@ -880,36 +974,11 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               </div>
             </div>
 
-            <div>
-              <Label>How would you like to pay?</Label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2">
-                {paymentMethods.map((method) => {
-                  const Icon = method.icon;
-                  const active = paymentMethod === method.value;
-                  return (
-                    <button
-                      key={method.value}
-                      type="button"
-                      onClick={() => setPaymentMethod(method.value)}
-                      className={`rounded-2xl border p-4 text-left transition-all ${
-                        active
-                          ? "border-teal-500/60 bg-teal-500/10"
-                          : "border-white/10 bg-white/[0.02] hover:border-teal-500/40"
-                      }`}
-                    >
-                      <Icon className="w-5 h-5 text-teal-400 mb-2" />
-                      <span className="text-sm font-semibold text-white">{method.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
               <ul className="space-y-2 text-xs text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-                  Secure payment link on WhatsApp — UPI, cards, or bank transfer.
+                  Secure online payment — UPI, cards, or netbanking via Razorpay.
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
@@ -926,6 +995,12 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                 </li>
               </ul>
             </div>
+
+            {paymentError && (
+              <div className="p-4 rounded-xl border border-red-500/40 bg-red-500/10 text-sm text-red-200">
+                {paymentError}
+              </div>
+            )}
           </div>
         )}
 
@@ -952,9 +1027,13 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             <Button
               type="submit"
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+              disabled={paying}
+              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20 disabled:opacity-60"
             >
-              <MessageSquare className="w-4 h-4 mr-2" /> Confirm Order on WhatsApp
+              <CreditCard className="w-4 h-4 mr-2" />
+              {paying
+                ? "Opening secure payment…"
+                : `Pay ${formatINR(summary.oneTimeTotal)} Securely`}
             </Button>
           )}
         </div>

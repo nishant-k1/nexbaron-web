@@ -78,7 +78,6 @@ export function PrintNavigation() {
 
           {/* Action CTAs */}
           <div className="hidden md:flex items-center gap-3">
-            <UserMenu />
             <Button
               asChild
               size="sm"
@@ -89,6 +88,7 @@ export function PrintNavigation() {
                 Instant Print Quote
               </Link>
             </Button>
+            <UserMenu />
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -125,10 +125,10 @@ export function PrintNavigation() {
               ))}
             </div>
             <div className="pt-4 border-t border-white/10 space-y-3">
-              <UserMenu />
               <Button asChild className="w-full bg-amber-500 text-slate-950 font-bold">
                 <Link href="/print/quote">Calculate Print Order</Link>
               </Button>
+              <UserMenu />
             </div>
           </div>
         )}
