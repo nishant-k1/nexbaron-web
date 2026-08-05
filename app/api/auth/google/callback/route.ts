@@ -1,66 +1,55 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+import { getApiUrl, type AuthUser, type Division } from "@/lib/api";
+import {
+  encodeGoogleAuthResult,
+  GOOGLE_AUTH_RESULT_MAX_AGE,
+  googleAuthResultCookie,
+  googleAuthResultPath,
+  type GoogleAuthResult,
+} from "@/lib/google-auth-result";
 
-interface GoogleIdToken {
-  name?: string;
-  email?: string;
-  sub?: string;
-  picture?: string;
+interface GoogleTokenResponse {
+  id_token?: string;
+  error_description?: string;
 }
 
-function decodeIdToken(token: string): GoogleIdToken {
-  const part = token.split(".")[1] ?? "";
-  const base64 = part.replace(/-/g, "+").replace(/_/g, "/");
-  return JSON.parse(Buffer.from(base64, "base64").toString("utf-8"));
-}
+export async function GET(request: NextRequest): Promise<Response> {
+  const origin = new URL(request.url).origin;
+  const state = request.nextUrl.searchParams.get("state") ?? "";
+  const division = divisionFromState(state);
 
-/**
- * OAuth2 Authorization Code callback.
- *
- * The client navigates the browser to accounts.google.com (a plain full-page
- * redirect, no FedCM / no GSI script). Google redirects back here with
- * ?code=..., which we exchange for an ID token using the client secret, upsert
- * the user via the backend, and hand the token to the /auth/complete page.
- */
-export async function GET(req: NextRequest): Promise<Response> {
-  const origin = new URL(req.url).origin;
-  const redirectTo = (path: string, params?: Record<string, string>) => {
-    const url = new URL(path, origin);
-    for (const [k, v] of Object.entries(params ?? {})) url.searchParams.set(k, v);
-    return NextResponse.redirect(url);
+  if (!division) {
+    return redirectToComplete(origin, { state });
+  }
+
+  const finish = (result: GoogleAuthResult): NextResponse => {
+    const response = redirectToComplete(origin, { division, state });
+    response.cookies.set(googleAuthResultCookie(division), encodeGoogleAuthResult(result), {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: googleAuthResultPath(division),
+      maxAge: GOOGLE_AUTH_RESULT_MAX_AGE,
+    });
+    return response;
   };
 
-  const code = req.nextUrl.searchParams.get("code");
+  const code = request.nextUrl.searchParams.get("code");
   if (!code) {
-    return redirectTo("/auth/complete", { error: "Google sign-in was cancelled." });
+    return finish({ success: false, message: "Google sign-in was cancelled." });
   }
 
-  // The client encodes { nonce, division } in the OAuth state so we can create
-  // the user under the right division (digital vs print).
-  const state = req.nextUrl.searchParams.get("state");
-  let division: "digital" | "print" = "digital";
-  try {
-    const parsed = state ? (JSON.parse(state) as { division?: "digital" | "print" }) : null;
-    if (parsed?.division) division = parsed.division;
-  } catch {
-    // fall through with digital
-  }
-
-  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const { clientId, clientSecret } = googleOAuthConfig(division);
   if (!clientId || !clientSecret) {
-    return redirectTo("/auth/complete", {
-      error: "Google sign-in isn't configured on the server.",
-    });
+    return finish({ success: false, message: "Google sign-in isn't configured on the server." });
   }
 
   const redirectUri = `${origin}/api/auth/google/callback`;
-
-  let tokens: { id_token?: string; error?: string; error_description?: string };
+  let tokens: GoogleTokenResponse;
   try {
-    const res = await fetch("https://oauth2.googleapis.com/token", {
+    const response = await fetch("https://oauth2.googleapis.com/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
@@ -70,59 +59,83 @@ export async function GET(req: NextRequest): Promise<Response> {
         redirect_uri: redirectUri,
         grant_type: "authorization_code",
       }),
+      cache: "no-store",
     });
-    tokens = await res.json();
+    tokens = (await response.json()) as GoogleTokenResponse;
   } catch {
-    return redirectTo("/auth/complete", {
-      error: "Could not reach Google. Please try again.",
-    });
+    return finish({ success: false, message: "Could not reach Google. Please try again." });
   }
 
   if (!tokens.id_token) {
-    return redirectTo("/auth/complete", {
-      error: tokens.error_description ?? "Google sign-in failed. Please try again.",
+    return finish({
+      success: false,
+      message: tokens.error_description ?? "Google sign-in failed. Please try again.",
     });
-  }
-
-  let payload: GoogleIdToken;
-  try {
-    payload = decodeIdToken(tokens.id_token);
-  } catch {
-    return redirectTo("/auth/complete", { error: "Invalid Google response." });
-  }
-
-  if (!payload.email || !payload.sub) {
-    return redirectTo("/auth/complete", { error: "Google didn't return a valid profile." });
   }
 
   let backend: Response;
   try {
-    backend = await fetch(`${API_URL}/api/digital/auth/google`, {
+    backend = await fetch(`${getApiUrl(division)}/api/${division}/auth/google`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: payload.name,
-        email: payload.email,
-        googleId: payload.sub,
-        photo: payload.picture,
-        division,
-      }),
+      body: JSON.stringify({ credential: tokens.id_token }),
+      cache: "no-store",
     });
   } catch {
-    return redirectTo("/auth/complete", {
-      error: "Could not reach the sign-in service. Please try again.",
+    return finish({
+      success: false,
+      message: "Could not reach the sign-in service. Please try again.",
     });
   }
 
-  const data = await backend.json().catch(() => null);
-  if (!backend.ok || !data?.token) {
-    return redirectTo("/auth/complete", {
-      error: data?.message ?? "Could not sign in with Google.",
+  const data = (await backend.json().catch(() => null)) as {
+    token?: string;
+    user?: AuthUser;
+    message?: string;
+  } | null;
+  if (!backend.ok || !data?.token || !data.user) {
+    return finish({
+      success: false,
+      message: data?.message ?? "Could not sign in with Google.",
     });
   }
+  if (data.user.division !== division) {
+    return finish({ success: false, message: "Google returned an account for another division." });
+  }
 
-  return redirectTo("/auth/complete", {
-    token: data.token,
-    user: JSON.stringify(data.user),
-  });
+  return finish({ success: true, token: data.token, user: data.user });
+}
+
+function divisionFromState(state: string): Division | null {
+  try {
+    const parsed = JSON.parse(state) as { division?: string };
+    return parsed.division === "digital" || parsed.division === "print" ? parsed.division : null;
+  } catch {
+    return null;
+  }
+}
+
+function googleOAuthConfig(division: Division): {
+  clientId: string | undefined;
+  clientSecret: string | undefined;
+} {
+  return division === "digital"
+    ? {
+        clientId:
+          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL ||
+          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET_DIGITAL || process.env.GOOGLE_CLIENT_SECRET,
+      }
+    : {
+        clientId:
+          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT ||
+          process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET_PRINT || process.env.GOOGLE_CLIENT_SECRET,
+      };
+}
+
+function redirectToComplete(origin: string, params: Record<string, string>): NextResponse {
+  const url = new URL("/auth/complete", origin);
+  for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
+  return NextResponse.redirect(url);
 }

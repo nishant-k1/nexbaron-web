@@ -37,6 +37,11 @@ const nextConfig = {
         destination: "/digital/who-we-help",
         permanent: true,
       },
+      {
+        source: "/print/bulk-orders",
+        destination: "/print/quote",
+        permanent: true,
+      },
     ];
   },
   experimental: {

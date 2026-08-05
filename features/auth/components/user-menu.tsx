@@ -2,11 +2,11 @@
 
 import { LogOut, User } from "lucide-react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/features/auth/auth-context";
-import { getDivisionFromPath, type DivisionSlug } from "@/lib/divisions";
+import type { DivisionSlug } from "@/lib/divisions";
 
 function initials(name: string): string {
   return name
@@ -24,13 +24,11 @@ const DIVISION_HOME: Record<DivisionSlug, string> = {
 
 const DIVISION_ACCOUNT: Record<DivisionSlug, { label: string; href: string }> = {
   digital: { label: "Your plan", href: "/digital/pricing" },
-  print: { label: "Your orders", href: "/print/bulk-orders" },
+  print: { label: "Your quotes", href: "/print/quotes" },
 };
 
 export function UserMenu() {
-  const { user, signOut, initialized, openSignIn } = useAuth();
-  const pathname = usePathname();
-  const division = getDivisionFromPath(pathname ?? "");
+  const { user, division, signOut, initialized, openSignIn } = useAuth();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -47,7 +45,7 @@ export function UserMenu() {
 
   if (!initialized) {
     return (
-      <div className="hidden md:inline-flex w-9 h-9 rounded-full bg-white/5 border border-white/10 animate-pulse" />
+      <div className="inline-flex w-9 h-9 rounded-full bg-white/5 border border-white/10 animate-pulse" />
     );
   }
 
@@ -55,12 +53,15 @@ export function UserMenu() {
     return (
       <button
         onClick={() => openSignIn()}
-        className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-teal-400 hover:text-teal-300 border border-teal-500/40 hover:border-teal-500/70 transition-colors"
+        className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold border transition-colors ${division === "print" ? "text-amber-400 hover:text-amber-300 border-amber-500/40 hover:border-amber-500/70" : "text-teal-400 hover:text-teal-300 border-teal-500/40 hover:border-teal-500/70"}`}
       >
         <User className="w-4 h-4" /> Sign in
       </button>
     );
   }
+
+  if (!division) return null;
+  const isPrint = division === "print";
 
   return (
     <div ref={menuRef} className="relative">
@@ -77,11 +78,13 @@ export function UserMenu() {
             alt={user.name}
             width={32}
             height={32}
-            className="w-8 h-8 rounded-full object-cover border border-teal-500/40 bg-slate-800"
+            className={`w-8 h-8 rounded-full object-cover border bg-slate-800 ${isPrint ? "border-amber-500/40" : "border-teal-500/40"}`}
             referrerPolicy="no-referrer"
           />
         ) : (
-          <span className="grid place-items-center w-8 h-8 rounded-full bg-teal-500 text-slate-950 text-xs font-bold">
+          <span
+            className={`grid place-items-center w-8 h-8 rounded-full text-slate-950 text-xs font-bold ${isPrint ? "bg-amber-500" : "bg-teal-500"}`}
+          >
             {initials(user.name) || "U"}
           </span>
         )}
@@ -105,7 +108,7 @@ export function UserMenu() {
               setOpen(false);
               router.push(DIVISION_ACCOUNT[division].href);
             }}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-teal-300 hover:bg-white/5"
+            className={`w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-white/5 ${isPrint ? "text-amber-300" : "text-teal-300"}`}
           >
             <User className="w-4 h-4" /> {DIVISION_ACCOUNT[division].label}
           </button>

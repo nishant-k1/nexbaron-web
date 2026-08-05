@@ -1,6 +1,14 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
-
 export type Division = "digital" | "print";
+
+const API_URL_FALLBACK = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+
+export function getApiUrl(division: Division): string {
+  const url =
+    division === "digital"
+      ? process.env.NEXT_PUBLIC_API_URL_DIGITAL || API_URL_FALLBACK
+      : process.env.NEXT_PUBLIC_API_URL_PRINT || API_URL_FALLBACK;
+  return url.replace(/\/$/, "");
+}
 
 const AUTH_TOKEN_KEY_PREFIX = "nexbaron-auth-token";
 
@@ -55,7 +63,7 @@ export async function apiRequest<T>(
   options: RequestInit = {},
   division: Division = "digital",
 ): Promise<T> {
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${getApiUrl(division)}${path}`, {
     ...options,
     headers: {
       ...getAuthHeaders(division),

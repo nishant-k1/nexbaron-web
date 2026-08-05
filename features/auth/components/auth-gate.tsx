@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/features/auth/auth-context";
 import { apiRequest, type AuthUser } from "@/lib/api";
+import { getGoogleClientId } from "@/lib/google";
 
 type Channel = "email" | "phone" | null;
 
@@ -28,7 +29,8 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
   const [name, setName] = useState("");
   const [target, setTarget] = useState("");
   const [code, setCode] = useState("");
-  const [sentCode, setSentCode] = useState<string | null>(null);
+  const [otpSent, setOtpSent] = useState(false);
+  const [devCode, setDevCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [countdown, setCountdown] = useState(0);
@@ -40,7 +42,8 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
     setName("");
     setTarget("");
     setCode("");
-    setSentCode(null);
+    setOtpSent(false);
+    setDevCode(null);
     setError(null);
   };
 
@@ -69,24 +72,37 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
   if (!open) return null;
 
   const isEmail = channel === "email";
+  const phoneAuthEnabled =
+    division === "digital"
+      ? process.env.NEXT_PUBLIC_PHONE_AUTH_ENABLED_DIGITAL === "true"
+      : process.env.NEXT_PUBLIC_PHONE_AUTH_ENABLED_PRINT === "true";
+
+  const resetOtp = () => {
+    setOtpSent(false);
+    setDevCode(null);
+    setCode("");
+    setCountdown(0);
+  };
 
   const requestOtp = async () => {
+    if (!division) return;
     if (!target.trim()) {
-      setError(isEmail ? "Please enter your email." : "Please enter your WhatsApp number.");
+      setError(isEmail ? "Please enter your email." : "Please enter your phone number.");
       return;
     }
     setLoading(true);
     setError(null);
     try {
       const data = await apiRequest<{ success: boolean; devCode?: string; message?: string }>(
-        "/api/digital/auth/request-otp",
+        `/api/${division}/auth/request-otp`,
         {
           method: "POST",
-          body: JSON.stringify({ channel, target, name, division }),
+          body: JSON.stringify({ channel, target, name }),
         },
         division,
       );
-      setSentCode(data.devCode ?? null);
+      setOtpSent(true);
+      setDevCode(data.devCode ?? null);
       setCountdown(30);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not send the code.");
@@ -96,6 +112,7 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
   };
 
   const confirmCode = async () => {
+    if (!division) return;
     if (!code.trim()) {
       setError("Please enter the verification code.");
       return;
@@ -108,10 +125,10 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
         token: string;
         user: AuthUser;
       }>(
-        "/api/digital/auth/verify",
+        `/api/${division}/auth/verify`,
         {
           method: "POST",
-          body: JSON.stringify({ channel, target, code, name, division }),
+          body: JSON.stringify({ channel, target, code, name }),
         },
         division,
       );
@@ -124,7 +141,8 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
   };
 
   const handleGoogleSignIn = async () => {
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    if (!division) return;
+    const clientId = getGoogleClientId(division);
     if (!clientId) {
       setError("Google sign-in isn't configured. Use email or phone for now.");
       return;
@@ -161,6 +179,19 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
     }
   };
 
+  const isPrint = division === "print";
+  const accentBorder = isPrint ? "border-amber-500/30" : "border-teal-500/30";
+  const accentShadow = isPrint ? "shadow-amber-500/10" : "shadow-teal-500/10";
+  const accentPanel = isPrint
+    ? "bg-amber-500/10 border-amber-500/30 text-amber-400"
+    : "bg-teal-500/10 border-teal-500/30 text-teal-400";
+  const accentButton = isPrint
+    ? "bg-amber-500 hover:bg-amber-400"
+    : "bg-teal-500 hover:bg-teal-400";
+  const accentText = isPrint
+    ? "text-amber-400 hover:text-amber-300"
+    : "text-teal-400 hover:text-teal-300";
+
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
@@ -173,7 +204,9 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
         onClick={onClose}
         aria-label="Close sign-in"
       />
-      <div className="relative w-full max-w-md rounded-3xl bg-slate-900 border border-teal-500/30 shadow-2xl shadow-teal-500/10 p-8">
+      <div
+        className={`relative w-full max-w-md rounded-3xl bg-slate-900 border shadow-2xl p-8 ${accentBorder} ${accentShadow}`}
+      >
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors"
@@ -183,12 +216,14 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
         </button>
 
         <div className="flex items-center gap-3 mb-5">
-          <div className="p-2.5 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+          <div className={`p-2.5 rounded-xl border ${accentPanel}`}>
             <User className="w-5 h-5" />
           </div>
           <div>
             <h2 className="text-lg font-heading font-bold text-white">
-              {step === Step.Method ? "Continue with Nexbaron" : "Verify it's you"}
+              {step === Step.Method
+                ? `Continue with Nexbaron ${isPrint ? "Print" : "Digital"}`
+                : "Verify it's you"}
             </h2>
             <p className="text-[11px] text-slate-400">
               {step === Step.Method
@@ -227,7 +262,7 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
             </div>
 
             <Button
-              className="w-full justify-start gap-3 h-12 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold"
+              className={`w-full justify-start gap-3 h-12 rounded-xl text-slate-950 font-semibold ${accentButton}`}
               onClick={() => {
                 setChannel("email");
                 setStep(Step.Contact);
@@ -235,16 +270,19 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
             >
               <Mail className="w-4 h-4" /> Continue with Email
             </Button>
-            <Button
-              variant="outline"
-              className="w-full justify-start gap-3 h-12 rounded-xl border-white/15 hover:border-teal-500/40"
-              onClick={() => {
-                setChannel("phone");
-                setStep(Step.Contact);
-              }}
-            >
-              <Phone className="w-4 h-4 text-teal-400" /> Continue with Phone
-            </Button>
+            {phoneAuthEnabled && (
+              <Button
+                variant="outline"
+                className={`w-full justify-start gap-3 h-12 rounded-xl border-white/15 ${isPrint ? "hover:border-amber-500/40" : "hover:border-teal-500/40"}`}
+                onClick={() => {
+                  setChannel("phone");
+                  setStep(Step.Contact);
+                }}
+              >
+                <Phone className={`w-4 h-4 ${isPrint ? "text-amber-400" : "text-teal-400"}`} />{" "}
+                Continue with Phone
+              </Button>
+            )}
             <p className="text-center text-[10px] text-slate-500 pt-1">
               We&apos;ll send a one-time passcode to verify &mdash; no password needed.
             </p>
@@ -268,12 +306,15 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
 
             <div>
               <label className="text-xs font-medium text-slate-300 block mb-1.5">
-                {isEmail ? "Email address" : "WhatsApp number"}
+                {isEmail ? "Email address" : "Phone number"}
               </label>
               <Input
                 ref={targetRef}
                 value={target}
-                onChange={(e) => setTarget(e.target.value)}
+                onChange={(e) => {
+                  setTarget(e.target.value);
+                  if (otpSent) resetOtp();
+                }}
                 placeholder={isEmail ? "you@business.com" : "10-digit mobile number"}
                 type={isEmail ? "email" : "tel"}
                 className="rounded-xl"
@@ -281,21 +322,23 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
               />
             </div>
 
-            {sentCode !== null && (
-              <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-xs text-teal-200 flex gap-2">
+            {devCode !== null && (
+              <div
+                className={`p-3 rounded-xl border text-xs flex gap-2 ${isPrint ? "bg-amber-500/10 border-amber-500/30 text-amber-200" : "bg-teal-500/10 border-teal-500/30 text-teal-200"}`}
+              >
                 <MessageSquare className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>
-                  Dev mode code: <span className="font-mono font-bold">{sentCode}</span> — in
+                  Dev mode code: <span className="font-mono font-bold">{devCode}</span> — in
                   production this is sent automatically.
                 </span>
               </div>
             )}
 
-            {sentCode === null ? (
+            {!otpSent ? (
               <Button
                 onClick={requestOtp}
                 disabled={loading}
-                className="w-full h-12 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold"
+                className={`w-full h-12 rounded-xl text-slate-950 font-bold ${accentButton}`}
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Send verification code"}
                 {!loading && <MessageSquare className="w-4 h-4 ml-2" />}
@@ -316,22 +359,22 @@ export function AuthGate({ open, onClose, onSuccess }: AuthGateProps) {
                 <Button
                   onClick={confirmCode}
                   disabled={loading}
-                  className="w-full h-12 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold"
+                  className={`w-full h-12 rounded-xl text-slate-950 font-bold ${accentButton}`}
                 >
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify & continue"}
                 </Button>
                 <div className="flex items-center justify-between">
                   <button
-                    onClick={() => setSentCode(null)}
-                    className="text-xs text-teal-400 hover:text-teal-300 disabled:opacity-40"
+                    onClick={() => {
+                      setOtpSent(false);
+                      setDevCode(null);
+                    }}
+                    className={`text-xs disabled:opacity-40 ${accentText}`}
                     disabled={countdown > 0}
                   >
                     {countdown > 0 ? `Resend in ${countdown}s` : "Resend code"}
                   </button>
-                  <button
-                    onClick={() => setStep(Step.Method)}
-                    className="text-xs text-slate-400 hover:text-white"
-                  >
+                  <button onClick={reset} className="text-xs text-slate-400 hover:text-white">
                     Change method
                   </button>
                 </div>

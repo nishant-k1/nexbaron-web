@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 import { plans as defaultPlans, type Plan } from "@/features/digital/plans";
-import { API_URL } from "@/lib/api";
+import { getApiUrl } from "@/lib/api";
 
 export interface CatalogService {
   id: string;
@@ -113,7 +113,7 @@ export function PlansProvider({ children }: { children: ReactNode }) {
 
     (async () => {
       try {
-        const response = await fetch(`${API_URL}/api/digital/catalog`, {
+        const response = await fetch(`${getApiUrl("digital")}/api/digital/catalog`, {
           headers: { Accept: "application/json" },
         });
         if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);

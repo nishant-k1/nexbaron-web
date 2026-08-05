@@ -164,6 +164,7 @@ export function LeadForm({
   const classes = accent[division];
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   const {
     register,
@@ -178,17 +179,21 @@ export function LeadForm({
   const onSubmit = async (data: LeadValues) => {
     setIsSubmitting(true);
     setStatus("idle");
+    setStatusMessage(null);
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`/api/${division}/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, division }),
+        body: JSON.stringify(data),
       });
+      const result = (await response.json().catch(() => null)) as { message?: string } | null;
       if (response.ok) {
         setStatus("success");
+        setStatusMessage(result?.message ?? null);
         reset();
       } else {
         setStatus("error");
+        setStatusMessage(result?.message ?? null);
       }
     } catch {
       setStatus("error");
@@ -209,13 +214,15 @@ export function LeadForm({
 
       {status === "success" && (
         <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-sm">
-          Thank you! Your request has been received. We will reach out within a few business hours.
+          {statusMessage ??
+            "Thank you! Your request has been received. We will reach out within a few business hours."}
         </div>
       )}
 
       {status === "error" && (
         <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm">
-          There was an error submitting the form. Please reach us directly on WhatsApp instead.
+          {statusMessage ??
+            "There was an error submitting the form. Please reach us directly on WhatsApp instead."}
           <a
             href={buildWhatsAppLink(division, fallbackMessage)}
             target="_blank"

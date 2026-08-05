@@ -4,7 +4,9 @@ import { useEffect, useRef } from "react";
 
 import { useAuth } from "@/features/auth/auth-context";
 import {
+  cancelGooglePrompt,
   ensureGsiScript,
+  getGoogleClientId,
   initGoogleAuth,
   onGoogleCredential,
   triggerGooglePrompt,
@@ -21,14 +23,19 @@ import {
  *   user lands directly on the "Continue with Google" OAuth button.
  */
 export function GoogleOneTap() {
-  const { user, initialized, googleSignIn, openSignIn } = useAuth();
+  const { user, division, initialized, googleSignIn, openSignIn } = useAuth();
   const attemptedRef = useRef(false);
+  const attemptedDivisionRef = useRef(division);
 
   useEffect(() => {
-    if (!initialized || user || attemptedRef.current) return;
+    if (attemptedDivisionRef.current !== division) {
+      attemptedDivisionRef.current = division;
+      attemptedRef.current = false;
+    }
+    if (!division || !initialized || user || attemptedRef.current) return;
     attemptedRef.current = true;
 
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    const clientId = getGoogleClientId(division);
     if (!clientId) return;
 
     let cancelled = false;
@@ -59,8 +66,9 @@ export function GoogleOneTap() {
     return () => {
       cancelled = true;
       offCredential();
+      cancelGooglePrompt();
     };
-  }, [initialized, user, googleSignIn, openSignIn]);
+  }, [division, initialized, user, googleSignIn, openSignIn]);
 
   return null;
 }

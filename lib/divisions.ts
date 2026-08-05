@@ -1,8 +1,10 @@
 export type DivisionSlug = "digital" | "print";
+export type BrandPath = DivisionSlug | null;
 
-export function getDivisionFromPath(pathname: string): DivisionSlug {
-  if (pathname === "/print" || pathname.startsWith("/print")) return "print";
-  return "digital";
+export function getDivisionFromPath(pathname: string): BrandPath {
+  if (pathname === "/print" || pathname.startsWith("/print/")) return "print";
+  if (pathname === "/digital" || pathname.startsWith("/digital/")) return "digital";
+  return null;
 }
 
 interface NavItem {
@@ -72,7 +74,6 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
     nav: [
       { href: "/print/products", label: "Services" },
       { href: "/print/specifications", label: "Specifications" },
-      { href: "/print/bulk-orders", label: "Bulk Orders" },
     ],
     otherDivision: { href: "/digital", label: "digital ↗" },
     social: {

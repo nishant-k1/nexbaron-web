@@ -38,39 +38,32 @@ export type DraftPayload = Partial<{
   step: number;
 }>;
 
-export async function getDraft(
-  division: "digital" | "print" = "digital",
-): Promise<ServerDraft | null> {
+export async function getDraft(): Promise<ServerDraft | null> {
   const data = await apiRequest<{ success: boolean; draft: ServerDraft | null }>(
-    `/api/digital/drafts/${division}`,
+    "/api/digital/drafts",
     {},
-    division,
+    "digital",
   );
   return data.draft;
 }
 
-export async function saveDraft(
-  payload: DraftPayload,
-  division: "digital" | "print" = "digital",
-): Promise<ServerDraft> {
+export async function saveDraft(payload: DraftPayload): Promise<ServerDraft> {
   const data = await apiRequest<{ success: boolean; draft: ServerDraft }>(
-    `/api/digital/drafts/${division}`,
+    "/api/digital/drafts",
     {
       method: "PUT",
       body: JSON.stringify(payload),
     },
-    division,
+    "digital",
   );
   return data.draft;
 }
 
-export async function resetPlanDraft(
-  division: "digital" | "print" = "digital",
-): Promise<ServerDraft> {
+export async function resetPlanDraft(): Promise<ServerDraft> {
   const data = await apiRequest<{ success: boolean; draft: ServerDraft }>(
-    `/api/digital/drafts/${division}/reset-plan`,
+    "/api/digital/drafts/reset-plan",
     { method: "POST" },
-    division,
+    "digital",
   );
   return data.draft;
 }

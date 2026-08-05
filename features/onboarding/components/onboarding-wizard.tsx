@@ -223,7 +223,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     let cancelled = false;
     (async () => {
       try {
-        const draft = await getDraft("digital");
+        const draft = await getDraft();
         if (cancelled) return;
         setLoadedDraft(true);
         if (draft) {
@@ -293,17 +293,14 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
         notes: values.notes,
       };
       try {
-        await saveDraft(
-          {
-            planId,
-            plans: Object.fromEntries(
-              plans.map((plan) => [plan.id, selectionToDraftState(getSelection(plan.id))]),
-            ),
-            fields,
-            step,
-          },
-          "digital",
-        );
+        await saveDraft({
+          planId,
+          plans: Object.fromEntries(
+            plans.map((plan) => [plan.id, selectionToDraftState(getSelection(plan.id))]),
+          ),
+          fields,
+          step,
+        });
         setSavedAt(new Date());
       } catch {
         // silent — retried on next change

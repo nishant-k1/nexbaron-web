@@ -1,8 +1,9 @@
-export interface GoogleJwtPayload {
-  name?: string;
-  email: string;
-  sub: string;
-  picture?: string;
+import type { Division } from "@/lib/api";
+
+export function getGoogleClientId(division: Division): string | undefined {
+  return division === "digital"
+    ? process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL || process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+    : process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT || process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 }
 
 let scriptPromise: Promise<void> | null = null;
@@ -73,7 +74,7 @@ export function getGoogleId(): GoogleId | null {
 type GoogleCredentialHandler = (credential: string) => void;
 
 const credentialHandlers = new Set<GoogleCredentialHandler>();
-let initialized = false;
+let initializedClientId: string | null = null;
 
 export function onGoogleCredential(handler: GoogleCredentialHandler): () => void {
   credentialHandlers.add(handler);
@@ -83,10 +84,10 @@ export function onGoogleCredential(handler: GoogleCredentialHandler): () => void
 }
 
 export function initGoogleAuth(clientId: string): void {
-  if (initialized) return;
+  if (initializedClientId === clientId) return;
   const googleId = getGoogleId();
   if (!googleId) return;
-  initialized = true;
+  initializedClientId = clientId;
   googleId.initialize({
     client_id: clientId,
     callback: (response) => {
@@ -131,10 +132,4 @@ export function triggerGooglePrompt(): Promise<PromptResult> {
 export function cancelGooglePrompt(): void {
   pendingPrompt = null;
   getGoogleId()?.cancel();
-}
-
-export function decodeGoogleJwt(credential: string): GoogleJwtPayload {
-  const part = credential.split(".")[1];
-  const base64 = (part ?? "").replace(/-/g, "+").replace(/_/g, "/");
-  return JSON.parse(window.atob(base64)) as GoogleJwtPayload;
 }

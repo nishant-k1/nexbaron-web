@@ -17,7 +17,6 @@ const printLinks = {
   services: [
     { href: "/print/quote", label: "Instant Custom Print Calculator" },
     { href: "/print/specifications", label: "Paper Stocks & Finish Options" },
-    { href: "/print/bulk-orders", label: "Bulk Commercial Pricing" },
   ],
 };
 
