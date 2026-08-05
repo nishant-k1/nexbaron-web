@@ -1,14 +1,9 @@
 import type { Division } from "@/lib/api";
 
 export function getGoogleClientId(division: Division): string | undefined {
-  const brandSpecific =
-    division === "digital"
-      ? process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL
-      : process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT;
-  return (
-    brandSpecific ||
-    (process.env.NODE_ENV !== "production" ? process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID : undefined)
-  );
+  return division === "digital"
+    ? process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_DIGITAL
+    : process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PRINT;
 }
 
 let scriptPromise: Promise<void> | null = null;
