@@ -1,13 +1,12 @@
 "use client";
 
-import { Menu, X, Calculator } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 import { UserMenu } from "@/auth/components/user-menu";
 import { BrandMark } from "@/components/brand/brand-mark";
-import { Button } from "@/components/ui/button";
 import { divisions } from "@/lib/divisions";
 
 const navItems = divisions.print.nav;
@@ -78,16 +77,6 @@ export function PrintNavigation() {
 
           {/* Action CTAs */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button
-              asChild
-              size="sm"
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 rounded-lg shadow-md shadow-amber-500/20"
-            >
-              <Link href="/print/quote" className="flex items-center gap-1.5">
-                <Calculator className="w-4 h-4" />
-                Instant Print Quote
-              </Link>
-            </Button>
             <UserMenu />
           </div>
 
@@ -125,9 +114,6 @@ export function PrintNavigation() {
               ))}
             </div>
             <div className="pt-4 border-t border-white/10 space-y-3">
-              <Button asChild className="w-full bg-amber-500 text-slate-950 font-bold">
-                <Link href="/print/quote">Calculate Print Order</Link>
-              </Button>
               <UserMenu />
             </div>
           </div>
