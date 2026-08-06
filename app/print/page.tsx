@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
-import { printProducts } from "@/lib/data/print-products";
+import { printProducts } from "@/features/print/products";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {

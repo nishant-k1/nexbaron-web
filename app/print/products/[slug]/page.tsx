@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionHeading } from "@/components/sections/section-heading";
-import { printProducts } from "@/lib/data/print-products";
+import { printProducts } from "@/features/print/products";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 interface ProductPageProps {

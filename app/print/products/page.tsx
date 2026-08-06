@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
-import { printCategories, getProductsByCategory } from "@/lib/data/print-products";
+import { printCategories, getProductsByCategory } from "@/features/print/products";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
