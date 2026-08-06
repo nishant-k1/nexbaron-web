@@ -14,7 +14,7 @@ import {
   submitPrintQuote,
   type PrintCatalog,
   type PrintQuoteInput,
-} from "@/features/print/lib/quotes";
+} from "@/features/print/quotes";
 
 const PENDING_QUOTE_KEY = "nexbaron-pending-print-quote";
 const PENDING_QUOTE_TTL_MS = 30 * 60 * 1000;

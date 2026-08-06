@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PlansProvider } from "@/features/digital/lib/catalog";
+import { PlansProvider } from "@/features/digital/catalog";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com";

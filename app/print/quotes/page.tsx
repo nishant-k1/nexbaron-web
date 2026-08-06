@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
 import { Button } from "@/components/ui/button";
-import { getMyPrintQuotes, type PrintQuote } from "@/features/print/lib/quotes";
+import { getMyPrintQuotes, type PrintQuote } from "@/features/print/quotes";
 
 const STATUS_LABELS: Record<PrintQuote["status"], string> = {
   new: "Under review",

@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
+import { usePlans } from "@/features/digital/catalog";
 import { PlanCard } from "@/features/digital/components/plan-card";
-import { usePlans } from "@/features/digital/lib/catalog";
-import { savePlanSelection } from "@/features/digital/lib/plan-selection";
+import { savePlanSelection } from "@/features/digital/plan-selection";
 import {
   computeLaunchTimeline,
   computePrepared,

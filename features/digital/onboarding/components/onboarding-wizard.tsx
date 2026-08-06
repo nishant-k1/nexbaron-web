@@ -24,15 +24,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { usePlans } from "@/features/digital/catalog";
 import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
-import { usePlans } from "@/features/digital/lib/catalog";
 import {
   createCheckout,
   verifyPayment,
   type VerifyPaymentResponse,
-} from "@/features/digital/lib/payments";
-import { loadPlanSelection } from "@/features/digital/lib/plan-selection";
-import { loadRazorpayScript, type RazorpayPaymentResponse } from "@/features/digital/lib/razorpay";
+} from "@/features/digital/payments";
+import { loadPlanSelection } from "@/features/digital/plan-selection";
 import {
   buildStageSchedule,
   computeLaunchTimeline,
@@ -42,6 +41,7 @@ import {
   type PlanSelection,
 } from "@/features/digital/plan-summary";
 import { formatINR } from "@/features/digital/plans";
+import { loadRazorpayScript, type RazorpayPaymentResponse } from "@/features/digital/razorpay";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { getDraft, saveDraft, selectionToDraftState, type DraftFields } from "@/lib/draft";
 

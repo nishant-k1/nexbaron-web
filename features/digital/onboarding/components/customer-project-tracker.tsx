@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
 import { LaunchTracker } from "@/components/tracking/launch-tracker";
-import { fetchMyOrder, type MyOrder } from "@/features/digital/lib/orders";
+import { fetchMyOrder, type MyOrder } from "@/features/digital/orders";
 import { buildStageSchedule } from "@/features/digital/plan-summary";
 
 interface CustomerProjectTrackerProps {
