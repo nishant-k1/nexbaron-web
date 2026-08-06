@@ -44,13 +44,13 @@ export function BrandMark({ variant = "corporate", className = "" }: BrandMarkPr
           <g
             fill="none"
             stroke={v.glyph ? `url(#${id})` : "#ffffff"}
-            strokeWidth={4.2}
+            strokeWidth={2.5}
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M8 4.5 V19.5" />
-            <path d="M16 4.5 V19.5" />
-            <path d="M8 4.5 L16 19.5" />
+            <path d="M7 4.5 V19.5" />
+            <path d="M17 4.5 V19.5" />
+            <path d="M7 4.5 L17 19.5" />
           </g>
         </svg>
       </div>
