@@ -5,46 +5,73 @@ import { notFound } from "next/navigation";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionHeading } from "@/components/sections/section-heading";
-import { printProducts } from "@/features/print/products";
+import { getPrintCatalog, getProductIcon, type PrintProduct } from "@/features/print/catalog";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 interface ProductPageProps {
   params: { slug: string };
 }
 
+// Minimal static slug list for build-time generation — fetched from API at runtime
+const STATIC_SLUGS = [
+  "visiting-cards",
+  "card-holders",
+  "pamphlets-posters",
+  "stickers-labels",
+  "pens",
+  "sample-files",
+  "letter-heads",
+  "envelopes",
+  "files",
+  "tags",
+  "bill-books",
+  "digital-paper-printing",
+  "atm-pouches",
+  "shooting-targets",
+];
+
 export function generateStaticParams() {
-  return printProducts.map((product) => ({ slug: product.slug }));
+  return STATIC_SLUGS.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: ProductPageProps): Metadata {
-  const product = printProducts.find((p) => p.slug === params.slug);
-  if (!product) {
-    return { title: "Print Product | Nexbaron Print" };
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  try {
+    const catalog = await getPrintCatalog();
+    const product = catalog.products.find((p) => p.slug === params.slug);
+    if (product) {
+      return {
+        title: `${product.label} | Nexbaron Print`,
+        description: product.description,
+        openGraph: {
+          title: `${product.label} | Nexbaron Print`,
+          description: product.description,
+          ...divisionOpenGraph("print"),
+        },
+        twitter: divisionTwitter("print"),
+      };
+    }
+  } catch {
+    /* fall through to default */
   }
-  return {
-    title: `${product.name} | Nexbaron Print`,
-    description: `${product.name}. ${product.description}`,
-    openGraph: {
-      title: `${product.name} | Nexbaron Print`,
-      description: product.description,
-      ...divisionOpenGraph("print"),
-    },
-    twitter: divisionTwitter("print"),
-  };
+  return { title: "Print Product | Nexbaron Print" };
 }
 
-export default function PrintProductPage({ params }: ProductPageProps) {
-  const product = printProducts.find((p) => p.slug === params.slug);
-
-  if (!product) {
-    notFound();
+export default async function PrintProductPage({ params }: ProductPageProps) {
+  let product: PrintProduct | undefined;
+  try {
+    const catalog = await getPrintCatalog();
+    product = catalog.products.find((p) => p.slug === params.slug);
+  } catch {
+    // will hit notFound below
   }
 
-  const Icon = product.icon;
+  if (!product) notFound();
+
+  const Icon = getProductIcon(product.icon);
 
   const detailSections = [
     { title: "Materials & Stocks", items: product.materials },
-    { title: "Finishing Options", items: product.finishes },
+    { title: "Finishing Options", items: product.displayFinishes },
     { title: "Available Sizes", items: product.sizes },
   ];
 
@@ -53,12 +80,12 @@ export default function PrintProductPage({ params }: ProductPageProps) {
       <PageHero
         accent="print"
         eyebrow={`Print Collaterals • ${product.badge}`}
-        title={product.name}
+        title={product.label}
         highlight={product.tagline}
         description={product.description}
         primaryCta={{
           label: "Get an Instant Quote",
-          href: `/print/quote?product=${product.quoteId}`,
+          href: `/print/quote?product=${product.id}`,
         }}
         secondaryCta={{ label: "View Full Catalog", href: "/print/products" }}
       />
@@ -114,10 +141,10 @@ export default function PrintProductPage({ params }: ProductPageProps) {
 
         <CTABanner
           accent="print"
-          title={`Need ${product.name}?`}
+          title={`Need ${product.label}?`}
           description="Configure dimensions, quantity, and finishing in the instant quote builder — get an estimated price in seconds."
           ctaLabel="Launch Quote Builder"
-          href={`/print/quote?product=${product.quoteId}`}
+          href={`/print/quote?product=${product.id}`}
         />
       </div>
     </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
-import { printProducts } from "@/features/print/products";
+import { printProducts, getProductIcon } from "@/features/print/catalog";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -126,7 +126,7 @@ export default function PrintLandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featured.map((prod) => {
-              const Icon = prod.icon;
+              const Icon = getProductIcon(prod.icon);
               return (
                 <Link
                   key={prod.slug}
@@ -143,7 +143,7 @@ export default function PrintLandingPage() {
                   </div>
 
                   <h3 className="text-xl font-heading font-semibold text-white mb-3">
-                    {prod.name}
+                    {prod.label}
                   </h3>
                   <p className="text-sm text-slate-300 leading-relaxed mb-6">{prod.description}</p>
 

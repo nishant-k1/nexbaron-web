@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
-import { printCategories, getProductsByCategory } from "@/features/print/products";
+import { printCategories, getProductsByCategory, getProductIcon } from "@/features/print/catalog";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -51,7 +51,7 @@ export default function PrintProductsPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {getProductsByCategory(category).map((product) => {
-                const Icon = product.icon;
+                const Icon = getProductIcon(product.icon);
                 return (
                   <Link
                     key={product.slug}
@@ -68,7 +68,7 @@ export default function PrintProductsPage() {
                       </span>
                     </div>
                     <h3 className="text-lg font-heading font-semibold text-white mb-2">
-                      {product.name}
+                      {product.label}
                     </h3>
                     <p className="text-xs text-slate-400 leading-relaxed mb-5">{product.tagline}</p>
                     <div className="mt-auto flex items-center justify-between">
