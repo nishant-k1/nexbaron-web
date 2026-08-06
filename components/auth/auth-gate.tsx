@@ -3,7 +3,7 @@
 import { Loader2, Mail, MessageSquare, Phone, User, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { useAuth } from "@/auth/auth-context";
+import { useAuth } from "@/components/auth/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { apiRequest, type AuthUser } from "@/lib/api";

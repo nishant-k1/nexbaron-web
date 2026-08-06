@@ -18,7 +18,7 @@ import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { useAuth } from "@/auth/auth-context";
+import { useAuth } from "@/components/auth/auth-context";
 import { formatCalendarDate, LaunchTracker } from "@/components/tracking/launch-tracker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

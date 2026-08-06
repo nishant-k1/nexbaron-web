@@ -1,8 +1,8 @@
 import { MessageSquare, Clock, PhoneCall } from "lucide-react";
 import { type Metadata } from "next";
 
+import { ContactForm } from "@/components/contact/contact-form";
 import { PageHero } from "@/components/sections/page-hero";
-import { ContactForm } from "@/contact/components/contact-form";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 

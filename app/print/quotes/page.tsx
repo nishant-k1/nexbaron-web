@@ -4,7 +4,7 @@ import { FileText, Loader2, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { useAuth } from "@/auth/auth-context";
+import { useAuth } from "@/components/auth/auth-context";
 import { Button } from "@/components/ui/button";
 import { getMyPrintQuotes, type PrintQuote } from "@/features/print/lib/quotes";
 

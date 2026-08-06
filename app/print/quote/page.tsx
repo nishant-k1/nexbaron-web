@@ -3,7 +3,7 @@
 import { Loader2, MessageSquare } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { useAuth } from "@/auth/auth-context";
+import { useAuth } from "@/components/auth/auth-context";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
-import { UserMenu } from "@/auth/components/user-menu";
+import { UserMenu } from "@/components/auth/user-menu";
 import { BrandMark } from "@/components/brand/brand-mark";
 import { divisions } from "@/lib/divisions";
 

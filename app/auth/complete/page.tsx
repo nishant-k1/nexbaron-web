@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 
-import { useAuth } from "@/auth/auth-context";
+import { useAuth } from "@/components/auth/auth-context";
 import type { AuthUser } from "@/lib/api";
 import { getDivisionFromPath, type DivisionSlug } from "@/lib/divisions";
 import type { GoogleAuthResult } from "@/lib/google-auth-result";

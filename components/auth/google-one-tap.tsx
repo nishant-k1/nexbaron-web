@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { useAuth } from "@/auth/auth-context";
+import { useAuth } from "@/components/auth/auth-context";
 import {
   cancelGooglePrompt,
   ensureGsiScript,
