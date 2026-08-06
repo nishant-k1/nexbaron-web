@@ -5,7 +5,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
 import type { AuthUser } from "@/lib/api";
-import { getDivisionFromPath, type DivisionSlug } from "@/lib/divisions";
+import { getDivisionFromPath, type Division } from "@/lib/divisions";
 import type { GoogleAuthResult } from "@/lib/google-auth-result";
 
 const PENDING_PLAN_KEY = "nexbaron-pending-plan";
@@ -18,7 +18,7 @@ function CompleteInner() {
   const { signIn } = useAuth();
   const handled = useRef(false);
   const [fatalError, setFatalError] = useState<string | null>(null);
-  const [errorDivision, setErrorDivision] = useState<DivisionSlug | null>(null);
+  const [errorDivision, setErrorDivision] = useState<Division | null>(null);
   const isPrintCallback = params.get("division") === "print";
 
   useEffect(() => {
@@ -130,11 +130,11 @@ export default function GoogleAuthCompletePage() {
   );
 }
 
-function readDivision(value: string | null): DivisionSlug | null {
+function readDivision(value: string | null): Division | null {
   return value === "digital" || value === "print" ? value : null;
 }
 
-function divisionFromState(state: string): DivisionSlug | null {
+function divisionFromState(state: string): Division | null {
   try {
     return readDivision((JSON.parse(state) as { division?: string }).division ?? null);
   } catch {

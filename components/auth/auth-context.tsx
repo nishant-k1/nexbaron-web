@@ -12,11 +12,11 @@ import {
 } from "react";
 
 import { apiRequest, getToken, setToken, type AuthUser } from "@/lib/api";
-import { getDivisionFromPath, type DivisionSlug } from "@/lib/divisions";
+import { getDivisionFromPath, type Division } from "@/lib/divisions";
 
 interface AuthContextValue {
   user: AuthUser | null;
-  division: DivisionSlug | null;
+  division: Division | null;
   initialized: boolean;
   signIn: (token: string, user: AuthUser) => void;
   signOut: () => void;
@@ -36,9 +36,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const division = getDivisionFromPath(pathname ?? "");
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [initializedDivision, setInitializedDivision] = useState<DivisionSlug | null>(null);
+  const [initializedDivision, setInitializedDivision] = useState<Division | null>(null);
   const [signInOpen, setSignInOpen] = useState(false);
-  const [signInDivision, setSignInDivision] = useState<DivisionSlug | null>(null);
+  const [signInDivision, setSignInDivision] = useState<Division | null>(null);
   const [pendingPlan, setPendingPlan] = useState<string | null>(null);
   const refreshGeneration = useRef(0);
 

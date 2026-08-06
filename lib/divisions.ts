@@ -1,5 +1,7 @@
-export type DivisionSlug = "digital" | "print";
-export type BrandPath = DivisionSlug | null;
+import type { Division } from "@/lib/api";
+
+export type { Division };
+export type BrandPath = Division | null;
 
 export function getDivisionFromPath(pathname: string): BrandPath {
   if (pathname === "/print" || pathname.startsWith("/print/")) return "print";
@@ -13,7 +15,7 @@ interface NavItem {
 }
 
 interface DivisionConfig {
-  slug: DivisionSlug;
+  slug: Division;
   name: string;
   label: string;
   tagline: string;
@@ -39,7 +41,7 @@ interface DivisionConfig {
 const DIGITAL_WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_DIGITAL ?? "";
 const PRINT_WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_PRINT ?? "";
 
-export const divisions: Record<DivisionSlug, DivisionConfig> = {
+export const divisions: Record<Division, DivisionConfig> = {
   digital: {
     slug: "digital",
     name: "Nexbaron Digital",
@@ -95,7 +97,7 @@ export const divisions: Record<DivisionSlug, DivisionConfig> = {
   },
 };
 
-export function buildWhatsAppLink(division: DivisionSlug, message: string): string {
+export function buildWhatsAppLink(division: Division, message: string): string {
   const number = divisions[division].whatsappNumber;
   const base = number ? `https://wa.me/${number}` : "https://wa.me";
   return `${base}?text=${encodeURIComponent(message)}`;

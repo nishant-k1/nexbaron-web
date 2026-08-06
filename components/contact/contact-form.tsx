@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { accent } from "@/lib/accents";
-import { buildWhatsAppLink, type DivisionSlug } from "@/lib/divisions";
+import { buildWhatsAppLink, type Division } from "@/lib/divisions";
 
 const schema = z
   .object({
@@ -28,7 +28,7 @@ const schema = z
 type ContactValues = z.infer<typeof schema>;
 
 interface ContactFormProps {
-  division: DivisionSlug;
+  division: Division;
   heading: string;
   subheading?: string;
 }

@@ -1,6 +1,6 @@
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
-import { divisions, type DivisionSlug } from "@/lib/divisions";
+import { divisions, type Division } from "@/lib/divisions";
 
 import { PinterestIcon, ThreadsIcon, TikTokIcon, WhatsAppIcon, XIcon } from "./brand-icons";
 
@@ -17,7 +17,7 @@ const socialPlatforms = [
 ] as const;
 
 interface SocialLinksProps {
-  division: DivisionSlug;
+  division: Division;
 }
 
 export function SocialLinks({ division }: SocialLinksProps) {

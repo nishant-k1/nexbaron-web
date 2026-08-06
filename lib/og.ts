@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-type Division = "print" | "digital";
+import type { Division } from "@/lib/api";
 
 const divisionConfig: Record<Division, { image: string; siteName: string; alt: string }> = {
   print: {

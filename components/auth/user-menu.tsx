@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
-import type { DivisionSlug } from "@/lib/divisions";
+import type { Division } from "@/lib/divisions";
 
 function initials(name: string): string {
   return name
@@ -17,12 +17,12 @@ function initials(name: string): string {
     .join("");
 }
 
-const DIVISION_HOME: Record<DivisionSlug, string> = {
+const DIVISION_HOME: Record<Division, string> = {
   digital: "/digital",
   print: "/print",
 };
 
-const DIVISION_ACCOUNT: Record<DivisionSlug, { label: string; href: string }> = {
+const DIVISION_ACCOUNT: Record<Division, { label: string; href: string }> = {
   digital: { label: "Your plan", href: "/digital/pricing" },
   print: { label: "Your quotes", href: "/print/quotes" },
 };
