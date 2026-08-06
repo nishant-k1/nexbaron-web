@@ -1,23 +1,20 @@
 import {
-  Monitor,
-  Search,
-  MessageSquare,
-  Zap,
   ArrowRight,
   Building,
-  Utensils,
-  Stethoscope,
-  Scale,
-  Dumbbell,
   Briefcase,
+  Dumbbell,
+  MessageSquare,
+  Scale,
+  Stethoscope,
+  Utensils,
 } from "lucide-react";
 import { type Metadata } from "next";
 import Link from "next/link";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
+import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { Button } from "@/components/ui/button";
-import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -37,37 +34,6 @@ export const metadata: Metadata = {
     ...divisionTwitter("digital"),
   },
 };
-
-const digitalServices = [
-  {
-    icon: Monitor,
-    title: "A Website That Brings Customers In",
-    desc: "A professional website built for your business — opens fast on any phone, explains what you do, and sends every enquiry straight to your WhatsApp.",
-    tags: ["Built for You", "Opens Fast", "Mobile Perfect"],
-    linkLabel: "See a sample website",
-  },
-  {
-    icon: Search,
-    title: "Show Up When People Search Near You",
-    desc: "We make your business appear on Google when people search for what you offer — and automatically collect reviews that make you look trusted.",
-    tags: ["Google Visibility", "Review System", "Your City"],
-    linkLabel: "How local ranking works",
-  },
-  {
-    icon: MessageSquare,
-    title: "Never Miss Another Customer Message",
-    desc: "Customers message you on WhatsApp and get an instant reply, day or night. Appointments get booked and enquiries never slip through.",
-    tags: ["24/7 Replies", "Booking", "Every Enquiry Captured"],
-    linkLabel: "Try our WhatsApp demo",
-  },
-  {
-    icon: Zap,
-    title: "We Keep It Online, Fast & Secure",
-    desc: "Hosting, security, backups, and updates — handled for you. Your website stays online and opens fast, always, while you run your business.",
-    tags: ["Always Online", "Backups", "No Tech Worries"],
-    linkLabel: "What's included in care",
-  },
-];
 
 const targetIndustries = [
   {
@@ -172,7 +138,6 @@ export default function DigitalLandingPage() {
                 Fixed-Price Growth Plans
               </span>
             </div>
-
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
               Your Business, Found on Google.{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400">
@@ -180,13 +145,11 @@ export default function DigitalLandingPage() {
               </span>{" "}
               Every Day.
             </h1>
-
             <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
               We help restaurants, clinics, salons, law firms, and local shops get more customers —
               a website, Google visibility, and 24/7 WhatsApp booking in one simple plan. Fixed
               price. No jargon. No lock-in.
             </p>
-
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
               <Button
                 asChild
@@ -207,95 +170,41 @@ export default function DigitalLandingPage() {
               >
                 <Link href="/digital/who-we-help">Who We Help</Link>
               </Button>
-            </div>
-
-            {/* Honest commitments */}
-            <div className="pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center max-w-3xl mx-auto">
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-teal-400 font-mono">Launch in 7 Days</div>
-                <div className="text-xs text-slate-400">Your website, live on a real date</div>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-cyan-400 font-mono">Own Your Website</div>
-                <div className="text-xs text-slate-400">
-                  Domain, content, design — yours forever
+            </div>{" "}
+            {/* Trust Signals */}
+            <div className="pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-center max-w-4xl mx-auto">
+              {[
+                "50+ businesses launched",
+                "Average launch: 7 days",
+                "Google Business verified",
+                "WhatsApp Business Partner",
+                "Hosted securely",
+              ].map((signal) => (
+                <div
+                  key={signal}
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/5"
+                >
+                  <span className="text-teal-400 text-sm">✓</span>
+                  <span className="text-xs text-slate-300 font-medium">{signal}</span>
                 </div>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-teal-300 font-mono">Google Business</div>
-                <div className="text-xs text-slate-400">
-                  Verified profile, reviews, local ranking
-                </div>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <div className="text-2xl font-bold text-emerald-400 font-mono">WhatsApp Ready</div>
-                <div className="text-xs text-slate-400">24/7 auto-replies, booking, enquiries</div>
-              </div>
+              ))}
             </div>
           </div>
         </SectionReveal>
-
-        {/* Services Grid */}
-        <section id="services" className="py-16">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
-              What You Get
-            </span>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-              Everything a Local Business Needs to Grow
-            </h2>
-            <p className="text-sm text-slate-300 mt-4">
-              One plan. One team. All the pieces a local business needs to get found, get contacted,
-              and get booked — working together.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {digitalServices.map((service, idx) => {
-              const Icon = service.icon;
-              return (
-                <div
-                  key={idx}
-                  className="p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06] group"
-                >
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 group-hover:scale-110 transition-transform">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <div className="flex gap-2">
-                      {service.tags.map((tag, tIdx) => (
-                        <span
-                          key={tIdx}
-                          className="text-[10px] font-mono text-slate-400 px-2 py-0.5 rounded bg-white/5 border border-white/10"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-heading font-semibold text-white mb-3">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed mb-6">{service.desc}</p>
-
-                  <a
-                    href={buildWhatsAppLink(
-                      "digital",
-                      "Hi Nexbaron Digital, I want to know how you can help my business grow",
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-xs font-semibold text-teal-400 hover:text-teal-300"
-                  >
-                    {service.linkLabel} <ArrowRight className="ml-1 w-4 h-4" />
-                  </a>
-                </div>
-              );
-            })}
+        {/* Social Proof */}
+        <section className="py-16 border-t border-white/10">
+          <div className="max-w-3xl mx-auto">
+            <div className="p-8 rounded-2xl bg-gradient-to-r from-teal-500/10 to-cyan-500/5 border border-teal-500/20 text-center">
+              <p className="text-slate-300 italic leading-relaxed max-w-xl mx-auto">
+                &ldquo;I had zero online presence. Nexbaron built my website in 6 days, got me on
+                Google, and now customers book appointments on WhatsApp — I don&apos;t even pick up
+                the phone anymore.&rdquo;
+              </p>
+              <p className="text-sm font-semibold text-white mt-4">Dr. Mehta</p>
+              <p className="text-xs text-slate-500">Dental Clinic, Mumbai</p>
+            </div>
           </div>
         </section>
-
         {/* Tailored Industries */}
         <section className="py-16 border-t border-white/10">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -331,8 +240,31 @@ export default function DigitalLandingPage() {
             })}
           </div>
         </section>
-
-        {/* Process Timeline — compact 4+4 grid */}
+        {/* Results */}
+        <section className="py-16 border-t border-white/10">
+          <SectionHeading
+            accent="digital"
+            eyebrow="Results"
+            title="What Our Customers See"
+            description="Real outcomes from businesses like yours — not promises, proof."
+          />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-3xl mx-auto">
+            {[
+              { value: "50+", label: "Businesses Launched" },
+              { value: "4.9", label: "Google Rating" },
+              { value: "7 Days", label: "Avg. Launch Time" },
+              { value: "24/7", label: "WhatsApp Replies" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="text-4xl font-heading font-extrabold text-teal-400">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-slate-300 mt-2">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* Process Timeline */}
         <section className="py-16 border-t border-white/10">
           <SectionHeading
             accent="digital"
@@ -340,23 +272,8 @@ export default function DigitalLandingPage() {
             title="Eight Steps. No Surprises."
             description="The same journey for every customer, from choosing a package to monthly growth."
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            {steps.map((step) => (
-              <div
-                key={step.number}
-                className="flex gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all group"
-              >
-                <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-teal-500/10 border border-teal-500/30 text-teal-400 font-mono font-bold text-sm grid place-items-center group-hover:bg-teal-500/20 transition-colors">
-                  {step.number}
-                </span>
-                <div>
-                  <h3 className="text-sm font-semibold text-white mb-0.5">{step.title}</h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">{step.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
+          <ProcessTimeline steps={steps} />
+          <div className="text-center mt-12">
             <Button
               asChild
               size="lg"
@@ -370,38 +287,7 @@ export default function DigitalLandingPage() {
               </Link>
             </Button>
           </div>
-        </section>
-
-        {/* Social Proof */}
-        <section className="py-16 border-t border-white/10">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 text-center">
-              {[
-                { value: "50+", label: "Businesses Launched" },
-                { value: "4.9", label: "Google Rating" },
-                { value: "7 Days", label: "Average Launch Time" },
-                { value: "24/7", label: "WhatsApp Replies" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-3xl font-heading font-extrabold text-teal-400">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-slate-300 mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-            <div className="p-8 rounded-2xl bg-gradient-to-r from-teal-500/10 to-cyan-500/5 border border-teal-500/20 text-center">
-              <p className="text-slate-300 italic leading-relaxed max-w-xl mx-auto">
-                &ldquo;I had zero online presence. Nexbaron built my website in 6 days, got me on
-                Google, and now customers book appointments on WhatsApp — I don&apos;t even pick up
-                the phone anymore.&rdquo;
-              </p>
-              <p className="text-sm font-semibold text-white mt-4">Dr. Mehta</p>
-              <p className="text-xs text-slate-500">Dental Clinic, Mumbai</p>
-            </div>
-          </div>
-        </section>
-
+        </section>{" "}
         {/* Pricing Preview */}
         <section className="py-16 border-t border-white/10">
           <SectionHeading
@@ -471,6 +357,87 @@ export default function DigitalLandingPage() {
                 Compare All Plans <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
+          </div>
+        </section>
+        {/* Final CTA */}
+        <section className="py-16 border-t border-white/10">
+          <div className="max-w-2xl mx-auto text-center p-10 rounded-3xl bg-gradient-to-r from-teal-500/20 via-cyan-500/10 to-slate-950 border border-teal-500/30">
+            <h2 className="text-3xl font-heading font-bold text-white mb-4">
+              Ready to Launch Your Business Online?
+            </h2>
+            <p className="text-slate-300 mb-8">
+              Pick a plan, complete a 10-minute form, and your website goes live in 7 days — with
+              Google visibility and WhatsApp booking included.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button
+                asChild
+                size="lg"
+                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+              >
+                <Link href="/digital/pricing#plans" className="flex items-center gap-2">
+                  Choose Your Plan <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-white/20 text-white hover:bg-white/10 px-8 rounded-xl backdrop-blur-md"
+              >
+                <Link href="/digital/contact">Talk to Us First</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+        {/* FAQ */}
+        <section className="py-16 border-t border-white/10">
+          <SectionHeading
+            accent="digital"
+            eyebrow="FAQ"
+            title="Questions Business Owners Ask"
+            description="Straight answers. No jargon. No fine print."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            {[
+              {
+                q: "How long until my website is live?",
+                a: "7 days from payment. You get a confirmed launch date the moment you pay — no estimates, no delays.",
+              },
+              {
+                q: "Do I own my website and domain?",
+                a: "Yes. Everything — domain, content, design — is 100% yours. Even if you cancel, it stays yours.",
+              },
+              {
+                q: "What if I don't have a logo or photos?",
+                a: "We design a logo for you at no extra cost. For photos, send what you have — we make it work. If you have nothing, we use professional stock imagery.",
+              },
+              {
+                q: "Can you help with my Google Business Profile?",
+                a: "Yes. Growth and Scale plans include Google Business Profile setup, verification, optimisation, and review management. We handle the entire process.",
+              },
+              {
+                q: "What happens after the website goes live?",
+                a: "Monthly care keeps it online, updated, and backed up. Growth Care adds Google ranking work, review collection, and WhatsApp automation. You get a plain-English report by the 5th of every month.",
+              },
+              {
+                q: "Is there a lock-in contract?",
+                a: "No. Cancel anytime. Your website and domain remain yours. The only thing that stops is our monthly care and updates.",
+              },
+            ].map((item) => (
+              <details
+                key={item.q}
+                className="p-5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all group cursor-pointer"
+              >
+                <summary className="text-sm font-semibold text-white list-none flex items-center justify-between gap-3">
+                  {item.q}
+                  <span className="text-teal-400 text-lg shrink-0 group-open:rotate-45 transition-transform">
+                    +
+                  </span>
+                </summary>
+                <p className="text-sm text-slate-300 leading-relaxed mt-3 ml-0">{item.a}</p>
+              </details>
+            ))}
           </div>
         </section>
       </div>
