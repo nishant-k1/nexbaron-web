@@ -50,7 +50,7 @@ export function BrandMark({ variant = "corporate", className = "" }: BrandMarkPr
           >
             <path d="M8 4.5 V19.5" />
             <path d="M16 4.5 V19.5" />
-            <path d="M8 19.5 L16 4.5" />
+            <path d="M8 4.5 L16 19.5" />
           </g>
         </svg>
       </div>
