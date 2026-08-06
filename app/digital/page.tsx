@@ -15,6 +15,8 @@ import { type Metadata } from "next";
 import Link from "next/link";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
+import { ProcessTimeline } from "@/components/sections/process-timeline";
+import { SectionHeading } from "@/components/sections/section-heading";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
@@ -94,6 +96,60 @@ const targetIndustries = [
     icon: Briefcase,
     name: "Startups & SMEs",
     detail: "A professional footprint, launched fast",
+  },
+];
+
+const steps = [
+  {
+    number: "1",
+    title: "Choose your package",
+    description: "Pick Launch, Growth, or Scale. No sales call, no pressure.",
+    href: "/digital/pricing",
+  },
+  {
+    number: "2",
+    title: "Complete a 10-minute onboarding form",
+    description: "Tell us your services, hours, address, and what you want visitors to do.",
+    href: "/digital/onboarding",
+  },
+  {
+    number: "3",
+    title: "Upload your photos & business details",
+    description:
+      "Photos, services, and anything you want on your site. No logo yet? We design one for you.",
+    href: "/digital/onboarding",
+  },
+  {
+    number: "4",
+    title: "Complete payment",
+    description:
+      "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is booked.",
+    href: "/digital/onboarding",
+  },
+  {
+    number: "5",
+    title: "We start building",
+    description:
+      "Your digital presence takes shape — designed around how your customers actually search.",
+    href: "/digital/why-nexbaron",
+  },
+  {
+    number: "6",
+    title: "Review your digital presence",
+    description: "See it live, request tweaks, and approve the final version.",
+    href: "/digital/solutions",
+  },
+  {
+    number: "7",
+    title: "Go live",
+    description: "Your digital presence is published — approved by you, on time.",
+    href: "/digital/solutions",
+  },
+  {
+    number: "8",
+    title: "Monthly growth begins",
+    description: "Google visibility, WhatsApp answers, and monthly care keep it working.",
+    href: "/digital/results",
   },
 ];
 
@@ -266,6 +322,31 @@ export default function DigitalLandingPage() {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        {/* Process Timeline */}
+        <section className="py-16 border-t border-white/10">
+          <SectionHeading
+            accent="digital"
+            eyebrow="How It Works"
+            title="Eight Steps. No Surprises."
+            description="The same journey for every customer, from choosing a package to monthly growth."
+          />
+          <ProcessTimeline steps={steps} />
+          <div className="text-center mt-12">
+            <Button
+              asChild
+              size="lg"
+              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+            >
+              <Link
+                href="/digital/pricing#plans"
+                className="inline-flex items-center justify-center gap-2"
+              >
+                Choose Your Plan <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
           </div>
         </section>
 

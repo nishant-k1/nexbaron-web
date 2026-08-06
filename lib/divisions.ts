@@ -51,7 +51,6 @@ export const divisions: Record<Division, DivisionConfig> = {
     nav: [
       { href: "/digital/solutions", label: "Solutions" },
       { href: "/digital/who-we-help", label: "Who We Help" },
-      { href: "/digital/process", label: "Our Process" },
       { href: "/digital/pricing", label: "Pricing" },
       { href: "/digital/about", label: "About" },
       { href: "/digital/contact", label: "Contact" },
