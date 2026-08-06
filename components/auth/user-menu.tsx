@@ -28,7 +28,7 @@ const DIVISION_ACCOUNT: Record<Division, { label: string; href: string }> = {
 };
 
 export function UserMenu() {
-  const { user, division, signOut, initialized, openSignIn } = useAuth();
+  const { user, division, signOut, initialized } = useAuth();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -51,12 +51,12 @@ export function UserMenu() {
 
   if (!user) {
     return (
-      <button
-        onClick={() => openSignIn()}
+      <a
+        href={`https://hub.nexbaron.com/${division}/login`}
         className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold border transition-colors ${division === "print" ? "text-amber-400 hover:text-amber-300 border-amber-500/40 hover:border-amber-500/70" : "text-teal-400 hover:text-teal-300 border-teal-500/40 hover:border-teal-500/70"}`}
       >
         <User className="w-4 h-4" /> Sign in
-      </button>
+      </a>
     );
   }
 
