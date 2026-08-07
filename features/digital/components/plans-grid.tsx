@@ -13,6 +13,7 @@ export function PlansGrid() {
   const { plans, loading } = usePlans();
 
   const selectPlan = (planId: string) => {
+    console.log("[PlansGrid] selectPlan called, planId:", planId, "user:", user);
     savePlanSelection({ planId, plans: {} });
 
     if (user) {

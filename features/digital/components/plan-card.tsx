@@ -115,7 +115,10 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
       <div className="mt-auto pt-4">
         <button
           type="button"
-          onClick={onSelectPlan}
+          onClick={() => {
+            console.log("[PlanCard] button clicked, plan:", plan.id);
+            onSelectPlan();
+          }}
           className={`w-full h-11 font-bold px-8 rounded-xl shadow-lg cursor-pointer transition-colors inline-flex items-center justify-center gap-2 ${
             plan.featured
               ? "bg-teal-500 hover:bg-teal-400 text-slate-950 shadow-teal-500/20"
