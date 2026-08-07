@@ -4,6 +4,7 @@ import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import { AuthProvider } from "@/components/auth/auth-context";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { Footer } from "@/components/footer/footer";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Navigation } from "@/components/navigation/navigation";
@@ -165,20 +166,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.variable} ${montserrat.variable} font-body`}>
         <ScrollProgress />
-        <ThemeProvider>
-          <AuthProvider>
-            <GlobalMeshBackground />
-            <a href="#main-content" className="skip-to-content">
-              Skip to main content
-            </a>
-            <Navigation />
-            <main id="main-content" className="flex-1">
-              {children}
-            </main>
-            <Footer />
-            <FloatingActions />
-          </AuthProvider>
-        </ThemeProvider>
+        <ErrorBoundary>
+          <ThemeProvider>
+            <AuthProvider>
+              <GlobalMeshBackground />
+              <a href="#main-content" className="skip-to-content">
+                Skip to main content
+              </a>
+              <Navigation />
+              <main id="main-content" className="flex-1">
+                {children}
+              </main>
+              <Footer />
+              <FloatingActions />
+            </AuthProvider>
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
