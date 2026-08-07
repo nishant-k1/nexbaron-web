@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
@@ -24,30 +24,53 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [dotY, setDotY] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end end"],
-  });
+  const updateDotPosition = useCallback((index: number) => {
+    const el = stepRefs.current[index];
+    if (el && containerRef.current) {
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const stepRect = el.getBoundingClientRect();
+      // Position at the circle's center (circle is h-11 = 44px)
+      const circleCenter = stepRect.top - containerRect.top + 22;
+      setDotY(circleCenter);
+    }
+  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion) return;
-    const unsubscribe = scrollYProgress.on("change", (progress) => {
-      const stepCount = steps.length;
-      const rawIndex = Math.floor(progress * stepCount);
-      const clamped = Math.min(rawIndex, stepCount - 1);
-      setActiveIndex(clamped);
 
-      // Calculate dot Y position relative to active step
-      const activeEl = stepRefs.current[clamped];
-      if (activeEl && containerRef.current) {
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const stepRect = activeEl.getBoundingClientRect();
-        const relativeY = stepRect.top - containerRect.top + stepRect.height / 2;
-        setDotY(relativeY);
-      }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the entry closest to center of viewport (highest ratio)
+        let bestIdx = -1;
+        let bestRatio = 0;
+
+        entries.forEach((entry) => {
+          const idx = stepRefs.current.findIndex((el) => el === entry.target);
+          if (idx === -1) return;
+
+          if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio;
+            bestIdx = idx;
+          }
+        });
+
+        if (bestIdx !== activeIndex && bestIdx >= 0) {
+          setActiveIndex(bestIdx);
+          updateDotPosition(bestIdx);
+        }
+      },
+      {
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+        rootMargin: "-20% 0px -20% 0px",
+      },
+    );
+
+    stepRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
     });
-    return () => unsubscribe();
-  }, [scrollYProgress, steps.length, prefersReducedMotion]);
+
+    return () => observer.disconnect();
+  }, [prefersReducedMotion, updateDotPosition, activeIndex]);
 
   return (
     <div ref={containerRef} className="relative max-w-4xl mx-auto">
@@ -58,22 +81,12 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
       >
         {/* Background line */}
         <div className="absolute inset-0 bg-white/10" />
-        {/* Active progress line */}
-        {!prefersReducedMotion && (
-          <motion.div
-            className="absolute top-0 left-0 right-0 bg-gradient-to-b from-teal-400 to-amber-400"
-            style={{
-              height: `${((activeIndex + 1) / steps.length) * 100}%`,
-              transition: "height 0.5s ease-out",
-            }}
-          />
-        )}
         {/* Travel dot */}
         {!prefersReducedMotion && activeIndex >= 0 && (
           <motion.span
             className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-teal-400 shadow-[0_0_16px_rgba(45,212,191,0.8)] z-10"
             animate={{ top: dotY }}
-            transition={{ type: "spring", stiffness: 120, damping: 14 }}
+            transition={{ type: "spring", stiffness: 70, damping: 14 }}
           />
         )}
       </div>
@@ -82,6 +95,7 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
         {steps.map((step, index) => {
           const isEven = index % 2 === 0;
           const isActive = index === activeIndex;
+          const isPast = index < activeIndex;
           return (
             <li
               key={step.number}
@@ -96,10 +110,12 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
                 className="absolute left-[22px] top-0 md:left-1/2 md:-translate-x-1/2 h-11 -translate-x-1/2 z-20"
               >
                 <div
-                  className={`h-full min-w-[2.75rem] px-2 rounded-full flex items-center justify-center font-mono font-bold text-xs whitespace-nowrap transition-all duration-500 ${
+                  className={`h-full min-w-[2.75rem] px-2 rounded-full flex items-center justify-center font-mono font-bold text-xs whitespace-nowrap transition-all duration-500 border ${
                     isActive
-                      ? "bg-teal-500/20 border-teal-400 text-teal-300 border shadow-[0_0_20px_rgba(45,212,191,0.4)]"
-                      : "bg-slate-950 border border-teal-500/40 text-teal-400 shadow-lg shadow-teal-500/20"
+                      ? "bg-teal-500/20 border-teal-400 text-teal-300 shadow-[0_0_20px_rgba(45,212,191,0.4)] scale-110"
+                      : isPast
+                        ? "bg-teal-500/10 border-teal-500/40 text-teal-400"
+                        : "bg-slate-950 border-white/10 text-slate-500"
                   }`}
                 >
                   {step.number}
@@ -113,7 +129,7 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
                 }
                 initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
               >
                 {step.href ? (
