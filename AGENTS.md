@@ -24,6 +24,14 @@ No tests. Husky: pre-commit runs lint-staged + typecheck; pre-push runs `check` 
 - **Dark mode only** — design decision; `theme/theme-toggle.tsx` force-resets to dark on a 1s interval. Don't add light theme without sign-off.
 - Styling: Tailwind 3 with CSS-var tokens in `app/globals.css`; shadcn-style primitives in `components/ui/` (Radix + CVA + `cn()`); fonts Inter/Montserrat via next/font; framer-motion with reduced-motion support (`hooks/use-reveal-in-view.ts` works around a whileInView bug).
 
+**Theme rules (MUST follow):**
+
+- The site is dark-only. Use `text-white`, `bg-slate-950`, `text-slate-400`, `border-white/10` etc. consistently.
+- Division accent: digital = teal (`teal-400`/`teal-500`), print = amber (`amber-400`/`amber-500`).
+- Never mix division accents on the wrong division's pages.
+- Card/panel backgrounds: `bg-white/[0.03]` with `border-white/10` and `backdrop-blur-md`.
+- Input backgrounds: `bg-slate-800` with `border-white/10`.
+
 ### Key routes
 
 ```
