@@ -1,114 +1,118 @@
 "use client";
 
-import { ArrowRight, CalendarCheck } from "lucide-react";
+import { ArrowRight, Check, Rocket, TrendingUp, Building2 } from "lucide-react";
 
-import { formatCalendarDate } from "@/components/tracking/launch-tracker";
 import { Button } from "@/components/ui/button";
-import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
-import type { InheritedView, LaunchTimeline } from "@/features/digital/plan-summary";
 import { formatINR, type Plan } from "@/features/digital/plans";
 
 interface PlanCardProps {
   plan: Plan;
-  launchTimeline?: LaunchTimeline;
-  oneTimeTotal: number;
-  monthlyTotal: number;
-  serviceSelection: Record<string, boolean>;
-  addOnSelection: Record<string, boolean>;
-  addOnCounts: Record<string, number>;
-  inherited: InheritedView | null;
-  inheritedOn: boolean;
-  onToggleService: (id: string) => void;
-  onToggleAddOn: (id: string) => void;
-  onSetAddOnCount: (id: string, count: number) => void;
-  onToggleInherited: () => void;
   onSelectPlan: () => void;
 }
 
-export function PlanCard({
-  plan,
-  launchTimeline,
-  oneTimeTotal,
-  monthlyTotal,
-  serviceSelection,
-  addOnSelection,
-  addOnCounts,
-  inherited,
-  inheritedOn,
-  onToggleService,
-  onToggleAddOn,
-  onSetAddOnCount,
-  onToggleInherited,
-  onSelectPlan,
-}: PlanCardProps) {
-  const Icon = plan.icon;
+const WHO_ITS_FOR: Record<string, string> = {
+  launch:
+    "Solo business just starting out. 5-page site, mobile-ready, Google Business Profile created.",
+  growth:
+    "Growing business with 10–30 customers a day. Found on Google, booked on WhatsApp, reviews collected automatically.",
+  scale:
+    "Established business doing ₹50L+/year. Dedicated manager, unlimited updates, monthly strategy calls.",
+};
+
+const INCLUDES: Record<string, string[]> = {
+  launch: [
+    "Website — up to 5 pages",
+    "Works perfectly on phone",
+    "Logo, colours, and your photos",
+    "WhatsApp button on every page",
+    "Google Business Profile created",
+    "All enquiries sent to your phone",
+  ],
+  growth: [
+    "Everything in Launch",
+    "Google profile optimised for your city",
+    "Review collection — we ask after every sale",
+    "Rank for searches in your area",
+    "WhatsApp booking and reminders",
+    "Auto-reply to common questions 24/7",
+    "Monthly report in plain English",
+  ],
+  scale: [
+    "Everything in Growth",
+    "Dedicated growth manager",
+    "Monthly strategy call",
+    "Unlimited content and page updates",
+    "Competitor review every quarter",
+    "Campaign and offer pages",
+  ],
+};
+
+const ICONS: Record<string, React.ElementType> = {
+  launch: Rocket,
+  growth: TrendingUp,
+  scale: Building2,
+};
+
+export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
+  const Icon = ICONS[plan.id] || Rocket;
+  const who = WHO_ITS_FOR[plan.id] || "";
+  const items = INCLUDES[plan.id] || [];
 
   return (
     <div
       id={plan.id}
-      className={`h-full flex flex-col p-8 rounded-2xl backdrop-blur-md border transition-all duration-300 scroll-mt-28 ${
+      className={`h-full flex flex-col p-6 rounded-2xl backdrop-blur-md border transition-all duration-300 scroll-mt-28 ${
         plan.featured
           ? "bg-teal-500/10 border-teal-500/40 shadow-2xl shadow-teal-500/10"
           : "bg-white/[0.03] border-white/10 hover:border-teal-500/40 hover:bg-white/[0.06]"
       }`}
     >
-      <div className="flex items-center justify-between mb-6">
-        <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
-          <Icon className="w-6 h-6" />
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2.5 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+          <Icon className="w-5 h-5" />
         </div>
-        {plan.featured && (
-          <span className="text-[10px] font-mono text-slate-950 px-2.5 py-1 rounded bg-teal-400 font-semibold">
-            Most Popular
-          </span>
-        )}
+        <div>
+          <h3 className="text-lg font-heading font-semibold text-white">{plan.name}</h3>
+          {plan.featured && (
+            <span className="text-[10px] font-semibold text-teal-400">Most popular</span>
+          )}
+        </div>
       </div>
 
-      <h3 className="text-xl font-heading font-semibold text-white mb-1">{plan.name}</h3>
-      <p className="text-sm text-slate-300 leading-relaxed mb-4">{plan.tagline}</p>
+      {/* Who it's for */}
+      <p className="text-xs text-slate-400 leading-relaxed mb-4">{who}</p>
 
+      {/* Price */}
       <div className="mb-4">
-        <span className="text-3xl font-heading font-extrabold text-white">
-          {formatINR(oneTimeTotal)}
+        <span className="text-2xl font-heading font-extrabold text-white">
+          {formatINR(plan.oneTime)}
         </span>
         <span className="text-xs text-slate-400 ml-1">one-time</span>
-        <div className="text-sm text-slate-300 mt-1">
-          + {formatINR(monthlyTotal)}
-          <span className="text-xs text-slate-400">/month · {plan.monthlyName}</span>
+        <div className="text-sm text-slate-300 mt-0.5">
+          + {formatINR(plan.monthly)}
+          <span className="text-xs text-slate-400">/month</span>
         </div>
       </div>
 
-      <div className="mb-4">
-        <span className="text-[10px] font-mono text-teal-400 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20 inline-flex items-center gap-1.5">
-          {plan.timelineMode === "phased" ? (
-            plan.timeline
-          ) : launchTimeline ? (
-            <>
-              <CalendarCheck className="w-3 h-3" />
-              Web live by {formatCalendarDate(launchTimeline.launchDate)}
-            </>
-          ) : (
-            plan.timeline
-          )}
+      {/* Timeline */}
+      <div className="mb-5">
+        <span className="text-[10px] font-mono text-teal-400 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20">
+          {plan.timeline}
         </span>
       </div>
 
-      {(inherited || plan.services.length > 0) && (
-        <div className="mb-6 pt-4 border-t border-white/10">
-          <PlanServicesEditor
-            plan={plan}
-            serviceSelection={serviceSelection}
-            addOnSelection={addOnSelection}
-            addOnCounts={addOnCounts}
-            inherited={inherited}
-            inheritedOn={inheritedOn}
-            onToggleService={onToggleService}
-            onToggleAddOn={onToggleAddOn}
-            onSetAddOnCount={onSetAddOnCount}
-            onToggleInherited={onToggleInherited}
-          />
-        </div>
-      )}
+      {/* Features list */}
+      <div className="mb-6 pt-4 border-t border-white/10 space-y-2.5">
+        {items.map((item) => (
+          <div key={item} className="flex items-start gap-2.5">
+            <Check className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+            <span className="text-sm text-slate-300 leading-relaxed">{item}</span>
+          </div>
+        ))}
+      </div>
 
+      {/* CTA */}
       <div className="mt-auto pt-4">
         <Button
           type="button"
