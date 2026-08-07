@@ -139,7 +139,7 @@ export default function DigitalServicesPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-white/[0.03] border-b border-white/10">
-                  <th className="text-left px-6 py-4 font-mono text-xs uppercase tracking-wider text-slate-400">
+                  <th className="sticky left-0 bg-slate-950 text-left px-6 py-4 font-mono text-xs uppercase tracking-wider text-slate-400 z-10">
                     Feature
                   </th>
                   {plans.map((plan) => (
@@ -167,7 +167,9 @@ export default function DigitalServicesPage() {
                       index % 2 === 0 ? "bg-transparent" : "bg-white/[0.02]"
                     }`}
                   >
-                    <td className="px-6 py-3.5 text-slate-300">{row.feature}</td>
+                    <td className="sticky left-0 bg-slate-950 px-6 py-3.5 text-slate-300 z-10">
+                      {row.feature}
+                    </td>
                     {[row.launch, row.growth, row.scale].map((included, colIndex) => (
                       <td key={colIndex} className="px-6 py-3.5 text-center">
                         {included ? (

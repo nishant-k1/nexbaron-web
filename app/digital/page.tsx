@@ -178,7 +178,7 @@ export default function DigitalLandingPage() {
               </Button>
             </div>{" "}
             {/* Trust Signals */}
-            <div className="pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-center max-w-4xl mx-auto">
+            <div className="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center max-w-4xl mx-auto">
               {[
                 "50+ businesses launched",
                 "Average launch: 7 days",
