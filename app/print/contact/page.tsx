@@ -1,4 +1,4 @@
-import { MessageSquare, Clock, PhoneCall } from "lucide-react";
+import { MapPin, MessageSquare, Clock, PhoneCall } from "lucide-react";
 import { type Metadata } from "next";
 
 import { ContactForm } from "@/components/contact/contact-form";
@@ -17,26 +17,6 @@ export const metadata: Metadata = {
   },
   twitter: divisionTwitter("print"),
 };
-
-const nextSteps = [
-  {
-    icon: Clock,
-    title: "Reply the same day",
-    description: "We reply to every enquiry the same day, every time.",
-  },
-  {
-    icon: MessageSquare,
-    title: "Clear specifications and pricing",
-    description:
-      "We'll confirm sizes, stocks, finishes, and pricing — no ambiguity, no hidden costs.",
-  },
-  {
-    icon: PhoneCall,
-    title: "Talk when you're ready",
-    description:
-      "Prefer a call or WhatsApp? We're available Monday to Saturday at a time that suits you.",
-  },
-];
 
 export default function PrintContactPage() {
   return (
@@ -60,57 +40,94 @@ export default function PrintContactPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5 space-y-6">
-            <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <h2 className="text-xl font-heading font-bold text-white mb-6">What to Expect</h2>
-              <div className="space-y-6">
-                {nextSteps.map((step) => {
-                  const Icon = step.icon;
-                  return (
-                    <div key={step.title} className="flex items-start gap-4">
-                      <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-semibold text-white mb-1">{step.title}</h3>
-                        <p className="text-xs text-slate-400 leading-relaxed">{step.description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
+            {/* Contact Information */}
+            <div className="p-8 rounded-3xl bg-white/[0.03] border border-amber-500/20 backdrop-blur-xl space-y-6">
+              <h2 className="text-xl font-heading font-bold text-white">Contact Information</h2>
+
+              <div className="flex items-start gap-3">
+                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Response Time</h3>
+                  <p className="text-xs text-slate-400">
+                    We reply to every enquiry the same day — usually within 2–3 hours during
+                    business hours.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
+                  <PhoneCall className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Phone</h3>
+                  <a
+                    href="tel:+919899752254"
+                    className="text-sm text-amber-400 hover:text-amber-300"
+                  >
+                    +91 98997 52254
+                  </a>
+                  <p className="text-xs text-slate-500 mt-0.5">Monday – Saturday, 10 AM – 7 PM</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
+                  <MessageSquare className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">WhatsApp</h3>
+                  <a
+                    href={buildWhatsAppLink(
+                      "print",
+                      "Hi Nexbaron Print, I have a question about your printing services",
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-amber-400 hover:text-amber-300"
+                  >
+                    Start a conversation
+                  </a>
+                  <div className="mt-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/919899752254"
+                      alt="Scan to chat on WhatsApp"
+                      width={100}
+                      height={100}
+                      className="rounded-lg border border-white/10"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <address className="not-italic">
+                  <h3 className="text-sm font-semibold text-white">Location</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed mt-1">
+                    Begusarai, Bihar - 851101
+                  </p>
+                </address>
               </div>
             </div>
 
-            <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <h2 className="text-xl font-heading font-bold text-white mb-4">Call Us</h2>
-              <a
-                href="tel:+919899752254"
-                className="inline-flex items-center gap-2 text-lg font-semibold text-amber-400 hover:text-amber-300"
-              >
-                <PhoneCall className="w-5 h-5" />
-                +91 98997 52254
-              </a>
-              <p className="text-xs text-slate-500 mt-2">Monday to Saturday, 10 AM – 7 PM</p>
-            </div>
-
-            <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <h2 className="text-xl font-heading font-bold text-white mb-4">
-                Prefer to Message Directly?
-              </h2>
-              <p className="text-sm text-slate-400 leading-relaxed mb-4">
-                You can also reach us on WhatsApp — we&apos;re available Monday to Saturday.
-              </p>
-              <a
-                href={buildWhatsAppLink(
-                  "print",
-                  "Hi Nexbaron Print, I'd like to know more about your printing services",
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-amber-400 hover:text-amber-300"
-              >
-                <PhoneCall className="w-4 h-4" />
-                Start a WhatsApp conversation
-              </a>
+            {/* Google Maps */}
+            <div className="rounded-3xl overflow-hidden border border-white/10">
+              <iframe
+                title="Nexbaron Print Office Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28676.5!2d86.12!3d25.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDI1JzEyLjAiTiA4NsKwMDcnMTIuMCJF!5e0!3m2!1sen!2sin!4v1600000000000"
+                width="100%"
+                height="220"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
 
