@@ -19,8 +19,10 @@ export function PlansGrid() {
     if (user) {
       router.push(`/digital/onboarding?plan=${planId}`);
     } else {
+      console.log("[PlansGrid] calling openSignIn with planId:", planId);
       window.sessionStorage.setItem("nexbaron-pending-plan", planId);
       openSignIn(planId);
+      console.log("[PlansGrid] openSignIn returned");
     }
   };
 
