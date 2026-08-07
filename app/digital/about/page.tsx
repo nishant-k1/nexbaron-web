@@ -1,4 +1,4 @@
-import { Globe, Search, MessageSquare, Zap, Users, TrendingUp } from "lucide-react";
+import { Globe, Search, MessageSquare, Zap, Users, TrendingUp, Heart, MapPin } from "lucide-react";
 import { type Metadata } from "next";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
@@ -86,6 +86,64 @@ export default function DigitalAboutPage() {
                 before you pay. And a team that actually answers when you call. Because growing your
                 business online shouldn&apos;t be complicated.
               </p>
+            </div>
+          </SectionReveal>
+        </div>
+      </section>
+
+      {/* Meet the Humans */}
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionReveal>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
+              The People Behind the Pixels
+            </h2>
+            <p className="text-slate-400 text-center max-w-xl mx-auto mb-12">
+              We&apos;re a small, hands-on team. When you work with Nexbaron, you work directly with
+              the people building your digital presence — no account managers, no handoffs.
+            </p>
+
+            {/* Team & Workspace Vibe */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+              {[
+                {
+                  initials: "ST",
+                  name: "Small Team, Big Impact",
+                  desc: "Every project is built by 2–3 people who know your business by name. No assembly line. No faceless agency.",
+                  icon: Users,
+                },
+                {
+                  initials: "BL",
+                  name: "Based in Bengaluru",
+                  desc: `Flat No. 402, Vasavi Residency - 1, Green House Layout, Doddathoguru, Electronic City Phase - 1, Bengaluru - 560100\n+91 90027 85683`,
+                  icon: MapPin,
+                },
+                {
+                  initials: "MV",
+                  name: "Our Mission",
+                  desc: "Make getting online as simple as ordering chai. Fixed price, confirmed date, real results — every single time.",
+                  icon: Heart,
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.name}
+                    className="p-6 rounded-xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all text-center"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-teal-500/10 border border-teal-500/30 mx-auto mb-3 flex items-center justify-center">
+                      <span className="text-sm font-bold text-teal-400">{item.initials}</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-1.5 mb-2">
+                      <Icon className="w-4 h-4 text-teal-400" />
+                      <h3 className="text-sm font-semibold text-white">{item.name}</h3>
+                    </div>
+                    <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line">
+                      {item.desc}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </SectionReveal>
         </div>

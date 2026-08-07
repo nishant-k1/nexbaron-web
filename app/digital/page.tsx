@@ -39,31 +39,37 @@ const targetIndustries = [
   {
     icon: Stethoscope,
     name: "Clinics & Doctors",
+    preview: `<svg viewBox="0 0 120 80" fill="none" class="w-full"><rect width="120" height="80" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/><rect x="0" y="0" width="120" height="10" rx="6" fill="#1e293b"/><circle cx="8" cy="5" r="2" fill="#ef4444"/><circle cx="15" cy="5" r="2" fill="#f59e0b"/><circle cx="22" cy="5" r="2" fill="#22c55e"/><rect x="15" y="22" width="90" height="6" rx="2" fill="#2dd4bf" opacity=".3"/><rect x="25" y="36" width="70" height="4" rx="1" fill="#334155"/><rect x="25" y="44" width="50" height="4" rx="1" fill="#334155"/><rect x="25" y="52" width="60" height="4" rx="1" fill="#334155"/><circle cx="58" cy="60" r="12" fill="#2dd4bf" opacity=".15" stroke="#2dd4bf" stroke-width="1.5"/><path d="M54 60h8M58 56v8" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round"/></svg>`,
     detail: "More booked appointments, fewer no-shows",
   },
   {
     icon: Utensils,
     name: "Restaurants & Cafes",
+    preview: `<svg viewBox="0 0 120 80" fill="none" class="w-full"><rect width="120" height="80" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/><rect x="0" y="0" width="120" height="10" rx="6" fill="#1e293b"/><circle cx="8" cy="5" r="2" fill="#ef4444"/><circle cx="15" cy="5" r="2" fill="#f59e0b"/><circle cx="22" cy="5" r="2" fill="#22c55e"/><rect x="15" y="20" width="90" height="7" rx="2" fill="#f59e0b" opacity=".3"/><rect x="25" y="35" width="50" height="4" rx="1" fill="#334155"/><rect x="25" y="43" width="70" height="4" rx="1" fill="#334155"/><circle cx="20" cy="54" r="8" fill="#f59e0b" opacity=".15" stroke="#f59e0b" stroke-width="1.5"/><circle cx="40" cy="54" r="8" fill="#f59e0b" opacity=".15" stroke="#f59e0b" stroke-width="1.5"/><circle cx="60" cy="54" r="8" fill="#f59e0b" opacity=".15" stroke="#f59e0b" stroke-width="1.5"/></svg>`,
     detail: 'Found first by people searching "near me"',
   },
   {
     icon: Scale,
     name: "Law & CA Firms",
+    preview: `<svg viewBox="0 0 120 80" fill="none" class="w-full"><rect width="120" height="80" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/><rect x="0" y="0" width="120" height="10" rx="6" fill="#1e293b"/><circle cx="8" cy="5" r="2" fill="#ef4444"/><circle cx="15" cy="5" r="2" fill="#f59e0b"/><circle cx="22" cy="5" r="2" fill="#22c55e"/><rect x="15" y="22" width="90" height="6" rx="2" fill="#94a3b8" opacity=".25"/><rect x="25" y="36" width="70" height="4" rx="1" fill="#334155"/><rect x="25" y="44" width="60" height="4" rx="1" fill="#334155"/><path d="M50 56L58 48l4 4 8-8" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="50" y1="66" x2="70" y2="66" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round"/></svg>`,
     detail: "A credible presence that wins high-trust clients",
   },
   {
     icon: Dumbbell,
     name: "Salons, Spas & Gyms",
+    preview: `<svg viewBox="0 0 120 80" fill="none" class="w-full"><rect width="120" height="80" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/><rect x="0" y="0" width="120" height="10" rx="6" fill="#1e293b"/><circle cx="8" cy="5" r="2" fill="#ef4444"/><circle cx="15" cy="5" r="2" fill="#f59e0b"/><circle cx="22" cy="5" r="2" fill="#22c55e"/><rect x="15" y="20" width="90" height="7" rx="2" fill="#f59e0b" opacity=".2"/><rect x="25" y="35" width="50" height="4" rx="1" fill="#334155"/><rect x="25" y="43" width="70" height="4" rx="1" fill="#334155"/><circle cx="30" cy="60" r="10" fill="#2dd4bf" opacity=".12"/><path d="M26 56l8 8M34 56l-8 8" stroke="#2dd4bf" stroke-width="1.5" stroke-linecap="round"/></svg>`,
     detail: "Fill more slots with self-booking",
   },
   {
     icon: Building,
     name: "Real Estate & Builders",
+    preview: `<svg viewBox="0 0 120 80" fill="none" class="w-full"><rect width="120" height="80" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/><rect x="0" y="0" width="120" height="10" rx="6" fill="#1e293b"/><circle cx="8" cy="5" r="2" fill="#ef4444"/><circle cx="15" cy="5" r="2" fill="#f59e0b"/><circle cx="22" cy="5" r="2" fill="#22c55e"/><rect x="15" y="22" width="90" height="6" rx="2" fill="#f59e0b" opacity=".25"/><rect x="25" y="36" width="70" height="4" rx="1" fill="#334155"/><rect x="25" y="44" width="50" height="4" rx="1" fill="#334155"/><rect x="30" y="56" width="24" height="18" rx="2" fill="#2dd4bf" opacity=".1" stroke="#2dd4bf" stroke-width="1"/><polygon points="42,56 42,48 54,42 66,48 66,56" fill="none" stroke="#2dd4bf" stroke-width="1" opacity=".5"/></svg>`,
     detail: "Capture serious buyers and follow up properly",
   },
   {
     icon: Briefcase,
     name: "Startups & SMEs",
+    preview: `<svg viewBox="0 0 120 80" fill="none" class="w-full"><rect width="120" height="80" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/><rect x="0" y="0" width="120" height="10" rx="6" fill="#1e293b"/><circle cx="8" cy="5" r="2" fill="#ef4444"/><circle cx="15" cy="5" r="2" fill="#f59e0b"/><circle cx="22" cy="5" r="2" fill="#22c55e"/><rect x="15" y="20" width="90" height="7" rx="2" fill="#2dd4bf" opacity=".2"/><rect x="25" y="35" width="70" height="4" rx="1" fill="#334155"/><rect x="25" y="43" width="50" height="4" rx="1" fill="#334155"/><path d="M60 48l6-12 6 12" fill="#f59e0b" opacity=".3" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="60" r="3" fill="#2dd4bf"/></svg>`,
     detail: "A professional footprint, launched fast",
   },
 ];
@@ -237,17 +243,14 @@ export default function DigitalLandingPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {targetIndustries.map((ind, idx) => {
-              const Icon = ind.icon;
               return (
                 <div
                   key={idx}
-                  className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-teal-500/30 transition-all flex items-start gap-4"
+                  className="rounded-xl bg-white/[0.02] border border-white/10 hover:border-teal-500/30 transition-all overflow-hidden group"
                 >
-                  <div className="p-3 rounded-lg bg-teal-500/10 text-teal-400 shrink-0">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-white mb-1">{ind.name}</h3>
+                  <div className="p-3 bg-slate-950/50 border-b border-white/5">{ind.preview}</div>
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-white mb-1">{ind.name}</h3>
                     <p className="text-xs text-slate-400">{ind.detail}</p>
                   </div>
                 </div>

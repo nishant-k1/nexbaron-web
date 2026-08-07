@@ -81,6 +81,18 @@ export default function PrintContactPage() {
             </div>
 
             <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
+              <h2 className="text-xl font-heading font-bold text-white mb-4">Call Us</h2>
+              <a
+                href="tel:+919899752254"
+                className="inline-flex items-center gap-2 text-lg font-semibold text-amber-400 hover:text-amber-300"
+              >
+                <PhoneCall className="w-5 h-5" />
+                +91 98997 52254
+              </a>
+              <p className="text-xs text-slate-500 mt-2">Monday to Saturday, 10 AM – 7 PM</p>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
               <h2 className="text-xl font-heading font-bold text-white mb-4">
                 Prefer to Message Directly?
               </h2>

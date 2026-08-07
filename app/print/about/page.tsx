@@ -1,4 +1,4 @@
-import { Printer, Clock, Shield, Truck, Palette, Ruler } from "lucide-react";
+import { Printer, Clock, Shield, Truck, Palette, Ruler, Heart, MapPin, Users } from "lucide-react";
 import { type Metadata } from "next";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
@@ -86,6 +86,81 @@ export default function PrintAboutPage() {
                 high-quality. You tell us what you need — we quote honestly, manufacture to spec,
                 and deliver on time. Every single order.
               </p>
+            </div>
+          </SectionReveal>
+        </div>
+      </section>
+
+      {/* Meet the Humans */}
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionReveal>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
+              The People Behind the Press
+            </h2>
+            <p className="text-slate-400 text-center max-w-xl mx-auto mb-12">
+              We&apos;re a hands-on print operation. When you place an order, it&apos;s handled by
+              people who care about paper stock, finish, and deadlines — not a faceless production
+              line.
+            </p>
+
+            {/* Founder Card */}
+            <div className="max-w-2xl mx-auto mb-16">
+              <div className="p-8 rounded-2xl bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 text-center">
+                <div className="w-20 h-20 rounded-full bg-amber-500/20 border-2 border-amber-500/40 mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-amber-400">HK</span>
+                </div>
+                <h3 className="text-xl font-heading font-bold text-white mb-1">Himanshu Kumar</h3>
+                <p className="text-sm text-amber-400 font-medium mb-3">Founder & Print Director</p>
+                <p className="text-slate-300 text-sm leading-relaxed max-w-lg mx-auto">
+                  Built Nexbaron Print on one principle: quality you can feel. Personally inspects
+                  every order before dispatch. Believes a visiting card should make someone stop and
+                  look twice.
+                </p>
+              </div>
+            </div>
+
+            {/* Team & Workspace Vibe */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+              {[
+                {
+                  initials: "ST",
+                  name: "Small Team, Big Impact",
+                  desc: "Every order is handled by skilled print operators who know your brand specs. No assembly line. No quality lottery.",
+                  icon: Users,
+                },
+                {
+                  initials: "BR",
+                  name: "Based in Begusarai",
+                  desc: `Begusarai, Bihar - 851101\n+91 98997 52254`,
+                  icon: MapPin,
+                },
+                {
+                  initials: "MV",
+                  name: "Our Mission",
+                  desc: "Make premium printing as simple as ordering online. Honest quotes, precise manufacturing, on-time delivery — every single order.",
+                  icon: Heart,
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.name}
+                    className="p-6 rounded-xl bg-white/[0.03] border border-white/10 hover:border-amber-500/30 transition-all text-center"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/30 mx-auto mb-3 flex items-center justify-center">
+                      <span className="text-sm font-bold text-amber-400">{item.initials}</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-1.5 mb-2">
+                      <Icon className="w-4 h-4 text-amber-400" />
+                      <h3 className="text-sm font-semibold text-white">{item.name}</h3>
+                    </div>
+                    <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line">
+                      {item.desc}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </SectionReveal>
         </div>
