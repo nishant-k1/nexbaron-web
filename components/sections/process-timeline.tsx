@@ -43,9 +43,9 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
                 {/* Node dot */}
                 <div
                   aria-hidden
-                  className="absolute left-[22px] top-0 md:left-1/2 md:-translate-x-1/2 w-11 h-11 -translate-x-1/2"
+                  className="absolute left-[22px] top-0 md:left-1/2 md:-translate-x-1/2 h-11 -translate-x-1/2"
                 >
-                  <div className="w-full h-full rounded-full bg-slate-950 border border-teal-500/40 flex items-center justify-center text-teal-400 font-mono font-bold text-sm shadow-lg shadow-teal-500/20">
+                  <div className="h-full min-w-[2.75rem] px-2 rounded-full bg-slate-950 border border-teal-500/40 flex items-center justify-center text-teal-400 font-mono font-bold text-xs shadow-lg shadow-teal-500/20 whitespace-nowrap">
                     {step.number}
                   </div>
                 </div>
