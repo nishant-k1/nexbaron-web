@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
+import { plans as staticPlans } from "@/features/digital/plans";
 import { getApiUrl } from "@/lib/api";
 import { getIcon } from "@/lib/icon-map";
 
@@ -85,7 +86,7 @@ export function usePlans(): PlansContextValue {
 }
 
 export function PlansProvider({ children }: { children: ReactNode }) {
-  const [plans, setPlans] = useState<CatalogPlan[]>([]);
+  const [plans, setPlans] = useState<CatalogPlan[]>(staticPlans);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -103,7 +104,6 @@ export function PlansProvider({ children }: { children: ReactNode }) {
         writeCache(fetched);
         if (!cancelled) setPlans(fetched);
       } catch {
-        // cached fallback already set above
       } finally {
         if (!cancelled) setLoading(false);
       }
