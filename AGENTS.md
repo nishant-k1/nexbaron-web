@@ -84,3 +84,14 @@ Protected behavior (no middleware): `/digital/onboarding` server-redirects witho
 ### Git
 
 Branch `main`, remote `git@github.com:nishant-k1/nexbaron-web.git`. Imperative feature-sized commit messages.
+
+### Brand Logo
+
+The official logo is `public/icon.svg` — NX monogram in a rounded square with gradient border.
+Corporate: teal→amber gradient. Digital: teal icon on teal gradient. Print: amber icon on amber gradient.
+
+**Rules:**
+
+- Every email template, PDF, or external asset must use this logo.
+- `components/brand/brand-mark.tsx` is the canonical React component.
+- Never create a different logo or text-based fallback.
