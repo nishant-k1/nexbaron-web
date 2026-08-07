@@ -47,6 +47,23 @@ export function LiveChat() {
   const sessionId = getSessionId();
   const isLoggedIn = !!user;
 
+  // Auto-merge anonymous messages when user logs in
+  useEffect(() => {
+    if (!division || !user || !sessionId) return;
+
+    const token = getToken(division);
+    if (!token) return;
+
+    fetch(`/api/${division}/chat/merge`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ sessionId }),
+    }).catch(() => {});
+  }, [division, user, sessionId]);
+
   // Load chat history from backend
   useEffect(() => {
     if (!division) return;
