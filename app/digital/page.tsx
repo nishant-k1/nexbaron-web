@@ -70,52 +70,52 @@ const targetIndustries = [
 
 const steps = [
   {
-    number: "1",
+    number: "Day 0",
     title: "Choose your package",
     description: "Pick Launch, Growth, or Scale. No sales call, no pressure.",
     href: "/digital/pricing",
   },
   {
-    number: "2",
+    number: "Day 1",
     title: "Complete a 10-minute onboarding form",
     description: "Tell us your services, hours, address, and what you want visitors to do.",
     href: "/digital/onboarding",
   },
   {
-    number: "3",
+    number: "Day 2",
     title: "Upload your photos & business details",
     description:
       "Photos, services, and anything you want on your site. No logo yet? We design one for you.",
     href: "/digital/onboarding",
   },
   {
-    number: "4",
+    number: "Day 3",
     title: "Complete payment",
     description:
       "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is booked.",
     href: "/digital/onboarding",
   },
   {
-    number: "5",
+    number: "Day 4–5",
     title: "We start building",
     description:
       "Your digital presence takes shape — designed around how your customers actually search.",
     href: "/digital/why-nexbaron",
   },
   {
-    number: "6",
+    number: "Day 6",
     title: "Review your digital presence",
     description: "See it live, request tweaks, and approve the final version.",
     href: "/digital/solutions",
   },
   {
-    number: "7",
+    number: "Day 7",
     title: "Go live",
     description: "Your digital presence is published — approved by you, on time.",
     href: "/digital/solutions",
   },
   {
-    number: "8",
+    number: "Month 1+",
     title: "Monthly growth begins",
     description: "Google visibility, WhatsApp answers, and monthly care keep it working.",
     href: "/digital/results",
@@ -154,7 +154,7 @@ export default function DigitalLandingPage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 py-6 rounded-xl shadow-lg shadow-teal-500/20"
+                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-7 rounded-xl shadow-lg shadow-teal-500/20"
               >
                 <Link href="/digital/pricing" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
@@ -166,7 +166,7 @@ export default function DigitalLandingPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-md"
+                className="border-white/20 text-white hover:bg-white/10 px-10 py-7 rounded-xl backdrop-blur-md"
               >
                 <Link href="/digital/who-we-help">Who We Help</Link>
               </Button>
@@ -194,17 +194,32 @@ export default function DigitalLandingPage() {
         {/* Social Proof */}
         <section className="py-16 border-t border-white/10">
           <div className="max-w-3xl mx-auto">
-            <div className="p-8 rounded-2xl bg-gradient-to-r from-teal-500/10 to-cyan-500/5 border border-teal-500/20 text-center">
-              <p className="text-slate-300 italic leading-relaxed max-w-xl mx-auto">
+            <div className="p-8 rounded-2xl bg-gradient-to-r from-teal-500/10 to-cyan-500/5 border border-teal-500/20">
+              <div className="flex items-center gap-1.5 mb-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <span key={i} className="text-amber-400 text-base">
+                    &#9733;
+                  </span>
+                ))}
+                <span className="text-xs text-slate-500 ml-2">Google Review</span>
+              </div>
+              <p className="text-slate-200 text-base leading-relaxed italic max-w-xl">
                 &ldquo;I had zero online presence. Nexbaron built my website in 6 days, got me on
                 Google, and now customers book appointments on WhatsApp — I don&apos;t even pick up
                 the phone anymore.&rdquo;
               </p>
-              <p className="text-sm font-semibold text-white mt-4">Dr. Mehta</p>
-              <p className="text-xs text-slate-500">Dental Clinic, Mumbai</p>
+              <div className="flex items-center gap-4 mt-6">
+                <div className="w-11 h-11 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold text-sm">
+                  DM
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white">Dr. Mehta</p>
+                  <p className="text-xs text-slate-400">Dental Clinic, Mumbai</p>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        </section>{" "}
         {/* Tailored Industries */}
         <section className="py-16 border-t border-white/10">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -214,7 +229,7 @@ export default function DigitalLandingPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
               Built for Businesses Like Yours
             </h2>
-            <p className="text-sm text-slate-300 mt-4">
+            <p className="text-base text-slate-200 mt-4">
               We&apos;ve seen how your customers actually search, call, and book. Every plan is
               built around that.
             </p>
@@ -277,7 +292,7 @@ export default function DigitalLandingPage() {
             <Button
               asChild
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
             >
               <Link
                 href="/digital/pricing#plans"
@@ -351,7 +366,7 @@ export default function DigitalLandingPage() {
             <Button
               asChild
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
             >
               <Link href="/digital/pricing#plans" className="flex items-center gap-2">
                 Compare All Plans <ArrowRight className="w-4 h-4" />
@@ -373,7 +388,7 @@ export default function DigitalLandingPage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
               >
                 <Link href="/digital/pricing#plans" className="flex items-center gap-2">
                   Choose Your Plan <ArrowRight className="w-4 h-4" />
@@ -401,41 +416,41 @@ export default function DigitalLandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
             {[
               {
-                q: "How long until my website is live?",
-                a: "7 days from payment. You get a confirmed launch date the moment you pay — no estimates, no delays.",
+                q: "Do I own my website? Can I cancel anytime?",
+                a: "Yes — 100%. Your domain, content, and design are yours forever. Cancel anytime with no penalty. Your site stays yours.",
               },
               {
-                q: "Do I own my website and domain?",
-                a: "Yes. Everything — domain, content, design — is 100% yours. Even if you cancel, it stays yours.",
+                q: "Will my website rank on Google?",
+                a: "Yes. Every site is built with SEO best practices. Growth and Scale plans include active Google Business Profile optimisation, local ranking work, and monthly progress reports.",
               },
               {
-                q: "What if I don't have a logo or photos?",
-                a: "We design a logo for you at no extra cost. For photos, send what you have — we make it work. If you have nothing, we use professional stock imagery.",
+                q: "How does WhatsApp booking work?",
+                a: "Customers message your WhatsApp number. Our automation replies instantly — 24/7 — answers common questions, captures enquiries, and books appointments. You see every message in one chat thread.",
               },
               {
-                q: "Can you help with my Google Business Profile?",
-                a: "Yes. Growth and Scale plans include Google Business Profile setup, verification, optimisation, and review management. We handle the entire process.",
+                q: "Do I need to buy a domain separately?",
+                a: "We include a free .com or .in domain for the first year with every plan. After that, renewal is approximately ₹800–₹1,200/year — billed directly by the domain registrar, not us.",
               },
               {
-                q: "What happens after the website goes live?",
-                a: "Monthly care keeps it online, updated, and backed up. Growth Care adds Google ranking work, review collection, and WhatsApp automation. You get a plain-English report by the 5th of every month.",
+                q: "Can I edit my own website content?",
+                a: "Yes. We build on a platform you can edit yourself. Or we handle updates for you — up to 2 small changes per month included in Care. Bigger pages are ₹999 each.",
               },
               {
-                q: "Is there a lock-in contract?",
-                a: "No. Cancel anytime. Your website and domain remain yours. The only thing that stops is our monthly care and updates.",
+                q: "What happens after launch? How long until I see results?",
+                a: "Your site is live in 7 days. Google ranking builds over 4–8 weeks. WhatsApp automation starts immediately. You get a plain-English report by the 5th of each month showing visits, enquiries, and ranking progress.",
               },
             ].map((item) => (
               <details
                 key={item.q}
                 className="p-5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all group cursor-pointer"
               >
-                <summary className="text-sm font-semibold text-white list-none flex items-center justify-between gap-3">
+                <summary className="text-base font-semibold text-white list-none flex items-center justify-between gap-3">
                   {item.q}
                   <span className="text-teal-400 text-lg shrink-0 group-open:rotate-45 transition-transform">
                     +
                   </span>
                 </summary>
-                <p className="text-sm text-slate-300 leading-relaxed mt-3 ml-0">{item.a}</p>
+                <p className="text-base text-slate-200 leading-relaxed mt-3 ml-0">{item.a}</p>
               </details>
             ))}
           </div>
