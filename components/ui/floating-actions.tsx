@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { LiveChat } from "@/components/ui/live-chat";
-import { buildWhatsAppLink } from "@/lib/divisions";
 
 const CONTACTS: Record<string, { phone: string; whatsappMsg: string }> = {
   digital: {
@@ -69,7 +68,7 @@ export function FloatingActions() {
 
       {/* WhatsApp button */}
       <a
-        href={buildWhatsAppLink(division!, contact.whatsappMsg)}
+        href={`https://wa.me/${contact.phone.replace(/[^\d]/g, "")}?text=${encodeURIComponent(contact.whatsappMsg)}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
