@@ -1,6 +1,6 @@
-// Minimal plan data for server components at build time (generateMetadata,
-// generateStaticParams, etc.). The runtime source of truth is the API's
-// /digital/catalog endpoint — see PlansProvider in catalog.tsx.
+// Static plan data used as fallback when the catalog API is unreachable.
+// Must stay in sync with the backend source of truth:
+//   nexbaron-api/src/features/digital/catalog/catalog.ts
 import type { CatalogPlan, CatalogService } from "@/features/digital/catalog";
 
 export type Plan = CatalogPlan;
@@ -15,15 +15,15 @@ export interface TimelineExpectation {
 export const DEFAULT_EXPECTATIONS: TimelineExpectation[] = [
   {
     label: "Google Business Profile",
-    note: "Submitted within 2 days. Google verifies in 3-10 business days.",
+    note: "Submitted within 2 days. Google verifies in 3–10 business days.",
   },
   {
     label: "Website launch",
-    note: "Live on your confirmed date. Includes design, build, and review.",
+    note: "Live on your confirmed date. Design, build, and review included.",
   },
   {
     label: "Search visibility",
-    note: "Begins ranking for local searches. Improves over 4-8 weeks.",
+    note: "Starts ranking for local searches. Improves over 4–8 weeks.",
   },
 ];
 export type PlanService = CatalogService;
@@ -40,44 +40,44 @@ export const plans: CatalogPlan[] = [
   {
     id: "launch",
     name: "Launch",
-    oneTime: 24999,
-    monthly: 1499,
+    oneTime: 34999,
+    monthly: 2499,
     monthlyName: "Care",
-    tagline: "Get your business online, professionally.",
+    tagline: "A professional website for your business.",
     icon: () => null,
-    timeline: "Website live in ~7 days",
-    ctaLabel: "Start With Launch",
+    timeline: "Live in 5–7 days",
     services: [],
     addOns: [],
+    ctaLabel: "Get Launch",
   },
   {
     id: "growth",
     name: "Growth",
-    oneTime: 39999,
-    monthly: 3999,
+    oneTime: 64999,
+    monthly: 4999,
     monthlyName: "Growth Care",
-    tagline: "Generate more calls, WhatsApp enquiries, and Google leads.",
+    tagline: "Get found on Google and booked on WhatsApp.",
     icon: () => null,
-    timeline: "Website live in ~9 days",
+    timeline: "Live in 5–7 days · ranking builds over 4–8 weeks",
     featured: true,
-    ctaLabel: "Start With Growth",
-    inherited: { label: "Everything in Launch", oneTime: 24999, monthly: 1499 },
+    ctaLabel: "Get Growth",
+    inherited: { label: "Everything in Launch", oneTime: 34999, monthly: 2499 },
     services: [],
     addOns: [],
   },
   {
     id: "scale",
     name: "Scale",
-    oneTime: 59999,
-    monthly: 7999,
+    oneTime: 109999,
+    monthly: 9999,
     monthlyName: "Business Partner",
-    tagline: "Your outsourced digital growth team.",
+    tagline: "A dedicated team managing your online growth.",
     icon: () => null,
-    timeline: "30-day foundation",
+    timeline: "Kick-off call within 3 days",
     timelineMode: "phased",
     foundationDays: 30,
-    ctaLabel: "Start With Scale",
-    inherited: { label: "Everything in Growth", oneTime: 39999, monthly: 3999 },
+    ctaLabel: "Get Scale",
+    inherited: { label: "Everything in Growth", oneTime: 64999, monthly: 4999 },
     services: [],
     addOns: [],
   },

@@ -25,20 +25,17 @@ export const metadata: Metadata = {
 };
 
 const comparisonRows = [
-  { feature: "Professional website", launch: true, growth: true, scale: true },
-  {
-    feature: "Google Business Profile created & verified",
-    launch: true,
-    growth: true,
-    scale: true,
-  },
-  { feature: "Get found on Google (ranking & reviews)", launch: false, growth: true, scale: true },
-  { feature: "WhatsApp booking & no-show reminders", launch: false, growth: true, scale: true },
-  { feature: "24/7 automatic replies", launch: false, growth: true, scale: true },
+  { feature: "Website — up to 5 pages", launch: true, growth: true, scale: true },
+  { feature: "Works perfectly on phone", launch: true, growth: true, scale: true },
+  { feature: "Google Business Profile", launch: true, growth: true, scale: true },
+  { feature: "Get found on Google", launch: false, growth: true, scale: true },
+  { feature: "Review collection", launch: false, growth: true, scale: true },
+  { feature: "WhatsApp booking & auto-replies", launch: false, growth: true, scale: true },
+  { feature: "Monthly report", launch: false, growth: true, scale: true },
   { feature: "Dedicated growth manager", launch: false, growth: false, scale: true },
-  { feature: "Unlimited content & page updates", launch: false, growth: false, scale: true },
-  { feature: "Monthly strategy session", launch: false, growth: false, scale: true },
-  { feature: "Cancel anytime, no lock-in", launch: true, growth: true, scale: true },
+  { feature: "Unlimited content updates", launch: false, growth: false, scale: true },
+  { feature: "Monthly strategy call", launch: false, growth: false, scale: true },
+  { feature: "Cancel anytime", launch: true, growth: true, scale: true },
   { feature: "Keep your website forever", launch: true, growth: true, scale: true },
 ];
 
@@ -56,7 +53,7 @@ function LaunchTimelineSection() {
             Your Launch Timeline
           </span>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-            A Confirmed Date. Not a Guess.
+            A No Hidden Costs. Not a Guess.
           </h2>
           <p className="text-sm text-slate-300 mt-4 leading-relaxed">
             The moment you pay, we commit to a real calendar date and you can watch your progress
@@ -91,9 +88,9 @@ export default function DigitalServicesPage() {
       <PageHero
         accent="digital"
         eyebrow="Pricing"
-        title="Pick a Plan. Launch by Your"
-        highlight="Confirmed Date."
-        description="Published prices. No hidden costs. No sales call required to get started — choose a plan, fill in a short form, and we take it from there. Your launch date is confirmed the moment you pay."
+        title="Simple Pricing."
+        highlight="No Hidden Costs."
+        description="Everything you need is included. Pick your plan, answer a few questions, and we build your website. Cancel anytime — the site is yours forever."
         primaryCta={{ label: "Compare Plans Below", href: "#plans" }}
         secondaryCta={{ label: "Already Have a Website?", href: "/digital/contact" }}
       />
@@ -106,7 +103,7 @@ export default function DigitalServicesPage() {
               Growth Plans
             </span>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-              One Plan. Everything Your Business Needs.
+              Three Plans. One Price Each.
             </h2>
             <p className="text-sm text-slate-300 mt-4">
               Each plan includes a website, hosting, and support. Pick the stage your business is at
@@ -126,9 +123,7 @@ export default function DigitalServicesPage() {
             <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
               Compare Plans
             </span>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-              Everything, Side by Side
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">What You Get</h2>
             <p className="text-sm text-slate-300 mt-4">
               Same inclusions, three levels of growth. Pick the one that matches where your business
               is today.
