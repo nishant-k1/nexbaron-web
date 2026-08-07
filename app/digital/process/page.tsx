@@ -43,51 +43,65 @@ export const metadata: Metadata = {
 
 const steps = [
   {
-    number: "Day 0",
+    number: "Step 1",
     title: "Choose your package",
     description: "Pick Launch, Growth, or Scale. No sales call, no pressure.",
     href: "/digital/pricing",
   },
   {
-    number: "Day 1",
+    number: "Step 2",
     title: "Complete onboarding & upload materials",
     description:
       "A 10-minute form tells us everything. Send photos, logo, and business details — we work with what you have.",
     href: "/digital/onboarding",
   },
   {
-    number: "Day 2",
-    title: "Complete payment",
+    number: "Step 3",
+    title: "Complete payment & book your slot",
     description:
-      "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is confirmed.",
+      "Pay securely with UPI or card. Your GST receipt arrives instantly and your 7-day build clock starts.",
     href: "/digital/onboarding",
   },
   {
-    number: "Day 3–5",
-    title: "We design & build your website",
+    number: "Day 1",
+    title: "Research & planning",
     description:
-      "Your site takes shape — designed around how your customers search, mobile-optimised, with your brand front and centre.",
+      "We study your industry, competitors, and customer search behaviour. Every design decision starts with data.",
     href: "/digital/why-nexbaron",
   },
   {
-    number: "Day 6",
-    title: "Review & request changes",
+    number: "Day 2–4",
+    title: "Design & development",
     description:
-      "See your website live on a private preview link. Mark your feedback directly — we refine until you're happy.",
+      "Your website takes shape — mobile-first, branded, and optimised for how your customers actually search and book.",
+    href: "/digital/solutions",
+  },
+  {
+    number: "Day 5",
+    title: "First review — see it live",
+    description:
+      "You get a private preview link. Walk through every page, mark your feedback directly on the site.",
+    href: "/digital/solutions",
+  },
+  {
+    number: "Day 6",
+    title: "Revisions based on your feedback",
+    description:
+      "We refine everything you flagged. Second review, final tweaks — we don't stop until you approve.",
     href: "/digital/solutions",
   },
   {
     number: "Day 7",
-    title: "Final polish & go live",
+    title: "Go live — your website is published",
     description:
-      "We apply finishing touches, run a final check, and publish your website — live to the world, on time.",
+      "Final checks complete. Domain connected, SSL active, mobile tested. Your business is now live online.",
     href: "/digital/solutions",
   },
   {
     number: "Week 2",
-    title: "Google listing & ranking begins",
+    title: "Google Business Profile verified",
     description:
-      "Your Google Business Profile goes live. Review collection starts. Local ranking begins building over 4–8 weeks.",
+      "Your GBP is submitted for verification. Review collection starts. Local ranking begins building over 4–8 weeks.",
     href: "/digital/results",
   },
   {
@@ -343,8 +357,8 @@ export default function DigitalProcessPage() {
           <SectionHeading
             accent="digital"
             eyebrow="How It Works"
-            title="Eight Steps. No Surprises."
-            description="The same journey for every customer, from choosing a package to monthly growth."
+            title="From Sign-Up to Go-Live in 7 Days"
+            description="Three simple steps from you. Seven days from us. Then we keep it growing."
           />
           <ProcessTimeline steps={steps} />
           <div className="text-center mt-12">
