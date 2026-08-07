@@ -67,6 +67,20 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
 
   if (!product) notFound();
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.label,
+    description: product.description,
+    category: product.category,
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print/products/${product.slug}`,
+    },
+  };
+
   const Icon = getProductIcon(product.icon);
 
   const detailSections = [
@@ -77,6 +91,34 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Nexbaron Print",
+                item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Products",
+                item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print/products`,
+              },
+              { "@type": "ListItem", position: 3, name: product.label },
+            ],
+          }),
+        }}
+      />
       <PageHero
         accent="print"
         eyebrow={`Print Collaterals • ${product.badge}`}

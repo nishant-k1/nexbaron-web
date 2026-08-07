@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2, MessageSquare } from "lucide-react";
+import { type Metadata } from "next";
 import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
@@ -15,6 +16,19 @@ import {
   type PrintCatalog,
   type PrintQuoteInput,
 } from "@/features/print/quotes";
+import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
+
+export const metadata: Metadata = {
+  title: "Get a Custom Print Quote | Nexbaron Print",
+  description:
+    "Build your custom print quote — visiting cards, brochures, signage, and more. Clear pricing, confirmed delivery date.",
+  openGraph: {
+    title: "Get a Custom Print Quote | Nexbaron Print",
+    description: "Build your custom print quote with transparent pricing.",
+    ...divisionOpenGraph("print"),
+  },
+  twitter: divisionTwitter("print"),
+};
 
 const PENDING_QUOTE_KEY = "nexbaron-pending-print-quote";
 const PENDING_QUOTE_TTL_MS = 30 * 60 * 1000;
