@@ -65,7 +65,7 @@ export function PrintFooter() {
           </div>
 
           {/* Print Products */}
-          <div>
+          <nav aria-label="Print products">
             <h3 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4">
               Print Catalog
             </h3>
@@ -81,10 +81,10 @@ export function PrintFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Specifications & Tools */}
-          <div>
+          <nav aria-label="Quote and specifications">
             <h3 className="text-xs uppercase font-mono font-semibold text-amber-400 tracking-wider mb-4">
               Quote & Specifications
             </h3>
@@ -100,7 +100,7 @@ export function PrintFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Division Switch */}
           <div className="space-y-4">

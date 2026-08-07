@@ -73,7 +73,7 @@ export function DigitalFooter() {
           </div>
 
           {/* Popular Plans */}
-          <div>
+          <nav aria-label="Popular plans">
             <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
               Popular Plans
             </h3>
@@ -89,10 +89,10 @@ export function DigitalFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Explore */}
-          <div>
+          <nav aria-label="Explore">
             <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
               Explore
             </h3>
@@ -138,10 +138,10 @@ export function DigitalFooter() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Who We Help */}
-          <div>
+          <nav aria-label="Who we help">
             <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
               Who We Help
             </h3>
@@ -157,7 +157,7 @@ export function DigitalFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Division Switch & Contact Info */}
           <div className="space-y-4">

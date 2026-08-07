@@ -111,12 +111,22 @@ const jsonLd = {
   "@type": "Organization",
   name: "Nexbaron Private Limited",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com",
-  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/logo.png`,
+  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/icon.svg`,
   description:
     "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital and Nexbaron Print.",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "Flat No. 402, Vasavi Residency - 1, Green House Layout, Doddathoguru",
+    addressLocality: "Bengaluru",
+    addressRegion: "Karnataka",
+    postalCode: "560100",
     addressCountry: "IN",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+91-90027-85683",
+    contactType: "customer service",
+    availableLanguage: ["English", "Hindi"],
   },
   subOrganization: [
     {
@@ -130,7 +140,14 @@ const jsonLd = {
       url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print`,
     },
   ],
-  sameAs: [],
+  sameAs: [
+    "https://instagram.com/nexbarondigital",
+    "https://facebook.com/nexbarondigital",
+    "https://linkedin.com/company/nexbarondigital",
+    "https://instagram.com/nexbaronprint",
+    "https://facebook.com/nexbaronprint",
+    "https://linkedin.com/company/nexbaronprint",
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
