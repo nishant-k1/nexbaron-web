@@ -35,6 +35,8 @@ export function LiveChat() {
   const [name, setName] = useState("");
   const [nameSet, setNameSet] = useState(false);
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [formError, setFormError] = useState("");
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -61,7 +63,7 @@ export function LiveChat() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ sessionId }),
+      body: JSON.stringify({ sessionId, phone: phone || undefined, email: email || undefined }),
     }).catch(() => {});
   }, [division, user, sessionId]);
 
@@ -127,6 +129,7 @@ export function LiveChat() {
             sessionId,
             name: name || undefined,
             phone: phone || undefined,
+            email: email || undefined,
           }),
         });
 
@@ -144,10 +147,21 @@ export function LiveChat() {
 
   const handleNameSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name.trim()) {
-      setNameSet(true);
-      setTimeout(() => inputRef.current?.focus(), 100);
+    const trimmedName = name.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedName) {
+      setFormError("Please enter your name");
+      return;
     }
+    if (!trimmedPhone && !trimmedEmail) {
+      setFormError("Please enter a phone or email so we can reach you");
+      return;
+    }
+    setFormError("");
+    setNameSet(true);
+    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   if (!division) return null;
@@ -207,18 +221,35 @@ export function LiveChat() {
                 <form onSubmit={handleNameSubmit} className="flex flex-col gap-2 max-w-xs mx-auto">
                   <input
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      setFormError("");
+                    }}
+                    placeholder="Your name *"
                     className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
                     autoFocus
                   />
                   <input
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      setFormError("");
+                    }}
                     type="tel"
-                    placeholder="Phone (optional)"
+                    placeholder="Phone"
                     className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
                   />
+                  <input
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setFormError("");
+                    }}
+                    type="email"
+                    placeholder="Email"
+                    className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                  />
+                  {formError && <p className="text-[11px] text-red-400 text-center">{formError}</p>}
                   <button
                     type="submit"
                     className="w-full py-2 bg-teal-500 text-slate-950 rounded-lg text-sm font-semibold hover:bg-teal-400"
