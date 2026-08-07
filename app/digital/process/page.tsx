@@ -43,58 +43,61 @@ export const metadata: Metadata = {
 
 const steps = [
   {
-    number: "1",
+    number: "Day 0",
     title: "Choose your package",
     description: "Pick Launch, Growth, or Scale. No sales call, no pressure.",
     href: "/digital/pricing",
   },
   {
-    number: "2",
-    title: "Complete a 10-minute onboarding form",
-    description: "Tell us your services, hours, address, and what you want visitors to do.",
-    href: "/digital/onboarding",
-  },
-  {
-    number: "3",
-    title: "Upload your photos & business details",
+    number: "Day 1",
+    title: "Complete onboarding & upload materials",
     description:
-      "Photos, services, and anything you want on your site. No logo yet? We design one for you.",
+      "A 10-minute form tells us everything. Send photos, logo, and business details — we work with what you have.",
     href: "/digital/onboarding",
   },
   {
-    number: "4",
+    number: "Day 2",
     title: "Complete payment",
     description:
-      "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is booked.",
+      "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is confirmed.",
     href: "/digital/onboarding",
   },
   {
-    number: "5",
-    title: "We start building",
+    number: "Day 3–5",
+    title: "We design & build your website",
     description:
-      "Your digital presence takes shape — designed around how your customers actually search.",
+      "Your site takes shape — designed around how your customers search, mobile-optimised, with your brand front and centre.",
     href: "/digital/why-nexbaron",
   },
   {
-    number: "6",
-    title: "Review your digital presence",
-    description: "See it live, request tweaks, and approve the final version.",
+    number: "Day 6",
+    title: "Review & request changes",
+    description:
+      "See your website live on a private preview link. Mark your feedback directly — we refine until you're happy.",
     href: "/digital/solutions",
   },
   {
-    number: "7",
-    title: "Go live",
-    description: "Your digital presence is published — approved by you, on time.",
+    number: "Day 7",
+    title: "Final polish & go live",
+    description:
+      "We apply finishing touches, run a final check, and publish your website — live to the world, on time.",
     href: "/digital/solutions",
   },
   {
-    number: "8",
-    title: "Monthly growth begins",
-    description: "Google visibility, WhatsApp answers, and monthly care keep it working.",
+    number: "Week 2",
+    title: "Google listing & ranking begins",
+    description:
+      "Your Google Business Profile goes live. Review collection starts. Local ranking begins building over 4–8 weeks.",
+    href: "/digital/results",
+  },
+  {
+    number: "Month 1+",
+    title: "Monthly care & growth reports",
+    description:
+      "Hosting, updates, backups, and a plain-English report by the 5th. WhatsApp auto-replies keep working 24/7.",
     href: "/digital/results",
   },
 ];
-
 const firstWeek = [
   {
     day: "Day 0",

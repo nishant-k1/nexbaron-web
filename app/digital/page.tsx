@@ -83,51 +83,54 @@ const steps = [
   },
   {
     number: "Day 1",
-    title: "Complete a 10-minute onboarding form",
-    description: "Tell us your services, hours, address, and what you want visitors to do.",
+    title: "Complete onboarding & upload materials",
+    description:
+      "A 10-minute form tells us everything. Send photos, logo, and business details — we work with what you have.",
     href: "/digital/onboarding",
   },
   {
     number: "Day 2",
-    title: "Upload your photos & business details",
-    description:
-      "Photos, services, and anything you want on your site. No logo yet? We design one for you.",
-    href: "/digital/onboarding",
-  },
-  {
-    number: "Day 3",
     title: "Complete payment",
     description:
-      "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is booked.",
+      "Pay securely with UPI or card. Your GST receipt arrives instantly and your build slot is confirmed.",
     href: "/digital/onboarding",
   },
   {
-    number: "Day 4–5",
-    title: "We start building",
+    number: "Day 3–5",
+    title: "We design & build your website",
     description:
-      "Your digital presence takes shape — designed around how your customers actually search.",
+      "Your site takes shape — designed around how your customers search, mobile-optimised, with your brand front and centre.",
     href: "/digital/why-nexbaron",
   },
   {
     number: "Day 6",
-    title: "Review your digital presence",
-    description: "See it live, request tweaks, and approve the final version.",
+    title: "Review & request changes",
+    description:
+      "See your website live on a private preview link. Mark your feedback directly — we refine until you're happy.",
     href: "/digital/solutions",
   },
   {
     number: "Day 7",
-    title: "Go live",
-    description: "Your digital presence is published — approved by you, on time.",
+    title: "Final polish & go live",
+    description:
+      "We apply finishing touches, run a final check, and publish your website — live to the world, on time.",
     href: "/digital/solutions",
   },
   {
+    number: "Week 2",
+    title: "Google listing & ranking begins",
+    description:
+      "Your Google Business Profile goes live. Review collection starts. Local ranking begins building over 4–8 weeks.",
+    href: "/digital/results",
+  },
+  {
     number: "Month 1+",
-    title: "Monthly growth begins",
-    description: "Google visibility, WhatsApp answers, and monthly care keep it working.",
+    title: "Monthly care & growth reports",
+    description:
+      "Hosting, updates, backups, and a plain-English report by the 5th. WhatsApp auto-replies keep working 24/7.",
     href: "/digital/results",
   },
 ];
-
 export default function DigitalLandingPage() {
   return (
     <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
