@@ -7,6 +7,7 @@ import { AuthProvider } from "@/components/auth/auth-context";
 import { Footer } from "@/components/footer/footer";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Navigation } from "@/components/navigation/navigation";
+import { FloatingActions } from "@/components/ui/floating-actions";
 import { ThemeProvider } from "@/theme/theme-provider";
 
 const GlobalMeshBackground = dynamic(
@@ -175,6 +176,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
             </main>
             <Footer />
+            <FloatingActions />
           </AuthProvider>
         </ThemeProvider>
       </body>
