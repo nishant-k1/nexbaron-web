@@ -115,7 +115,17 @@ export default function DigitalAboutPage() {
                 {
                   initials: "BL",
                   name: "Based in Bengaluru",
-                  desc: `Flat No. 402, Vasavi Residency - 1, Green House Layout, Doddathoguru, Electronic City Phase - 1, Bengaluru - 560100\n+91 90027 85683`,
+                  desc: (
+                    <address className="not-italic">
+                      Flat No. 402, Vasavi Residency - 1, Green House Layout,
+                      <br />
+                      Doddathoguru, Electronic City Phase - 1, Bengaluru - 560100
+                      <br />
+                      <a href="tel:+919002785683" className="text-teal-400 hover:text-teal-300">
+                        +91 90027 85683
+                      </a>
+                    </address>
+                  ),
                   icon: MapPin,
                 },
                 {
@@ -138,9 +148,7 @@ export default function DigitalAboutPage() {
                       <Icon className="w-4 h-4 text-teal-400" />
                       <h3 className="text-sm font-semibold text-white">{item.name}</h3>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line">
-                      {item.desc}
-                    </p>
+                    <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
                 );
               })}

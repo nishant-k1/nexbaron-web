@@ -57,6 +57,16 @@ export function DigitalFooter() {
                 Message Us on WhatsApp
               </a>
             </div>
+            <div className="pt-3 space-y-1.5">
+              <address className="text-xs text-slate-400 leading-relaxed not-italic">
+                402, Vasavi Residency - 1, Green House Layout,
+                <br />
+                Doddathoguru, Electronic City Phase - 1, Bengaluru - 560100
+              </address>
+              <a href="tel:+919002785683" className="text-xs text-teal-400 hover:text-teal-300">
+                +91 90027 85683
+              </a>
+            </div>
             <div className="pt-2">
               <SocialLinks division="digital" />
             </div>

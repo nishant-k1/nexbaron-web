@@ -132,7 +132,15 @@ export default function PrintAboutPage() {
                 {
                   initials: "BR",
                   name: "Based in Begusarai",
-                  desc: `Begusarai, Bihar - 851101\n+91 98997 52254`,
+                  desc: (
+                    <address className="not-italic">
+                      Begusarai, Bihar - 851101
+                      <br />
+                      <a href="tel:+919899752254" className="text-amber-400 hover:text-amber-300">
+                        +91 98997 52254
+                      </a>
+                    </address>
+                  ),
                   icon: MapPin,
                 },
                 {
@@ -155,9 +163,7 @@ export default function PrintAboutPage() {
                       <Icon className="w-4 h-4 text-amber-400" />
                       <h3 className="text-sm font-semibold text-white">{item.name}</h3>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line">
-                      {item.desc}
-                    </p>
+                    <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
                 );
               })}

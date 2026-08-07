@@ -51,6 +51,14 @@ export function PrintFooter() {
                 Launch Instant Print Quote
               </Link>
             </div>
+            <div className="pt-3 space-y-1.5">
+              <address className="text-xs text-slate-400 not-italic">
+                Begusarai, Bihar - 851101
+              </address>
+              <a href="tel:+919899752254" className="text-xs text-amber-400 hover:text-amber-300">
+                +91 98997 52254
+              </a>
+            </div>
             <div className="pt-2">
               <SocialLinks division="print" />
             </div>
