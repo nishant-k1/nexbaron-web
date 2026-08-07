@@ -10,7 +10,7 @@ import { savePlanSelection } from "@/features/digital/plan-selection";
 export function PlansGrid() {
   const router = useRouter();
   const { user, openSignIn } = useAuth();
-  const { plans } = usePlans();
+  const { plans, loading } = usePlans();
 
   const selectPlan = (planId: string) => {
     savePlanSelection({ planId, plans: {} });
@@ -22,6 +22,19 @@ export function PlansGrid() {
       openSignIn(planId);
     }
   };
+
+  if (loading && plans.length === 0) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+        {[1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="h-96 rounded-2xl bg-white/[0.03] border border-white/10 animate-pulse"
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">

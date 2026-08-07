@@ -2,7 +2,6 @@
 
 import { ArrowRight, Check, Rocket, TrendingUp, Building2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { formatINR, type Plan } from "@/features/digital/plans";
 
 interface PlanCardProps {
@@ -114,21 +113,18 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
 
       {/* CTA */}
       <div className="mt-auto pt-4">
-        <Button
+        <button
           type="button"
-          size="lg"
           onClick={onSelectPlan}
-          className={`w-full font-bold px-8 rounded-xl shadow-lg cursor-pointer ${
+          className={`w-full h-11 font-bold px-8 rounded-xl shadow-lg cursor-pointer transition-colors inline-flex items-center justify-center gap-2 ${
             plan.featured
               ? "bg-teal-500 hover:bg-teal-400 text-slate-950 shadow-teal-500/20"
               : "bg-teal-500/10 border border-teal-500/30 text-teal-300 hover:bg-teal-500/20"
           }`}
         >
-          <span className="inline-flex items-center justify-center gap-2">
-            {plan.ctaLabel}
-            <ArrowRight className="w-4 h-4" />
-          </span>
-        </Button>
+          {plan.ctaLabel}
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
