@@ -1,18 +1,19 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { usePlans } from "@/features/digital/catalog";
 import { PlanCard } from "@/features/digital/components/plan-card";
+import { PlanSignupForm } from "@/features/digital/components/plan-signup-form";
 import { savePlanSelection } from "@/features/digital/plan-selection";
 
 export function PlansGrid() {
-  const router = useRouter();
   const { plans, loading } = usePlans();
+  const [signupPlan, setSignupPlan] = useState<string | null>(null);
 
-  const selectPlan = (planId: string) => {
+  const handlePlanSelect = (planId: string) => {
     savePlanSelection({ planId, plans: {} });
-    router.push(`/digital/onboarding?plan=${planId}`);
+    setSignupPlan(planId);
   };
 
   if (loading && plans.length === 0) {
@@ -29,10 +30,14 @@ export function PlansGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-      {plans.map((plan) => (
-        <PlanCard key={plan.id} plan={plan} onSelectPlan={() => selectPlan(plan.id)} />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+        {plans.map((plan) => (
+          <PlanCard key={plan.id} plan={plan} onSelectPlan={() => handlePlanSelect(plan.id)} />
+        ))}
+      </div>
+
+      {signupPlan && <PlanSignupForm planId={signupPlan} onClose={() => setSignupPlan(null)} />}
+    </>
   );
 }
