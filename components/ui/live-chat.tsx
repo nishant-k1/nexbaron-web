@@ -1,8 +1,11 @@
 "use client";
 
-import { MessageCircle, Send, X, User } from "lucide-react";
+import { MessageCircle, Send, X, User, LogIn } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import { useAuth } from "@/components/auth/auth-context";
+import { getToken } from "@/lib/api";
 
 interface ChatMessage {
   id: string;
@@ -12,7 +15,6 @@ interface ChatMessage {
 }
 
 const SESSION_KEY = "nexbaron-chat-session";
-const MESSAGES_KEY = "nexbaron-chat-messages";
 
 function getSessionId(): string {
   if (typeof window === "undefined") return "";
@@ -24,24 +26,9 @@ function getSessionId(): string {
   return id;
 }
 
-function loadMessages(): ChatMessage[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(MESSAGES_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveMessages(msgs: ChatMessage[]) {
-  if (typeof window === "undefined") return;
-  // Keep only last 50 messages
-  localStorage.setItem(MESSAGES_KEY, JSON.stringify(msgs.slice(-50)));
-}
-
 export function LiveChat() {
   const pathname = usePathname();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -57,10 +44,37 @@ export function LiveChat() {
       ? "print"
       : null;
 
-  // Load messages on mount
+  const sessionId = getSessionId();
+  const isLoggedIn = !!user;
+
+  // Load chat history from backend
   useEffect(() => {
-    setMessages(loadMessages());
-  }, []);
+    if (!division) return;
+
+    const token = getToken(division);
+    const params = new URLSearchParams();
+    params.set("sessionId", sessionId);
+
+    fetch(`/api/${division}/chat?${params.toString()}`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.messages) {
+          setMessages(
+            data.messages.map(
+              (m: { _id: string; message: string; sender: string; createdAt: string }) => ({
+                id: m._id,
+                text: m.message,
+                sender: m.sender === "agent" ? "agent" : "user",
+                timestamp: new Date(m.createdAt).getTime(),
+              }),
+            ),
+          );
+        }
+      })
+      .catch(() => {});
+  }, [division, user, sessionId]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -78,61 +92,35 @@ export function LiveChat() {
         timestamp: Date.now(),
       };
 
-      const updated = [...messages, userMsg];
-      setMessages(updated);
-      saveMessages(updated);
+      setMessages((prev) => [...prev, userMsg]);
       setInput("");
       setSending(true);
 
       try {
+        const token = getToken(division);
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+
         const res = await fetch(`/api/${division}/chat`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify({
-            name: name || "Website Visitor",
-            email: "",
             message: text.trim(),
-            source: "live-chat",
-            sessionId: getSessionId(),
+            sessionId,
+            name: name || undefined,
           }),
         });
 
-        if (res.ok) {
-          const autoReply: ChatMessage = {
-            id: `a_${Date.now()}`,
-            text: "Thanks for your message! We typically reply within a few hours. If you need immediate help, call or WhatsApp us using the buttons below.",
-            sender: "agent",
-            timestamp: Date.now(),
-          };
-          const withReply = [...updated, autoReply];
-          setMessages(withReply);
-          saveMessages(withReply);
-        } else {
-          const errorMsg: ChatMessage = {
-            id: `a_${Date.now()}`,
-            text: "Sorry, something went wrong. Please try WhatsApp or call us instead — we'll respond immediately.",
-            sender: "agent",
-            timestamp: Date.now(),
-          };
-          const withError = [...updated, errorMsg];
-          setMessages(withError);
-          saveMessages(withError);
+        if (!res.ok) {
+          setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
         }
       } catch {
-        const errorMsg: ChatMessage = {
-          id: `a_${Date.now()}`,
-          text: "Message couldn't be sent. Please use WhatsApp or call — we're available right now.",
-          sender: "agent",
-          timestamp: Date.now(),
-        };
-        const withError = [...updated, errorMsg];
-        setMessages(withError);
-        saveMessages(withError);
+        setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
       } finally {
         setSending(false);
       }
     },
-    [messages, division, name],
+    [division, sessionId, name],
   );
 
   const handleNameSubmit = (e: React.FormEvent) => {
@@ -168,8 +156,18 @@ export function LiveChat() {
               <p className="text-sm font-semibold text-white">
                 Nexbaron {division === "digital" ? "Digital" : "Print"}
               </p>
-              <p className="text-[10px] text-slate-400">We reply within a few hours</p>
+              <p className="text-[10px] text-slate-400">
+                {isLoggedIn ? "Replies appear here" : "Log in to save chat history"}
+              </p>
             </div>
+            {!isLoggedIn && (
+              <button
+                onClick={() => window.open(`/${division}`, "_blank", "noopener,noreferrer")}
+                className="ml-auto flex items-center gap-1 px-2 py-1 text-[10px] text-teal-400 hover:text-teal-300 border border-teal-500/30 rounded shrink-0"
+              >
+                <LogIn className="w-3 h-3" /> Log in
+              </button>
+            )}
           </div>
 
           {/* Messages */}
@@ -183,7 +181,9 @@ export function LiveChat() {
                   Welcome! What should we call you?
                 </p>
                 <p className="text-xs text-slate-400 mb-4">
-                  Your name helps us personalise the conversation.
+                  {isLoggedIn
+                    ? "Your chat history is saved to your account."
+                    : "Log in to save chat history across sessions."}
                 </p>
                 <form onSubmit={handleNameSubmit} className="flex gap-2 max-w-xs mx-auto">
                   <input
