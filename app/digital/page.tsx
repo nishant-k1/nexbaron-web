@@ -248,7 +248,10 @@ export default function DigitalLandingPage() {
                   key={idx}
                   className="rounded-xl bg-white/[0.02] border border-white/10 hover:border-teal-500/30 transition-all overflow-hidden group"
                 >
-                  <div className="p-3 bg-slate-950/50 border-b border-white/5">{ind.preview}</div>
+                  <div
+                    className="p-3 bg-slate-950/50 border-b border-white/5"
+                    dangerouslySetInnerHTML={{ __html: ind.preview }}
+                  />
                   <div className="p-4">
                     <h3 className="text-sm font-semibold text-white mb-1">{ind.name}</h3>
                     <p className="text-xs text-slate-400">{ind.detail}</p>
