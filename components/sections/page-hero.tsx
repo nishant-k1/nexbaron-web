@@ -85,7 +85,7 @@ export function PageHero({
                     asChild
                     size="lg"
                     variant="outline"
-                    className="border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-md"
+                    className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-md"
                   >
                     <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
                   </Button>

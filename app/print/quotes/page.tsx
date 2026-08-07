@@ -55,7 +55,10 @@ export default function PrintQuotesPage() {
             <h1 className="text-3xl sm:text-5xl font-heading font-bold text-white">Your Quotes</h1>
             <p className="text-sm text-slate-400 mt-3">Track requests and confirmed pricing.</p>
           </div>
-          <Button asChild className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold">
+          <Button
+            asChild
+            className="cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold"
+          >
             <Link href="/print/quote">
               <Plus className="w-4 h-4 mr-2" /> New quote
             </Link>

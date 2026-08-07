@@ -86,7 +86,7 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
               </p>
             )}
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">
+          <button onClick={onClose} className="cursor-pointer text-slate-400 hover:text-white">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -192,7 +192,7 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
             <button
               type="submit"
               disabled={step === "submitting"}
-              className="w-full py-3 bg-teal-500 text-slate-950 rounded-xl font-bold hover:bg-teal-400 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
+              className="cursor-pointer w-full py-3 bg-teal-500 text-slate-950 rounded-xl font-bold hover:bg-teal-400 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
             >
               {step === "submitting" ? (
                 <>

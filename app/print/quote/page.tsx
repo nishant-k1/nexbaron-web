@@ -407,7 +407,7 @@ export default function PrintQuotePage() {
                       type="submit"
                       size="lg"
                       disabled={isSubmitting || Boolean(catalogError)}
-                      className="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-amber-500/20 disabled:opacity-60"
+                      className="cursor-pointer w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-amber-500/20 disabled:opacity-60"
                     >
                       {isSubmitting ? (
                         <>

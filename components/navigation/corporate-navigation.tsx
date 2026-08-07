@@ -78,10 +78,18 @@ export function CorporateNavigation() {
         {isOpen && (
           <div className="md:hidden mt-4 rounded-2xl bg-slate-950/95 border border-white/10 p-6 space-y-4 backdrop-blur-2xl shadow-2xl">
             <div className="pt-0 grid grid-cols-2 gap-3">
-              <Button asChild size="sm" className="bg-teal-500 text-slate-950 font-bold">
+              <Button
+                asChild
+                size="sm"
+                className="cursor-pointer bg-teal-500 text-slate-950 font-bold"
+              >
                 <Link href="/digital">Digital Division</Link>
               </Button>
-              <Button asChild size="sm" className="bg-amber-500 text-slate-950 font-bold">
+              <Button
+                asChild
+                size="sm"
+                className="cursor-pointer bg-amber-500 text-slate-950 font-bold"
+              >
                 <Link href="/print">Print Division</Link>
               </Button>
             </div>

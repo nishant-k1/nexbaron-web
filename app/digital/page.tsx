@@ -170,7 +170,7 @@ export default function DigitalLandingPage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-7 rounded-xl shadow-lg shadow-teal-500/20"
+                className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-7 rounded-xl shadow-lg shadow-teal-500/20"
               >
                 <Link href="/digital/pricing" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
@@ -182,7 +182,7 @@ export default function DigitalLandingPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 px-10 py-7 rounded-xl backdrop-blur-md"
+                className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-10 py-7 rounded-xl backdrop-blur-md"
               >
                 <Link href="/digital/who-we-help">Who We Help</Link>
               </Button>
@@ -308,7 +308,7 @@ export default function DigitalLandingPage() {
             <Button
               asChild
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
+              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
             >
               <Link
                 href="/digital/pricing#plans"
@@ -382,7 +382,7 @@ export default function DigitalLandingPage() {
             <Button
               asChild
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
+              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
             >
               <Link href="/digital/pricing#plans" className="flex items-center gap-2">
                 Compare All Plans <ArrowRight className="w-4 h-4" />
@@ -404,7 +404,7 @@ export default function DigitalLandingPage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
+                className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
               >
                 <Link href="/digital/pricing#plans" className="flex items-center gap-2">
                   Choose Your Plan <ArrowRight className="w-4 h-4" />
@@ -414,7 +414,7 @@ export default function DigitalLandingPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 px-8 rounded-xl backdrop-blur-md"
+                className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-8 rounded-xl backdrop-blur-md"
               >
                 <Link href="/digital/contact">Talk to Us First</Link>
               </Button>

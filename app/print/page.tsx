@@ -73,7 +73,7 @@ export default function PrintLandingPage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 py-6 rounded-xl shadow-lg shadow-amber-500/20"
+                className="cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 py-6 rounded-xl shadow-lg shadow-amber-500/20"
               >
                 <Link href="/print/quote" className="flex items-center gap-2">
                   <Calculator className="w-5 h-5" />
@@ -85,7 +85,7 @@ export default function PrintLandingPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-md"
+                className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-md"
               >
                 <Link href="/print/products">View Full Catalog</Link>
               </Button>
@@ -180,7 +180,7 @@ export default function PrintLandingPage() {
             <Button
               asChild
               size="lg"
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8"
+              className="cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8"
             >
               <Link href="/print/quote">Launch Interactive Print Calculator</Link>
             </Button>

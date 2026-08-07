@@ -252,7 +252,7 @@ export function LiveChat() {
                   {formError && <p className="text-[11px] text-red-400 text-center">{formError}</p>}
                   <button
                     type="submit"
-                    className="w-full py-2 bg-teal-500 text-slate-950 rounded-lg text-sm font-semibold hover:bg-teal-400"
+                    className="cursor-pointer w-full py-2 bg-teal-500 text-slate-950 rounded-lg text-sm font-semibold hover:bg-teal-400"
                   >
                     Start chat
                   </button>
@@ -316,7 +316,7 @@ export function LiveChat() {
               <button
                 type="submit"
                 disabled={!input.trim() || sending}
-                className="p-2 bg-teal-500 text-slate-950 rounded-xl hover:bg-teal-400 disabled:opacity-50 disabled:hover:bg-teal-500 transition-colors"
+                className="cursor-pointer p-2 bg-teal-500 text-slate-950 rounded-xl hover:bg-teal-400 disabled:opacity-50 disabled:hover:bg-teal-500 transition-colors"
                 aria-label="Send message"
               >
                 {sending ? (

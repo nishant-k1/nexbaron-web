@@ -343,7 +343,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Button
             size="lg"
-            className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-xl"
+            className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-xl"
             onClick={() => openSignIn(planId)}
           >
             Sign in or create account
@@ -543,7 +543,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
           <Button
             asChild
             size="lg"
-            className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-xl"
+            className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-xl"
           >
             <a
               href={buildWhatsAppLink(
@@ -561,7 +561,12 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               <MessageSquare className="w-4 h-4" /> Chat With Us
             </a>
           </Button>
-          <Button asChild size="lg" variant="outline" className="font-bold rounded-xl">
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="cursor-pointer font-bold rounded-xl"
+          >
             <a href="/digital/process">See What Happens Next</a>
           </Button>
         </div>
@@ -672,7 +677,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                       size="sm"
                       variant="outline"
                       onClick={openUpdateDialog}
-                      className="cursor-pointer shrink-0 rounded-lg border-teal-500/40 text-teal-300 hover:bg-teal-500/10 hover:text-teal-200"
+                      className="cursor-pointer cursor-pointer shrink-0 rounded-lg border-teal-500/40 text-teal-300 hover:bg-teal-500/10 hover:text-teal-200"
                     >
                       Update Your Plan
                     </Button>
@@ -1007,7 +1012,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             variant="ghost"
             onClick={goBack}
             disabled={step === 0}
-            className="cursor-pointer font-semibold text-slate-300 hover:text-white disabled:opacity-40"
+            className="cursor-pointer cursor-pointer font-semibold text-slate-300 hover:text-white disabled:opacity-40"
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Back
           </Button>
@@ -1016,7 +1021,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               type="button"
               onClick={goNext}
               size="lg"
-              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+              className="cursor-pointer cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
             >
               Continue <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -1025,7 +1030,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               type="submit"
               size="lg"
               disabled={paying}
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20 disabled:opacity-60"
+              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20 disabled:opacity-60"
             >
               <CreditCard className="w-4 h-4 mr-2" />
               {paying
@@ -1045,7 +1050,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             aria-label="Update your plan"
           >
             <button
-              className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+              className="cursor-pointer absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
               onClick={() => setShowUpdateDialog(false)}
               aria-label="Close"
             />
@@ -1144,7 +1149,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                   type="button"
                   onClick={applyDialogPlan}
                   size="lg"
-                  className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+                  className="cursor-pointer cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
                 >
                   Continue with {dialogChosen.plan.name}
                   <ArrowRight className="w-4 h-4 ml-2" />

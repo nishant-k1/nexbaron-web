@@ -104,7 +104,7 @@ export default function CorporateGatewayPage() {
                 <Button
                   asChild
                   size="lg"
-                  className="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-teal-500/20 group-hover:scale-[1.01] transition-transform"
+                  className="cursor-pointer w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-teal-500/20 group-hover:scale-[1.01] transition-transform"
                 >
                   <Link href="/digital">
                     Enter Digital Division Portal
@@ -166,7 +166,7 @@ export default function CorporateGatewayPage() {
                 <Button
                   asChild
                   size="lg"
-                  className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-amber-500/20 group-hover:scale-[1.01] transition-transform"
+                  className="cursor-pointer w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-6 rounded-xl shadow-lg shadow-amber-500/20 group-hover:scale-[1.01] transition-transform"
                 >
                   <Link href="/print">
                     Enter Print Division Portal

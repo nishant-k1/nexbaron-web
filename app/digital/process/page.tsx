@@ -358,7 +358,7 @@ export default function DigitalProcessPage() {
             <Button
               asChild
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
             >
               <Link
                 href="/digital/pricing#plans"

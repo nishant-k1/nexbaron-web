@@ -258,7 +258,7 @@ export default function DigitalIndustriesPage() {
                     <Button
                       asChild
                       size="lg"
-                      className="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+                      className="cursor-pointer w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
                     >
                       <a
                         href={`/digital/contact?plan=${industry.planId}`}
