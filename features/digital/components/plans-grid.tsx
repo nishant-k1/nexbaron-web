@@ -2,28 +2,17 @@
 
 import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/components/auth/auth-context";
 import { usePlans } from "@/features/digital/catalog";
 import { PlanCard } from "@/features/digital/components/plan-card";
 import { savePlanSelection } from "@/features/digital/plan-selection";
 
 export function PlansGrid() {
   const router = useRouter();
-  const { user, openSignIn } = useAuth();
   const { plans, loading } = usePlans();
 
   const selectPlan = (planId: string) => {
-    console.log("[PlansGrid] selectPlan called, planId:", planId, "user:", user);
     savePlanSelection({ planId, plans: {} });
-
-    if (user) {
-      router.push(`/digital/onboarding?plan=${planId}`);
-    } else {
-      console.log("[PlansGrid] calling openSignIn with planId:", planId);
-      window.sessionStorage.setItem("nexbaron-pending-plan", planId);
-      openSignIn(planId);
-      console.log("[PlansGrid] openSignIn returned");
-    }
+    router.push(`/digital/onboarding?plan=${planId}`);
   };
 
   if (loading && plans.length === 0) {
