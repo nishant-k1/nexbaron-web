@@ -1,25 +1,12 @@
 "use client";
 
 import { FileText, Loader2, Plus } from "lucide-react";
-import { type Metadata } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
 import { Button } from "@/components/ui/button";
 import { getMyPrintQuotes, type PrintQuote } from "@/features/print/quotes";
-import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
-
-export const metadata: Metadata = {
-  title: "My Print Quotes | Nexbaron Print",
-  description: "Track your print quotes, view pricing, and manage your print orders.",
-  openGraph: {
-    title: "My Print Quotes | Nexbaron Print",
-    description: "Track your print quotes and orders.",
-    ...divisionOpenGraph("print"),
-  },
-  twitter: divisionTwitter("print"),
-};
 
 const STATUS_LABELS: Record<PrintQuote["status"], string> = {
   new: "Under review",
