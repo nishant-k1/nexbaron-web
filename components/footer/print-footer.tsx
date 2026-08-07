@@ -124,17 +124,36 @@ export function PrintFooter() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-          <p>
-            © {currentYear} Nexbaron Print Division (Nexbaron Private Limited). All rights reserved.
-          </p>
-          <div className="flex items-center gap-4 font-mono text-[11px]">
+        <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-slate-500">
+            <div className="space-y-1">
+              <p>
+                © {currentYear} Nexbaron Print Division (Nexbaron Private Limited). All rights
+                reserved.
+              </p>
+              <p className="text-[11px] text-slate-600">GSTIN: 10AAKCN1234E1Z6</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+              <a href="mailto:print@nexbaron.com" className="text-amber-400 hover:text-amber-300">
+                print@nexbaron.com
+              </a>
+              <span className="text-slate-700">•</span>
+              <a href="tel:+919899752254" className="text-amber-400 hover:text-amber-300">
+                +91 98997 52254
+              </a>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-slate-500">
             <Link href="/privacy" className="hover:text-slate-300">
               Privacy Policy
             </Link>
             <span>•</span>
             <Link href="/terms" className="hover:text-slate-300">
               Terms of Service
+            </Link>
+            <span>•</span>
+            <Link href="/refund" className="hover:text-slate-300">
+              Refund & Cancellation
             </Link>
             <span>•</span>
             <Link href="/sitemap.xml" className="hover:text-slate-300">

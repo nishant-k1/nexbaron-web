@@ -5,6 +5,7 @@ import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/auth/auth-context";
 import { Footer } from "@/components/footer/footer";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Navigation } from "@/components/navigation/navigation";
 import { ThemeProvider } from "@/theme/theme-provider";
 
@@ -162,6 +163,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${inter.variable} ${montserrat.variable} font-body`}>
+        <ScrollProgress />
         <ThemeProvider>
           <AuthProvider>
             <GlobalMeshBackground />
