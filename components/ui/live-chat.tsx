@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle, Send, X, User, LogIn } from "lucide-react";
+import { MessageSquareMore, Send, X, User, LogIn } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -174,7 +174,7 @@ export function LiveChat() {
         aria-label={open ? "Close chat" : "Open chat"}
         className="flex items-center justify-center w-14 h-14 rounded-full bg-teal-500 text-white shadow-lg shadow-teal-500/30 hover:bg-teal-400 hover:scale-110 transition-all duration-300"
       >
-        {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        {open ? <X className="w-6 h-6" /> : <MessageSquareMore className="w-6 h-6" />}
       </button>
 
       {/* Chat panel */}
@@ -183,7 +183,7 @@ export function LiveChat() {
           {/* Header */}
           <div className="p-4 bg-slate-800 border-b border-white/10 flex items-center gap-3 shrink-0">
             <div className="w-9 h-9 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center">
-              <MessageCircle className="w-5 h-5 text-teal-400" />
+              <MessageSquareMore className="w-5 h-5 text-teal-400" />
             </div>
             <div>
               <p className="text-sm font-semibold text-white">
