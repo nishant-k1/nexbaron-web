@@ -58,6 +58,7 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
       const data = await res.json();
 
       if (data.success && data.hubUrl) {
+        localStorage.setItem("nexbaron-plan-id", planId);
         setHubUrl(data.hubUrl);
         setStep("done");
       } else {

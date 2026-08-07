@@ -12,6 +12,9 @@ export function PlansGrid() {
   const [signupPlan, setSignupPlan] = useState<string | null>(null);
 
   const handlePlanSelect = (planId: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("nexbaron-plan-id", planId);
+    }
     savePlanSelection({ planId, plans: {} });
     setSignupPlan(planId);
   };
