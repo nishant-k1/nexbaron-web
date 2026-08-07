@@ -83,7 +83,7 @@ export function PrintNavigation() {
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 text-slate-300 hover:text-white"
+            className="cursor-pointer lg:hidden p-2 text-slate-300 hover:text-white"
             aria-label="Toggle Navigation"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

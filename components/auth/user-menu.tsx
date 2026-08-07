@@ -71,7 +71,7 @@ export function UserMenu() {
     <div ref={menuRef} className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2 px-2 py-1.5 rounded-full hover:bg-white/5 transition-colors"
+        className="cursor-pointer flex items-center gap-2 px-2 py-1.5 rounded-full hover:bg-white/5 transition-colors"
         aria-label="Account menu"
         aria-haspopup="menu"
         aria-expanded={open}

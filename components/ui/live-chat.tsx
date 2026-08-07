@@ -172,7 +172,7 @@ export function LiveChat() {
       <button
         onClick={() => setOpen(!open)}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="flex items-center justify-center w-14 h-14 rounded-full bg-teal-500 text-white shadow-lg shadow-teal-500/30 hover:bg-teal-400 hover:scale-110 transition-all duration-300"
+        className="cursor-pointer flex items-center justify-center w-14 h-14 rounded-full bg-teal-500 text-white shadow-lg shadow-teal-500/30 hover:bg-teal-400 hover:scale-110 transition-all duration-300"
       >
         {open ? <X className="w-6 h-6" /> : <MessageSquareMore className="w-6 h-6" />}
       </button>
@@ -196,7 +196,7 @@ export function LiveChat() {
             {!isLoggedIn && (
               <button
                 onClick={() => window.open(`/${division}`, "_blank", "noopener,noreferrer")}
-                className="ml-auto flex items-center gap-1 px-2 py-1 text-[10px] text-teal-400 hover:text-teal-300 border border-teal-500/30 rounded shrink-0"
+                className="cursor-pointer ml-auto flex items-center gap-1 px-2 py-1 text-[10px] text-teal-400 hover:text-teal-300 border border-teal-500/30 rounded shrink-0"
               >
                 <LogIn className="w-3 h-3" /> Log in
               </button>

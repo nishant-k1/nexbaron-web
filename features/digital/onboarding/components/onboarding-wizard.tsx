@@ -672,7 +672,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                       size="sm"
                       variant="outline"
                       onClick={openUpdateDialog}
-                      className="shrink-0 rounded-lg border-teal-500/40 text-teal-300 hover:bg-teal-500/10 hover:text-teal-200"
+                      className="cursor-pointer shrink-0 rounded-lg border-teal-500/40 text-teal-300 hover:bg-teal-500/10 hover:text-teal-200"
                     >
                       Update Your Plan
                     </Button>
@@ -1007,7 +1007,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             variant="ghost"
             onClick={goBack}
             disabled={step === 0}
-            className="font-semibold text-slate-300 hover:text-white disabled:opacity-40"
+            className="cursor-pointer font-semibold text-slate-300 hover:text-white disabled:opacity-40"
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Back
           </Button>
@@ -1016,7 +1016,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               type="button"
               onClick={goNext}
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
             >
               Continue <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -1049,10 +1049,10 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
               onClick={() => setShowUpdateDialog(false)}
               aria-label="Close"
             />
-            <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl bg-slate-900 border border-teal-500/30 shadow-2xl shadow-teal-500/10 p-6 md:p-8">
+            <div className="cursor-pointer relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl bg-slate-900 border border-teal-500/30 shadow-2xl shadow-teal-500/10 p-6 md:p-8">
               <button
                 onClick={() => setShowUpdateDialog(false)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors"
+                className="cursor-pointer absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
@@ -1136,7 +1136,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                 <button
                   type="button"
                   onClick={() => setShowUpdateDialog(false)}
-                  className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                  className="cursor-pointer text-xs text-slate-500 hover:text-slate-300 transition-colors"
                 >
                   Cancel
                 </button>
@@ -1144,7 +1144,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                   type="button"
                   onClick={applyDialogPlan}
                   size="lg"
-                  className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
+                  className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-teal-500/20"
                 >
                   Continue with {dialogChosen.plan.name}
                   <ArrowRight className="w-4 h-4 ml-2" />
