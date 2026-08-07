@@ -59,39 +59,39 @@ const steps = [
     number: "Step 3",
     title: "Complete payment & book your slot",
     description:
-      "Pay securely with UPI or card. Your GST receipt arrives instantly and your 5-day build clock starts.",
+      "Pay securely with UPI or card. Your GST receipt arrives instantly and your build clock starts.",
     href: "/digital/onboarding",
   },
   {
-    number: "Day 1",
+    number: "Days 1–2",
     title: "Research & planning",
     description:
       "We study your industry, competitors, and customer search behaviour. Every design decision starts with data.",
     href: "/digital/why-nexbaron",
   },
   {
-    number: "Day 2–3",
+    number: "Days 2–4",
     title: "Design & development",
     description:
       "Your website takes shape — mobile-first, branded, and optimised for how your customers actually search and book.",
     href: "/digital/solutions",
   },
   {
-    number: "Day 4",
+    number: "Days 4–5",
     title: "Review & revisions",
     description:
       "You get a private preview link. Walk through every page, mark your feedback directly. We refine until you approve.",
     href: "/digital/solutions",
   },
   {
-    number: "Day 5",
-    title: "Go live — your website is published",
+    number: "Days 5–7",
+    title: "Final polish & go live",
     description:
       "Final checks complete. Domain connected, SSL active, mobile tested. Your business is now live online.",
     href: "/digital/solutions",
   },
   {
-    number: "Week 2",
+    number: "Weeks 2–4",
     title: "Google Business Profile verified",
     description:
       "Your GBP is submitted for verification. Review collection starts. Local ranking begins building over 4–8 weeks.",
@@ -350,8 +350,8 @@ export default function DigitalProcessPage() {
           <SectionHeading
             accent="digital"
             eyebrow="How It Works"
-            title="From Sign-Up to Go-Live in 5 Days"
-            description="Three simple steps from you. Five days from us. Then we keep it growing."
+            title="From Sign-Up to Go-Live in 5–7 Days"
+            description="Three simple steps from you. A few days from us. Then we keep it growing. Then we keep it growing."
           />
           <ProcessTimeline steps={steps} />
           <div className="text-center mt-12">
