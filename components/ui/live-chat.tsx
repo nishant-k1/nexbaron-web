@@ -85,7 +85,7 @@ export function LiveChat() {
       setSending(true);
 
       try {
-        const res = await fetch(`/api/${division}/contact`, {
+        const res = await fetch(`/api/${division}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
