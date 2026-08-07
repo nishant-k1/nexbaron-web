@@ -34,6 +34,7 @@ export function LiveChat() {
   const [input, setInput] = useState("");
   const [name, setName] = useState("");
   const [nameSet, setNameSet] = useState(false);
+  const [phone, setPhone] = useState("");
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -125,6 +126,7 @@ export function LiveChat() {
             message: text.trim(),
             sessionId,
             name: name || undefined,
+            phone: phone || undefined,
           }),
         });
 
@@ -202,19 +204,26 @@ export function LiveChat() {
                     ? "Your chat history is saved to your account."
                     : "Log in to save chat history across sessions."}
                 </p>
-                <form onSubmit={handleNameSubmit} className="flex gap-2 max-w-xs mx-auto">
+                <form onSubmit={handleNameSubmit} className="flex flex-col gap-2 max-w-xs mx-auto">
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Your name"
-                    className="flex-1 px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                    className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
                     autoFocus
+                  />
+                  <input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    type="tel"
+                    placeholder="Phone (optional)"
+                    className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
                   />
                   <button
                     type="submit"
-                    className="px-3 py-2 bg-teal-500 text-slate-950 rounded-lg text-sm font-semibold hover:bg-teal-400"
+                    className="w-full py-2 bg-teal-500 text-slate-950 rounded-lg text-sm font-semibold hover:bg-teal-400"
                   >
-                    Start
+                    Start chat
                   </button>
                 </form>
               </div>
