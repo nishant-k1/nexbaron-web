@@ -8,7 +8,6 @@ import { Footer } from "@/components/footer/footer";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Navigation } from "@/components/navigation/navigation";
 import { FloatingActions } from "@/components/ui/floating-actions";
-import { LiveChat } from "@/components/ui/live-chat";
 import { ThemeProvider } from "@/theme/theme-provider";
 
 const GlobalMeshBackground = dynamic(
@@ -178,7 +177,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </main>
             <Footer />
             <FloatingActions />
-            <LiveChat />
           </AuthProvider>
         </ThemeProvider>
       </body>

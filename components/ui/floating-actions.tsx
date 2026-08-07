@@ -4,6 +4,7 @@ import { MessageCircle, Phone } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { LiveChat } from "@/components/ui/live-chat";
 import { buildWhatsAppLink } from "@/lib/divisions";
 
 const CONTACTS: Record<string, { phone: string; whatsappMsg: string }> = {
@@ -48,6 +49,11 @@ export function FloatingActions() {
         visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
       }`}
     >
+      {/* Live Chat */}
+      <div className="relative">
+        <LiveChat />
+      </div>
+
       {/* Call button */}
       <a
         href={`tel:${contact.phone}`}
