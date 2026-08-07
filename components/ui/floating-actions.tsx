@@ -9,11 +9,11 @@ import { LiveChat } from "@/components/ui/live-chat";
 const CONTACTS: Record<string, { phone: string; whatsappMsg: string }> = {
   digital: {
     phone: "+919002785683",
-    whatsappMsg: "Hi Nexbaron Digital, I need help with my business",
+    whatsappMsg: "Hi! I'm interested in getting a website for my business. Can you help?",
   },
   print: {
     phone: "+919899752254",
-    whatsappMsg: "Hi Nexbaron Print, I have a question about your printing services",
+    whatsappMsg: "Hi! I need a quote for some printing work. Can you help?",
   },
 };
 
