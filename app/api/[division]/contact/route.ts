@@ -2,9 +2,12 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { getApiUrl } from "@/lib/api";
 
-export async function POST(request: NextRequest, { params }: { params: { division: string } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ division: string }> },
+) {
   try {
-    const { division } = params;
+    const { division } = await params;
     if (division !== "digital" && division !== "print") {
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }

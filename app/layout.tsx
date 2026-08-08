@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import { AuthProvider } from "@/components/auth/auth-context";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { Footer } from "@/components/footer/footer";
+import GlobalMeshBackgroundDynamic from "@/components/motion/global-mesh-background-dynamic";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Navigation } from "@/components/navigation/navigation";
 import { FloatingActions } from "@/components/ui/floating-actions";
 import { ThemeProvider } from "@/theme/theme-provider";
-
-const GlobalMeshBackground = dynamic(
-  () =>
-    import("@/components/motion/global-mesh-background").then((mod) => ({
-      default: mod.GlobalMeshBackground,
-    })),
-  { ssr: false },
-);
 
 const inter = Inter({
   subsets: ["latin"],
@@ -169,7 +161,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ErrorBoundary>
           <ThemeProvider>
             <AuthProvider>
-              <GlobalMeshBackground />
+              <GlobalMeshBackgroundDynamic />
               <a href="#main-content" className="skip-to-content">
                 Skip to main content
               </a>

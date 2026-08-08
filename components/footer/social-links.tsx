@@ -1,16 +1,24 @@
-import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
-
 import { divisions, type Division } from "@/lib/divisions";
 
-import { PinterestIcon, ThreadsIcon, TikTokIcon, WhatsAppIcon, XIcon } from "./brand-icons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  PinterestIcon,
+  ThreadsIcon,
+  TikTokIcon,
+  WhatsAppIcon,
+  XIcon,
+  YouTubeIcon,
+} from "./brand-icons";
 
 const socialPlatforms = [
-  { key: "instagram", label: "Instagram", Icon: Instagram },
-  { key: "facebook", label: "Facebook", Icon: Facebook },
+  { key: "instagram", label: "Instagram", Icon: InstagramIcon },
+  { key: "facebook", label: "Facebook", Icon: FacebookIcon },
   { key: "x", label: "X", Icon: XIcon },
-  { key: "linkedin", label: "LinkedIn", Icon: Linkedin },
+  { key: "linkedin", label: "LinkedIn", Icon: LinkedInIcon },
   { key: "pinterest", label: "Pinterest", Icon: PinterestIcon },
-  { key: "youtube", label: "YouTube", Icon: Youtube },
+  { key: "youtube", label: "YouTube", Icon: YouTubeIcon },
   { key: "whatsapp", label: "WhatsApp", Icon: WhatsAppIcon },
   { key: "threads", label: "Threads", Icon: ThreadsIcon },
   { key: "tiktok", label: "TikTok", Icon: TikTokIcon },

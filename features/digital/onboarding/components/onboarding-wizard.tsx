@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -93,7 +93,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
   const [loadedDraft, setLoadedDraft] = useState(false);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const getPlan = (id: string) => plans.find((p) => p.id === id) ?? plans[0]!;
+  const getPlan = useCallback((id: string) => plans.find((p) => p.id === id) ?? plans[0]!, [plans]);
   const [activePlanId, setActivePlanId] = useState<PlanId>((initialPlan as PlanId) || "launch");
   const planId = activePlanId as string;
 
@@ -104,8 +104,10 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     );
   });
 
-  const getSelection = (id: string): PlanSelection =>
-    selections[id] ?? createDefaultSelection(getPlan(id));
+  const getSelection = useCallback(
+    (id: string): PlanSelection => selections[id] ?? createDefaultSelection(getPlan(id)),
+    [selections, getPlan],
+  );
 
   const toggleService = (id: string, serviceId: string) => {
     setSelections((prev) => {
@@ -171,7 +173,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
 
   const prepared = useMemo(
     () => computePrepared(plans, (id) => getSelection(id)),
-    [plans, selections],
+    [plans, getSelection],
   );
 
   const chosen = prepared.find((p) => p.plan.id === planId) ?? prepared[0]!;
@@ -179,7 +181,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
 
   const launchTimeline = useMemo(
     () => computeLaunchTimeline(plans, getSelection, planId),
-    [plans, selections, planId],
+    [plans, getSelection, planId],
   );
 
   const launchLabel =
@@ -241,7 +243,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     return () => {
       cancelled = true;
     };
-  }, [initialized, user, loadedDraft, activePlanId, reset]);
+  }, [initialized, user, loadedDraft, activePlanId, reset, plans]);
 
   // Debounced: persist the draft + form fields to the server as the user edits.
   useEffect(() => {

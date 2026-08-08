@@ -83,7 +83,7 @@ export function LiveChat() {
       },
       body: JSON.stringify({ sessionId, phone: phone || undefined, email: email || undefined }),
     }).catch(() => {});
-  }, [division, user, sessionId]);
+  }, [division, user, sessionId, phone, email]);
 
   // Load chat history from backend
   useEffect(() => {
@@ -167,7 +167,7 @@ export function LiveChat() {
         setSending(false);
       }
     },
-    [division, sessionId, name],
+    [division, sessionId, name, phone, email],
   );
 
   const handleNameSubmit = (e: React.FormEvent) => {
@@ -306,6 +306,9 @@ export function LiveChat() {
                       {msg.attachments?.map((a, i) => (
                         <div key={`${msg.id}-a${i}`} className="mt-2">
                           {renderAsImage(a) ? (
+                            // Chat attachments are presigned R2 URLs; next/image
+                            // remotePatterns can't be pinned, so use a raw <img>.
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
                               src={a.url}
                               alt={a.name}

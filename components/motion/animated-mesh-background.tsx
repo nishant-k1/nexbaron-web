@@ -37,7 +37,7 @@ export function AnimatedMeshBackground({
 }: AnimatedMeshBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationIdRef = useRef<number>();
+  const animationIdRef = useRef<number | undefined>(undefined);
   const dotsRef = useRef<Dot[]>([]);
   const prefersReducedMotion = useReducedMotion();
 

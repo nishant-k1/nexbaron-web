@@ -91,6 +91,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Sign-in happens on the Hub (OTP + Google), not on the marketing site.
   const openSignIn = useCallback(() => {
     if (!division) return;
+    // Full cross-app navigation to the Hub, not an internal Next.js page.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.assign(`${HUB_URL}/${division}/login`);
   }, [division]);
 

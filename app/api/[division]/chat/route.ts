@@ -9,9 +9,12 @@ function forwardHeaders(request: NextRequest): Record<string, string> {
   return headers;
 }
 
-export async function POST(request: NextRequest, { params }: { params: { division: string } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ division: string }> },
+) {
   try {
-    const { division } = params;
+    const { division } = await params;
     if (division !== "digital" && division !== "print") {
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }
@@ -39,9 +42,12 @@ export async function POST(request: NextRequest, { params }: { params: { divisio
   }
 }
 
-export async function GET(request: NextRequest, { params }: { params: { division: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ division: string }> },
+) {
   try {
-    const { division } = params;
+    const { division } = await params;
     if (division !== "digital" && division !== "print") {
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }
