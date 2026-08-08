@@ -1,20 +1,38 @@
 "use client";
 
-import { MessageSquareMore, Send, X, User, LogIn } from "lucide-react";
+import { MessageSquareMore, Send, X, User, LogIn, FileText } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
 import { getToken } from "@/lib/api";
 
+interface ChatAttachment {
+  url: string;
+  type: "image" | "video" | "document";
+  name: string;
+  size?: number;
+}
+
 interface ChatMessage {
   id: string;
   text: string;
   sender: "user" | "agent";
   timestamp: number;
+  attachments?: ChatAttachment[];
 }
 
 const SESSION_KEY = "nexbaron-chat-session";
+
+const IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "webp", "avif", "svg", "bmp", "ico"];
+
+// Cloudinary classifies PDFs as `resource_type: "image"`, so only render an
+// <img> for real image files — PDFs/office docs render as a file chip instead.
+function renderAsImage(a: ChatAttachment): boolean {
+  if (a.type !== "image") return false;
+  const ext = a.name.split(".").pop()?.toLowerCase() ?? "";
+  return IMAGE_EXTENSIONS.includes(ext);
+}
 
 function getSessionId(): string {
   if (typeof window === "undefined") return "";
@@ -83,11 +101,18 @@ export function LiveChat() {
         if (data.messages) {
           setMessages(
             data.messages.map(
-              (m: { _id: string; message: string; sender: string; createdAt: string }) => ({
+              (m: {
+                _id: string;
+                message: string;
+                sender: string;
+                createdAt: string;
+                attachments?: ChatAttachment[];
+              }) => ({
                 id: m._id,
                 text: m.message,
                 sender: m.sender === "agent" ? "agent" : "user",
                 timestamp: new Date(m.createdAt).getTime(),
+                attachments: m.attachments,
               }),
             ),
           );
@@ -278,6 +303,26 @@ export function LiveChat() {
                       }`}
                     >
                       {msg.text}
+                      {msg.attachments?.map((a, i) => (
+                        <div key={`${msg.id}-a${i}`} className="mt-2">
+                          {renderAsImage(a) ? (
+                            <img
+                              src={a.url}
+                              alt={a.name}
+                              className="rounded-lg max-w-full max-h-48 object-cover block"
+                            />
+                          ) : (
+                            <a
+                              href={a.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-medium bg-slate-800/80 text-slate-200 hover:bg-slate-700 transition-colors"
+                            >
+                              <FileText className="w-3.5 h-3.5" /> {a.name}
+                            </a>
+                          )}
+                        </div>
+                      ))}
                       <div
                         className={`text-[10px] mt-1 ${
                           msg.sender === "user" ? "text-slate-700" : "text-slate-500"
