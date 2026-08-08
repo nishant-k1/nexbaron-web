@@ -1,6 +1,36 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme inline {
+  /* Colours — sourced from :root vars below (matches nexbaron-hub / nexbaron-crm token names) */
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-surface: var(--color-neutral-surface);
+  --color-neutral-bg: var(--color-neutral-bg);
+  --color-neutral-surface: var(--color-neutral-surface);
+  --color-border: var(--color-border);
+  --color-muted: var(--color-muted);
+  --color-heading: var(--color-heading);
+  --color-body: var(--color-body);
+
+  /* Fonts — the v3 fontFamily.heading/body config */
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+
+  /* Spacing — the v3 spacing.section/component config */
+  --spacing-section: var(--spacing-section);
+  --spacing-component: var(--spacing-component);
+
+  /* Border radius — v3 borderRadius.base */
+  --radius-base: var(--radius-base);
+
+  /* Shadows — v3 boxShadow.surface/elevated */
+  --shadow-surface: var(--shadow-surface);
+  --shadow-elevated: var(--shadow-elevated);
+
+  /* Motion — v3 transitionDuration/function.motion */
+  --duration-motion: var(--motion-duration);
+  --ease-motion: var(--motion-easing);
+}
 
 :root {
   /* Brand Colors - Matching DiligenceSquared */
@@ -77,11 +107,32 @@ body {
 }
 
 /* Container max-width override to match DiligenceSquared design */
-@layer components {
+@media (min-width: 1024px) {
   .container {
-    @media (min-width: 1024px) {
-      max-width: 1280px;
-    }
+    max-width: 1280px;
+  }
+}
+
+@layer components {
+  .skip-to-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateY(-150%);
+    background: var(--color-primary);
+    color: white;
+    padding: 10px 18px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0 0 10px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+  }
+
+  .skip-to-content:focus,
+  .skip-to-content:focus-visible {
+    transform: translateY(0);
   }
 }
 
@@ -178,25 +229,4 @@ body {
     top: -6px;
     animation: travelDot 12s ease-in-out infinite;
   }
-}
-
-.skip-to-content {
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translateY(-150%);
-  background: var(--color-primary);
-  color: white;
-  padding: 10px 18px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 0 0 10px 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  z-index: 100;
-}
-
-.skip-to-content:focus,
-.skip-to-content:focus-visible {
-  transform: translateY(0);
 }
