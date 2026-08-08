@@ -72,12 +72,6 @@
 
 /* Dark mode only - no theme switching */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
 }
