@@ -15,6 +15,7 @@ import { SectionReveal } from "@/components/motion/section-reveal";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { Button } from "@/components/ui/button";
+import { PricingPreview, PricingPreviewCta } from "@/features/digital/components/pricing-preview";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -327,68 +328,8 @@ export default function DigitalLandingPage() {
             title="One Plan. One Price. No Surprises."
             description="Every plan includes hosting, SSL, mobile optimisation, and monthly care. Pay once for the build, then a small monthly fee to keep it growing."
           />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {[
-              {
-                name: "Launch",
-                price: "₹9,999",
-                care: "₹1,499/mo",
-                desc: "5-page website, mobile-ready, contact form, 7-day delivery",
-                featured: false,
-              },
-              {
-                name: "Growth",
-                price: "₹24,999",
-                care: "₹3,999/mo",
-                desc: "Everything in Launch + Google Business Profile, review system, WhatsApp auto-replies, 2-week delivery",
-                featured: true,
-              },
-              {
-                name: "Scale",
-                price: "₹49,999",
-                care: "₹7,999/mo",
-                desc: "Everything in Growth + 10 pages, advanced SEO, booking system, dedicated support, 30-day build",
-                featured: false,
-              },
-            ].map((plan) => (
-              <div
-                key={plan.name}
-                className={`p-6 rounded-2xl border transition-all ${
-                  plan.featured
-                    ? "bg-teal-500/10 border-teal-500/40 shadow-xl shadow-teal-500/10"
-                    : "bg-white/[0.03] border-white/10 hover:border-teal-500/30"
-                }`}
-              >
-                <h3 className="text-lg font-heading font-bold text-white mb-1">{plan.name}</h3>
-                <div className="text-3xl font-heading font-extrabold text-teal-300 mb-1">
-                  {plan.price}
-                </div>
-                <div className="text-xs text-slate-500 mb-4">+ {plan.care} monthly care</div>
-                <p className="text-sm text-slate-400 leading-relaxed mb-4">{plan.desc}</p>
-                <Link
-                  href="/digital/pricing#plans"
-                  className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
-                    plan.featured
-                      ? "text-teal-300 hover:text-teal-200"
-                      : "text-teal-400 hover:text-teal-300"
-                  }`}
-                >
-                  See full details <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <Button
-              asChild
-              size="lg"
-              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
-            >
-              <Link href="/digital/pricing#plans" className="flex items-center gap-2">
-                Compare All Plans <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
-          </div>
+          <PricingPreview />
+          <PricingPreviewCta />
         </section>
         {/* Final CTA */}
         <section className="py-16 border-t border-white/10">

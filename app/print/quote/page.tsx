@@ -49,7 +49,7 @@ const EMPTY_DRAFT: QuoteDraft = {
 };
 
 export default function PrintQuotePage() {
-  const { user, initialized, signInOpen, openSignIn } = useAuth();
+  const { user, initialized, openSignIn } = useAuth();
   const [catalog, setCatalog] = useState<PrintCatalog | null>(null);
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [draft, setDraft] = useState<QuoteDraft>(EMPTY_DRAFT);
@@ -58,7 +58,6 @@ export default function PrintQuotePage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [quoteNumber, setQuoteNumber] = useState<string | null>(null);
   const [pendingSubmit, setPendingSubmit] = useState(false);
-  const previousSignInOpen = useRef(false);
   const resumedSubmit = useRef(false);
 
   useEffect(() => {
@@ -135,14 +134,6 @@ export default function PrintQuotePage() {
     // submit is intentionally driven only by the persisted explicit intent.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalog, initialized, pendingSubmit, user]);
-
-  useEffect(() => {
-    if (previousSignInOpen.current && !signInOpen && !user && pendingSubmit) {
-      clearPendingQuote();
-      setPendingSubmit(false);
-    }
-    previousSignInOpen.current = signInOpen;
-  }, [pendingSubmit, signInOpen, user]);
 
   const product = catalog?.products.find((item) => item.id === draft.product);
   const stock = catalog?.stockTiers.find((item) => item.id === draft.paperStock);

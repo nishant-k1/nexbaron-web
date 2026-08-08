@@ -2,6 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { getApiUrl } from "@/lib/api";
 
+const HUB_URL = process.env.NEXT_PUBLIC_HUB_URL || "https://hub.nexbaron.com";
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -32,7 +34,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // If 409 = user already exists — that's fine, we proceed
+    // Signup returns a login token for brand-new accounts (201). For existing
+    // accounts (409) no token is issued; send them to the hub login page instead.
 
     // Step 2: Submit as a lead/contact
     await fetch(`${backendUrl}/digital/contact`, {
@@ -50,17 +53,9 @@ export async function POST(request: NextRequest) {
       }),
     }).catch(() => {});
 
-    // Step 3: Generate login token
-    const tokenRes = await fetch(`${backendUrl}/digital/auth/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email.trim() }),
-    });
-
-    const tokenData = await tokenRes.json().catch(() => ({}));
-    const hubUrl = tokenData.token
-      ? `${process.env.NEXT_PUBLIC_HUB_URL || "http://localhost:5173"}/digital?token=${tokenData.token}`
-      : `${process.env.NEXT_PUBLIC_HUB_URL || "http://localhost:5173"}/digital/login`;
+    const hubUrl = signupData.token
+      ? `${HUB_URL}/digital?token=${signupData.token}`
+      : `${HUB_URL}/digital/login`;
 
     return NextResponse.json({ success: true, hubUrl });
   } catch (error) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -14,6 +14,8 @@ import {
 import { apiRequest, getToken, setToken, type AuthUser } from "@/lib/api";
 import { getDivisionFromPath, type Division } from "@/lib/divisions";
 
+const HUB_URL = process.env.NEXT_PUBLIC_HUB_URL || "https://hub.nexbaron.com";
+
 interface AuthContextValue {
   user: AuthUser | null;
   division: Division | null;
@@ -21,25 +23,16 @@ interface AuthContextValue {
   signIn: (token: string, user: AuthUser) => void;
   signOut: () => void;
   refresh: () => Promise<void>;
-  googleSignIn: (credential: string) => Promise<{ token: string; user: AuthUser } | null>;
-  signInOpen: boolean;
-  pendingPlan: string | null;
-  openSignIn: (planId?: string) => void;
-  closeSignIn: () => void;
-  completeSignIn: (result: { token: string; user: AuthUser }) => void;
+  openSignIn: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
   const pathname = usePathname();
   const division = getDivisionFromPath(pathname ?? "");
   const [user, setUser] = useState<AuthUser | null>(null);
   const [initializedDivision, setInitializedDivision] = useState<Division | null>(null);
-  const [signInOpen, setSignInOpen] = useState(false);
-  const [signInDivision, setSignInDivision] = useState<Division | null>(null);
-  const [pendingPlan, setPendingPlan] = useState<string | null>(null);
   const refreshGeneration = useRef(0);
 
   const refresh = useCallback(async () => {
@@ -95,64 +88,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }, [division]);
 
-  const googleSignIn = useCallback(
-    async (credential: string): Promise<{ token: string; user: AuthUser } | null> => {
-      if (!division) return null;
-      try {
-        const data = await apiRequest<{ success: boolean; token: string; user: AuthUser }>(
-          `/${division}/auth/google`,
-          {
-            method: "POST",
-            body: JSON.stringify({ credential }),
-          },
-          division,
-        );
-        signIn(data.token, data.user);
-        return { token: data.token, user: data.user };
-      } catch {
-        return null;
-      }
-    },
-    [signIn, division],
-  );
-
-  const openSignIn = useCallback(
-    (planId?: string) => {
-      if (!division) return;
-      setSignInDivision(division);
-      setPendingPlan(planId ?? null);
-      setSignInOpen(true);
-    },
-    [division],
-  );
-
-  const closeSignIn = useCallback(() => {
-    setSignInOpen(false);
-    setSignInDivision(null);
-    setPendingPlan(null);
-    if (typeof window !== "undefined") {
-      if (division === "digital") {
-        window.sessionStorage.removeItem("nexbaron-pending-plan");
-      }
-    }
+  // Sign-in happens on the Hub (OTP + Google), not on the marketing site.
+  const openSignIn = useCallback(() => {
+    if (!division) return;
+    window.location.assign(`${HUB_URL}/${division}/login`);
   }, [division]);
-
-  const completeSignIn = useCallback(
-    (result: { token: string; user: AuthUser }) => {
-      signIn(result.token, result.user);
-      setSignInOpen(false);
-      setSignInDivision(null);
-      const plan = pendingPlan;
-      setPendingPlan(null);
-      if (typeof window !== "undefined" && result.user.division === "digital") {
-        window.sessionStorage.removeItem("nexbaron-pending-plan");
-      }
-      if (plan && result.user.division === "digital") {
-        router.push(`/digital/onboarding?plan=${plan}`);
-      }
-    },
-    [signIn, pendingPlan, router],
-  );
 
   const value = useMemo(
     () => ({
@@ -162,28 +102,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signIn,
       signOut,
       refresh,
-      googleSignIn,
-      signInOpen: signInOpen && signInDivision === division,
-      pendingPlan,
       openSignIn,
-      closeSignIn,
-      completeSignIn,
     }),
-    [
-      user,
-      division,
-      initializedDivision,
-      signIn,
-      signOut,
-      refresh,
-      googleSignIn,
-      signInOpen,
-      signInDivision,
-      pendingPlan,
-      openSignIn,
-      closeSignIn,
-      completeSignIn,
-    ],
+    [user, division, initializedDivision, signIn, signOut, refresh, openSignIn],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

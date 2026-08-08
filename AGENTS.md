@@ -19,9 +19,9 @@ No tests. Husky: pre-commit runs lint-staged + typecheck; pre-push runs `check` 
 
 - **Next.js 14 App Router, React 18, TypeScript strict** (+`noUncheckedIndexedAccess`). Code lives at repo root: `app/` (routes), `features/` (business logic), `components/` (shared UI), `lib/`, `hooks/`, `theme/`. **No `src/` folder.**
 - **Division is derived from the URL path** (`lib/divisions.ts#getDivisionFromPath`) and scopes everything: nav, footer, accent colors (`lib/accents.ts` — digital=teal, print=amber), auth tokens, OG images, lead capture.
-- **State: React Context + localStorage/sessionStorage only** (no Redux/React Query). `AuthProvider` (`features/auth/auth-context.tsx`) holds user + sign-in dialog state (`pendingPlan`, `openSignIn`); `PlansProvider` (`features/digital/lib/catalog.tsx`) merges static plan defaults with remote catalog (`GET /digital/catalog`, cached in localStorage 15min).
+- **State: React Context + localStorage/sessionStorage only** (no Redux/React Query). `AuthProvider` (`components/auth/auth-context.tsx`) validates the division-scoped token and exposes `openSignIn()` — sign-in happens entirely on the **Hub** (`NEXT_PUBLIC_HUB_URL/{division}/login`), never on this marketing site. `PlansProvider` (`features/digital/catalog.tsx`) merges static plan defaults with remote catalog (`GET /digital/catalog`, cached in localStorage 15min).
 - **API client** (`lib/api.ts`): native `fetch` via `apiRequest<T>()`, base `NEXT_PUBLIC_API_URL || http://localhost:3001`, Bearer token from the division-scoped localStorage key `nexbaron-auth-token-{division}`. Never add axios.
-- **Dark mode only** — design decision; `theme/theme-toggle.tsx` force-resets to dark on a 1s interval. Don't add light theme without sign-off.
+- **Dark mode only** — design decision; `theme/theme-provider.tsx` sets `defaultTheme="dark"` / `enableSystem={false}`. Don't add light theme without sign-off.
 - Styling: Tailwind 3 with CSS-var tokens in `app/globals.css`; shadcn-style primitives in `components/ui/` (Radix + CVA + `cn()`); fonts Inter/Montserrat via next/font; framer-motion with reduced-motion support (`hooks/use-reveal-in-view.ts` works around a whileInView bug).
 
 **Theme rules (MUST follow):**
@@ -37,30 +37,27 @@ No tests. Husky: pre-commit runs lint-staged + typecheck; pre-push runs `check` 
 ```
 /                          corporate gateway (division split cards)
 /about, /privacy, /terms
-/auth/complete             OAuth landing (?token=&user= -> signIn, resume pending plan)
 /digital/*                 landing, solutions, who-we-help, process, pricing (plan builder),
                            automation, results, why-nexbaron, faq, contact, onboarding?plan=
 /print/*                   landing, products (+SSG [slug] from lib/data/print-products.ts),
-                           quote (builder, sign-in-gated submit), specifications
+                           quote (builder, sign-in-gated submit), specifications, quotes
 ```
 
-Next API routes (proxies/handlers): `app/api/contact/route.ts`, `app/api/[division]/contact/route.ts` (proxy to backend lead endpoints), `app/api/auth/google/callback/route.ts` (OAuth code exchange using `GOOGLE_CLIENT_SECRET`). Redirects in `next.config.js` (`/digital/services|plans` -> pricing, `/digital/industries` -> who-we-help).
+Next API routes (proxies/handlers): `app/api/[division]/contact/route.ts` (proxy to backend lead endpoints), `app/api/digital/signup/route.ts` (creates the account + lead, then redirects to the Hub with the new token). Redirects in `next.config.js` (`/digital/services|plans` -> pricing, `/digital/industries` -> who-we-help).
 
-### Auth (passwordless, per-division)
+### Auth (sign-in happens on the Hub)
 
-1. Google One Tap (GSI) — `features/auth/components/google-one-tap.tsx`, credential posted to the selected brand's `/<division>/auth/google` endpoint.
-2. Google OAuth2 authorization-code flow — state in sessionStorage, server-side code exchange, lands on `/auth/complete`.
-3. Email/phone OTP — `features/auth/components/auth-gate.tsx` (dev mode shows `devCode` in UI).
+- `openSignIn()` (`components/auth/auth-context.tsx`) navigates to the Hub's `/{division}/login` (OTP + Google) — this site has no login form of its own.
+- Account creation starts on the pricing page: `PlanSignupForm` posts to `/api/digital/signup`, which creates the account, then routes the user to the Hub (with `?token=` for brand-new accounts, `/login` for existing ones).
+- The `nexbaron-auth-token-{division}` key is web-local; a Hub session does not propagate back to this site, so `user` is usually `null` here.
 
-All customer API calls use the selected brand's canonical `/<division>/*` path.
-
-Protected behavior (no middleware): `/digital/onboarding` server-redirects without `?plan=`; wizard prompts sign-in before payment; `/print/quote` submission opens AuthGate then auto-resumes.
+Protected behavior (no middleware): `/digital/onboarding` shows a sign-in gate if unauthenticated (opens Hub login); `/print/quotes` similar; `/print/quote` submit with a signed-out user also routes to Hub.
 
 ### Money/logic
 
-- Plan pricing computed client-side in `features/digital/lib/plan-summary.ts` (tier inheritance, launch timeline `LAUNCH_FIXED_DAYS=4 + critical path`); server recomputes at checkout — keep them in sync with `nexbaron-api`'s `digital/catalog/catalog.ts`.
-- Onboarding wizard (`features/onboarding/components/onboarding-wizard.tsx`, ~1100 lines): plan confirm -> RHF+Zod business form with debounced server drafts (`lib/draft.ts` -> `/digital/drafts/{division}`) -> Razorpay checkout (`features/digital/lib/razorpay.ts` loads checkout.js; `devMode` simulates payment without keys) -> success screen with launch date/milestones.
-- Launch tracking: `components/tracking/launch-tracker.tsx`, `features/onboarding/components/customer-project-tracker.tsx` (fetches real order via `/digital/payments/orders/mine`).
+- Plan pricing computed client-side in `features/digital/plan-summary.ts` (tier inheritance, launch timeline `LAUNCH_FIXED_DAYS=4 + critical path`); server recomputes at checkout — keep them in sync with `nexbaron-api`'s `digital/catalog/catalog.ts`.
+- Onboarding wizard (`features/digital/onboarding/components/onboarding-wizard.tsx`, ~1100 lines): plan confirm -> RHF+Zod business form with debounced server drafts (`lib/draft.ts` -> `/digital/drafts/{division}`) -> Razorpay checkout (`features/digital/razorpay.ts` loads checkout.js; `devMode` simulates payment without keys) -> success screen with launch date/milestones.
+- Launch tracking: `components/tracking/launch-tracker.tsx`, `features/digital/onboarding/components/customer-project-tracker.tsx` (fetches real order via `/digital/payments/orders/mine`).
 - Print quote estimate is a naive client-side formula — not authoritative.
 
 ### Conventions
@@ -72,7 +69,7 @@ Protected behavior (no middleware): `/digital/onboarding` server-redirects witho
 
 ### Env (`.env.local`; no `.env.example` despite README)
 
-`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` (server-only), `NEXT_PUBLIC_GOOGLE_VERIFICATION`, `NEXT_PUBLIC_WHATSAPP_DIGITAL`/`_PRINT` (currently unset).
+`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_API_URL_DIGITAL`/`_PRINT`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_HUB_URL` (Hub login/signup redirect base), `NEXT_PUBLIC_WHATSAPP_DIGITAL`/`_PRINT`. (Google sign-in client IDs/secrets apply to the Hub and CRM, not this repo.)
 
 ### Gotchas
 

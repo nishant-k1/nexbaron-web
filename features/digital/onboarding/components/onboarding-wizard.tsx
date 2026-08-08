@@ -47,36 +47,6 @@ import { getDraft, saveDraft, selectionToDraftState, type DraftFields } from "@/
 
 type PlanId = "launch" | "growth" | "scale";
 
-interface PlanOption {
-  name: string;
-  oneTime: string;
-  monthly: string;
-  monthlyName: string;
-  featured?: boolean;
-}
-
-const planOptions: Record<PlanId, PlanOption> = {
-  launch: {
-    name: "Launch",
-    oneTime: "₹24,999",
-    monthly: "₹1,499",
-    monthlyName: "Care",
-  },
-  growth: {
-    name: "Growth",
-    oneTime: "₹39,999",
-    monthly: "₹3,999",
-    monthlyName: "Growth Care",
-    featured: true,
-  },
-  scale: {
-    name: "Scale",
-    oneTime: "₹59,999",
-    monthly: "₹7,999",
-    monthlyName: "Business Partner",
-  },
-};
-
 const wizardSchema = z.object({
   plan: z.string().min(1, "Select a plan"),
   businessName: z.string().min(2, "Please enter your business name"),
@@ -337,14 +307,13 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
         <h2 className="text-2xl font-heading font-bold text-white mb-3">Sign in to continue</h2>
         <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
           You need an account to save your progress and complete your{" "}
-          {planOptions[planId as PlanId]?.name ?? "chosen"} plan. Login or create one in a few
-          seconds.
+          {getPlan(planId as string).name} plan. Login or create one in a few seconds.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Button
             size="lg"
             className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-xl"
-            onClick={() => openSignIn(planId)}
+            onClick={() => openSignIn()}
           >
             Sign in or create account
           </Button>
@@ -368,7 +337,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     },
   };
 
-  const plan = planOptions[planId as PlanId] ?? planOptions.growth;
+  const plan = getPlan(planId as string);
 
   const stepFields: (keyof WizardValues)[][] = [
     [
