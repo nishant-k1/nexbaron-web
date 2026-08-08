@@ -9,20 +9,23 @@ function forwardHeaders(request: NextRequest): Record<string, string> {
   return headers;
 }
 
+// Catch-all proxy for every /api/{division}/chat[/...rest] route (send, history,
+// read, presence, merge). The path suffix is forwarded to the backend verbatim.
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ division: string }> },
+  { params }: { params: Promise<{ division: string; rest?: string[] }> },
 ) {
   try {
-    const { division } = await params;
+    const { division, rest } = await params;
     if (division !== "digital" && division !== "print") {
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }
 
     const body = await request.json();
     const backendUrl = getApiUrl(division);
+    const suffix = rest?.length ? `/${rest.join("/")}` : "";
 
-    const response = await fetch(`${backendUrl}/${division}/chat`, {
+    const response = await fetch(`${backendUrl}/${division}/chat${suffix}`, {
       method: "POST",
       headers: forwardHeaders(request),
       body: JSON.stringify(body),
@@ -44,10 +47,10 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ division: string }> },
+  { params }: { params: Promise<{ division: string; rest?: string[] }> },
 ) {
   try {
-    const { division } = await params;
+    const { division, rest } = await params;
     if (division !== "digital" && division !== "print") {
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }
@@ -55,8 +58,9 @@ export async function GET(
     const backendUrl = getApiUrl(division);
     const url = new URL(request.url);
     const qs = url.search;
+    const suffix = rest?.length ? `/${rest.join("/")}` : "";
 
-    const response = await fetch(`${backendUrl}/${division}/chat${qs}`, {
+    const response = await fetch(`${backendUrl}/${division}/chat${suffix}${qs}`, {
       headers: forwardHeaders(request),
     });
 

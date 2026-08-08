@@ -19,6 +19,7 @@ interface ChatMessage {
   text: string;
   sender: "user" | "agent";
   timestamp: number;
+  isRead?: boolean;
   attachments?: ChatAttachment[];
 }
 
@@ -81,12 +82,17 @@ export function LiveChat() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ sessionId, phone: phone || undefined, email: email || undefined }),
+      body: JSON.stringify({
+        sessionId,
+        name: name || undefined,
+        phone: phone || undefined,
+        email: email || undefined,
+      }),
     }).catch(() => {});
-  }, [division, user, sessionId, phone, email]);
+  }, [division, user, sessionId, name, phone, email]);
 
-  // Load chat history from backend
-  useEffect(() => {
+  // Load chat history from backend (initial + silent polling).
+  const loadMessages = useCallback(() => {
     if (!division) return;
 
     const token = getToken(division);
@@ -99,27 +105,68 @@ export function LiveChat() {
       .then((res) => res.json())
       .then((data) => {
         if (data.messages) {
-          setMessages(
-            data.messages.map(
-              (m: {
-                _id: string;
-                message: string;
-                sender: string;
-                createdAt: string;
-                attachments?: ChatAttachment[];
-              }) => ({
-                id: m._id,
-                text: m.message,
-                sender: m.sender === "agent" ? "agent" : "user",
-                timestamp: new Date(m.createdAt).getTime(),
-                attachments: m.attachments,
-              }),
-            ),
+          const next = data.messages.map(
+            (m: {
+              _id: string;
+              message: string;
+              sender: string;
+              createdAt: string;
+              isRead?: boolean;
+              attachments?: ChatAttachment[];
+            }) => ({
+              id: m._id,
+              text: m.message,
+              sender: m.sender === "agent" ? "agent" : "user",
+              timestamp: new Date(m.createdAt).getTime(),
+              isRead: m.isRead,
+              attachments: m.attachments,
+            }),
           );
+          setMessages(next);
         }
       })
       .catch(() => {});
-  }, [division, user, sessionId]);
+  }, [division, sessionId]);
+
+  useEffect(() => {
+    loadMessages();
+    const interval = setInterval(loadMessages, 10000);
+    return () => clearInterval(interval);
+  }, [loadMessages]);
+
+  // Mark agent messages as read once the widget is open and visible.
+  useEffect(() => {
+    if (!division || !open) return;
+    const token = getToken(division);
+    fetch(`/api/${division}/chat/read`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ sessionId }),
+    }).catch(() => {});
+  }, [division, open, sessionId, messages]);
+
+  // Presence heartbeat — keeps the CRM's online indicator accurate while the
+  // widget is open. Pauses when hidden (pagevisibility throttles timers).
+  useEffect(() => {
+    if (!division || !open) return;
+    const beat = () => {
+      const token = getToken(division);
+      fetch(`/api/${division}/chat/presence`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ sessionId }),
+      }).catch(() => {});
+    };
+    beat();
+    const interval = setInterval(beat, 30000);
+    return () => clearInterval(interval);
+  }, [division, open, sessionId]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -327,7 +374,7 @@ export function LiveChat() {
                         </div>
                       ))}
                       <div
-                        className={`text-[10px] mt-1 ${
+                        className={`text-[10px] mt-1 flex items-center gap-1 ${
                           msg.sender === "user" ? "text-slate-700" : "text-slate-500"
                         }`}
                       >
@@ -335,6 +382,7 @@ export function LiveChat() {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
+                        {msg.sender === "user" && msg.isRead && <span>· Seen</span>}
                       </div>
                     </div>
                   </div>
