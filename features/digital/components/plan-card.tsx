@@ -9,15 +9,6 @@ interface PlanCardProps {
   onSelectPlan: () => void;
 }
 
-const WHO_ITS_FOR: Record<string, string> = {
-  launch:
-    "Solo business just starting out. 5-page site, mobile-ready, Google Business Profile created.",
-  growth:
-    "Growing business with 10–30 customers a day. Found on Google, booked on WhatsApp, reviews collected automatically.",
-  scale:
-    "Established business doing ₹50L+/year. Dedicated manager, unlimited updates, monthly strategy calls.",
-};
-
 const INCLUDES: Record<string, string[]> = {
   launch: [
     "Website — Up to 5 Pages",
@@ -55,7 +46,6 @@ const ICONS: Record<string, React.ElementType> = {
 
 export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
   const Icon = ICONS[plan.id] || Rocket;
-  const who = WHO_ITS_FOR[plan.id] || "";
   const items = INCLUDES[plan.id] || [];
 
   return (
@@ -79,9 +69,6 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
           )}
         </div>
       </div>
-
-      {/* Who it's for */}
-      <p className="text-xs text-slate-400 leading-relaxed mb-4">{who}</p>
 
       {/* Price */}
       <div className="mb-4">
