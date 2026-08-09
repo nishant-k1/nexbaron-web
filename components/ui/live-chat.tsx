@@ -21,6 +21,8 @@ interface ChatMessage {
   sender: "user" | "agent";
   timestamp: number;
   isRead?: boolean;
+  edited?: boolean;
+  deletedAt?: string | null;
   attachments?: ChatAttachment[];
 }
 
@@ -113,6 +115,8 @@ export function LiveChat() {
               sender: string;
               createdAt: string;
               isRead?: boolean;
+              edited?: boolean;
+              deletedAt?: string | null;
               attachments?: ChatAttachment[];
             }) => ({
               id: m._id,
@@ -120,6 +124,8 @@ export function LiveChat() {
               sender: m.sender === "agent" ? "agent" : "user",
               timestamp: new Date(m.createdAt).getTime(),
               isRead: m.isRead,
+              edited: m.edited,
+              deletedAt: m.deletedAt,
               attachments: m.attachments,
             }),
           );
@@ -136,6 +142,7 @@ export function LiveChat() {
   // Realtime: connect to the chat service socket so new agent messages and read
   // receipts arrive instantly while the widget is open.
   const socketRef = useRef<Socket | null>(null);
+  const [agentTyping, setAgentTyping] = useState(false);
   useEffect(() => {
     if (!division || !open) return;
     socketRef.current?.disconnect();
@@ -150,6 +157,11 @@ export function LiveChat() {
     });
     socket.on("message:new", loadMessages);
     socket.on("message:read", loadMessages);
+    socket.on("message:updated", loadMessages);
+    socket.on("message:deleted", loadMessages);
+    socket.on("typing", (payload: { sender?: string; isTyping?: boolean }) => {
+      setAgentTyping(payload.sender === "agent" && !!payload.isTyping);
+    });
     socketRef.current = socket;
     return () => {
       socketRef.current?.disconnect();
@@ -372,7 +384,11 @@ export function LiveChat() {
                           : "bg-slate-800 text-slate-200 rounded-bl-md"
                       }`}
                     >
-                      {msg.text}
+                      {msg.deletedAt ? (
+                        <span className="italic opacity-60">This message was deleted</span>
+                      ) : (
+                        msg.text
+                      )}
                       {msg.attachments?.map((a, i) => (
                         <div key={`${msg.id}-a${i}`} className="mt-2">
                           {renderAsImage(a) ? (
@@ -406,10 +422,29 @@ export function LiveChat() {
                           minute: "2-digit",
                         })}
                         {msg.sender === "user" && msg.isRead && <span>· Seen</span>}
+                        {msg.sender === "agent" && msg.edited && !msg.deletedAt && (
+                          <span>· edited</span>
+                        )}
                       </div>
                     </div>
                   </div>
                 ))}
+                {agentTyping && (
+                  <div className="flex justify-start">
+                    <div className="max-w-[80%] px-3.5 py-2.5 rounded-2xl bg-slate-800 text-slate-200 rounded-bl-md flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" />
+                      <span
+                        className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                        style={{ animationDelay: "150ms" }}
+                      />
+                      <span
+                        className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                        style={{ animationDelay: "300ms" }}
+                      />
+                      <span className="text-[11px] text-slate-400 ml-1">typing…</span>
+                    </div>
+                  </div>
+                )}
                 <div ref={messagesEndRef} />
               </>
             )}
