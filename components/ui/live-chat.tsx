@@ -131,8 +131,6 @@ export function LiveChat() {
 
   useEffect(() => {
     loadMessages();
-    const interval = setInterval(loadMessages, 10000);
-    return () => clearInterval(interval);
   }, [loadMessages]);
 
   // Realtime: connect to the chat service socket so new agent messages and read
