@@ -82,13 +82,6 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
         </div>
       </div>
 
-      {/* Timeline */}
-      <div className="mb-5">
-        <span className="text-[10px] font-mono text-teal-400 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20">
-          {plan.timeline}
-        </span>
-      </div>
-
       {/* Features list */}
       <div className="mb-6 pt-4 border-t border-white/10 space-y-2.5">
         {items.map((item) => (
