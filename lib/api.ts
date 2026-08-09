@@ -10,6 +10,13 @@ export function getApiUrl(division: Division): string {
   return url.replace(/\/$/, "");
 }
 
+// Dedicated chat service — serves BOTH divisions from one host (division in path).
+const CHAT_URL_FALLBACK = process.env.NEXT_PUBLIC_CHAT_URL || "https://chat.nexbaron.com";
+
+export function getChatUrl(): string {
+  return (process.env.NEXT_PUBLIC_CHAT_URL || CHAT_URL_FALLBACK).replace(/\/$/, "");
+}
+
 const AUTH_TOKEN_KEY_PREFIX = "nexbaron-auth-token";
 
 export function authTokenKey(division: Division): string {

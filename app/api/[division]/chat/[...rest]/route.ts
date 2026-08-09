@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { getApiUrl } from "@/lib/api";
+import { getChatUrl } from "@/lib/api";
 
 function forwardHeaders(request: NextRequest): Record<string, string> {
   const headers: Record<string, string> = { "Content-Type": "application/json" };
@@ -22,7 +22,7 @@ export async function POST(
     }
 
     const body = await request.json();
-    const backendUrl = getApiUrl(division);
+    const backendUrl = getChatUrl();
     const suffix = rest?.length ? `/${rest.join("/")}` : "";
 
     const response = await fetch(`${backendUrl}/${division}/chat${suffix}`, {
@@ -55,7 +55,7 @@ export async function GET(
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }
 
-    const backendUrl = getApiUrl(division);
+    const backendUrl = getChatUrl();
     const url = new URL(request.url);
     const qs = url.search;
     const suffix = rest?.length ? `/${rest.join("/")}` : "";
