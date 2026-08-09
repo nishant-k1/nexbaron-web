@@ -131,6 +131,7 @@ export default function PrintQuotePage() {
     }
     resumedSubmit.current = true;
     setDraft(pending.draft);
+    // eslint-disable-next-line react-hooks/immutability
     void submit(pending.draft, pending.clientRequestId);
     // submit is intentionally driven only by the persisted explicit intent.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,8 +139,8 @@ export default function PrintQuotePage() {
 
   const selectedItems = draft.selectedProducts
     .map((id) => {
-      const p = catalog?.products.find((pr) => pr.id === id)
-      return p ? { ...p, quantity: draft.quantities[id] || p.minQuantity } : null
+      const p = catalog?.products.find((pr) => pr.id === id);
+      return p ? { ...p, quantity: draft.quantities[id] || p.minQuantity } : null;
     })
     .filter(Boolean) as (PrintCatalogProduct & { quantity: number })[];
   const validationError = catalog ? validateDraft(draft, catalog) : "Loading catalog";
@@ -244,14 +245,14 @@ export default function PrintQuotePage() {
                       onClick={() => {
                         const selected = draft.selectedProducts.includes(item.id)
                           ? draft.selectedProducts.filter((id) => id !== item.id)
-                          : [...draft.selectedProducts, item.id]
-                        const quantities = { ...draft.quantities }
+                          : [...draft.selectedProducts, item.id];
+                        const quantities = { ...draft.quantities };
                         if (!draft.selectedProducts.includes(item.id)) {
-                          quantities[item.id] = Math.max(item.minQuantity, 500)
+                          quantities[item.id] = Math.max(item.minQuantity, 500);
                         } else {
-                          delete quantities[item.id]
+                          delete quantities[item.id];
                         }
-                        setDraft((d) => ({ ...d, selectedProducts: selected, quantities }))
+                        setDraft((d) => ({ ...d, selectedProducts: selected, quantities }));
                       }}
                       className={`p-3.5 rounded-xl text-xs font-medium text-left border transition-all cursor-pointer ${draft.selectedProducts.includes(item.id) ? "bg-amber-500 text-slate-950 font-bold border-amber-400 shadow-lg shadow-amber-500/20" : "bg-white/[0.03] text-slate-300 border-white/10 hover:border-white/20"}`}
                     >
@@ -266,8 +267,13 @@ export default function PrintQuotePage() {
                   <StepLabel>2. Quantities</StepLabel>
                   <div className="space-y-3">
                     {selectedItems.map((item) => (
-                      <div key={item.id} className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                        <span className="text-sm text-slate-200 flex-1 font-medium">{item.label}</span>
+                      <div
+                        key={item.id}
+                        className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03] border border-white/10"
+                      >
+                        <span className="text-sm text-slate-200 flex-1 font-medium">
+                          {item.label}
+                        </span>
                         <input
                           type="number"
                           min={Math.max(item.minQuantity, 500)}
@@ -275,11 +281,14 @@ export default function PrintQuotePage() {
                           step={100}
                           value={draft.quantities[item.id] || item.minQuantity}
                           onChange={(e) => {
-                            const qty = Math.max(Math.max(item.minQuantity, 500), Math.min(10000, Number(e.target.value) || 0))
+                            const qty = Math.max(
+                              Math.max(item.minQuantity, 500),
+                              Math.min(10000, Number(e.target.value) || 0),
+                            );
                             setDraft((d) => ({
                               ...d,
                               quantities: { ...d.quantities, [item.id]: qty },
-                            }))
+                            }));
                           }}
                           className="w-28 px-3 py-1.5 bg-slate-800 border border-white/10 rounded-lg text-sm text-white text-right focus:outline-none focus:border-amber-500/50"
                         />
