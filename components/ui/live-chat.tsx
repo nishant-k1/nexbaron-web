@@ -3,9 +3,10 @@
 import { MessageSquareMore, Send, X, User, LogIn, FileText } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { io, type Socket } from "socket.io-client";
 
 import { useAuth } from "@/components/auth/auth-context";
-import { getToken } from "@/lib/api";
+import { getChatUrl, getToken } from "@/lib/api";
 
 interface ChatAttachment {
   url: string;
@@ -133,6 +134,30 @@ export function LiveChat() {
     const interval = setInterval(loadMessages, 10000);
     return () => clearInterval(interval);
   }, [loadMessages]);
+
+  // Realtime: connect to the chat service socket so new agent messages and read
+  // receipts arrive instantly while the widget is open.
+  const socketRef = useRef<Socket | null>(null);
+  useEffect(() => {
+    if (!division || !open) return;
+    socketRef.current?.disconnect();
+    const token = getToken(division);
+    const socket = io(getChatUrl(), {
+      transports: ["websocket"],
+      auth: {
+        division,
+        ...(token ? { token } : {}),
+        ...(!token ? { sessionId } : {}),
+      },
+    });
+    socket.on("message:new", loadMessages);
+    socket.on("message:read", loadMessages);
+    socketRef.current = socket;
+    return () => {
+      socketRef.current?.disconnect();
+      socketRef.current = null;
+    };
+  }, [division, open, sessionId, loadMessages]);
 
   // Mark agent messages as read once the widget is open and visible.
   useEffect(() => {
