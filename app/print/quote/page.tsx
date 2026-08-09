@@ -265,34 +265,75 @@ export default function PrintQuotePage() {
               {selectedItems.length > 0 && (
                 <section>
                   <StepLabel>2. Quantities</StepLabel>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {selectedItems.map((item) => (
                       <div
                         key={item.id}
-                        className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03] border border-white/10"
+                        className="p-4 rounded-xl bg-white/[0.03] border border-white/10"
                       >
-                        <span className="text-sm text-slate-200 flex-1 font-medium">
+                        <span className="text-sm text-slate-200 font-medium block mb-3">
                           {item.label}
                         </span>
-                        <input
-                          type="number"
-                          min={Math.max(item.minQuantity, 500)}
-                          max={10000}
-                          step={100}
-                          value={draft.quantities[item.id] || item.minQuantity}
-                          onChange={(e) => {
-                            const qty = Math.max(
-                              Math.max(item.minQuantity, 500),
-                              Math.min(10000, Number(e.target.value) || 0),
-                            );
-                            setDraft((d) => ({
-                              ...d,
-                              quantities: { ...d.quantities, [item.id]: qty },
-                            }));
-                          }}
-                          className="w-28 px-3 py-1.5 bg-slate-800 border border-white/10 rounded-lg text-sm text-white text-right focus:outline-none focus:border-amber-500/50"
-                        />
-                        <span className="text-xs text-slate-400 w-12">units</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const min = Math.max(item.minQuantity, 500)
+                              const qty = Math.max(min, (draft.quantities[item.id] || min) - 100)
+                              setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: qty } }))
+                            }}
+                            className="cursor-pointer w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 text-white text-xl font-bold flex items-center justify-center hover:bg-white/[0.12] transition-colors active:scale-95"
+                          >
+                            −
+                          </button>
+                          <div className="flex-1 text-center">
+                            <input
+                              type="number"
+                              min={Math.max(item.minQuantity, 500)}
+                              max={10000}
+                              step={100}
+                              value={draft.quantities[item.id] || item.minQuantity}
+                              onChange={(e) => {
+                                const qty = Math.max(
+                                  Math.max(item.minQuantity, 500),
+                                  Math.min(10000, Number(e.target.value) || 0),
+                                )
+                                setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: qty } }))
+                              }}
+                              className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            />
+                            <span className="text-[10px] text-slate-400">units</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const min = Math.max(item.minQuantity, 500)
+                              const qty = Math.min(10000, (draft.quantities[item.id] || min) + 100)
+                              setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: qty } }))
+                            }}
+                            className="cursor-pointer w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 text-white text-xl font-bold flex items-center justify-center hover:bg-white/[0.12] transition-colors active:scale-95"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <div className="flex gap-2 mt-3">
+                          {[500, 1000, 2000, 5000].map((preset) => (
+                            <button
+                              key={preset}
+                              type="button"
+                              onClick={() => {
+                                setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: preset } }))
+                              }}
+                              className={`cursor-pointer px-3 py-1 rounded-lg text-[11px] font-medium transition-colors ${
+                                (draft.quantities[item.id] || item.minQuantity) === preset
+                                  ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                                  : "bg-white/[0.04] text-slate-400 border border-white/5 hover:bg-white/[0.08]"
+                              }`}
+                            >
+                              {preset.toLocaleString("en-IN")}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
