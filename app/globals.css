@@ -22,6 +22,7 @@
 
   /* Border radius — v3 borderRadius.base */
   --radius-base: var(--radius-base);
+  --radius-xl: var(--radius-xl);
 
   /* Shadows — v3 boxShadow.surface/elevated */
   --shadow-surface: var(--shadow-surface);
