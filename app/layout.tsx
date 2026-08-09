@@ -3,6 +3,7 @@ import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import { AuthProvider } from "@/components/auth/auth-context";
+import { FaviconSwitcher } from "@/components/brand/favicon-switcher";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { Footer } from "@/components/footer/footer";
 import GlobalMeshBackgroundDynamic from "@/components/motion/global-mesh-background-dynamic";
@@ -162,6 +163,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider>
             <AuthProvider>
               <GlobalMeshBackgroundDynamic />
+              <FaviconSwitcher />
               <a href="#main-content" className="skip-to-content">
                 Skip to main content
               </a>
