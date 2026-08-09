@@ -42,8 +42,6 @@ const comparisonRows = [
   { feature: "Competitor Analysis", launch: false, growth: false, scale: true },
   { feature: "Monthly Performance Report", launch: false, growth: false, scale: true },
   { feature: "Monthly Strategy Call", launch: false, growth: false, scale: true },
-  { feature: "Cancel anytime", launch: true, growth: true, scale: true },
-  { feature: "Keep your website forever", launch: true, growth: true, scale: true },
 ];
 
 function LaunchTimelineSection() {
