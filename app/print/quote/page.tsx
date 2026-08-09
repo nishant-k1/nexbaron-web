@@ -13,6 +13,7 @@ import {
   getPrintCatalog,
   submitPrintQuote,
   type PrintCatalog,
+  type PrintCatalogProduct,
   type PrintQuoteInput,
 } from "@/features/print/quotes";
 
@@ -25,10 +26,12 @@ interface QuoteDraft extends PrintQuoteInput {
   deadline: string;
   deliveryPincode: string;
   notes: string;
+  selectedProducts: string[];
+  quantities: Record<string, number>;
 }
 
 interface PendingQuote {
-  version: 2;
+  version: 3;
   requestedAt: number;
   clientRequestId: string;
   draft: QuoteDraft;
@@ -41,11 +44,11 @@ const EMPTY_DRAFT: QuoteDraft = {
   company: "",
   product: "",
   quantity: 500,
-  paperStock: "",
-  finishing: "",
   deadline: "",
   deliveryPincode: "",
   notes: "",
+  selectedProducts: [],
+  quantities: {},
 };
 
 export default function PrintQuotePage() {
@@ -76,9 +79,7 @@ export default function PrintQuotePage() {
           return {
             ...current,
             product: current.product || product?.id || "",
-            quantity: Math.max(current.quantity, product?.minQuantity ?? 500, 500),
-            paperStock: current.paperStock || data.stockTiers[0]?.id || "",
-            finishing: current.finishing || data.finishes[0]?.id || "",
+            quantity: Math.max(current.quantity || 500, product?.minQuantity ?? 500, 500),
           };
         });
       })
@@ -135,15 +136,12 @@ export default function PrintQuotePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalog, initialized, pendingSubmit, user]);
 
-  const product = catalog?.products.find((item) => item.id === draft.product);
-  const stock = catalog?.stockTiers.find((item) => item.id === draft.paperStock);
-  const finish = catalog?.finishes.find((item) => item.id === draft.finishing);
-  const minimumQuantity = Math.max(product?.minQuantity ?? 500, 500);
-  const estimatedPrice = product
-    ? Math.round(
-        product.basePrice * (draft.quantity / 500) + (stock?.extra ?? 0) + (finish?.extra ?? 0),
-      )
-    : null;
+  const selectedItems = draft.selectedProducts
+    .map((id) => {
+      const p = catalog?.products.find((pr) => pr.id === id)
+      return p ? { ...p, quantity: draft.quantities[id] || p.minQuantity } : null
+    })
+    .filter(Boolean) as (PrintCatalogProduct & { quantity: number })[];
   const validationError = catalog ? validateDraft(draft, catalog) : "Loading catalog";
 
   function updateDraft<K extends keyof QuoteDraft>(key: K, value: QuoteDraft[K]) {
@@ -174,6 +172,7 @@ export default function PrintQuotePage() {
         deadline: input.deadline || undefined,
         deliveryPincode: input.deliveryPincode.trim() || undefined,
         notes: input.notes.trim() || undefined,
+        items: selectedItems.map((it) => ({ product: it.id, quantity: it.quantity })),
       });
       setQuoteNumber(result.quoteNumber ?? null);
       setSubmitStatus("success");
@@ -236,17 +235,25 @@ export default function PrintQuotePage() {
           {catalog && (
             <>
               <section>
-                <StepLabel>1. Select Product</StepLabel>
+                <StepLabel>1. Select Products</StepLabel>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {catalog.products.map((item) => (
                     <button
                       type="button"
                       key={item.id}
                       onClick={() => {
-                        updateDraft("product", item.id);
-                        updateDraft("quantity", Math.max(draft.quantity, item.minQuantity, 500));
+                        const selected = draft.selectedProducts.includes(item.id)
+                          ? draft.selectedProducts.filter((id) => id !== item.id)
+                          : [...draft.selectedProducts, item.id]
+                        const quantities = { ...draft.quantities }
+                        if (!draft.selectedProducts.includes(item.id)) {
+                          quantities[item.id] = Math.max(item.minQuantity, 500)
+                        } else {
+                          delete quantities[item.id]
+                        }
+                        setDraft((d) => ({ ...d, selectedProducts: selected, quantities }))
                       }}
-                      className={`p-3.5 rounded-xl text-xs font-medium text-left border transition-all ${draft.product === item.id ? "bg-amber-500 text-slate-950 font-bold border-amber-400 shadow-lg shadow-amber-500/20" : "bg-white/[0.03] text-slate-300 border-white/10 hover:border-white/20"}`}
+                      className={`p-3.5 rounded-xl text-xs font-medium text-left border transition-all cursor-pointer ${draft.selectedProducts.includes(item.id) ? "bg-amber-500 text-slate-950 font-bold border-amber-400 shadow-lg shadow-amber-500/20" : "bg-white/[0.03] text-slate-300 border-white/10 hover:border-white/20"}`}
                     >
                       {item.label}
                     </button>
@@ -254,44 +261,37 @@ export default function PrintQuotePage() {
                 </div>
               </section>
 
-              <section>
-                <div className="flex justify-between items-center mb-3">
-                  <StepLabel>2. Order Quantity</StepLabel>
-                  <span className="text-xs font-mono text-white bg-amber-500/20 px-2.5 py-0.5 rounded border border-amber-500/30">
-                    {draft.quantity.toLocaleString("en-IN")} units
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={minimumQuantity}
-                  max={10000}
-                  step={100}
-                  value={draft.quantity}
-                  onChange={(event) => updateDraft("quantity", Number(event.target.value))}
-                  className="w-full accent-amber-500 cursor-pointer"
-                />
-                <div className="flex justify-between text-[11px] text-slate-400 font-mono mt-2">
-                  <span>{minimumQuantity.toLocaleString("en-IN")}</span>
-                  <span>5,000</span>
-                  <span>10,000</span>
-                </div>
-              </section>
-
-              <OptionSection
-                label="3. Stock / Material Grade"
-                options={catalog.stockTiers}
-                selected={draft.paperStock}
-                onSelect={(id) => updateDraft("paperStock", id)}
-              />
-              <OptionSection
-                label="4. Finishing & Lamination"
-                options={catalog.finishes}
-                selected={draft.finishing}
-                onSelect={(id) => updateDraft("finishing", id)}
-              />
+              {selectedItems.length > 0 && (
+                <section>
+                  <StepLabel>2. Quantities</StepLabel>
+                  <div className="space-y-3">
+                    {selectedItems.map((item) => (
+                      <div key={item.id} className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03] border border-white/10">
+                        <span className="text-sm text-slate-200 flex-1 font-medium">{item.label}</span>
+                        <input
+                          type="number"
+                          min={Math.max(item.minQuantity, 500)}
+                          max={10000}
+                          step={100}
+                          value={draft.quantities[item.id] || item.minQuantity}
+                          onChange={(e) => {
+                            const qty = Math.max(Math.max(item.minQuantity, 500), Math.min(10000, Number(e.target.value) || 0))
+                            setDraft((d) => ({
+                              ...d,
+                              quantities: { ...d.quantities, [item.id]: qty },
+                            }))
+                          }}
+                          className="w-28 px-3 py-1.5 bg-slate-800 border border-white/10 rounded-lg text-sm text-white text-right focus:outline-none focus:border-amber-500/50"
+                        />
+                        <span className="text-xs text-slate-400 w-12">units</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               <section className="pt-8 border-t border-white/10">
-                <StepLabel>5. Delivery & Contact Details</StepLabel>
+                <StepLabel>3. Delivery & Contact Details</StepLabel>
                 {submitStatus === "success" ? (
                   <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
                     <p className="text-lg font-semibold text-emerald-300 mb-1">
@@ -371,22 +371,17 @@ export default function PrintQuotePage() {
                     </div>
 
                     <div className="text-sm bg-white/[0.03] border border-white/10 rounded-xl p-4 space-y-1.5">
-                      <SummaryRow label="Product" value={product?.label ?? "-"} />
-                      <SummaryRow
-                        label="Quantity"
-                        value={`${draft.quantity.toLocaleString("en-IN")} units`}
-                      />
-                      <SummaryRow label="Stock" value={stock?.label ?? "-"} />
-                      <SummaryRow label="Finishing" value={finish?.label ?? "-"} />
-                      <SummaryRow
-                        label="Estimated price"
-                        value={
-                          estimatedPrice === null
-                            ? "-"
-                            : `₹${estimatedPrice.toLocaleString("en-IN")}`
-                        }
-                        accent
-                      />
+                      {selectedItems.length > 0 ? (
+                        selectedItems.map((it) => (
+                          <SummaryRow
+                            key={it.id}
+                            label={it.label}
+                            value={`${it.quantity.toLocaleString("en-IN")} units`}
+                          />
+                        ))
+                      ) : (
+                        <SummaryRow label="Products" value="None selected" />
+                      )}
                     </div>
 
                     {submitError && (
@@ -427,37 +422,6 @@ function StepLabel({ children }: { children: React.ReactNode }) {
     <div className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider block mb-3">
       {children}
     </div>
-  );
-}
-
-function OptionSection({
-  label,
-  options,
-  selected,
-  onSelect,
-}: {
-  label: string;
-  options: PrintCatalog["stockTiers"];
-  selected: string;
-  onSelect: (id: string) => void;
-}) {
-  return (
-    <section>
-      <StepLabel>{label}</StepLabel>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {options.map((option) => (
-          <button
-            type="button"
-            key={option.id}
-            onClick={() => onSelect(option.id)}
-            className={`p-3.5 rounded-xl text-xs font-medium border transition-all ${selected === option.id ? "bg-amber-500/20 text-white border-amber-400" : "bg-white/[0.03] text-slate-300 border-white/10"}`}
-          >
-            {option.label}
-            {option.extra > 0 ? ` (+₹${option.extra.toLocaleString("en-IN")})` : ""}
-          </button>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -507,16 +471,9 @@ function SummaryRow({
   );
 }
 
-function validateDraft(draft: QuoteDraft, catalog: PrintCatalog): string | null {
-  const product = catalog.products.find((item) => item.id === draft.product);
-  if (!product) return "Please choose a valid catalog product.";
-  if (!catalog.stockTiers.some((item) => item.id === draft.paperStock))
-    return "Please choose a valid stock.";
-  if (!catalog.finishes.some((item) => item.id === draft.finishing))
-    return "Please choose a valid finish.";
-  if (!Number.isInteger(draft.quantity) || draft.quantity < Math.max(product.minQuantity, 500))
-    return `Minimum quantity is ${Math.max(product.minQuantity, 500).toLocaleString("en-IN")}.`;
-  if (draft.name.trim().length < 2) return "Please enter your name.";
+function validateDraft(draft: QuoteDraft, _catalog: PrintCatalog): string | null {
+  if (draft.selectedProducts.length === 0) return "Please choose at least one product.";
+  if (!draft.name.trim() || draft.name.trim().length < 2) return "Please enter your name.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.email.trim()))
     return "Please enter a valid email address.";
   if (draft.phone.replace(/\D/g, "").length < 7) return "Please enter a valid phone number.";
@@ -527,7 +484,7 @@ function validateDraft(draft: QuoteDraft, catalog: PrintCatalog): string | null 
 
 function writePendingQuote(draft: QuoteDraft) {
   const pending: PendingQuote = {
-    version: 2,
+    version: 3,
     requestedAt: Date.now(),
     clientRequestId: createRequestId(),
     draft,
@@ -541,7 +498,7 @@ function readPendingQuote(): PendingQuote | null {
     if (!raw) return null;
     const pending = JSON.parse(raw) as PendingQuote;
     if (
-      pending.version !== 2 ||
+      pending.version !== 3 ||
       !pending.clientRequestId ||
       !pending.draft ||
       Date.now() - pending.requestedAt > PENDING_QUOTE_TTL_MS

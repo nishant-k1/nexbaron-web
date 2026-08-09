@@ -26,10 +26,9 @@ export interface PrintQuoteInput {
   name: string;
   email: string;
   phone?: string;
-  product: string;
-  quantity: number;
-  paperStock: string;
-  finishing: string;
+  items?: { product: string; quantity: number }[];
+  product?: string;
+  quantity?: number;
   company?: string;
   deadline?: string;
   deliveryPincode?: string;
