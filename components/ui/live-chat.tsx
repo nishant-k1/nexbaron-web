@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageSquareMore, Send, X, User, LogIn, FileText } from "lucide-react";
+import { MessageSquareMore, Send, X, User, FileText } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
@@ -300,14 +300,6 @@ export function LiveChat() {
                 {isLoggedIn ? "Replies appear here" : "Log in to save chat history"}
               </p>
             </div>
-            {!isLoggedIn && (
-              <button
-                onClick={() => window.open(`/${division}`, "_blank", "noopener,noreferrer")}
-                className="cursor-pointer ml-auto flex items-center gap-1 px-2 py-1 text-[10px] text-teal-400 hover:text-teal-300 border border-teal-500/30 rounded shrink-0"
-              >
-                <LogIn className="w-3 h-3" /> Log in
-              </button>
-            )}
           </div>
 
           {/* Messages */}
