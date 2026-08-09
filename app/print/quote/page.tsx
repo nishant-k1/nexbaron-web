@@ -278,9 +278,12 @@ export default function PrintQuotePage() {
                           <button
                             type="button"
                             onClick={() => {
-                              const min = Math.max(item.minQuantity, 500)
-                              const qty = Math.max(min, (draft.quantities[item.id] || min) - 100)
-                              setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: qty } }))
+                              const min = Math.max(item.minQuantity, 500);
+                              const qty = Math.max(min, (draft.quantities[item.id] || min) - 100);
+                              setDraft((d) => ({
+                                ...d,
+                                quantities: { ...d.quantities, [item.id]: qty },
+                              }));
                             }}
                             className="cursor-pointer w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 text-white text-xl font-bold flex items-center justify-center hover:bg-white/[0.12] transition-colors active:scale-95"
                           >
@@ -297,8 +300,11 @@ export default function PrintQuotePage() {
                                 const qty = Math.max(
                                   Math.max(item.minQuantity, 500),
                                   Math.min(10000, Number(e.target.value) || 0),
-                                )
-                                setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: qty } }))
+                                );
+                                setDraft((d) => ({
+                                  ...d,
+                                  quantities: { ...d.quantities, [item.id]: qty },
+                                }));
                               }}
                               className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
@@ -307,9 +313,12 @@ export default function PrintQuotePage() {
                           <button
                             type="button"
                             onClick={() => {
-                              const min = Math.max(item.minQuantity, 500)
-                              const qty = Math.min(10000, (draft.quantities[item.id] || min) + 100)
-                              setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: qty } }))
+                              const min = Math.max(item.minQuantity, 500);
+                              const qty = Math.min(10000, (draft.quantities[item.id] || min) + 100);
+                              setDraft((d) => ({
+                                ...d,
+                                quantities: { ...d.quantities, [item.id]: qty },
+                              }));
                             }}
                             className="cursor-pointer w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 text-white text-xl font-bold flex items-center justify-center hover:bg-white/[0.12] transition-colors active:scale-95"
                           >
@@ -322,7 +331,10 @@ export default function PrintQuotePage() {
                               key={preset}
                               type="button"
                               onClick={() => {
-                                setDraft((d) => ({ ...d, quantities: { ...d.quantities, [item.id]: preset } }))
+                                setDraft((d) => ({
+                                  ...d,
+                                  quantities: { ...d.quantities, [item.id]: preset },
+                                }));
                               }}
                               className={`cursor-pointer px-3 py-1 rounded-lg text-[11px] font-medium transition-colors ${
                                 (draft.quantities[item.id] || item.minQuantity) === preset
