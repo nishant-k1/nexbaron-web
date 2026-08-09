@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+button,
+[role="button"],
+select,
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
+
 @theme inline {
   /* Colours — sourced from :root vars below (matches nexbaron-hub / nexbaron-crm token names) */
   --color-primary: var(--color-primary);
