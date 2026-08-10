@@ -274,7 +274,7 @@ export default function PrintQuotePage() {
               {selectedItems.length > 0 && (
                 <section>
                   <StepLabel>2. Quantities</StepLabel>
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {selectedItems.map((item) => (
                       <div
                         key={item.id}
