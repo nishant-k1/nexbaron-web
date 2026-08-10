@@ -32,6 +32,9 @@ export interface PrintQuoteInput {
   company?: string;
   deadline?: string;
   deliveryPincode?: string;
+  address?: string;
+  city?: string;
+  state?: string;
   notes?: string;
 }
 

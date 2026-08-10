@@ -25,6 +25,9 @@ interface QuoteDraft extends PrintQuoteInput {
   company: string;
   deadline: string;
   deliveryPincode: string;
+  address: string;
+  city: string;
+  state: string;
   notes: string;
   selectedProducts: string[];
   quantities: Record<string, number>;
@@ -46,6 +49,9 @@ const EMPTY_DRAFT: QuoteDraft = {
   quantity: 500,
   deadline: "",
   deliveryPincode: "",
+  address: "",
+  city: "",
+  state: "",
   notes: "",
   selectedProducts: [],
   quantities: {},
@@ -172,6 +178,9 @@ export default function PrintQuotePage() {
         company: input.company.trim() || undefined,
         deadline: input.deadline || undefined,
         deliveryPincode: input.deliveryPincode.trim() || undefined,
+        address: input.address.trim() || undefined,
+        city: input.city.trim() || undefined,
+        state: input.state.trim() || undefined,
         notes: input.notes.trim() || undefined,
         items: selectedItems.map((it) => ({ product: it.id, quantity: it.quantity })),
       });
@@ -419,6 +428,33 @@ export default function PrintQuotePage() {
                           updateDraft("deliveryPincode", value.replace(/\D/g, "").slice(0, 6))
                         }
                       />
+                    </div>
+                    <div className="col-span-full pt-2">
+                      <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-3">
+                        Delivery Address
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="md:col-span-2">
+                          <QuoteInput
+                            label="Address"
+                            id="quote-address"
+                            value={draft.address}
+                            onChange={(value) => updateDraft("address", value)}
+                          />
+                        </div>
+                        <QuoteInput
+                          label="City"
+                          id="quote-city"
+                          value={draft.city}
+                          onChange={(value) => updateDraft("city", value)}
+                        />
+                        <QuoteInput
+                          label="State"
+                          id="quote-state"
+                          value={draft.state}
+                          onChange={(value) => updateDraft("state", value)}
+                        />
+                      </div>
                     </div>
                     <div>
                       <Label htmlFor="quote-notes">Notes (optional)</Label>
