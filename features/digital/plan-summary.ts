@@ -59,10 +59,14 @@ export function selectionFromSaved(plan: Plan, saved?: SavedPlanState): PlanSele
   };
 }
 
+function sellingPrice(svc: PlanService, type: BillingType): number {
+  return (type === "oneTime" ? svc.oneTime?.selling : svc.monthly?.selling) ?? 0;
+}
+
 function offByType(plan: Plan, selection: Set<string>, type: BillingType): number {
   return plan.services
     .filter((s) => s.type === type && !selection.has(s.id))
-    .reduce((sum, s) => sum + s.price, 0);
+    .reduce((sum, s) => sum + sellingPrice(s, type), 0);
 }
 
 function addOnByType(
@@ -73,7 +77,7 @@ function addOnByType(
 ): number {
   return plan.addOns
     .filter((s) => s.type === type && selection.has(s.id))
-    .reduce((sum, s) => sum + s.price * (counts[s.id] ?? 1), 0);
+    .reduce((sum, s) => sum + sellingPrice(s, type) * (counts[s.id] ?? 1), 0);
 }
 
 function totalSelected(plan: Plan, selection: Set<string>): number {

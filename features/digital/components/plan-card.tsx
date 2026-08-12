@@ -47,9 +47,12 @@ const ICONS: Record<string, React.ElementType> = {
 };
 
 function priceLabel(svc: CatalogService): string {
-  if (svc.carePrice) return `${formatINR(svc.price)} one-time + ${formatINR(svc.carePrice)}/mo`;
-  if (svc.type === "monthly") return `${formatINR(svc.price)}/mo`;
-  return `${formatINR(svc.price)} one-time`;
+  const ot = svc.oneTime?.selling;
+  const mo = svc.monthly?.selling;
+  if (ot && mo) return `${formatINR(ot)} one-time + ${formatINR(mo)}/mo`;
+  if (mo) return `${formatINR(mo)}/mo`;
+  if (ot) return `${formatINR(ot)} one-time`;
+  return "";
 }
 
 export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {

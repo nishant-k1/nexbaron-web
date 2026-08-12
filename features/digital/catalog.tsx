@@ -9,15 +9,13 @@ import { getIcon } from "@/lib/icon-map";
 export interface CatalogService {
   id: string;
   label: string;
-  price: number;
   type: "oneTime" | "monthly";
-  cost?: number;
+  oneTime?: { cost: number; selling: number };
+  monthly?: { cost: number; selling: number };
   unitLabel?: string;
   deliverDays?: number;
   parallel?: boolean;
   stage?: "design" | "build" | "setup";
-  carePrice?: number;
-  monthlyCost?: number;
 }
 
 export interface CatalogPlan {

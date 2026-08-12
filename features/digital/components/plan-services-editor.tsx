@@ -133,7 +133,7 @@ export function PlanServicesEditor({
                   {service.label}
                 </span>
                 <span className="text-[10px] font-mono text-teal-400/80">
-                  {formatINR(service.price)}{" "}
+                  {formatINR(service.oneTime?.selling ?? 0)}{" "}
                   <span className="text-slate-500">
                     {service.type === "oneTime" ? "one-time" : "/month"}
                   </span>
@@ -182,11 +182,12 @@ export function PlanServicesEditor({
                       <span className="block text-xs text-slate-200">{addOn.label}</span>
                       <span className="text-[10px] font-mono text-amber-400/80">
                         {isSelected
-                          ? `+${formatINR(addOn.price * count)}`
-                          : `+${formatINR(addOn.price)}`}{" "}
+                          ? `+${formatINR((addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0) * count)}`
+                          : `+${formatINR(addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0)}`}{" "}
                         <span className="text-slate-500">
                           {addOn.type === "oneTime" ? "one-time" : "/month"} ·{" "}
-                          {formatINR(addOn.price)} {addOn.unitLabel}
+                          {formatINR(addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0)}{" "}
+                          {addOn.unitLabel}
                         </span>
                       </span>
                     </span>
@@ -253,7 +254,7 @@ export function PlanServicesEditor({
                       {addOn.label}
                     </span>
                     <span className="text-[10px] font-mono text-amber-400/80">
-                      +{formatINR(addOn.price)}{" "}
+                      +{formatINR(addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0)}{" "}
                       <span className="text-slate-500">
                         {addOn.type === "oneTime" ? "one-time" : "/month"}
                       </span>
