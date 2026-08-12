@@ -112,6 +112,11 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
                 {plan.minimumMonths}-month minimum · cancel anytime after
               </div>
             )}
+            {plan.annualMonthly && (
+              <div className="text-[10px] text-teal-400/80 mt-1">
+                or {formatINR(plan.annualMonthly)}/mo billed annually
+              </div>
+            )}
           </>
         )}
       </div>

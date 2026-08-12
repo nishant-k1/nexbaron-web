@@ -11,11 +11,13 @@ export interface CatalogService {
   label: string;
   price: number;
   type: "oneTime" | "monthly";
+  cost?: number;
   unitLabel?: string;
   deliverDays?: number;
   parallel?: boolean;
   stage?: "design" | "build" | "setup";
   carePrice?: number;
+  monthlyCost?: number;
 }
 
 export interface CatalogPlan {
@@ -36,6 +38,7 @@ export interface CatalogPlan {
   foundationDays?: number;
   expectations?: { label: string; note: string }[];
   minimumMonths?: number;
+  annualMonthly?: number;
 }
 
 interface PlansContextValue {
