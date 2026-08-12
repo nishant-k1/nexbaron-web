@@ -352,7 +352,6 @@ export default function PrintQuotePage() {
                               <button
                                 type="button"
                                 onClick={() => {
-                                  const min = Math.max(item.minQuantity, 500);
                                   const newQty = Math.min(10000, qty + 100);
                                   setDraft((d) => ({
                                     ...d,
