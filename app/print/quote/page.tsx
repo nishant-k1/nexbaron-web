@@ -18,9 +18,6 @@ import {
   type PrintQuoteInput,
 } from "@/features/print/quotes";
 
-const PENDING_QUOTE_KEY = "nexbaron-pending-print-quote";
-const PENDING_QUOTE_TTL_MS = 30 * 60 * 1000;
-
 interface QuoteDraft extends PrintQuoteInput {
   phone: string;
   company: string;
@@ -32,13 +29,6 @@ interface QuoteDraft extends PrintQuoteInput {
   notes: string;
   selectedProducts: string[];
   quantities: Record<string, number>;
-}
-
-interface PendingQuote {
-  version: 3;
-  requestedAt: number;
-  clientRequestId: string;
-  draft: QuoteDraft;
 }
 
 const EMPTY_DRAFT: QuoteDraft = {
@@ -59,7 +49,7 @@ const EMPTY_DRAFT: QuoteDraft = {
 };
 
 export default function PrintQuotePage() {
-  const { user, initialized, openSignIn } = useAuth();
+  const { user } = useAuth();
   const [catalog, setCatalog] = useState<PrintCatalog | null>(null);
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [draft, setDraft] = useState<QuoteDraft>(EMPTY_DRAFT);
@@ -67,11 +57,9 @@ export default function PrintQuotePage() {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [quoteNumber, setQuoteNumber] = useState<string | null>(null);
-  const [pendingSubmit, setPendingSubmit] = useState(false);
   const [editingQuantities, setEditingQuantities] = useState<Record<string, string>>({});
   const [activeEditor, setActiveEditor] = useState<string | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
-  const resumedSubmit = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -109,13 +97,6 @@ export default function PrintQuotePage() {
   }, []);
 
   useEffect(() => {
-    const pending = readPendingQuote();
-    if (!pending) return;
-    setDraft(pending.draft);
-    setPendingSubmit(true);
-  }, []);
-
-  useEffect(() => {
     if (!user) return;
     setDraft((current) => ({
       ...current,
@@ -124,31 +105,6 @@ export default function PrintQuotePage() {
       phone: current.phone || user.phone || "",
     }));
   }, [user]);
-
-  useEffect(() => {
-    if (
-      !pendingSubmit ||
-      resumedSubmit.current ||
-      !initialized ||
-      !user ||
-      user.division !== "print" ||
-      !catalog
-    ) {
-      return;
-    }
-    const pending = readPendingQuote();
-    if (!pending || validateDraft(pending.draft, catalog)) {
-      clearPendingQuote();
-      setPendingSubmit(false);
-      return;
-    }
-    resumedSubmit.current = true;
-    setDraft(pending.draft);
-    // eslint-disable-next-line react-hooks/immutability
-    void submit(pending.draft, pending.clientRequestId);
-    // submit is intentionally driven only by the persisted explicit intent.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catalog, initialized, pendingSubmit, user]);
 
   useEffect(() => {
     if (!activeEditor) return;
@@ -187,7 +143,6 @@ export default function PrintQuotePage() {
     const error = validateDraft(input, catalog);
     if (error) {
       setSubmitError(error);
-      resumedSubmit.current = false;
       return;
     }
     setIsSubmitting(true);
@@ -211,14 +166,11 @@ export default function PrintQuotePage() {
       });
       setQuoteNumber(result.quoteNumber ?? null);
       setSubmitStatus("success");
-      clearPendingQuote();
-      setPendingSubmit(false);
     } catch (error) {
       setSubmitStatus("error");
       setSubmitError(error instanceof Error ? error.message : "Could not send your quote request.");
     } finally {
       setIsSubmitting(false);
-      resumedSubmit.current = false;
     }
   }
 
@@ -226,12 +178,6 @@ export default function PrintQuotePage() {
     event.preventDefault();
     if (validationError) {
       setSubmitError(validationError);
-      return;
-    }
-    if (!user) {
-      writePendingQuote(draft);
-      setPendingSubmit(true);
-      openSignIn();
       return;
     }
     void submit(draft);
@@ -664,41 +610,6 @@ function validateDraft(draft: QuoteDraft, _catalog: PrintCatalog): string | null
   if (!draft.deadline) return "Please choose when you need the order.";
   if (!/^\d{4,6}$/.test(draft.deliveryPincode)) return "Please enter a valid delivery pincode.";
   return null;
-}
-
-function writePendingQuote(draft: QuoteDraft) {
-  const pending: PendingQuote = {
-    version: 3,
-    requestedAt: Date.now(),
-    clientRequestId: createRequestId(),
-    draft,
-  };
-  window.sessionStorage.setItem(PENDING_QUOTE_KEY, JSON.stringify(pending));
-}
-
-function readPendingQuote(): PendingQuote | null {
-  try {
-    const raw = window.sessionStorage.getItem(PENDING_QUOTE_KEY);
-    if (!raw) return null;
-    const pending = JSON.parse(raw) as PendingQuote;
-    if (
-      pending.version !== 3 ||
-      !pending.clientRequestId ||
-      !pending.draft ||
-      Date.now() - pending.requestedAt > PENDING_QUOTE_TTL_MS
-    ) {
-      clearPendingQuote();
-      return null;
-    }
-    return pending;
-  } catch {
-    clearPendingQuote();
-    return null;
-  }
-}
-
-function clearPendingQuote() {
-  window.sessionStorage.removeItem(PENDING_QUOTE_KEY);
 }
 
 function createRequestId(): string {
