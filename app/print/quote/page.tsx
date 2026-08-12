@@ -278,12 +278,18 @@ export default function PrintQuotePage() {
                     {selectedItems.map((item) => (
                       <div
                         key={item.id}
-                        className="p-4 rounded-xl bg-white/[0.03] border border-white/10"
+                        className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] hover:border-white/[0.12] transition-colors"
                       >
-                        <span className="text-sm text-slate-200 font-medium block mb-3">
-                          {item.label}
-                        </span>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                          <span className="text-sm font-semibold text-slate-100">{item.label}</span>
+                          <span className="ml-auto text-[11px] font-mono text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                            min {Math.max(item.minQuantity, 500)}
+                          </span>
+                        </div>
+
+                        {/* Stepper */}
+                        <div className="flex items-stretch gap-2 mb-3">
                           <button
                             type="button"
                             onClick={() => {
@@ -294,11 +300,12 @@ export default function PrintQuotePage() {
                                 quantities: { ...d.quantities, [item.id]: qty },
                               }));
                             }}
-                            className="cursor-pointer w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 text-white text-xl font-bold flex items-center justify-center hover:bg-white/[0.12] transition-colors active:scale-95"
+                            className="cursor-pointer w-14 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
                           >
                             −
                           </button>
-                          <div className="flex-1 text-center">
+
+                          <div className="flex-1 relative rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col items-center justify-center py-2">
                             <input
                               type="number"
                               min={Math.max(item.minQuantity, 500)}
@@ -315,10 +322,13 @@ export default function PrintQuotePage() {
                                   quantities: { ...d.quantities, [item.id]: qty },
                                 }));
                               }}
-                              className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              className="w-full bg-transparent text-[28px] font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
-                            <span className="text-[10px] text-slate-400">units</span>
+                            <span className="text-[10px] text-slate-500 mt-0.5 tracking-wider uppercase">
+                              units
+                            </span>
                           </div>
+
                           <button
                             type="button"
                             onClick={() => {
@@ -329,31 +339,37 @@ export default function PrintQuotePage() {
                                 quantities: { ...d.quantities, [item.id]: qty },
                               }));
                             }}
-                            className="cursor-pointer w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 text-white text-xl font-bold flex items-center justify-center hover:bg-white/[0.12] transition-colors active:scale-95"
+                            className="cursor-pointer w-14 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
                           >
                             +
                           </button>
                         </div>
-                        <div className="flex gap-2 mt-3">
-                          {[500, 1000, 2000, 5000].map((preset) => (
-                            <button
-                              key={preset}
-                              type="button"
-                              onClick={() => {
-                                setDraft((d) => ({
-                                  ...d,
-                                  quantities: { ...d.quantities, [item.id]: preset },
-                                }));
-                              }}
-                              className={`cursor-pointer px-3 py-1 rounded-lg text-[11px] font-medium transition-colors ${
-                                (draft.quantities[item.id] || item.minQuantity) === preset
-                                  ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                                  : "bg-white/[0.04] text-slate-400 border border-white/5 hover:bg-white/[0.08]"
-                              }`}
-                            >
-                              {preset.toLocaleString("en-IN")}
-                            </button>
-                          ))}
+
+                        {/* Quick select */}
+                        <div className="flex gap-1.5">
+                          {[500, 1000, 2000, 5000].map((preset) => {
+                            const isActive =
+                              (draft.quantities[item.id] || item.minQuantity) === preset;
+                            return (
+                              <button
+                                key={preset}
+                                type="button"
+                                onClick={() => {
+                                  setDraft((d) => ({
+                                    ...d,
+                                    quantities: { ...d.quantities, [item.id]: preset },
+                                  }));
+                                }}
+                                className={`cursor-pointer flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all ${
+                                  isActive
+                                    ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
+                                    : "bg-white/[0.03] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]"
+                                }`}
+                              >
+                                {preset >= 1000 ? `${preset / 1000}k` : preset}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     ))}
