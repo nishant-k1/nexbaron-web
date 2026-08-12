@@ -238,4 +238,36 @@ export const plans: CatalogPlan[] = [
     ],
     addOns: [],
   },
+  {
+    id: "custom",
+    name: "Custom",
+    oneTime: 0,
+    monthly: 0,
+    monthlyName: "",
+    tagline: "Not finding what you need? Let's build it together.",
+    icon: () => null,
+    timeline: "We'll scope and quote within 2 days",
+    ctaLabel: "Contact Us",
+    services: [
+      {
+        id: "custom-mix",
+        label: "Pick services from any plan",
+        price: 0,
+        type: "oneTime" as const,
+      },
+      {
+        id: "custom-new",
+        label: "Request services not listed above",
+        price: 0,
+        type: "oneTime" as const,
+      },
+      {
+        id: "custom-quote",
+        label: "Receive a custom quote within 48h",
+        price: 0,
+        type: "oneTime" as const,
+      },
+    ],
+    addOns: [],
+  },
 ];
