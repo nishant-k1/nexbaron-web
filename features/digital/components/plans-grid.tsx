@@ -27,7 +27,7 @@ export function PlansGrid() {
 
   if (loading && plans.length === 0) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
@@ -40,7 +40,7 @@ export function PlansGrid() {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         {plans.map((plan) => (
           <PlanCard key={plan.id} plan={plan} onSelectPlan={() => handlePlanSelect(plan.id)} />
         ))}
