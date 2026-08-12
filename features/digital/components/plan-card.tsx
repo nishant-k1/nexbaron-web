@@ -2,6 +2,7 @@
 
 import { ArrowRight, Check, Rocket, TrendingUp, Building2 } from "lucide-react";
 
+import type { CatalogService } from "@/features/digital/catalog";
 import { formatINR, type Plan } from "@/features/digital/plans";
 
 interface PlanCardProps {
@@ -44,9 +45,16 @@ const ICONS: Record<string, React.ElementType> = {
   scale: Building2,
 };
 
+function priceLabel(svc: CatalogService): string {
+  if (svc.carePrice) return `${formatINR(svc.price)} one-time + ${formatINR(svc.carePrice)}/mo`;
+  if (svc.type === "monthly") return `${formatINR(svc.price)}/mo`;
+  return `${formatINR(svc.price)} one-time`;
+}
+
 export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
   const Icon = ICONS[plan.id] || Rocket;
   const items = INCLUDES[plan.id] || [];
+  const hasServices = plan.services.length > 0;
 
   return (
     <div
@@ -83,17 +91,47 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
       </div>
 
       {/* Features list */}
-      <div className="mb-6 pt-4 border-t border-white/10 space-y-2.5">
-        {items.map((item) => (
-          <div key={item} className="flex items-start gap-2.5">
-            <Check className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-            <span className="text-sm text-slate-300 leading-relaxed">{item}</span>
-          </div>
-        ))}
+      <div className="mb-6 pt-4 border-t border-white/10 space-y-2.5 flex-1">
+        {hasServices ? (
+          <>
+            {plan.inherited && (
+              <div className="flex items-start gap-2.5 pb-2.5 border-b border-white/5">
+                <Check className="w-4 h-4 text-teal-500/60 shrink-0 mt-0.5" />
+                <div className="min-w-0">
+                  <span className="text-sm text-slate-400">{plan.inherited.label}</span>
+                  <span className="block text-[11px] text-slate-600 mt-0.5">
+                    +{formatINR(plan.inherited.oneTime)} one-time · +
+                    {formatINR(plan.inherited.monthly)}/mo
+                  </span>
+                </div>
+              </div>
+            )}
+            {plan.services.map((svc) => (
+              <div key={svc.id} className="flex items-center justify-between gap-3">
+                <div className="flex items-start gap-2.5 min-w-0">
+                  <Check className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300 leading-relaxed truncate">
+                    {svc.label}
+                  </span>
+                </div>
+                <span className="text-xs tabular-nums text-slate-500 shrink-0">
+                  {priceLabel(svc)}
+                </span>
+              </div>
+            ))}
+          </>
+        ) : (
+          items.map((item) => (
+            <div key={item} className="flex items-start gap-2.5">
+              <Check className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+              <span className="text-sm text-slate-300 leading-relaxed">{item}</span>
+            </div>
+          ))
+        )}
       </div>
 
       {/* CTA */}
-      <div className="mt-auto pt-4">
+      <div className="pt-4">
         <button
           type="button"
           onClick={() => {

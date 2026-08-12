@@ -15,6 +15,7 @@ export interface CatalogService {
   deliverDays?: number;
   parallel?: boolean;
   stage?: "design" | "build" | "setup";
+  carePrice?: number;
 }
 
 export interface CatalogPlan {
