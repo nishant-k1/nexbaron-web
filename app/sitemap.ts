@@ -43,6 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/about", priority: 0.6, changeFrequency: "monthly" },
     { path: "/privacy", priority: 0.2, changeFrequency: "yearly" },
     { path: "/terms", priority: 0.2, changeFrequency: "yearly" },
+    { path: "/refund", priority: 0.2, changeFrequency: "yearly" },
   ];
 
   return routes.map((route) => ({

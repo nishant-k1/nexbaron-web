@@ -9,7 +9,7 @@ import { getPrintCatalog, getProductIcon, type PrintProduct } from "@/features/p
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 interface ProductPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 // Minimal static slug list for build-time generation — fetched from API at runtime
@@ -35,9 +35,10 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const { slug } = await params;
   try {
     const catalog = await getPrintCatalog();
-    const product = catalog.products.find((p) => p.slug === params.slug);
+    const product = catalog.products.find((p) => p.slug === slug);
     if (product) {
       return {
         title: `${product.label} | Nexbaron Print`,
@@ -57,10 +58,11 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export default async function PrintProductPage({ params }: ProductPageProps) {
+  const { slug } = await params;
   let product: PrintProduct | undefined;
   try {
     const catalog = await getPrintCatalog();
-    product = catalog.products.find((p) => p.slug === params.slug);
+    product = catalog.products.find((p) => p.slug === slug);
   } catch {
     // will hit notFound below
   }
