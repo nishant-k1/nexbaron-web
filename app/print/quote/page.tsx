@@ -586,8 +586,7 @@ export default function PrintQuotePage() {
                         </>
                       ) : (
                         <>
-                          <MessageSquare className="w-4 h-4 mr-2" />{" "}
-                          {user ? "Send Request" : "Sign In & Send"}
+                          <MessageSquare className="w-4 h-4 mr-2" /> Send Request
                         </>
                       )}
                     </Button>
