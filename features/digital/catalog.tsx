@@ -35,6 +35,7 @@ export interface CatalogPlan {
   timelineMode?: "phased";
   foundationDays?: number;
   expectations?: { label: string; note: string }[];
+  minimumMonths?: number;
 }
 
 interface PlansContextValue {

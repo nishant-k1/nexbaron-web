@@ -107,6 +107,11 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
               + {formatINR(plan.monthly)}
               <span className="text-xs text-slate-400">/month</span>
             </div>
+            {plan.minimumMonths && (
+              <div className="text-[10px] text-slate-600 mt-1">
+                {plan.minimumMonths}-month minimum · cancel anytime after
+              </div>
+            )}
           </>
         )}
       </div>

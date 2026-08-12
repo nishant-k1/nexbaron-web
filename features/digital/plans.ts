@@ -97,6 +97,7 @@ export const plans: CatalogPlan[] = [
     ],
     addOns: [],
     ctaLabel: "Get Launch",
+    minimumMonths: 3,
   },
   {
     id: "growth",
@@ -109,6 +110,7 @@ export const plans: CatalogPlan[] = [
     timeline: "Live in 2–3 days · ranking builds over 4–8 weeks",
     featured: true,
     ctaLabel: "Get Growth",
+    minimumMonths: 3,
     inherited: { label: "Everything in Launch", oneTime: 999, monthly: 499 },
     services: [
       {
@@ -183,6 +185,7 @@ export const plans: CatalogPlan[] = [
     timelineMode: "phased",
     foundationDays: 30,
     ctaLabel: "Get Scale",
+    minimumMonths: 3,
     inherited: { label: "Everything in Growth", oneTime: 1999, monthly: 1499 },
     services: [
       {
