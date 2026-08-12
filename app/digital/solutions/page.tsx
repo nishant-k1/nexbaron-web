@@ -52,36 +52,43 @@ const buildItems: SolutionItem[] = [
     icon: Palette,
     title: "Logo & Brand Identity",
     description: "A professional logo and brand colors you'll be proud to show.",
+    href: "/digital/pricing#launch",
   },
   {
     icon: Globe,
     title: "Business Digital Presence",
     description: "A mobile-perfect digital presence designed around how your customers search.",
+    href: "/digital/pricing#launch",
   },
   {
     icon: Globe,
     title: "Domain & Hosting",
     description: "Your domain registered, hosted, and secured with SSL — included.",
+    href: "/digital/pricing#launch",
   },
   {
     icon: Mail,
     title: "Business Email",
     description: "A professional email that matches your domain. No more Gmail for business.",
+    href: "/digital/pricing#launch",
   },
   {
     icon: MapPin,
     title: "Google Business Profile Setup",
     description: "Your GBP created, verified, and optimized for local discovery.",
+    href: "/digital/pricing#launch",
   },
   {
     icon: Share2,
     title: "Social Media Account Setup",
     description: "Professional profiles on the platforms your customers use.",
+    href: "/digital/pricing#launch",
   },
   {
     icon: BarChart3,
     title: "Analytics Setup",
     description: "Tracking installed so you can see exactly what's working.",
+    href: "/digital/pricing#launch",
   },
 ];
 
@@ -90,31 +97,37 @@ const getFoundItems: SolutionItem[] = [
     icon: Search,
     title: "Local SEO",
     description: "Rank for searches like 'plumber near me' in your city.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: MapPin,
     title: "Google Business Optimization",
     description: "Your profile polished with photos, categories, and services.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: MapPin,
     title: "Google Maps Optimization",
     description: "Show up when people search for businesses on Maps.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Star,
     title: "Review Management",
     description: "We ask happy customers for reviews after every sale.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Share2,
     title: "Citation Building",
     description: "Consistent business listings across the web for trust and ranking.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: RefreshCw,
     title: "Monthly SEO",
     description: "Ongoing optimization that compounds over time.",
+    href: "/digital/pricing#growth",
   },
 ];
 
@@ -123,31 +136,37 @@ const stayActiveItems: SolutionItem[] = [
     icon: Share2,
     title: "Social Media Management",
     description: "We post, engage, and grow your social presence.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Image,
     title: "Monthly Content",
     description: "Posts, stories, and updates created for your brand every month.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Palette,
     title: "Graphic Design",
     description: "Custom graphics, banners, and visual content.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: MessageSquare,
     title: "Captions",
     description: "Engaging captions that drive comments, shares, and saves.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Calendar,
     title: "Scheduling",
     description: "Content scheduled in advance so your profiles stay active.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: BarChart3,
     title: "Monthly Reports",
     description: "Plain-English reports on what's working and what needs attention.",
+    href: "/digital/pricing#growth",
   },
 ];
 
@@ -156,21 +175,25 @@ const growItems: SolutionItem[] = [
     icon: Search,
     title: "Google Ads",
     description: "Ad campaigns that put you in front of people searching for your service.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Globe,
     title: "Landing Pages",
     description: "Dedicated pages designed to convert visitors into leads.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: BarChart3,
     title: "Lead Tracking",
     description: "Know exactly where every lead comes from.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Star,
     title: "Conversion Tracking",
     description: "Measure what actually matters — calls, bookings, and sales.",
+    href: "/digital/pricing#growth",
   },
 ];
 
@@ -185,16 +208,19 @@ const automateItems: SolutionItem[] = [
     icon: Calendar,
     title: "Appointment Booking",
     description: "Customers book appointments directly in WhatsApp — no phone tag.",
+    href: "/digital/pricing#growth",
   },
   {
     icon: Briefcase,
     title: "CRM",
     description: "Every enquiry tracked, followed up, and never lost.",
+    href: "/digital/pricing#scale",
   },
   {
     icon: Mail,
     title: "Email Automation",
     description: "Welcome sequences, reminders, and follow-ups that run on autopilot.",
+    href: "/digital/pricing#growth",
   },
 ];
 
@@ -203,31 +229,37 @@ const careItems: SolutionItem[] = [
     icon: Server,
     title: "Hosting",
     description: "Your digital presence stays online, fast, and secure — included in every plan.",
+    href: "/digital/pricing",
   },
   {
     icon: Shield,
     title: "Security",
     description: "SSL certificates, malware scanning, and firewall protection.",
+    href: "/digital/pricing",
   },
   {
     icon: RefreshCw,
     title: "Updates",
     description: "Your platform, code, and features kept up to date automatically.",
+    href: "/digital/pricing",
   },
   {
     icon: Eye,
     title: "Backups",
     description: "Daily backups so you never lose a single page or customer.",
+    href: "/digital/pricing",
   },
   {
     icon: AlertTriangle,
     title: "Monitoring",
     description: "Uptime monitoring with instant alerts if anything goes down.",
+    href: "/digital/pricing",
   },
   {
     icon: Wrench,
     title: "Digital Care",
     description: "Up to 2 small updates per month included in every plan.",
+    href: "/digital/pricing",
   },
 ];
 
