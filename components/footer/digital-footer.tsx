@@ -14,11 +14,11 @@ const digitalLinks = {
     { href: "/digital/pricing#plans", label: "Scale" },
   ],
   industries: [
-    { href: "/digital/who-we-help#clinics", label: "Clinics & Healthcare" },
-    { href: "/digital/who-we-help#restaurants", label: "Restaurants & Cafes" },
-    { href: "/digital/who-we-help#real-estate", label: "Real Estate & Construction" },
-    { href: "/digital/who-we-help#law-ca", label: "Law & CA Firms" },
-    { href: "/digital/who-we-help#salons-gyms", label: "Salons, Spas & Gyms" },
+    { href: "/digital/who-we-help/clinics", label: "Clinics & Healthcare" },
+    { href: "/digital/who-we-help/restaurants", label: "Restaurants & Cafes" },
+    { href: "/digital/who-we-help/real-estate", label: "Real Estate & Construction" },
+    { href: "/digital/who-we-help/law-ca", label: "Law & CA Firms" },
+    { href: "/digital/who-we-help/salons", label: "Salons, Spas & Gyms" },
   ],
 };
 
