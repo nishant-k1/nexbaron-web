@@ -107,16 +107,14 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
               </div>
             )}
             {plan.services.map((svc) => (
-              <div key={svc.id} className="flex items-center justify-between gap-3">
-                <div className="flex items-start gap-2.5 min-w-0">
-                  <Check className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-300 leading-relaxed truncate">
-                    {svc.label}
+              <div key={svc.id} className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                <div className="min-w-0">
+                  <span className="text-sm text-slate-300 leading-relaxed">{svc.label}</span>
+                  <span className="block text-[11px] text-slate-500 tabular-nums mt-0.5">
+                    {priceLabel(svc)}
                   </span>
                 </div>
-                <span className="text-xs tabular-nums text-slate-500 shrink-0">
-                  {priceLabel(svc)}
-                </span>
               </div>
             ))}
           </>
