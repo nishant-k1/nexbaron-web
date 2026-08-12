@@ -82,7 +82,10 @@ input[type="radio"] {
 /* Dark mode only - no theme switching */
 
 html {
-  scroll-behavior: smooth;
+  /* `scroll-behavior: smooth` on <html> breaks Next.js scroll restoration
+     (pages restore at the bottom / wrong position). Anchor links still work
+     without it — they just jump instantly. */
+  scroll-behavior: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
