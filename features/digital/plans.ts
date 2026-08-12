@@ -57,15 +57,6 @@ export const plans: CatalogPlan[] = [
         stage: "build" as const,
       },
       {
-        id: "maps",
-        label: "Google Maps Business Listing",
-        price: 1000,
-        carePrice: 175,
-        type: "oneTime" as const,
-        deliverDays: 1,
-        stage: "setup" as const,
-      },
-      {
         id: "whatsapp",
         label: "WhatsApp Chat Button",
         price: 499,
@@ -73,6 +64,15 @@ export const plans: CatalogPlan[] = [
         type: "oneTime" as const,
         deliverDays: 0,
         stage: "build" as const,
+      },
+      {
+        id: "maps",
+        label: "Google Maps Business Listing",
+        price: 1000,
+        carePrice: 175,
+        type: "oneTime" as const,
+        deliverDays: 1,
+        stage: "setup" as const,
       },
       {
         id: "gbp",
