@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -77,6 +77,13 @@ export function PrintNavigation() {
 
           {/* Action CTAs */}
           <div className="hidden lg:flex items-center gap-3">
+            <Link
+              href="/print/quote"
+              className="group relative inline-flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/25 hover:bg-amber-500/20 hover:border-amber-500/50 hover:shadow-[0_0_24px_rgba(245,158,11,0.12)] transition-all duration-300"
+            >
+              Get Free Quote
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </Link>
             <UserMenu />
           </div>
 
@@ -114,6 +121,13 @@ export function PrintNavigation() {
               ))}
             </div>
             <div className="pt-4 border-t border-white/10 space-y-3">
+              <Link
+                href="/print/quote"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl text-sm font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/25"
+              >
+                Get Free Quote
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
               <UserMenu />
             </div>
           </div>

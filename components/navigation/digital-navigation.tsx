@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -77,6 +77,13 @@ export function DigitalNavigation() {
 
           {/* Action CTAs */}
           <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/digital/pricing"
+              className="group relative inline-flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold text-teal-400 bg-teal-500/10 border border-teal-500/25 hover:bg-teal-500/20 hover:border-teal-500/50 hover:shadow-[0_0_24px_rgba(20,184,166,0.12)] transition-all duration-300"
+            >
+              View Pricing
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </Link>
             <UserMenu />
           </div>
 
@@ -114,6 +121,13 @@ export function DigitalNavigation() {
               ))}
             </div>
             <div className="pt-4 border-t border-white/10 space-y-3">
+              <Link
+                href="/digital/pricing"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl text-sm font-semibold text-teal-400 bg-teal-500/10 border border-teal-500/25"
+              >
+                View Pricing
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
               <UserMenu />
             </div>
           </div>

@@ -49,9 +49,8 @@ export const divisions: Record<Division, DivisionConfig> = {
     tagline: "Plans • Websites • WhatsApp Growth",
     whatsappNumber: DIGITAL_WHATSAPP,
     nav: [
-      { href: "/digital/solutions", label: "Solutions" },
+      { href: "/digital/solutions", label: "Services" },
       { href: "/digital/who-we-help", label: "Who We Help" },
-      { href: "/digital/pricing", label: "Pricing" },
       { href: "/digital/about", label: "About" },
       { href: "/digital/contact", label: "Contact" },
     ],
@@ -76,8 +75,6 @@ export const divisions: Record<Division, DivisionConfig> = {
     whatsappNumber: PRINT_WHATSAPP,
     nav: [
       { href: "/print/products", label: "Services" },
-      { href: "/print/specifications", label: "Specifications" },
-      { href: "/print/quote", label: "Get Free Quote" },
       { href: "/print/about", label: "About" },
       { href: "/print/contact", label: "Contact" },
     ],
