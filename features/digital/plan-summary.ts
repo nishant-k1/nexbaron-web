@@ -1,6 +1,7 @@
 import {
   DEFAULT_EXPECTATIONS,
-  type BillingType,
+  svcMonthly,
+  svcSetup,
   type Plan,
   type PlanService,
   type TimelineExpectation,
@@ -17,7 +18,7 @@ export interface PlanSelection {
 
 export interface InheritedView {
   label: string;
-  oneTime: number;
+  setup: number;
   monthly: number;
   active: boolean;
   anySelected: boolean;
@@ -59,94 +60,65 @@ export function selectionFromSaved(plan: Plan, saved?: SavedPlanState): PlanSele
   };
 }
 
-function sellingPrice(svc: PlanService, type: BillingType): number {
-  return (type === "oneTime" ? svc.oneTime?.selling : svc.monthly?.selling) ?? 0;
-}
-
-function offByType(plan: Plan, selection: Set<string>, type: BillingType): number {
-  return plan.services
-    .filter((s) => s.type === type && !selection.has(s.id))
-    .reduce((sum, s) => sum + sellingPrice(s, type), 0);
-}
-
-function addOnByType(
-  plan: Plan,
-  selection: Set<string>,
-  counts: Record<string, number>,
-  type: BillingType,
-): number {
-  return plan.addOns
-    .filter((s) => s.type === type && selection.has(s.id))
-    .reduce((sum, s) => sum + sellingPrice(s, type) * (counts[s.id] ?? 1), 0);
-}
-
-function totalSelected(plan: Plan, selection: Set<string>): number {
-  return plan.services.filter((s) => selection.has(s.id)).length;
-}
-
 export function computePrepared(
   plans: Plan[],
   byId: (id: string) => PlanSelection,
 ): PreparedPlan[] {
   const result: PreparedPlan[] = [];
-  let lower: { plan: Plan; oneTimeLive: number; monthlyLive: number } | null = null;
+
+  let cumSetup = 0;
+  let cumMonthly = 0;
+  let cumSelectedCount = 0;
 
   for (const plan of plans) {
     const selection = byId(plan.id);
-    const ownOffOneTime = offByType(plan, selection.selected, "oneTime");
-    const ownOffMonthly = offByType(plan, selection.selected, "monthly");
 
-    let inheritedOneTime = 0;
-    let inheritedMonthly = 0;
-    let inherited: InheritedView | null = null;
-
-    if (lower) {
-      const lowerReductionOneTime = lower.plan.oneTime - lower.oneTimeLive;
-      const lowerReductionMonthly = lower.plan.monthly - lower.monthlyLive;
-      const lowerSelected = totalSelected(lower.plan, byId(lower.plan.id).selected);
-
-      if (selection.inheritedOn) {
-        inheritedOneTime = lowerReductionOneTime;
-        inheritedMonthly = lowerReductionMonthly;
-      } else {
-        inheritedOneTime = lower.plan.oneTime;
-        inheritedMonthly = lower.plan.monthly;
+    let ownSetup = 0;
+    let ownMonthly = 0;
+    let ownSelected = 0;
+    for (const svc of plan.services) {
+      if (selection.selected.has(svc.id)) {
+        ownSetup += svcSetup(svc);
+        ownMonthly += svcMonthly(svc);
+        ownSelected += 1;
       }
+    }
 
+    let addSetup = 0;
+    let addMonthly = 0;
+    for (const addOn of plan.addOns) {
+      if (selection.addOns.has(addOn.id)) {
+        const count = Math.max(1, selection.addOnCounts[addOn.id] ?? 1);
+        addSetup += svcSetup(addOn) * count;
+        addMonthly += svcMonthly(addOn) * count;
+      }
+    }
+
+    let inherited: InheritedView | null = null;
+    let inheritedSetup = 0;
+    let inheritedMonthly = 0;
+    if (plan.inherited) {
+      const active = selection.inheritedOn;
+      if (active) {
+        inheritedSetup = cumSetup;
+        inheritedMonthly = cumMonthly;
+      }
       inherited = {
-        label:
-          lowerSelected === lower.plan.services.length
-            ? (plan.inherited?.label ?? "Everything in previous plan")
-            : lowerSelected > 0
-              ? `${plan.inherited?.label ?? "Everything"} (${lowerSelected}/${lower.plan.services.length} included)`
-              : `No ${(plan.inherited?.label ?? "services").replace("Everything in ", "").toLowerCase()} selected`,
-        oneTime: lower.plan.oneTime,
-        monthly: lower.plan.monthly,
-        active: selection.inheritedOn,
-        anySelected: lowerSelected > 0,
+        label: plan.inherited.label,
+        setup: cumSetup,
+        monthly: cumMonthly,
+        active,
+        anySelected: cumSelectedCount > 0,
       };
     }
 
-    const oneTimeTotal = Math.max(
-      0,
-      plan.oneTime -
-        ownOffOneTime -
-        inheritedOneTime +
-        addOnByType(plan, selection.addOns, selection.addOnCounts, "oneTime"),
-    );
-    const monthlyTotal = Math.max(
-      0,
-      plan.monthly -
-        ownOffMonthly -
-        inheritedMonthly +
-        addOnByType(plan, selection.addOns, selection.addOnCounts, "monthly"),
-    );
+    const oneTimeTotal = ownSetup + addSetup + inheritedSetup;
+    const monthlyTotal = ownMonthly + addMonthly + inheritedMonthly;
 
     const serviceSelection: Record<string, boolean> = {};
-    for (const service of plan.services) {
-      serviceSelection[service.id] = selection.selected.has(service.id);
+    for (const svc of plan.services) {
+      serviceSelection[svc.id] = selection.selected.has(svc.id);
     }
-
     const addOnSelection: Record<string, boolean> = {};
     for (const addOn of plan.addOns) {
       addOnSelection[addOn.id] = selection.addOns.has(addOn.id);
@@ -162,11 +134,10 @@ export function computePrepared(
       inherited,
     });
 
-    lower = {
-      plan,
-      oneTimeLive: oneTimeTotal,
-      monthlyLive: monthlyTotal,
-    };
+    cumSetup = oneTimeTotal;
+    cumMonthly = monthlyTotal;
+    cumSelectedCount =
+      ownSelected + (plan.inherited && selection.inheritedOn ? cumSelectedCount : 0);
   }
 
   return result;

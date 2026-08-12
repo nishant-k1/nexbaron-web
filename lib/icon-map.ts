@@ -16,6 +16,8 @@ import {
   Rocket,
   MapPin,
   TrendingUp,
+  Building2,
+  MessageSquare,
   type LucideIcon,
 } from "lucide-react";
 
@@ -37,6 +39,8 @@ const iconMap: Record<string, LucideIcon> = {
   Rocket,
   MapPin,
   TrendingUp,
+  Building2,
+  MessageSquare,
 };
 
 export function getIcon(name: string): LucideIcon {

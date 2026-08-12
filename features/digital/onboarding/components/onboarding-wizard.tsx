@@ -334,7 +334,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     inheritedActive: chosen.inherited?.active ?? false,
     inheritedLabel: chosen.inherited?.anySelected ? chosen.inherited.label : null,
     inheritedPrice: {
-      oneTime: chosen.inherited?.oneTime ?? 0,
+      setup: chosen.inherited?.setup ?? 0,
       monthly: chosen.inherited?.monthly ?? 0,
     },
   };
@@ -639,7 +639,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                       </div>
                       <div className="text-sm text-slate-300 mt-0.5">
                         + {formatINR(summary.monthlyTotal)}
-                        <span className="text-xs text-slate-400">/month · {plan.monthlyName}</span>
+                        <span className="text-xs text-slate-400">/month</span>
                       </div>
                       <div className="text-[10px] font-mono text-teal-400 mt-2">{launchLabel}</div>
                     </div>
@@ -661,7 +661,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                       {summary.inheritedLabel} included
                     </div>
                     <div className="text-[10px] font-mono text-teal-500/80 mt-0.5">
-                      {formatINR(summary.inheritedPrice.oneTime)} one-time ·{" "}
+                      {formatINR(summary.inheritedPrice.setup)} one-time ·{" "}
                       {formatINR(summary.inheritedPrice.monthly)}/month
                     </div>
                   </div>
@@ -934,7 +934,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                   </div>
                   <div className="text-sm text-slate-300 mt-1">
                     + {formatINR(summary.monthlyTotal)}
-                    <span className="text-xs text-slate-400">/month · {plan.monthlyName}</span>
+                    <span className="text-xs text-slate-400">/month</span>
                   </div>
                 </div>
                 <div className="text-right">

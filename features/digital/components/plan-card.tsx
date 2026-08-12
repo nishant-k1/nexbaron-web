@@ -3,7 +3,7 @@
 import { ArrowRight, Check, MessageSquare, Rocket, TrendingUp, Building2 } from "lucide-react";
 
 import type { CatalogService } from "@/features/digital/catalog";
-import { formatINR, type Plan } from "@/features/digital/plans";
+import { formatINR, svcMonthly, svcSetup, type Plan } from "@/features/digital/plans";
 
 interface PlanCardProps {
   plan: Plan;
@@ -47,8 +47,8 @@ const ICONS: Record<string, React.ElementType> = {
 };
 
 function priceLabel(svc: CatalogService): string {
-  const ot = svc.oneTime?.selling;
-  const mo = svc.monthly?.selling;
+  const ot = svcSetup(svc);
+  const mo = svcMonthly(svc);
   if (ot && mo) return `${formatINR(ot)} one-time + ${formatINR(mo)}/mo`;
   if (mo) return `${formatINR(mo)}/mo`;
   if (ot) return `${formatINR(ot)} one-time`;
@@ -103,21 +103,16 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
         ) : (
           <>
             <span className="text-2xl font-heading font-extrabold text-white">
-              {formatINR(plan.oneTime)}
+              {formatINR(plan.pricing?.setup ?? 0)}
             </span>
             <span className="text-xs text-slate-400 ml-1">one-time</span>
             <div className="text-sm text-slate-300 mt-0.5">
-              + {formatINR(plan.monthly)}
+              + {formatINR(plan.pricing?.monthly ?? 0)}
               <span className="text-xs text-slate-400">/month</span>
             </div>
             {plan.minimumMonths && (
               <div className="text-[10px] text-slate-400 mt-1">
                 {plan.minimumMonths}-month minimum · cancel anytime after
-              </div>
-            )}
-            {plan.annualMonthly && (
-              <div className="text-[10px] text-teal-400/80 mt-1">
-                or {formatINR(plan.annualMonthly)}/mo billed annually
               </div>
             )}
           </>
@@ -134,8 +129,10 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
                 <div className="min-w-0">
                   <span className="text-sm text-slate-400">{plan.inherited.label}</span>
                   <span className="block text-[11px] text-slate-600 mt-0.5">
-                    +{formatINR(plan.inherited.oneTime)} one-time · +
-                    {formatINR(plan.inherited.monthly)}/mo
+                    +{formatINR((plan.pricing?.setup ?? 0) - (plan.pricing?.ownSetup ?? 0))}{" "}
+                    one-time · +
+                    {formatINR((plan.pricing?.monthly ?? 0) - (plan.pricing?.ownMonthly ?? 0))}
+                    /mo
                   </span>
                 </div>
               </div>
@@ -149,7 +146,7 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
                   <span
                     className={`text-sm leading-relaxed ${isCustom ? "text-slate-400" : "text-slate-300"}`}
                   >
-                    {svc.label}
+                    {svc.service.label}
                   </span>
                   {!isCustom && (
                     <span className="block text-[11px] text-slate-500 tabular-nums mt-0.5">

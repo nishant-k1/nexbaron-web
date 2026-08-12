@@ -6,29 +6,50 @@ import { plans as staticPlans } from "@/features/digital/plans";
 import { getApiUrl } from "@/lib/api";
 import { getIcon } from "@/lib/icon-map";
 
+export interface ServiceItem {
+  label: string;
+  costPrice: { setup: number; monthly: number; annual: number };
+  profitMargin: { setup: number; monthly: number; annual: number };
+  sellingPrice?: { setup?: number; monthly?: number; annual?: number };
+}
+
+export interface ServiceAggregate {
+  cost: { setup: number; monthly: number; annual: number };
+  selling: { setup: number; monthly: number; annual: number };
+  margin: { setup: number; monthly: number; annual: number };
+}
+
 export interface CatalogService {
   id: string;
-  label: string;
-  type: "oneTime" | "monthly";
-  oneTime?: { cost: number; selling: number };
-  monthly?: { cost: number; selling: number };
+  service: {
+    label: string;
+    items: ServiceItem[];
+    clientCostNote?: string;
+  };
+  aggregate?: ServiceAggregate;
   unitLabel?: string;
   deliverDays?: number;
   parallel?: boolean;
   stage?: "design" | "build" | "setup";
 }
 
+export interface PlanPricing {
+  setup: number;
+  monthly: number;
+  annual: number;
+  ownSetup: number;
+  ownMonthly: number;
+  ownAnnual: number;
+}
+
 export interface CatalogPlan {
   id: string;
   name: string;
-  oneTime: number;
-  monthly: number;
-  monthlyName: string;
   tagline: string;
   timeline: string;
   icon: React.ElementType;
   featured?: boolean;
-  inherited?: { label: string; oneTime: number; monthly: number };
+  inherited?: { label: string };
   services: CatalogService[];
   addOns: CatalogService[];
   ctaLabel: string;
@@ -36,7 +57,7 @@ export interface CatalogPlan {
   foundationDays?: number;
   expectations?: { label: string; note: string }[];
   minimumMonths?: number;
-  annualMonthly?: number;
+  pricing?: PlanPricing;
 }
 
 interface PlansContextValue {

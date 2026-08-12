@@ -3,7 +3,7 @@
 import { Minus, Plus, ShieldCheck } from "lucide-react";
 
 import type { InheritedView } from "@/features/digital/plan-summary";
-import { formatINR, type Plan } from "@/features/digital/plans";
+import { formatINR, svcMonthly, svcSetup, type Plan } from "@/features/digital/plans";
 
 interface PlanServicesEditorProps {
   plan: Plan;
@@ -82,7 +82,7 @@ export function PlanServicesEditor({
               {inherited.label}
             </span>
             <span className="text-[10px] font-mono text-teal-400/80">
-              {formatINR(inherited.oneTime)} <span className="text-slate-500">one-time</span>
+              {formatINR(inherited.setup)} <span className="text-slate-500">one-time</span>
               {" · "}
               {formatINR(inherited.monthly)}
               <span className="text-slate-500">/month</span>
@@ -130,12 +130,12 @@ export function PlanServicesEditor({
                     isSelected ? "text-slate-200" : "text-slate-400 line-through"
                   }`}
                 >
-                  {service.label}
+                  {service.service.label}
                 </span>
                 <span className="text-[10px] font-mono text-teal-400/80">
-                  {formatINR(service.oneTime?.selling ?? 0)}{" "}
+                  {formatINR(svcSetup(service) || svcMonthly(service) || 0)}{" "}
                   <span className="text-slate-500">
-                    {service.type === "oneTime" ? "one-time" : "/month"}
+                    {svcSetup(service) ? "one-time" : "/month"}
                   </span>
                 </span>
               </span>
@@ -165,6 +165,7 @@ export function PlanServicesEditor({
             {plan.addOns.map((addOn) => {
               const isSelected = addOnSelection[addOn.id] ?? false;
               const count = addOnCounts[addOn.id] ?? 0;
+              const addOnPrice = svcSetup(addOn) || svcMonthly(addOn);
 
               if (addOn.unitLabel) {
                 return (
@@ -179,14 +180,13 @@ export function PlanServicesEditor({
                     }`}
                   >
                     <span className="flex-1 min-w-0">
-                      <span className="block text-xs text-slate-200">{addOn.label}</span>
+                      <span className="block text-xs text-slate-200">{addOn.service.label}</span>
                       <span className="text-[10px] font-mono text-amber-400/80">
                         {isSelected
-                          ? `+${formatINR((addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0) * count)}`
-                          : `+${formatINR(addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0)}`}{" "}
+                          ? `+${formatINR(addOnPrice * count)}`
+                          : `+${formatINR(addOnPrice)}`}{" "}
                         <span className="text-slate-500">
-                          {addOn.type === "oneTime" ? "one-time" : "/month"} ·{" "}
-                          {formatINR(addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0)}{" "}
+                          {svcSetup(addOn) ? "one-time" : "/month"} · {formatINR(addOnPrice)}{" "}
                           {addOn.unitLabel}
                         </span>
                       </span>
@@ -196,7 +196,7 @@ export function PlanServicesEditor({
                         type="button"
                         onClick={() => onSetAddOnCount(addOn.id, count - 1)}
                         disabled={disabled || count === 0}
-                        aria-label={`Remove ${addOn.label}`}
+                        aria-label={`Remove ${addOn.service.label}`}
                         className="cursor-pointer w-7 h-7 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
                       >
                         <Minus className="w-3.5 h-3.5" />
@@ -212,14 +212,14 @@ export function PlanServicesEditor({
                             Math.max(0, Math.floor(Number(e.target.value) || 0)),
                           )
                         }
-                        aria-label={`Number of ${addOn.label}`}
+                        aria-label={`Number of ${addOn.service.label}`}
                         className="w-12 h-7 text-center text-sm font-mono bg-white/[0.03] border border-white/10 rounded-lg text-white focus:outline-none focus:border-amber-500/40 disabled:opacity-40 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                       <button
                         type="button"
                         onClick={() => onSetAddOnCount(addOn.id, count + 1)}
                         disabled={disabled}
-                        aria-label={`Add ${addOn.label}`}
+                        aria-label={`Add ${addOn.service.label}`}
                         className="cursor-pointer w-7 h-7 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
                       >
                         <Plus className="w-3.5 h-3.5" />
@@ -251,12 +251,12 @@ export function PlanServicesEditor({
                         isSelected ? "text-slate-200" : "text-slate-400"
                       }`}
                     >
-                      {addOn.label}
+                      {addOn.service.label}
                     </span>
                     <span className="text-[10px] font-mono text-amber-400/80">
-                      +{formatINR(addOn.oneTime?.selling ?? addOn.monthly?.selling ?? 0)}{" "}
+                      +{formatINR(addOnPrice)}{" "}
                       <span className="text-slate-500">
-                        {addOn.type === "oneTime" ? "one-time" : "/month"}
+                        {svcSetup(addOn) ? "one-time" : "/month"}
                       </span>
                     </span>
                   </span>

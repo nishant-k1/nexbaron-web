@@ -82,7 +82,8 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
             </h2>
             {plan && step !== "done" && (
               <p className="text-xs text-slate-400 mt-0.5">
-                {formatINR(plan.oneTime)} one-time + {formatINR(plan.monthly)}/month
+                {formatINR(plan.pricing?.setup ?? 0)} one-time +{" "}
+                {formatINR(plan.pricing?.monthly ?? 0)}/month
               </p>
             )}
           </div>

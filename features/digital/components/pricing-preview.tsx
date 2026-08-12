@@ -23,10 +23,10 @@ export function PricingPreview() {
         >
           <h3 className="text-lg font-heading font-bold text-white mb-1">{plan.name}</h3>
           <div className="text-3xl font-heading font-extrabold text-teal-300 mb-1">
-            {formatINR(plan.oneTime)}
+            {formatINR(plan.pricing?.setup ?? 0)}
           </div>
           <div className="text-xs text-slate-500 mb-4">
-            + {formatINR(plan.monthly)} monthly care
+            + {formatINR(plan.pricing?.monthly ?? 0)} monthly care
           </div>
           <p className="text-sm text-slate-400 leading-relaxed mb-4">{plan.tagline}</p>
           <Link
