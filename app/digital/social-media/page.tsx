@@ -1,10 +1,9 @@
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { SolutionDetail } from "@/components/digital/solution-detail";
-import { solutionSections } from "@/features/digital/solutions-data";
+import { getSectionServices, getServiceCatalog } from "@/features/digital/services";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
-
-const section = solutionSections.find((s) => s.slug === "social-media")!;
 
 export const metadata: Metadata = {
   title: "Social Media Management for Small Business | Nexbaron Digital",
@@ -19,10 +18,15 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-export default function SocialMediaPage() {
+export default async function SocialMediaPage() {
+  const catalog = await getServiceCatalog();
+  const { section, services } = getSectionServices("social-media", catalog);
+  if (!section) notFound();
+
   return (
     <SolutionDetail
       section={section}
+      services={services}
       eyebrow="Stay Active"
       highlight="Stay Top-of-Mind Every Month"
       description="Your customers scroll social media daily. We create and schedule fresh, on-brand content every month so your business stays visible and remembered."

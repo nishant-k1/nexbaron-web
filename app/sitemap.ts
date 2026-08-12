@@ -1,6 +1,8 @@
 import { type MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+import { getServiceCatalog } from "@/features/digital/services";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com";
 
   const routes: Array<{
@@ -49,6 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/digital/social-media", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/online-ads", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/website-care", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/digital/custom-software", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/results", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/process", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/why-nexbaron", priority: 0.8, changeFrequency: "monthly" },
@@ -79,7 +82,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/refund", priority: 0.2, changeFrequency: "yearly" },
   ];
 
-  return routes.map((route) => ({
+  const catalog = await getServiceCatalog();
+  const sectionBySlug = new Map(catalog.sections.map((s) => [s.id, s.slug]));
+  const serviceRoutes = catalog.services.map((s) => ({
+    path: `/digital/${sectionBySlug.get(s.section) ?? s.section}/${s.id}`,
+    priority: 0.7,
+    changeFrequency: "monthly" as const,
+  }));
+
+  return [...routes, ...serviceRoutes].map((route) => ({
     url: `${baseUrl}${route.path}`,
     lastModified: new Date(),
     changeFrequency: route.changeFrequency,

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
-import { printProducts, getProductIcon } from "@/features/print/catalog";
+import { getPrintCatalog, getProductIcon } from "@/features/print/catalog";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -36,10 +36,11 @@ const featuredSlugs = [
   "pens",
 ];
 
-export default function PrintLandingPage() {
+export default async function PrintLandingPage() {
+  const catalog = await getPrintCatalog();
   const featured = featuredSlugs
-    .map((slug) => printProducts.find((p) => p.slug === slug))
-    .filter((p): p is (typeof printProducts)[number] => Boolean(p));
+    .map((slug) => catalog.products.find((p) => p.slug === slug))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">

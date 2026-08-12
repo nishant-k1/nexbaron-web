@@ -4,12 +4,13 @@ import { type Metadata } from "next";
 import { PageHero } from "@/components/sections/page-hero";
 import { LaunchTracker } from "@/components/tracking/launch-tracker";
 import { PlansGrid } from "@/features/digital/components/plans-grid";
+import { getPlanCatalog } from "@/features/digital/plan-catalog";
 import {
   buildStageSchedule,
   computeLaunchTimeline,
   createDefaultSelection,
 } from "@/features/digital/plan-summary";
-import { plans } from "@/features/digital/plans";
+import type { Plan } from "@/features/digital/plans";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -24,28 +25,34 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-const comparisonRows = [
-  { feature: "Website — Up to 5 Pages", launch: true, growth: true, scale: true },
-  { feature: "WhatsApp Button on Every Page", launch: true, growth: true, scale: true },
-  { feature: "Google Business Profile Setup", launch: true, growth: true, scale: true },
-  { feature: "Basic SEO Setup", launch: true, growth: true, scale: true },
-  { feature: "Basic Analytics", launch: true, growth: true, scale: true },
-  { feature: "GBP Optimized for Your City", launch: false, growth: true, scale: true },
-  { feature: "Local SEO Visibility", launch: false, growth: true, scale: true },
-  { feature: "WhatsApp Booking & Reminders", launch: false, growth: true, scale: true },
-  { feature: "SEO Optimization", launch: false, growth: true, scale: true },
-  { feature: "Review Management", launch: false, growth: true, scale: true },
-  { feature: "Social Media Posts", launch: false, growth: true, scale: true },
-  { feature: "Social Media Posts + Reels", launch: false, growth: false, scale: true },
-  { feature: "GBP Management", launch: false, growth: false, scale: true },
-  { feature: "Campaign Execution", launch: false, growth: false, scale: true },
-  { feature: "Competitor Analysis", launch: false, growth: false, scale: true },
-  { feature: "Monthly Performance Report", launch: false, growth: false, scale: true },
-  { feature: "Monthly Strategy Call", launch: false, growth: false, scale: true },
-];
+interface ComparisonRow {
+  feature: string;
+  launch: boolean;
+  growth: boolean;
+  scale: boolean;
+}
 
-function LaunchTimelineSection() {
-  const launchPlan = plans.find((p) => p.id === "launch")!;
+function buildComparisonRows(plans: Plan[]): ComparisonRow[] {
+  const standard = plans.filter((p) => p.id !== "custom");
+  const rows: ComparisonRow[] = [];
+  const seen = new Set<string>();
+  standard.forEach((plan, index) => {
+    for (const svc of plan.services) {
+      if (seen.has(svc.id)) continue;
+      seen.add(svc.id);
+      rows.push({
+        feature: svc.label,
+        launch: index <= 0,
+        growth: index <= 1,
+        scale: index <= 2,
+      });
+    }
+  });
+  return rows;
+}
+
+function LaunchTimelineSection({ plans }: { plans: Plan[] }) {
+  const launchPlan = plans.find((p) => p.id === "launch") ?? plans[0]!;
   const demoSelection = createDefaultSelection(launchPlan);
   const demo = computeLaunchTimeline(plans, () => demoSelection, "launch");
   const stages = buildStageSchedule(demo.launchDays);
@@ -87,7 +94,10 @@ function LaunchTimelineSection() {
   );
 }
 
-export default function DigitalServicesPage() {
+export default async function DigitalServicesPage() {
+  const { plans } = await getPlanCatalog();
+  const comparisonRows = buildComparisonRows(plans);
+
   return (
     <div className="relative overflow-hidden">
       <PageHero
@@ -116,11 +126,11 @@ export default function DigitalServicesPage() {
             </p>
           </div>
 
-          <PlansGrid />
+          <PlansGrid plans={plans} />
         </section>
 
         {/* Launch Timeline */}
-        <LaunchTimelineSection />
+        <LaunchTimelineSection plans={plans} />
 
         {/* Comparison Table */}
         <section className="py-16 border-t border-white/10">
@@ -142,21 +152,23 @@ export default function DigitalServicesPage() {
                   <th className="sticky left-0 bg-slate-950 text-left px-6 py-4 font-mono text-xs uppercase tracking-wider text-slate-400 z-10">
                     Feature
                   </th>
-                  {plans.map((plan) => (
-                    <th
-                      key={plan.id}
-                      className={`px-6 py-4 text-center font-heading font-semibold ${
-                        plan.featured ? "text-teal-300" : "text-white"
-                      }`}
-                    >
-                      {plan.name}
-                      {plan.featured && (
-                        <span className="block text-[10px] font-mono text-teal-400 mt-1">
-                          Most Popular
-                        </span>
-                      )}
-                    </th>
-                  ))}
+                  {plans
+                    .filter((p) => p.id !== "custom")
+                    .map((plan) => (
+                      <th
+                        key={plan.id}
+                        className={`px-6 py-4 text-center font-heading font-semibold ${
+                          plan.featured ? "text-teal-300" : "text-white"
+                        }`}
+                      >
+                        {plan.name}
+                        {plan.featured && (
+                          <span className="block text-[10px] font-mono text-teal-400 mt-1">
+                            Most Popular
+                          </span>
+                        )}
+                      </th>
+                    ))}
                 </tr>
               </thead>
               <tbody>

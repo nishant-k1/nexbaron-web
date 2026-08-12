@@ -1,10 +1,9 @@
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { SolutionDetail } from "@/components/digital/solution-detail";
-import { solutionSections } from "@/features/digital/solutions-data";
+import { getSectionServices, getServiceCatalog } from "@/features/digital/services";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
-
-const section = solutionSections.find((s) => s.slug === "online-ads")!;
 
 export const metadata: Metadata = {
   title: "Google Ads & Lead Generation for Local Business | Nexbaron Digital",
@@ -19,10 +18,15 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-export default function OnlineAdsPage() {
+export default async function OnlineAdsPage() {
+  const catalog = await getServiceCatalog();
+  const { section, services } = getSectionServices("online-ads", catalog);
+  if (!section) notFound();
+
   return (
     <SolutionDetail
       section={section}
+      services={services}
       eyebrow="Grow"
       highlight="Turn Searches Into Customers"
       description="Ads put you in front of people already searching for your service. We build the campaigns, landing pages, and tracking so you know exactly what every rupee returns."

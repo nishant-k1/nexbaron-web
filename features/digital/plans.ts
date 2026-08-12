@@ -48,7 +48,7 @@ function fallbackService(
   label: string,
   opts?: Partial<CatalogService>,
 ): CatalogService {
-  return { id, service: { label, items: [] }, ...opts };
+  return { id, label, items: [], ...opts };
 }
 
 // Pricing mirrors the values computed by the backend enrichCatalog. Do not
@@ -58,7 +58,7 @@ export const plans: CatalogPlan[] = [
     id: "launch",
     name: "Launch",
     tagline: "A professional website for your business.",
-    icon: () => null,
+    icon: "Rocket",
     timeline: "Live in 2–3 days",
     services: [
       fallbackService("website", "Website — Up to 5 Pages", { deliverDays: 1, stage: "build" }),
@@ -90,7 +90,7 @@ export const plans: CatalogPlan[] = [
     id: "growth",
     name: "Growth",
     tagline: "Get found on Google and booked on WhatsApp.",
-    icon: () => null,
+    icon: "TrendingUp",
     timeline: "Live in 2–3 days · ranking builds over 4–8 weeks",
     featured: true,
     inherited: { label: "Everything in Launch" },
@@ -136,7 +136,7 @@ export const plans: CatalogPlan[] = [
     id: "scale",
     name: "Scale",
     tagline: "A dedicated team managing your online growth.",
-    icon: () => null,
+    icon: "Building2",
     timeline: "Kick-off call within 3 days",
     timelineMode: "phased",
     foundationDays: 30,
@@ -175,7 +175,7 @@ export const plans: CatalogPlan[] = [
     id: "custom",
     name: "Custom",
     tagline: "Not finding what you need? Let's build it together.",
-    icon: () => null,
+    icon: "MessageSquare",
     timeline: "We'll scope and quote within 2 days",
     services: [
       fallbackService("custom-mix", "Pick services from any plan"),

@@ -1,10 +1,9 @@
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { SolutionDetail } from "@/components/digital/solution-detail";
-import { solutionSections } from "@/features/digital/solutions-data";
+import { getSectionServices, getServiceCatalog } from "@/features/digital/services";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
-
-const section = solutionSections.find((s) => s.slug === "web-design")!;
 
 export const metadata: Metadata = {
   title: "Website Design & Business Presence for Local Businesses | Nexbaron Digital",
@@ -19,10 +18,15 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-export default function WebDesignPage() {
+export default async function WebDesignPage() {
+  const catalog = await getServiceCatalog();
+  const { section, services } = getSectionServices("web-design", catalog);
+  if (!section) notFound();
+
   return (
     <SolutionDetail
       section={section}
+      services={services}
       eyebrow="Build Your Presence"
       highlight="Establish Your Business Online"
       description="From a logo you're proud of to a website that turns visitors into customers — we build everything your business needs to look established and get found, for one fixed price."

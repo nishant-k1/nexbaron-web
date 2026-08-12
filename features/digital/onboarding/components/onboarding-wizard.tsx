@@ -12,6 +12,7 @@ import {
   Upload,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -44,6 +45,7 @@ import { formatINR } from "@/features/digital/plans";
 import { loadRazorpayScript, type RazorpayPaymentResponse } from "@/features/digital/razorpay";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { getDraft, saveDraft, selectionToDraftState, type DraftFields } from "@/lib/draft";
+import { getIcon } from "@/lib/icon-map";
 
 type PlanId = "launch" | "growth" | "scale";
 
@@ -538,7 +540,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             variant="outline"
             className="cursor-pointer font-bold rounded-xl"
           >
-            <a href="/digital/process">See What Happens Next</a>
+            <Link href="/digital/process">See What Happens Next</Link>
           </Button>
         </div>
       </div>
@@ -1046,7 +1048,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                   const prep = prepared.find((x) => x.plan.id === p.id) ?? prepared[0]!;
                   const isActive = dialogPlanId === p.id;
                   const isCurrent = activePlanId === p.id;
-                  const Icon = p.icon;
+                  const Icon = getIcon(p.icon);
                   return (
                     <button
                       key={p.id}

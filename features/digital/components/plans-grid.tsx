@@ -3,13 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { usePlans } from "@/features/digital/catalog";
 import { PlanCard } from "@/features/digital/components/plan-card";
 import { PlanSignupForm } from "@/features/digital/components/plan-signup-form";
 import { savePlanSelection } from "@/features/digital/plan-selection";
+import type { Plan } from "@/features/digital/plans";
 
-export function PlansGrid() {
-  const { plans, loading } = usePlans();
+export function PlansGrid({ plans }: { plans: Plan[] }) {
   const [signupPlan, setSignupPlan] = useState<string | null>(null);
   const router = useRouter();
 
@@ -24,19 +23,6 @@ export function PlansGrid() {
     savePlanSelection({ planId, plans: {} });
     setSignupPlan(planId);
   };
-
-  if (loading && plans.length === 0) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-        {[1, 2, 3, 4].map((i) => (
-          <div
-            key={i}
-            className="h-96 rounded-2xl bg-white/[0.03] border border-white/10 animate-pulse"
-          />
-        ))}
-      </div>
-    );
-  }
 
   return (
     <>

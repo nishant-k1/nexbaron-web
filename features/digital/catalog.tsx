@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 
 import { plans as staticPlans } from "@/features/digital/plans";
 import { getApiUrl } from "@/lib/api";
-import { getIcon } from "@/lib/icon-map";
 
 export interface ServiceItem {
   label: string;
@@ -21,16 +20,17 @@ export interface ServiceAggregate {
 
 export interface CatalogService {
   id: string;
-  service: {
-    label: string;
-    items: ServiceItem[];
-    clientCostNote?: string;
-  };
+  label: string;
+  description?: string;
+  items: ServiceItem[];
+  clientCostNote?: string;
   aggregate?: ServiceAggregate;
   unitLabel?: string;
   deliverDays?: number;
   parallel?: boolean;
   stage?: "design" | "build" | "setup";
+  icon?: string;
+  section?: string;
 }
 
 export interface PlanPricing {
@@ -47,7 +47,7 @@ export interface CatalogPlan {
   name: string;
   tagline: string;
   timeline: string;
-  icon: React.ElementType;
+  icon: string;
   featured?: boolean;
   inherited?: { label: string };
   services: CatalogService[];
@@ -75,7 +75,7 @@ function readCache(): CatalogPlan[] | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as { at: number; plans: CatalogPlan[] };
     if (!parsed?.plans || Date.now() - parsed.at > CACHE_TTL) return null;
-    return parsed.plans.map((p) => ({ ...p, icon: getIcon(p.icon as unknown as string) }));
+    return parsed.plans;
   } catch {
     return null;
   }
@@ -97,7 +97,7 @@ async function fetchCatalog(): Promise<CatalogPlan[]> {
   if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);
   const data = (await response.json()) as { plans: (CatalogPlan & { icon: string })[] };
   if (!Array.isArray(data.plans) || data.plans.length === 0) throw new Error("Empty catalog");
-  return data.plans.map((p) => ({ ...p, icon: getIcon(p.icon) }));
+  return data.plans;
 }
 
 const PlansContext = createContext<PlansContextValue>({

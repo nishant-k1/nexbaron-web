@@ -1,10 +1,9 @@
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { SolutionDetail } from "@/components/digital/solution-detail";
-import { solutionSections } from "@/features/digital/solutions-data";
+import { getSectionServices, getServiceCatalog } from "@/features/digital/services";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
-
-const section = solutionSections.find((s) => s.slug === "local-seo")!;
 
 export const metadata: Metadata = {
   title: "Local SEO & Google Maps Ranking for Your City | Nexbaron Digital",
@@ -19,10 +18,15 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-export default function LocalSeoPage() {
+export default async function LocalSeoPage() {
+  const catalog = await getServiceCatalog();
+  const { section, services } = getSectionServices("local-seo", catalog);
+  if (!section) notFound();
+
   return (
     <SolutionDetail
       section={section}
+      services={services}
       eyebrow="Get Found"
       highlight="Show Up When Customers Search"
       description="When someone searches for a business like yours in your city, they should find you first. We optimize your Google presence so you rank for the searches that bring customers."

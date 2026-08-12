@@ -1,10 +1,9 @@
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { SolutionDetail } from "@/components/digital/solution-detail";
-import { solutionSections } from "@/features/digital/solutions-data";
+import { getSectionServices, getServiceCatalog } from "@/features/digital/services";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
-
-const section = solutionSections.find((s) => s.slug === "automation")!;
 
 export const metadata: Metadata = {
   title: "WhatsApp That Answers Your Customers 24/7 | Nexbaron Digital",
@@ -18,10 +17,15 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-export default function DigitalAutomationPage() {
+export default async function DigitalAutomationPage() {
+  const catalog = await getServiceCatalog();
+  const { section, services } = getSectionServices("automation", catalog);
+  if (!section) notFound();
+
   return (
     <SolutionDetail
       section={section}
+      services={services}
       eyebrow="Automate"
       highlight="Answer 24/7 on WhatsApp"
       description="The most under-used channel in local business. We turn WhatsApp into a service that answers your customers, books their appointments, and follows up — automatically, around the clock."

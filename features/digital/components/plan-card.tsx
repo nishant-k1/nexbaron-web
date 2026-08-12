@@ -1,50 +1,15 @@
 "use client";
 
-import { ArrowRight, Check, MessageSquare, Rocket, TrendingUp, Building2 } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 import type { CatalogService } from "@/features/digital/catalog";
 import { formatINR, svcMonthly, svcSetup, type Plan } from "@/features/digital/plans";
+import { getIcon } from "@/lib/icon-map";
 
 interface PlanCardProps {
   plan: Plan;
   onSelectPlan: () => void;
 }
-
-const INCLUDES: Record<string, string[]> = {
-  launch: [
-    "Website — Up to 5 Pages",
-    "WhatsApp Button on Every Page",
-    "Google Business Profile Setup",
-    "Basic SEO Setup",
-    "Basic Analytics",
-  ],
-  growth: [
-    "Everything in Launch",
-    "Google Business Profile Optimized for Your City",
-    "Local SEO to Improve Search Visibility",
-    "WhatsApp Booking & Reminders",
-    "SEO Optimization",
-    "Review Management",
-    "Social Media Posts",
-  ],
-  scale: [
-    "Everything in Growth",
-    "Unlimited Content & Page Updates",
-    "Social Media Posts + Reels",
-    "Google Business Profile Management",
-    "Campaign Execution",
-    "Competitor Analysis",
-    "Monthly Performance Report",
-    "Monthly Strategy Call",
-  ],
-};
-
-const ICONS: Record<string, React.ElementType> = {
-  launch: Rocket,
-  growth: TrendingUp,
-  scale: Building2,
-  custom: MessageSquare,
-};
 
 function priceLabel(svc: CatalogService): string {
   const ot = svcSetup(svc);
@@ -56,10 +21,8 @@ function priceLabel(svc: CatalogService): string {
 }
 
 export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
-  const Icon = ICONS[plan.id] || Rocket;
-  const items = INCLUDES[plan.id] || [];
+  const Icon = getIcon(plan.icon);
   const isCustom = plan.id === "custom";
-  const hasServices = plan.services.length > 0;
 
   return (
     <div
@@ -74,13 +37,7 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
     >
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
-        <div
-          className={`p-2.5 rounded-xl border ${
-            isCustom
-              ? "bg-teal-500/10 border-teal-500/30 text-teal-400"
-              : "bg-teal-500/10 border-teal-500/30 text-teal-400"
-          }`}
-        >
+        <div className="p-2.5 rounded-xl border bg-teal-500/10 border-teal-500/30 text-teal-400">
           <Icon className="w-5 h-5" />
         </div>
         <div>
@@ -121,50 +78,38 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
 
       {/* Features list */}
       <div className="mb-6 pt-4 border-t border-white/10 space-y-2.5 flex-1">
-        {hasServices ? (
-          <>
-            {plan.inherited && (
-              <div className="flex items-start gap-2.5 pb-2.5 border-b border-white/5">
-                <Check className="w-4 h-4 text-teal-500/60 shrink-0 mt-0.5" />
-                <div className="min-w-0">
-                  <span className="text-sm text-slate-400">{plan.inherited.label}</span>
-                  <span className="block text-[11px] text-slate-600 mt-0.5">
-                    +{formatINR((plan.pricing?.setup ?? 0) - (plan.pricing?.ownSetup ?? 0))}{" "}
-                    one-time · +
-                    {formatINR((plan.pricing?.monthly ?? 0) - (plan.pricing?.ownMonthly ?? 0))}
-                    /mo
-                  </span>
-                </div>
-              </div>
-            )}
-            {plan.services.map((svc) => (
-              <div key={svc.id} className="flex items-start gap-2.5">
-                <Check
-                  className={`w-4 h-4 shrink-0 mt-0.5 ${isCustom ? "text-teal-400/60" : "text-teal-400"}`}
-                />
-                <div className="min-w-0">
-                  <span
-                    className={`text-sm leading-relaxed ${isCustom ? "text-slate-400" : "text-slate-300"}`}
-                  >
-                    {svc.service.label}
-                  </span>
-                  {!isCustom && (
-                    <span className="block text-[11px] text-slate-500 tabular-nums mt-0.5">
-                      {priceLabel(svc)}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </>
-        ) : (
-          items.map((item) => (
-            <div key={item} className="flex items-start gap-2.5">
-              <Check className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-              <span className="text-sm text-slate-300 leading-relaxed">{item}</span>
+        {plan.inherited && (
+          <div className="flex items-start gap-2.5 pb-2.5 border-b border-white/5">
+            <Check className="w-4 h-4 text-teal-500/60 shrink-0 mt-0.5" />
+            <div className="min-w-0">
+              <span className="text-sm text-slate-400">{plan.inherited.label}</span>
+              <span className="block text-[11px] text-slate-600 mt-0.5">
+                +{formatINR((plan.pricing?.setup ?? 0) - (plan.pricing?.ownSetup ?? 0))} one-time ·
+                +{formatINR((plan.pricing?.monthly ?? 0) - (plan.pricing?.ownMonthly ?? 0))}
+                /mo
+              </span>
             </div>
-          ))
+          </div>
         )}
+        {plan.services.map((svc) => (
+          <div key={svc.id} className="flex items-start gap-2.5">
+            <Check
+              className={`w-4 h-4 shrink-0 mt-0.5 ${isCustom ? "text-teal-400/60" : "text-teal-400"}`}
+            />
+            <div className="min-w-0">
+              <span
+                className={`text-sm leading-relaxed ${isCustom ? "text-slate-400" : "text-slate-300"}`}
+              >
+                {svc.label}
+              </span>
+              {!isCustom && (
+                <span className="block text-[11px] text-slate-500 tabular-nums mt-0.5">
+                  {priceLabel(svc)}
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* CTA */}

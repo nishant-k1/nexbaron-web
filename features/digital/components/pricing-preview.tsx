@@ -4,12 +4,9 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { usePlans } from "@/features/digital/catalog";
-import { formatINR } from "@/features/digital/plans";
+import { formatINR, type Plan } from "@/features/digital/plans";
 
-export function PricingPreview() {
-  const { plans } = usePlans();
-
+export function PricingPreview({ plans }: { plans: Plan[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
       {plans.slice(0, 3).map((plan) => (

@@ -12,28 +12,6 @@ interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Minimal static slug list for build-time generation — fetched from API at runtime
-const STATIC_SLUGS = [
-  "visiting-cards",
-  "card-holders",
-  "pamphlets-posters",
-  "stickers-labels",
-  "pens",
-  "sample-files",
-  "letter-heads",
-  "envelopes",
-  "files",
-  "tags",
-  "bill-books",
-  "digital-paper-printing",
-  "atm-pouches",
-  "shooting-targets",
-];
-
-export function generateStaticParams() {
-  return STATIC_SLUGS.map((slug) => ({ slug }));
-}
-
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   try {
@@ -121,6 +99,20 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: product.faqs.map((f) => ({
+              "@type": "Question",
+              name: f.question,
+              acceptedAnswer: { "@type": "Answer", text: f.answer },
+            })),
+          }),
+        }}
+      />
       <PageHero
         accent="print"
         eyebrow={`Print Collaterals • ${product.badge}`}
@@ -135,6 +127,18 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        {product.overview.length > 0 && (
+          <section className="py-16 max-w-3xl">
+            <div className="space-y-4">
+              {product.overview.map((paragraph) => (
+                <p key={paragraph} className="text-base md:text-lg text-slate-300 leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className="py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {detailSections.map((section) => (
@@ -182,6 +186,51 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
             ))}
           </div>
         </section>
+
+        {product.howItWorks.length > 0 && (
+          <section className="py-16 border-t border-white/10">
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
+              How It Works
+            </h2>
+            <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {product.howItWorks.map((step, index) => (
+                <li
+                  key={step}
+                  className="relative p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md"
+                >
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-bold mb-3">
+                    {index + 1}
+                  </span>
+                  <p className="text-sm text-slate-200 leading-relaxed">{step}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {product.faqs.length > 0 && (
+          <section className="py-16 border-t border-white/10 max-w-3xl">
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {product.faqs.map((faq) => (
+                <details
+                  key={faq.question}
+                  className="group rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden"
+                >
+                  <summary className="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 text-sm font-semibold text-white hover:text-amber-300 transition-colors">
+                    {faq.question}
+                    <span className="text-amber-400 shrink-0 group-open:rotate-45 transition-transform">
+                      +
+                    </span>
+                  </summary>
+                  <p className="px-5 pb-4 text-sm text-slate-300 leading-relaxed">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
 
         <CTABanner
           accent="print"

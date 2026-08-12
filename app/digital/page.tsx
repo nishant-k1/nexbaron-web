@@ -16,6 +16,7 @@ import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { Button } from "@/components/ui/button";
 import { PricingPreview, PricingPreviewCta } from "@/features/digital/components/pricing-preview";
+import { getPlanCatalog } from "@/features/digital/plan-catalog";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -139,7 +140,9 @@ const steps = [
     href: "/digital/results",
   },
 ];
-export default function DigitalLandingPage() {
+export default async function DigitalLandingPage() {
+  const { plans } = await getPlanCatalog();
+
   return (
     <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
       {/* Background Ambient Glow */}
@@ -328,7 +331,7 @@ export default function DigitalLandingPage() {
             title="One Plan. One Price. No Surprises."
             description="Every plan includes hosting, SSL, mobile optimisation, and monthly care. Pay once for the build, then a small monthly fee to keep it growing."
           />
-          <PricingPreview />
+          <PricingPreview plans={plans} />
           <PricingPreviewCta />
         </section>
         {/* Final CTA */}

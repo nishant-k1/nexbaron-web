@@ -35,6 +35,9 @@ const eslintConfig = defineConfig([
       eqeqeq: ["error", "smart"],
       "no-else-return": ["error", { allowElseIf: false }],
       "react-hooks/set-state-in-effect": "warn",
+      // Dynamic icon lookup via getIcon() returns stable module-level components;
+      // the React Compiler rule can't verify that, so it false-positives here.
+      "react-hooks/static-components": "off",
       "import/no-duplicates": "error",
       "import/order": [
         "error",

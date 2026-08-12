@@ -7,10 +7,8 @@ export type BusinessTier = "tier1" | "tier2";
 
 export interface BusinessService {
   id: string;
-  service: {
-    label: string;
-    clientCostNote?: string;
-  };
+  label: string;
+  clientCostNote?: string;
   aggregate?: {
     selling: { setup: number; monthly: number; annual: number };
   };

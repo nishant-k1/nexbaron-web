@@ -1,10 +1,9 @@
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { SolutionDetail } from "@/components/digital/solution-detail";
-import { solutionSections } from "@/features/digital/solutions-data";
+import { getSectionServices, getServiceCatalog } from "@/features/digital/services";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
-
-const section = solutionSections.find((s) => s.slug === "website-care")!;
 
 export const metadata: Metadata = {
   title: "Website Care & Maintenance | Nexbaron Digital",
@@ -19,10 +18,15 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-export default function WebsiteCarePage() {
+export default async function WebsiteCarePage() {
+  const catalog = await getServiceCatalog();
+  const { section, services } = getSectionServices("website-care", catalog);
+  if (!section) notFound();
+
   return (
     <SolutionDetail
       section={section}
+      services={services}
       eyebrow="Care"
       highlight="It Keeps Running. We Keep It Safe."
       description="Your website is an asset that needs care to stay fast, secure, and current. We handle hosting, security, updates, backups, and monitoring — so it never lets you down."
