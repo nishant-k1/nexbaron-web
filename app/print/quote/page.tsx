@@ -245,140 +245,159 @@ export default function PrintQuotePage() {
           {catalog && (
             <>
               <section>
-                <StepLabel>1. Select Products</StepLabel>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {catalog.products.map((item) => (
-                    <button
-                      type="button"
-                      key={item.id}
-                      onClick={() => {
-                        const selected = draft.selectedProducts.includes(item.id)
-                          ? draft.selectedProducts.filter((id) => id !== item.id)
-                          : [...draft.selectedProducts, item.id];
-                        const quantities = { ...draft.quantities };
-                        if (!draft.selectedProducts.includes(item.id)) {
-                          quantities[item.id] = Math.max(item.minQuantity, 500);
-                        } else {
-                          delete quantities[item.id];
-                        }
-                        setDraft((d) => ({ ...d, selectedProducts: selected, quantities }));
-                      }}
-                      className={`p-3.5 rounded-xl text-xs font-medium text-left border transition-all cursor-pointer ${draft.selectedProducts.includes(item.id) ? "bg-amber-500 text-slate-950 font-bold border-amber-400 shadow-lg shadow-amber-500/20" : "bg-white/[0.03] text-slate-300 border-white/10 hover:border-white/20"}`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
+                <StepLabel>1. Select Products & Quantities</StepLabel>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {catalog.products.map((item) => {
+                    const isSelected = draft.selectedProducts.includes(item.id);
+                    const qty = draft.quantities[item.id] || Math.max(item.minQuantity, 500);
+                    return (
+                      <div
+                        key={item.id}
+                        className={`rounded-2xl border transition-all overflow-hidden ${
+                          isSelected
+                            ? "bg-gradient-to-b from-amber-500/[0.06] to-transparent border-amber-500/30 shadow-lg shadow-amber-500/5"
+                            : "bg-white/[0.02] border-white/[0.06] hover:border-white/[0.15]"
+                        }`}
+                      >
+                        {/* Header — click to select/deselect */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const selected = isSelected
+                              ? draft.selectedProducts.filter((id) => id !== item.id)
+                              : [...draft.selectedProducts, item.id];
+                            const quantities = { ...draft.quantities };
+                            if (!isSelected) quantities[item.id] = Math.max(item.minQuantity, 500);
+                            else delete quantities[item.id];
+                            setDraft((d) => ({ ...d, selectedProducts: selected, quantities }));
+                          }}
+                          className="cursor-pointer w-full text-left p-3.5 flex items-center gap-2.5"
+                        >
+                          <div
+                            className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                              isSelected ? "bg-amber-500 border-amber-500" : "border-white/[0.2]"
+                            }`}
+                          >
+                            {isSelected && (
+                              <svg
+                                className="w-2.5 h-2.5 text-slate-950"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            )}
+                          </div>
+                          <span
+                            className={`text-sm font-medium ${
+                              isSelected ? "text-amber-400" : "text-slate-300"
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                          {isSelected && (
+                            <span className="ml-auto text-[11px] font-mono text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                              {qty.toLocaleString("en-IN")} units
+                            </span>
+                          )}
+                        </button>
+
+                        {/* Quantity controls — shown when selected */}
+                        {isSelected && (
+                          <div className="px-3.5 pb-3.5 pt-0 space-y-2.5">
+                            <div className="flex items-stretch gap-2">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const min = Math.max(item.minQuantity, 500);
+                                  const newQty = Math.max(min, qty - 100);
+                                  setDraft((d) => ({
+                                    ...d,
+                                    quantities: { ...d.quantities, [item.id]: newQty },
+                                  }));
+                                }}
+                                className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                              >
+                                −
+                              </button>
+                              <div className="flex-1 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col items-center justify-center py-1.5">
+                                <input
+                                  type="number"
+                                  min={Math.max(item.minQuantity, 500)}
+                                  max={10000}
+                                  step={100}
+                                  value={qty}
+                                  onChange={(e) => {
+                                    const v = Math.max(
+                                      Math.max(item.minQuantity, 500),
+                                      Math.min(10000, Number(e.target.value) || 0),
+                                    );
+                                    setDraft((d) => ({
+                                      ...d,
+                                      quantities: { ...d.quantities, [item.id]: v },
+                                    }));
+                                  }}
+                                  className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                />
+                                <span className="text-[10px] text-slate-500 mt-0.5 tracking-wider uppercase">
+                                  units
+                                </span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const min = Math.max(item.minQuantity, 500);
+                                  const newQty = Math.min(10000, qty + 100);
+                                  setDraft((d) => ({
+                                    ...d,
+                                    quantities: { ...d.quantities, [item.id]: newQty },
+                                  }));
+                                }}
+                                className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                              >
+                                +
+                              </button>
+                            </div>
+                            <div className="flex gap-1.5">
+                              {[500, 1000, 2000, 5000].map((preset) => {
+                                const active = qty === preset;
+                                return (
+                                  <button
+                                    key={preset}
+                                    type="button"
+                                    onClick={() =>
+                                      setDraft((d) => ({
+                                        ...d,
+                                        quantities: { ...d.quantities, [item.id]: preset },
+                                      }))
+                                    }
+                                    className={`cursor-pointer flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all ${
+                                      active
+                                        ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
+                                        : "bg-white/[0.03] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]"
+                                    }`}
+                                  >
+                                    {preset >= 1000 ? `${preset / 1000}k` : preset}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </section>
 
-              {selectedItems.length > 0 && (
-                <section>
-                  <StepLabel>2. Quantities</StepLabel>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {selectedItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] hover:border-white/[0.12] transition-colors"
-                      >
-                        <div className="flex items-center gap-2 mb-4">
-                          <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
-                          <span className="text-sm font-semibold text-slate-100">{item.label}</span>
-                          <span className="ml-auto text-[11px] font-mono text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                            min {Math.max(item.minQuantity, 500)}
-                          </span>
-                        </div>
-
-                        {/* Stepper */}
-                        <div className="flex items-stretch gap-2 mb-3">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const min = Math.max(item.minQuantity, 500);
-                              const qty = Math.max(min, (draft.quantities[item.id] || min) - 100);
-                              setDraft((d) => ({
-                                ...d,
-                                quantities: { ...d.quantities, [item.id]: qty },
-                              }));
-                            }}
-                            className="cursor-pointer w-14 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
-                          >
-                            −
-                          </button>
-
-                          <div className="flex-1 relative rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col items-center justify-center py-2">
-                            <input
-                              type="number"
-                              min={Math.max(item.minQuantity, 500)}
-                              max={10000}
-                              step={100}
-                              value={draft.quantities[item.id] || item.minQuantity}
-                              onChange={(e) => {
-                                const qty = Math.max(
-                                  Math.max(item.minQuantity, 500),
-                                  Math.min(10000, Number(e.target.value) || 0),
-                                );
-                                setDraft((d) => ({
-                                  ...d,
-                                  quantities: { ...d.quantities, [item.id]: qty },
-                                }));
-                              }}
-                              className="w-full bg-transparent text-[28px] font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                            />
-                            <span className="text-[10px] text-slate-500 mt-0.5 tracking-wider uppercase">
-                              units
-                            </span>
-                          </div>
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const min = Math.max(item.minQuantity, 500);
-                              const qty = Math.min(10000, (draft.quantities[item.id] || min) + 100);
-                              setDraft((d) => ({
-                                ...d,
-                                quantities: { ...d.quantities, [item.id]: qty },
-                              }));
-                            }}
-                            className="cursor-pointer w-14 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
-                          >
-                            +
-                          </button>
-                        </div>
-
-                        {/* Quick select */}
-                        <div className="flex gap-1.5">
-                          {[500, 1000, 2000, 5000].map((preset) => {
-                            const isActive =
-                              (draft.quantities[item.id] || item.minQuantity) === preset;
-                            return (
-                              <button
-                                key={preset}
-                                type="button"
-                                onClick={() => {
-                                  setDraft((d) => ({
-                                    ...d,
-                                    quantities: { ...d.quantities, [item.id]: preset },
-                                  }));
-                                }}
-                                className={`cursor-pointer flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all ${
-                                  isActive
-                                    ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
-                                    : "bg-white/[0.03] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]"
-                                }`}
-                              >
-                                {preset >= 1000 ? `${preset / 1000}k` : preset}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              )}
-
               <section className="pt-8 border-t border-white/10">
-                <StepLabel>3. Delivery & Contact Details</StepLabel>
+                <StepLabel>2. Delivery & Contact Details</StepLabel>
                 {submitStatus === "success" ? (
                   <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
                     <p className="text-lg font-semibold text-emerald-300 mb-1">
