@@ -102,6 +102,8 @@ You are a world-class UX/UI designer. Every interface you build must reflect thi
 - Never stack everything in a single column. Use proper grid layouts (2-col, 3-col, 5-col depending on content).
 - Primary content on the left/wider column, secondary/summary on the right/skinnier column.
 - Page headers are clean: title + one-line description, no clutter.
+- **No inline expansion in grids.** When a card in a CSS Grid needs to show additional controls (editors, pickers, actions), use an absolutely-positioned popover/dropdown — never expand the card inline. Inline expansion stretches the entire grid row (CSS Grid default `align-items: stretch`), making every card in the row grow to the tallest one. Instead: `relative` on the card, `absolute top-full z-30` on the popover, animated with `AnimatePresence` + `motion.div` (scale + opacity). Close on click outside (`mousedown` listener on `document`) and Escape key.
+- Single-click to select + reveal: clicking a card should both select it and open its popover in one gesture. No two-step "first select, then click somewhere else to edit" flow.
 
 ### Surfaces
 

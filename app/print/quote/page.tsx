@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, MessageSquare } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -67,6 +68,9 @@ export default function PrintQuotePage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [quoteNumber, setQuoteNumber] = useState<string | null>(null);
   const [pendingSubmit, setPendingSubmit] = useState(false);
+  const [editingQuantities, setEditingQuantities] = useState<Record<string, string>>({});
+  const [activeEditor, setActiveEditor] = useState<string | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
   const resumedSubmit = useRef(false);
 
   useEffect(() => {
@@ -85,7 +89,10 @@ export default function PrintQuotePage() {
           return {
             ...current,
             product: current.product || product?.id || "",
-            quantity: Math.max(current.quantity || 500, product?.minQuantity ?? 500, 500),
+            quantity: Math.max(
+              current.quantity || product?.minQuantity || 1,
+              product?.minQuantity || 1,
+            ),
           };
         });
       })
@@ -142,6 +149,24 @@ export default function PrintQuotePage() {
     // submit is intentionally driven only by the persisted explicit intent.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalog, initialized, pendingSubmit, user]);
+
+  useEffect(() => {
+    if (!activeEditor) return;
+    const handleClick = (e: MouseEvent) => {
+      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+        setActiveEditor(null);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveEditor(null);
+    };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [activeEditor]);
 
   const selectedItems = draft.selectedProducts
     .map((id) => {
@@ -249,27 +274,56 @@ export default function PrintQuotePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {catalog.products.map((item) => {
                     const isSelected = draft.selectedProducts.includes(item.id);
-                    const qty = draft.quantities[item.id] || Math.max(item.minQuantity, 500);
+                    const qty = draft.quantities[item.id] || item.minQuantity;
+                    const isEditing = editingQuantities[item.id] !== undefined;
+                    const displayValue = isEditing ? editingQuantities[item.id] : String(qty);
+                    const isPopoverOpen = activeEditor === item.id;
+
+                    const commitQuantity = (value: number) => {
+                      const clamped = Math.max(item.minQuantity, Math.min(100000, value));
+                      setDraft((d) => ({
+                        ...d,
+                        quantities: { ...d.quantities, [item.id]: clamped },
+                      }));
+                      setEditingQuantities((prev) => {
+                        const next = { ...prev };
+                        delete next[item.id];
+                        return next;
+                      });
+                    };
+
                     return (
                       <div
                         key={item.id}
-                        className={`rounded-2xl border transition-all overflow-hidden ${
+                        className={`relative rounded-2xl border transition-all ${
                           isSelected
                             ? "bg-gradient-to-b from-amber-500/[0.06] to-transparent border-amber-500/30 shadow-lg shadow-amber-500/5"
                             : "bg-white/[0.02] border-white/[0.06] hover:border-white/[0.15]"
                         }`}
                       >
-                        {/* Header — click to select/deselect */}
                         <button
                           type="button"
                           onClick={() => {
-                            const selected = isSelected
-                              ? draft.selectedProducts.filter((id) => id !== item.id)
-                              : [...draft.selectedProducts, item.id];
-                            const quantities = { ...draft.quantities };
-                            if (!isSelected) quantities[item.id] = Math.max(item.minQuantity, 500);
-                            else delete quantities[item.id];
-                            setDraft((d) => ({ ...d, selectedProducts: selected, quantities }));
+                            if (isSelected) {
+                              setActiveEditor(null);
+                              const selected = draft.selectedProducts.filter(
+                                (id) => id !== item.id,
+                              );
+                              const quantities = { ...draft.quantities };
+                              delete quantities[item.id];
+                              setDraft((d) => ({ ...d, selectedProducts: selected, quantities }));
+                            } else {
+                              setActiveEditor(item.id);
+                              const quantities = {
+                                ...draft.quantities,
+                                [item.id]: item.minQuantity,
+                              };
+                              setDraft((d) => ({
+                                ...d,
+                                selectedProducts: [...draft.selectedProducts, item.id],
+                                quantities,
+                              }));
+                            }
                           }}
                           className="cursor-pointer w-full text-left p-3.5 flex items-center gap-2.5"
                         >
@@ -308,87 +362,86 @@ export default function PrintQuotePage() {
                           )}
                         </button>
 
-                        {/* Quantity controls — shown when selected */}
-                        {isSelected && (
-                          <div className="px-3.5 pb-3.5 pt-0 space-y-2.5">
-                            <div className="flex items-stretch gap-2">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const min = Math.max(item.minQuantity, 500);
-                                  const newQty = Math.max(min, qty - 100);
-                                  setDraft((d) => ({
-                                    ...d,
-                                    quantities: { ...d.quantities, [item.id]: newQty },
-                                  }));
-                                }}
-                                className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
-                              >
-                                −
-                              </button>
-                              <div className="flex-1 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col items-center justify-center py-1.5">
-                                <input
-                                  type="number"
-                                  min={Math.max(item.minQuantity, 500)}
-                                  max={10000}
-                                  step={100}
-                                  value={qty}
-                                  onChange={(e) => {
-                                    const v = Math.max(
-                                      Math.max(item.minQuantity, 500),
-                                      Math.min(10000, Number(e.target.value) || 0),
-                                    );
-                                    setDraft((d) => ({
-                                      ...d,
-                                      quantities: { ...d.quantities, [item.id]: v },
-                                    }));
-                                  }}
-                                  className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                />
-                                <span className="text-[10px] text-slate-500 mt-0.5 tracking-wider uppercase">
-                                  units
-                                </span>
+                        <AnimatePresence>
+                          {isPopoverOpen && (
+                            <motion.div
+                              ref={popoverRef}
+                              initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
+                              exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                              transition={{ duration: 0.15, ease: "easeOut" }}
+                              className="absolute left-0 right-0 top-full z-30 mt-1 mx-1 rounded-2xl bg-slate-900 border border-white/15 shadow-2xl shadow-black/40 backdrop-blur-xl p-4 space-y-2.5"
+                            >
+                              <div className="flex items-stretch gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => commitQuantity(qty - 1)}
+                                  className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                                >
+                                  −
+                                </button>
+                                <div className="flex-1 rounded-xl bg-white/[0.06] border border-white/10 flex flex-col items-center justify-center py-1.5">
+                                  <input
+                                    type="number"
+                                    min={item.minQuantity}
+                                    max={100000}
+                                    step={1}
+                                    inputMode="numeric"
+                                    placeholder={String(item.minQuantity)}
+                                    value={displayValue}
+                                    onChange={(e) => {
+                                      setEditingQuantities((prev) => ({
+                                        ...prev,
+                                        [item.id]: e.target.value,
+                                      }));
+                                    }}
+                                    onBlur={() => {
+                                      const raw = editingQuantities[item.id];
+                                      if (raw === undefined) return;
+                                      const n = Number(raw);
+                                      commitQuantity(Number.isNaN(n) ? item.minQuantity : n);
+                                    }}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        (e.target as HTMLInputElement).blur();
+                                      }
+                                    }}
+                                    className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                  />
+                                  <span className="text-[10px] text-slate-500 mt-0.5 tracking-wider uppercase">
+                                    units
+                                  </span>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => commitQuantity(qty + 1)}
+                                  className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                                >
+                                  +
+                                </button>
                               </div>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const newQty = Math.min(10000, qty + 100);
-                                  setDraft((d) => ({
-                                    ...d,
-                                    quantities: { ...d.quantities, [item.id]: newQty },
-                                  }));
-                                }}
-                                className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
-                              >
-                                +
-                              </button>
-                            </div>
-                            <div className="flex gap-1.5">
-                              {[500, 1000, 2000, 5000].map((preset) => {
-                                const active = qty === preset;
-                                return (
-                                  <button
-                                    key={preset}
-                                    type="button"
-                                    onClick={() =>
-                                      setDraft((d) => ({
-                                        ...d,
-                                        quantities: { ...d.quantities, [item.id]: preset },
-                                      }))
-                                    }
-                                    className={`cursor-pointer flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all ${
-                                      active
-                                        ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
-                                        : "bg-white/[0.03] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]"
-                                    }`}
-                                  >
-                                    {preset >= 1000 ? `${preset / 1000}k` : preset}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        )}
+                              <div className="flex gap-1.5">
+                                {[1, 10, 50, 100, 500].map((preset) => {
+                                  const active = qty === preset;
+                                  return (
+                                    <button
+                                      key={preset}
+                                      type="button"
+                                      onClick={() => commitQuantity(preset)}
+                                      className={`cursor-pointer flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all ${
+                                        active
+                                          ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
+                                          : "bg-white/[0.03] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]"
+                                      }`}
+                                    >
+                                      {preset}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     );
                   })}
