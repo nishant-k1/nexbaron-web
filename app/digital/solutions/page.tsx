@@ -17,8 +17,10 @@ import {
   AlertTriangle,
   RefreshCw,
   Eye,
+  ArrowRight,
 } from "lucide-react";
 import { type Metadata } from "next";
+import Link from "next/link";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
@@ -38,7 +40,14 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-const buildItems = [
+interface SolutionItem {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  href?: string;
+}
+
+const buildItems: SolutionItem[] = [
   {
     icon: Palette,
     title: "Logo & Brand Identity",
@@ -76,7 +85,7 @@ const buildItems = [
   },
 ];
 
-const getFoundItems = [
+const getFoundItems: SolutionItem[] = [
   {
     icon: Search,
     title: "Local SEO",
@@ -109,7 +118,7 @@ const getFoundItems = [
   },
 ];
 
-const stayActiveItems = [
+const stayActiveItems: SolutionItem[] = [
   {
     icon: Share2,
     title: "Social Media Management",
@@ -142,7 +151,7 @@ const stayActiveItems = [
   },
 ];
 
-const growItems = [
+const growItems: SolutionItem[] = [
   {
     icon: Search,
     title: "Google Ads",
@@ -165,11 +174,12 @@ const growItems = [
   },
 ];
 
-const automateItems = [
+const automateItems: SolutionItem[] = [
   {
     icon: MessageSquare,
     title: "WhatsApp Automation",
     description: "24/7 automatic answers for hours, address, prices, and booking.",
+    href: "/digital/automation",
   },
   {
     icon: Calendar,
@@ -188,7 +198,7 @@ const automateItems = [
   },
 ];
 
-const careItems = [
+const careItems: SolutionItem[] = [
   {
     icon: Server,
     title: "Hosting",
@@ -326,17 +336,39 @@ export default function SolutionsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {section.items.map((item) => {
                 const ItemIcon = item.icon;
+                const content = (
+                  <>
+                    <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 w-fit mb-4">
+                      <ItemIcon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-lg font-heading font-semibold text-white mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
+                    {item.href && (
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-400 mt-4 group-hover:text-teal-300">
+                        Learn more
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </span>
+                    )}
+                  </>
+                );
+
+                const cardClasses =
+                  "p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06]";
+
                 return (
                   <SectionReveal key={item.title}>
-                    <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06]">
-                      <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 w-fit mb-4">
-                        <ItemIcon className="w-5 h-5" />
-                      </div>
-                      <h3 className="text-lg font-heading font-semibold text-white mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
-                    </div>
+                    {item.href ? (
+                      <Link
+                        href={item.href}
+                        className={`${cardClasses} block cursor-pointer group`}
+                      >
+                        {content}
+                      </Link>
+                    ) : (
+                      <div className={cardClasses}>{content}</div>
+                    )}
                   </SectionReveal>
                 );
               })}
