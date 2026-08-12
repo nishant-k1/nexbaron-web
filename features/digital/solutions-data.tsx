@@ -309,7 +309,7 @@ export const solutionSections: SolutionSection[] = [
         title: "WhatsApp Automation",
         description:
           "24/7 automatic answers for hours, address, prices, and booking — your business responds instantly, even at 3am.",
-        href: "/digital/automation",
+        href: "/digital/automation#whatsapp-automation",
       },
       {
         id: "appointment-booking",
@@ -317,7 +317,7 @@ export const solutionSections: SolutionSection[] = [
         title: "Appointment Booking",
         description:
           "Customers book appointments directly in WhatsApp — no phone tag. Automatic reminders cut no-shows.",
-        href: "/digital/automation",
+        href: "/digital/automation#appointment-booking",
       },
       {
         id: "crm",
@@ -325,7 +325,7 @@ export const solutionSections: SolutionSection[] = [
         title: "CRM",
         description:
           "Every enquiry tracked, followed up, and never lost. A clean pipeline from first message to paying customer.",
-        href: "/digital/automation",
+        href: "/digital/automation#crm",
       },
       {
         id: "email-automation",
@@ -333,7 +333,7 @@ export const solutionSections: SolutionSection[] = [
         title: "Email Automation",
         description:
           "Welcome sequences, reminders, and follow-ups that run on autopilot, nurturing leads while you focus on the work.",
-        href: "/digital/automation",
+        href: "/digital/automation#email-automation",
       },
     ],
   },
