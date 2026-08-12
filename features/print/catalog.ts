@@ -28,11 +28,22 @@ let cachedCatalog: PrintCatalog | null = null;
 
 export async function getPrintCatalog(): Promise<PrintCatalog> {
   if (cachedCatalog) return cachedCatalog;
-  const response = await fetch(`${getApiUrl("print")}/print/catalog`, {
-    headers: { Accept: "application/json" },
-  });
-  if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);
-  cachedCatalog = (await response.json()) as PrintCatalog;
+  try {
+    const response = await fetch(`${getApiUrl("print")}/print/catalog`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);
+    cachedCatalog = (await response.json()) as PrintCatalog;
+  } catch {
+    // Degrade gracefully to the static mirror when the print runtime is
+    // unreachable, so SSG product pages never 404.
+    cachedCatalog = {
+      version: "1.0.0",
+      currency: "INR",
+      categories: [...printCategories],
+      products: printProducts,
+    };
+  }
   return cachedCatalog;
 }
 
