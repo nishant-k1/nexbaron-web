@@ -49,6 +49,12 @@ export function CorporateNavigation() {
           {/* Direct Division Switch Pill Group (primary CTAs) */}
           <div className="hidden md:flex items-center gap-3">
             <Link
+              href="/about"
+              className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              About
+            </Link>
+            <Link
               href="/digital"
               className="flex items-center gap-1.5 text-xs font-mono font-medium px-3.5 py-1.5 rounded-lg bg-teal-500/10 text-teal-300 border border-teal-500/30 hover:bg-teal-500/20 transition-all"
             >
@@ -77,6 +83,12 @@ export function CorporateNavigation() {
         {/* Mobile Dropdown */}
         {isOpen && (
           <div className="md:hidden mt-4 rounded-2xl bg-slate-950/95 border border-white/10 p-6 space-y-4 backdrop-blur-2xl shadow-2xl">
+            <Link
+              href="/about"
+              className="block text-base font-medium text-slate-200 hover:text-white py-1"
+            >
+              About Nexbaron
+            </Link>
             <div className="pt-0 grid grid-cols-2 gap-3">
               <Button
                 asChild

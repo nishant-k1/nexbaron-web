@@ -131,6 +131,14 @@ export function DigitalFooter() {
               </li>
               <li>
                 <Link
+                  href="/digital/faq"
+                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                >
+                  Questions & Answers
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/digital/contact"
                   className="text-xs text-slate-400 hover:text-white transition-colors"
                 >
