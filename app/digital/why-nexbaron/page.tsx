@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Why Nexbaron | Nexbaron Digital",
   description:
     "Fixed pricing, no hidden charges, no lock-in, fast delivery, and one partner for everything — digital presence, SEO, GBP, social, and automation.",
+  alternates: { canonical: "/digital/why-nexbaron" },
   openGraph: {
     title: "Why Nexbaron | Nexbaron Digital",
     description: "Fixed pricing, no hidden charges, no lock-in, fast delivery.",

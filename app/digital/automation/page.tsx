@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "WhatsApp That Answers Your Customers 24/7 | Nexbaron Digital",
   description:
     "Your business answers customers on WhatsApp at any hour — instant replies, self-booking, and reminders that stop no-shows. Included in Growth and Scale plans.",
+  alternates: { canonical: "/digital/automation" },
   openGraph: {
     title: "WhatsApp That Answers Your Customers 24/7 | Nexbaron Digital",
     description: "Answers your customers, books appointments, and stops no-shows — 24/7.",

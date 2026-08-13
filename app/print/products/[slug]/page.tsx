@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       return {
         title: `${product.label} | Nexbaron Print`,
         description: product.description,
+        alternates: { canonical: `/print/products/${slug}` },
         openGraph: {
           title: `${product.label} | Nexbaron Print`,
           description: product.description,
@@ -221,7 +222,10 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
                 >
                   <summary className="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 text-sm font-semibold text-white hover:text-amber-300 transition-colors">
                     {faq.question}
-                    <span className="text-amber-400 shrink-0 group-open:rotate-45 transition-transform">
+                    <span
+                      className="text-amber-400 shrink-0 group-open:rotate-45 transition-transform"
+                      aria-hidden="true"
+                    >
                       +
                     </span>
                   </summary>

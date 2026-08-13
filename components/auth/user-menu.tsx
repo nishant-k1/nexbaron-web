@@ -33,6 +33,8 @@ export function UserMenu() {
   const { user, division, signOut, initialized } = useAuth();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuListRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,6 +46,37 @@ export function UserMenu() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
+
+  useEffect(() => {
+    if (open) {
+      const items = menuListRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]');
+      items?.[0]?.focus();
+    }
+  }, [open]);
+
+  const handleMenuKeyDown = (e: React.KeyboardEvent) => {
+    const items = Array.from(
+      menuListRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]') ?? [],
+    );
+    if (items.length === 0) return;
+    const currentIndex = items.indexOf(document.activeElement as HTMLButtonElement);
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      items[(currentIndex + 1) % items.length]?.focus();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      items[(currentIndex - 1 + items.length) % items.length]?.focus();
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      items[0]?.focus();
+    } else if (e.key === "End") {
+      e.preventDefault();
+      items[items.length - 1]?.focus();
+    } else if (e.key === "Escape") {
+      setOpen(false);
+      triggerRef.current?.focus();
+    }
+  };
 
   if (!initialized) {
     return (
@@ -70,6 +103,7 @@ export function UserMenu() {
   return (
     <div ref={menuRef} className="relative">
       <button
+        ref={triggerRef}
         onClick={() => setOpen((o) => !o)}
         className="cursor-pointer flex items-center gap-2 px-2 py-1.5 rounded-full hover:bg-white/5 transition-colors"
         aria-label="Account menu"
@@ -99,7 +133,9 @@ export function UserMenu() {
 
       {open && (
         <div
+          ref={menuListRef}
           role="menu"
+          onKeyDown={handleMenuKeyDown}
           className="absolute right-0 mt-2 w-56 rounded-2xl bg-slate-900 border border-white/10 shadow-2xl shadow-black/40 p-2"
         >
           <div className="px-3 py-2.5 border-b border-white/10 mb-1">

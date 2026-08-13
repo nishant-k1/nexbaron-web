@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   return {
     title: service.label,
     description: service.description,
+    alternates: { canonical: `/digital/${slug}/${serviceId}` },
     openGraph: {
       title: service.label,
       description: service.description,

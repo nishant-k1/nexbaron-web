@@ -66,7 +66,7 @@ export default function PrintQuotesPage() {
         </div>
 
         {!initialized || loading ? (
-          <div className="flex justify-center py-20 text-slate-400">
+          <div role="status" className="flex justify-center py-20 text-slate-400">
             <Loader2 className="w-5 h-5 animate-spin mr-2" /> Loading quotes...
           </div>
         ) : !user ? (
@@ -86,7 +86,10 @@ export default function PrintQuotesPage() {
             </Button>
           </div>
         ) : error ? (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-5 text-sm text-red-200">
+          <div
+            role="alert"
+            className="rounded-xl border border-red-500/30 bg-red-500/10 p-5 text-sm text-red-200"
+          >
             {error}
           </div>
         ) : quotes.length === 0 ? (

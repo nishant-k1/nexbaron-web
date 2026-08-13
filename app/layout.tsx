@@ -52,18 +52,6 @@ export const metadata: Metadata = {
   },
   description:
     "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital (business websites, local SEO, WhatsApp Business & AI automation) and Nexbaron Print (visiting cards, letterheads, bill books, stickers & labels, and commercial print).",
-  keywords: [
-    "Nexbaron",
-    "Nexbaron Digital",
-    "Nexbaron Print",
-    "website design",
-    "local SEO",
-    "WhatsApp Business",
-    "visiting cards printing",
-    "letterhead printing",
-    "bill book printing",
-    "stickers & labels printing",
-  ],
   authors: [{ name: "Nexbaron Private Limited" }],
   creator: "Nexbaron Private Limited",
   publisher: "Nexbaron Private Limited",
@@ -76,6 +64,7 @@ export const metadata: Metadata = {
     title: "Nexbaron Private Limited | Digital & Print Solutions",
     description:
       "Nexbaron Digital grows your business online. Nexbaron Print manufactures premium physical marketing collateral. One enterprise, two autonomous divisions.",
+    images: [{ url: "/icon.svg", width: 512, height: 512, alt: "Nexbaron" }],
   },
   twitter: {
     card: "summary_large_image",

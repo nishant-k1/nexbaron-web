@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Questions & Answers | Nexbaron Digital",
   description:
     "Published prices, clear timelines, and no lock-in. Answers to the questions we get most — hosting, domains, cancellation, ownership, payments, and more.",
+  alternates: { canonical: "/digital/faq" },
   openGraph: {
     title: "Questions & Answers | Nexbaron Digital",
     description: "Everything you're wondering about Nexbaron Digital, answered plainly.",
@@ -103,7 +104,10 @@ export default function FAQPage() {
               <details key={faq.question} className="group px-6 py-5">
                 <summary className="flex items-center justify-between cursor-pointer list-none text-sm font-semibold text-white hover:text-teal-300 transition-colors">
                   {faq.question}
-                  <span className="text-teal-400 text-xl font-light leading-none group-open:rotate-45 transition-transform">
+                  <span
+                    className="text-teal-400 text-xl font-light leading-none group-open:rotate-45 transition-transform"
+                    aria-hidden="true"
+                  >
                     +
                   </span>
                 </summary>

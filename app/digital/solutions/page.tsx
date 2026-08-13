@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: "Solutions | Nexbaron Digital",
   description:
     "Everything your business needs to grow online — from building your digital presence to generating leads and keeping it all running. Solutions for every stage, one partner.",
+  alternates: { canonical: "/digital/solutions" },
   openGraph: {
     title: "Solutions | Nexbaron Digital",
     description: "Build. Get Found. Stay Active. Grow. Automate. Care. One partner.",

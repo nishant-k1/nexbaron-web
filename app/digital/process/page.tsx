@@ -33,6 +33,7 @@ export const metadata: Metadata = {
   title: "Our Process | What Happens After You Choose a Plan | Nexbaron Digital",
   description:
     "From choosing a plan to your digital presence growing every month: the day-by-day timeline, what's included, revisions, communication, launch, and monthly care — in plain English.",
+  alternates: { canonical: "/digital/process" },
   openGraph: {
     title: "Our Process | Nexbaron Digital",
     description: "Eight steps, a clear week-by-week timeline, and no surprises in between.",

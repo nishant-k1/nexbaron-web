@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Local SEO & Google Maps Ranking for Your City | Nexbaron Digital",
   description:
     "Rank for local searches, show up on Google Maps, and collect reviews with our local SEO service — Google Business optimization, citations, and monthly SEO.",
+  alternates: { canonical: "/digital/local-seo" },
   openGraph: {
     title: "Local SEO & Google Maps Ranking | Nexbaron Digital",
     description:

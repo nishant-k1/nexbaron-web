@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "What to Expect | Nexbaron Digital",
   description:
     "From order to online: what your website launch and Google visibility actually look like with Nexbaron Digital — with honest timelines you can rely on.",
+  alternates: { canonical: "/digital/results" },
   openGraph: {
     title: "What to Expect | Nexbaron Digital",
     description: "One clear path from order to online.",

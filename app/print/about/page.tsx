@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "About Us | Nexbaron Print",
   description:
     "Nexbaron Print manufactures premium visiting cards, brochures, flex banners, signage, and more. Quality checked, delivered on time, at honest prices.",
+  alternates: { canonical: "/print/about" },
   openGraph: {
     title: "About Nexbaron Print",
     description: "Premium commercial printing — quality checked, delivered on time.",

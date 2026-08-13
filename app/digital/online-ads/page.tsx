@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Google Ads & Lead Generation for Local Business | Nexbaron Digital",
   description:
     "Google Ads campaigns, landing pages, and conversion tracking that turn clicks into calls and bookings — know exactly what your ad spend returns.",
+  alternates: { canonical: "/digital/online-ads" },
   openGraph: {
     title: "Google Ads & Lead Generation | Nexbaron Digital",
     description:

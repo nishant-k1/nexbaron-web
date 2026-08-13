@@ -1,5 +1,6 @@
 import { type MetadataRoute } from "next";
 
+import { getBusinesses } from "@/features/digital/businesses";
 import { getServiceCatalog } from "@/features/digital/services";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -16,34 +17,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/print/quote", priority: 0.9, changeFrequency: "weekly" },
     { path: "/digital/pricing", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/who-we-help", priority: 0.8, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/restaurants", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/cafes", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/bakeries", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/hotels", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/salons", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/spas", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/gyms", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/clinics", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/multi-speciality", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/tutors", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/coaching", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/schools", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/kirana", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/boutiques", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/supermarkets", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/pharmacies", priority: 0.7, changeFrequency: "monthly" },
-    {
-      path: "/digital/who-we-help/plumbers-electricians",
-      priority: 0.7,
-      changeFrequency: "monthly",
-    },
-    { path: "/digital/who-we-help/laundry", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/car-service", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/law-ca", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/real-estate", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/photographers", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/event-planners", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help/startups", priority: 0.7, changeFrequency: "monthly" },
     { path: "/digital/automation", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/solutions", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/web-design", priority: 0.8, changeFrequency: "monthly" },
@@ -90,9 +63,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly" as const,
   }));
 
-  return [...routes, ...serviceRoutes].map((route) => ({
+  const businesses = await getBusinesses();
+  const businessRoutes = businesses.map((b) => ({
+    path: `/digital/who-we-help/${b.slug}`,
+    priority: 0.7,
+    changeFrequency: "monthly" as const,
+  }));
+
+  return [...routes, ...serviceRoutes, ...businessRoutes].map((route) => ({
     url: `${baseUrl}${route.path}`,
-    lastModified: new Date(),
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));

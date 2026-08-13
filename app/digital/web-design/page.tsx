@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Website Design & Business Presence for Local Businesses | Nexbaron Digital",
   description:
     "Professional website design, logo & branding, domain, hosting, business email, Google Business Profile, and analytics setup — everything to establish your business online.",
+  alternates: { canonical: "/digital/web-design" },
   openGraph: {
     title: "Website Design & Business Presence | Nexbaron Digital",
     description:

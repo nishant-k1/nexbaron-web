@@ -96,14 +96,20 @@ export function ContactForm({ division, heading, subheading }: ContactFormProps)
       {subheading && <p className="text-sm text-slate-400 mb-6 ml-[52px]">{subheading}</p>}
 
       {status === "success" && (
-        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-sm">
+        <div
+          role="status"
+          className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-sm"
+        >
           {statusMessage ??
             "Thank you! Your message has been received. We'll get back to you within a few business hours."}
         </div>
       )}
 
       {status === "error" && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm">
+        <div
+          role="alert"
+          className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm"
+        >
           {statusMessage ??
             "There was an error sending your message. Please reach us on WhatsApp instead."}
           <a

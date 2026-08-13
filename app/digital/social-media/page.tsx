@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Social Media Management for Small Business | Nexbaron Digital",
   description:
     "We post, design, and schedule your social media content every month — custom graphics, engaging captions, and plain-English reports.",
+  alternates: { canonical: "/digital/social-media" },
   openGraph: {
     title: "Social Media Management | Nexbaron Digital",
     description:

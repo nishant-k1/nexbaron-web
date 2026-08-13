@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Pricing | Fixed-Price Growth Plans | Nexbaron Digital",
   description:
     "Three fixed-price plans for local businesses: Launch, Growth, and Scale. One-time build fee plus a simple monthly care plan. No hidden costs, no lock-in.",
+  alternates: { canonical: "/digital/pricing" },
   openGraph: {
     title: "Pricing | Nexbaron Digital",
     description: "One-time build. Simple monthly care. No hidden costs, no lock-in.",
@@ -185,9 +186,20 @@ export default async function DigitalServicesPage() {
                     {[row.launch, row.growth, row.scale].map((included, colIndex) => (
                       <td key={colIndex} className="px-6 py-3.5 text-center">
                         {included ? (
-                          <CheckCircle2 className="w-4 h-4 text-teal-400 mx-auto" />
+                          <>
+                            <CheckCircle2
+                              className="w-4 h-4 text-teal-400 mx-auto"
+                              aria-hidden="true"
+                            />
+                            <span className="sr-only">Included</span>
+                          </>
                         ) : (
-                          <span className="text-slate-600 text-xs font-mono">—</span>
+                          <>
+                            <span className="text-slate-500 text-xs font-mono" aria-hidden="true">
+                              —
+                            </span>
+                            <span className="sr-only">Not included</span>
+                          </>
                         )}
                       </td>
                     ))}

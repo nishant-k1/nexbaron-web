@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Website Care & Maintenance | Nexbaron Digital",
   description:
     "Hosting, security, updates, daily backups, uptime monitoring, and up to 2 small changes per month — your website stays fast, secure, and current.",
+  alternates: { canonical: "/digital/website-care" },
   openGraph: {
     title: "Website Care & Maintenance | Nexbaron Digital",
     description:

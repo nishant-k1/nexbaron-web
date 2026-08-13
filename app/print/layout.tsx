@@ -30,6 +30,30 @@ export const metadata: Metadata = {
   },
 };
 
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "Store",
+  name: "Nexbaron Print",
+  url: `${siteUrl}/print`,
+  telephone: "+919899752254",
+  priceRange: "₹₹",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Begusarai",
+    addressRegion: "Bihar",
+    postalCode: "851101",
+    addressCountry: "IN",
+  },
+};
+
 export default function PrintLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
+      />
+      {children}
+    </>
+  );
 }

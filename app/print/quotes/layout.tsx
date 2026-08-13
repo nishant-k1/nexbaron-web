@@ -5,6 +5,7 @@ import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 export const metadata: Metadata = {
   title: "My Print Quotes | Nexbaron Print",
   description: "Track your print quotes, view pricing, and manage your print orders.",
+  robots: { index: false, follow: false },
   openGraph: {
     title: "My Print Quotes | Nexbaron Print",
     description: "Track your print quotes and orders.",

@@ -203,12 +203,18 @@ export default function PrintQuotePage() {
 
         <div className="max-w-5xl mx-auto rounded-3xl bg-white/[0.03] border border-white/10 p-5 sm:p-8 backdrop-blur-xl space-y-8">
           {catalogError && (
-            <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+            <div
+              role="alert"
+              className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200"
+            >
               {catalogError} Please refresh the page to try again.
             </div>
           )}
           {!catalog && !catalogError && (
-            <div className="flex items-center justify-center gap-2 py-12 text-sm text-slate-400">
+            <div
+              role="status"
+              className="flex items-center justify-center gap-2 py-12 text-sm text-slate-400"
+            >
               <Loader2 className="w-4 h-4 animate-spin" /> Loading the Print catalog...
             </div>
           )}
@@ -271,6 +277,7 @@ export default function PrintQuotePage() {
                               }));
                             }
                           }}
+                          aria-pressed={isSelected}
                           className="cursor-pointer w-full text-left p-3.5 flex items-center gap-2.5"
                         >
                           <div
@@ -322,6 +329,7 @@ export default function PrintQuotePage() {
                                 <button
                                   type="button"
                                   onClick={() => commitQuantity(qty - 1)}
+                                  aria-label="Decrease quantity"
                                   className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
                                 >
                                   −
@@ -334,6 +342,7 @@ export default function PrintQuotePage() {
                                     step={1}
                                     inputMode="numeric"
                                     placeholder={String(item.minQuantity)}
+                                    aria-label={`Quantity for ${item.label}`}
                                     value={displayValue}
                                     onChange={(e) => {
                                       setEditingQuantities((prev) => ({
@@ -361,6 +370,7 @@ export default function PrintQuotePage() {
                                 <button
                                   type="button"
                                   onClick={() => commitQuantity(qty + 1)}
+                                  aria-label="Increase quantity"
                                   className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
                                 >
                                   +
@@ -397,7 +407,10 @@ export default function PrintQuotePage() {
               <section className="pt-8 border-t border-white/10">
                 <StepLabel>2. Delivery & Contact Details</StepLabel>
                 {submitStatus === "success" ? (
-                  <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
+                  <div
+                    role="status"
+                    className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center"
+                  >
                     <p className="text-lg font-semibold text-emerald-300 mb-1">
                       Quote request received
                     </p>
@@ -549,9 +562,9 @@ export default function PrintQuotePage() {
 
 function StepLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider block mb-3">
+    <h2 className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider block mb-3">
       {children}
-    </div>
+    </h2>
   );
 }
 

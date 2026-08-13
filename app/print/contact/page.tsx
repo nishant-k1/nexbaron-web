@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Contact Us | Nexbaron Print",
   description:
     "Have a question about visiting cards, brochures, signage, or any printing requirement? Get in touch and we'll get back with a clear answer.",
+  alternates: { canonical: "/print/contact" },
   openGraph: {
     title: "Contact Us | Nexbaron Print",
     description: "Have a printing question? We'll get back to you.",

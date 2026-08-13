@@ -65,6 +65,7 @@ export function DigitalNavigation() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={`text-sm font-medium transition-colors hover:text-teal-300 ${
                     isActive ? "text-teal-400 font-semibold" : "text-slate-300"
                   }`}
@@ -91,7 +92,9 @@ export function DigitalNavigation() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="cursor-pointer md:hidden p-2 text-slate-300 hover:text-white"
-            aria-label="Toggle Navigation"
+            aria-label={isOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -99,7 +102,10 @@ export function DigitalNavigation() {
 
         {/* Mobile Menu Dropdown */}
         {isOpen && (
-          <div className="md:hidden mt-4 rounded-2xl bg-slate-950/95 border border-teal-500/30 p-6 space-y-4 backdrop-blur-2xl shadow-2xl">
+          <div
+            id="mobile-menu"
+            className="md:hidden mt-4 rounded-2xl bg-slate-950/95 border border-teal-500/30 p-6 space-y-4 backdrop-blur-2xl shadow-2xl"
+          >
             <div className="pb-3 border-b border-white/10 flex justify-between items-center">
               <span className="text-xs font-mono text-teal-400 uppercase">Nexbaron Digital</span>
               <Link

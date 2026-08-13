@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: BusinessPageProps): Promise<M
   return {
     title: `${business.label} | Websites & Growth | Nexbaron Digital`,
     description: `${business.tagline} ${business.problems.join(" ")}`,
+    alternates: { canonical: `/digital/who-we-help/${slug}` },
     openGraph: {
       title: `${business.label} | Nexbaron Digital`,
       description: business.tagline,

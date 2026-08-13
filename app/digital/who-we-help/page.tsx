@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Who We Help | Growth Plans for Local Businesses | Nexbaron Digital",
   description:
     "How we help clinics, restaurants, law & CA firms, salons, gyms, real estate, and startups get more customers — with a clear recommended plan for each.",
+  alternates: { canonical: "/digital/who-we-help" },
   openGraph: {
     title: "Who We Help | Nexbaron Digital",
     description: "A clear recommended plan for every type of local business.",

@@ -1,7 +1,7 @@
 "use client";
 
 import { X, Loader2, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { formatINR, plans } from "@/features/digital/plans";
 
@@ -33,6 +33,35 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
   });
   const [error, setError] = useState("");
   const [hubUrl, setHubUrl] = useState("");
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   const update = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -72,12 +101,20 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-white/10 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="plan-signup-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+    >
+      <div
+        ref={dialogRef}
+        className="bg-slate-900 border border-white/10 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <div>
-            <h2 className="text-lg font-bold text-white">
+            <h2 id="plan-signup-title" className="text-lg font-bold text-white">
               {step === "done" ? "Account Created" : `Get ${PLAN_NAMES[planId] || planId}`}
             </h2>
             {plan && step !== "done" && (
@@ -87,7 +124,12 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
               </p>
             )}
           </div>
-          <button onClick={onClose} className="cursor-pointer text-slate-400 hover:text-white">
+          <button
+            ref={closeButtonRef}
+            onClick={onClose}
+            aria-label="Close"
+            className="cursor-pointer text-slate-400 hover:text-white"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -122,8 +164,11 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
           /* Form */
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Your Name *</label>
+              <label htmlFor="signup-name" className="block text-xs text-slate-400 mb-1">
+                Your Name *
+              </label>
               <input
+                id="signup-name"
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
                 placeholder="Full name"
@@ -134,8 +179,11 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Email *</label>
+                <label htmlFor="signup-email" className="block text-xs text-slate-400 mb-1">
+                  Email *
+                </label>
                 <input
+                  id="signup-email"
                   type="email"
                   value={form.email}
                   onChange={(e) => update("email", e.target.value)}
@@ -145,8 +193,11 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
                 />
               </div>
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Phone *</label>
+                <label htmlFor="signup-phone" className="block text-xs text-slate-400 mb-1">
+                  Phone *
+                </label>
                 <input
+                  id="signup-phone"
                   type="tel"
                   value={form.phone}
                   onChange={(e) => update("phone", e.target.value)}
@@ -158,8 +209,11 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Company / Business Name</label>
+              <label htmlFor="signup-company" className="block text-xs text-slate-400 mb-1">
+                Company / Business Name
+              </label>
               <input
+                id="signup-company"
                 value={form.company}
                 onChange={(e) => update("company", e.target.value)}
                 placeholder="Your business name"
@@ -168,8 +222,11 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Business Address</label>
+              <label htmlFor="signup-address" className="block text-xs text-slate-400 mb-1">
+                Business Address
+              </label>
               <input
+                id="signup-address"
                 value={form.address}
                 onChange={(e) => update("address", e.target.value)}
                 placeholder="Area, city"
@@ -178,8 +235,11 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">About Your Business</label>
+              <label htmlFor="signup-description" className="block text-xs text-slate-400 mb-1">
+                About Your Business
+              </label>
               <textarea
+                id="signup-description"
                 value={form.description}
                 onChange={(e) => update("description", e.target.value)}
                 placeholder="What do you do? What do you want visitors to know?"
@@ -188,7 +248,11 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
               />
             </div>
 
-            {error && <p className="text-sm text-red-400">{error}</p>}
+            {error && (
+              <p className="text-sm text-red-400" role="alert">
+                {error}
+              </p>
+            )}
 
             <button
               type="submit"

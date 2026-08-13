@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   title: "Launch, Growth & Scale Plans | Nexbaron Digital",
   description:
     "Fixed-price growth plans for local businesses: a website that brings customers in, Google visibility, and 24/7 WhatsApp booking. No jargon, no lock-in.",
+  alternates: { canonical: "/digital" },
   openGraph: {
     type: "website",
     url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/digital`,

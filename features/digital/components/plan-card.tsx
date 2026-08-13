@@ -83,7 +83,7 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
             <Check className="w-4 h-4 text-teal-500/60 shrink-0 mt-0.5" />
             <div className="min-w-0">
               <span className="text-sm text-slate-400">{plan.inherited.label}</span>
-              <span className="block text-[11px] text-slate-600 mt-0.5">
+              <span className="block text-[11px] text-slate-400 mt-0.5">
                 +{formatINR((plan.pricing?.setup ?? 0) - (plan.pricing?.ownSetup ?? 0))} one-time ·
                 +{formatINR((plan.pricing?.monthly ?? 0) - (plan.pricing?.ownMonthly ?? 0))}
                 /mo
@@ -103,7 +103,7 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
                 {svc.label}
               </span>
               {!isCustom && (
-                <span className="block text-[11px] text-slate-500 tabular-nums mt-0.5">
+                <span className="block text-[11px] text-slate-400 tabular-nums mt-0.5">
                   {priceLabel(svc)}
                 </span>
               )}

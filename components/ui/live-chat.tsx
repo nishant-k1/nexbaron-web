@@ -279,6 +279,9 @@ export function LiveChat() {
       <button
         onClick={() => setOpen(!open)}
         aria-label={open ? "Close chat" : "Open chat"}
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        aria-controls="live-chat-panel"
         className="cursor-pointer flex items-center justify-center w-14 h-14 rounded-full bg-teal-500 text-white shadow-lg shadow-teal-500/30 hover:bg-teal-400 hover:scale-110 transition-all duration-300"
       >
         {open ? <X className="w-6 h-6" /> : <MessageSquareMore className="w-6 h-6" />}
@@ -286,7 +289,12 @@ export function LiveChat() {
 
       {/* Chat panel */}
       {open && (
-        <div className="absolute bottom-20 right-0 w-80 sm:w-96 h-[28rem] bg-slate-900 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+        <div
+          id="live-chat-panel"
+          role="dialog"
+          aria-label="Live chat"
+          className="absolute bottom-20 right-0 w-80 sm:w-96 h-[28rem] bg-slate-900 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+        >
           {/* Header */}
           <div className="p-4 bg-slate-800 border-b border-white/10 flex items-center gap-3 shrink-0">
             <div className="w-9 h-9 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center">
@@ -303,7 +311,7 @@ export function LiveChat() {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3" aria-live="polite">
             {!nameSet ? (
               <div className="text-center py-8">
                 <div className="w-14 h-14 rounded-full bg-teal-500/10 border border-teal-500/20 mx-auto mb-4 flex items-center justify-center">
@@ -325,6 +333,7 @@ export function LiveChat() {
                       setFormError("");
                     }}
                     placeholder="Your name *"
+                    aria-label="Your name"
                     className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
                     autoFocus
                   />
@@ -336,6 +345,7 @@ export function LiveChat() {
                     }}
                     type="tel"
                     placeholder="Phone"
+                    aria-label="Phone number"
                     className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
                   />
                   <input
@@ -346,9 +356,14 @@ export function LiveChat() {
                     }}
                     type="email"
                     placeholder="Email"
+                    aria-label="Email"
                     className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
                   />
-                  {formError && <p className="text-[11px] text-red-400 text-center">{formError}</p>}
+                  {formError && (
+                    <p className="text-[11px] text-red-400 text-center" role="alert">
+                      {formError}
+                    </p>
+                  )}
                   <button
                     type="submit"
                     className="cursor-pointer w-full py-2 bg-teal-500 text-slate-950 rounded-lg text-sm font-semibold hover:bg-teal-400"
@@ -424,14 +439,19 @@ export function LiveChat() {
                 {agentTyping && (
                   <div className="flex justify-start">
                     <div className="max-w-[80%] px-3.5 py-2.5 rounded-2xl bg-slate-800 text-slate-200 rounded-bl-md flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" />
+                      <span
+                        className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                        aria-hidden="true"
+                      />
                       <span
                         className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
                         style={{ animationDelay: "150ms" }}
+                        aria-hidden="true"
                       />
                       <span
                         className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
                         style={{ animationDelay: "300ms" }}
+                        aria-hidden="true"
                       />
                       <span className="text-[11px] text-slate-400 ml-1">typing…</span>
                     </div>
@@ -456,6 +476,7 @@ export function LiveChat() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your message..."
+                aria-label="Type your message"
                 disabled={sending}
                 className="flex-1 px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50 disabled:opacity-50"
               />

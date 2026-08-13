@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Start Your Plan | Onboarding | Nexbaron Digital",
   description:
     "You've chosen your plan. Now complete the short onboarding: your business details, photos, and payment — settle everything in a few minutes and your launch date is confirmed when you pay.",
+  robots: { index: false, follow: false },
   openGraph: {
     title: "Start Your Plan | Nexbaron Digital",
     description: "Three short steps: business details, photos, and payment.",

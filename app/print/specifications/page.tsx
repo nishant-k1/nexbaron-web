@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Paper Stocks & Finish Options | Nexbaron Print",
   description:
     "Understand our paper stocks, finishing options, and production turnaround before you order — premium commercial printing from Nexbaron Print.",
+  alternates: { canonical: "/print/specifications" },
   openGraph: {
     title: "Specifications | Nexbaron Print",
     description: "Paper stocks, finishes, and production standards from Nexbaron Print.",

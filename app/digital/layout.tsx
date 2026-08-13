@@ -29,6 +29,37 @@ export const metadata: Metadata = {
   },
 };
 
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Nexbaron Digital",
+  url: `${siteUrl}/digital`,
+  telephone: "+919002785683",
+  priceRange: "₹₹",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Flat No. 402, Vasavi Residency - 1, Green House Layout, Doddathoguru",
+    addressLocality: "Bengaluru",
+    addressRegion: "Karnataka",
+    postalCode: "560100",
+    addressCountry: "IN",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    opens: "10:00",
+    closes: "19:00",
+  },
+};
+
 export default function DigitalLayout({ children }: { children: React.ReactNode }) {
-  return <PlansProvider>{children}</PlansProvider>;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
+      />
+      <PlansProvider>{children}</PlansProvider>
+    </>
+  );
 }

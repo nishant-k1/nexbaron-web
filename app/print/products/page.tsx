@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Printing Services | Nexbaron Print",
   description:
     "The Nexbaron Print catalog: visiting cards, card holders, pamphlets & posters, tags, files, letterheads, envelopes, stickers & labels, bill books, pens, and more.",
+  alternates: { canonical: "/print/products" },
   openGraph: {
     title: "Printing Services | Nexbaron Print",
     description: "Complete commercial printing services from Nexbaron Print.",

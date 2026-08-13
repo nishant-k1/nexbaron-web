@@ -15,6 +15,7 @@ interface ServiceDetailProps {
 
 export function ServiceDetail({ service, section, related }: ServiceDetailProps) {
   const Icon = getIcon(service.icon);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com";
 
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -23,6 +24,32 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
     description: service.description,
     provider: { "@type": "Organization", name: "Nexbaron" },
     areaServed: "IN",
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Nexbaron Digital",
+        item: `${siteUrl}/digital`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Solutions",
+        item: `${siteUrl}/digital/solutions`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: section.title,
+        item: `${siteUrl}/digital/${section.slug}`,
+      },
+      { "@type": "ListItem", position: 4, name: service.label },
+    ],
   };
 
   const faqSchema = {
@@ -40,6 +67,10 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <script
         type="application/ld+json"
@@ -156,7 +187,10 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
                 >
                   <summary className="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 text-sm font-semibold text-white hover:text-teal-300 transition-colors">
                     {faq.question}
-                    <span className="text-teal-400 shrink-0 group-open:rotate-45 transition-transform">
+                    <span
+                      className="text-teal-400 shrink-0 group-open:rotate-45 transition-transform"
+                      aria-hidden="true"
+                    >
                       +
                     </span>
                   </summary>

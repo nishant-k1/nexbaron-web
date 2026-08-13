@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "About Us | Nexbaron Digital",
   description:
     "Nexbaron Digital helps local businesses get found on Google, answered on WhatsApp, and grow with a website that works. Fixed-price plans, no lock-in.",
+  alternates: { canonical: "/digital/about" },
   openGraph: {
     title: "About Nexbaron Digital",
     description: "Websites, SEO, and WhatsApp growth for local businesses.",
