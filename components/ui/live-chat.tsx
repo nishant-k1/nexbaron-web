@@ -62,6 +62,15 @@ export function LiveChat() {
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef("");
+  const phoneRef = useRef("");
+  const emailRef = useRef("");
+
+  useEffect(() => {
+    nameRef.current = name;
+    phoneRef.current = phone;
+    emailRef.current = email;
+  }, [name, phone, email]);
 
   const division = pathname.startsWith("/digital")
     ? "digital"
@@ -69,7 +78,7 @@ export function LiveChat() {
       ? "print"
       : null;
 
-  const sessionId = getSessionId();
+  const [sessionId] = useState(getSessionId);
   const isLoggedIn = !!user;
 
   // Auto-merge anonymous messages when user logs in
@@ -87,12 +96,12 @@ export function LiveChat() {
       },
       body: JSON.stringify({
         sessionId,
-        name: name || undefined,
-        phone: phone || undefined,
-        email: email || undefined,
+        name: nameRef.current || undefined,
+        phone: phoneRef.current || undefined,
+        email: emailRef.current || undefined,
       }),
     }).catch(() => {});
-  }, [division, user, sessionId, name, phone, email]);
+  }, [division, user, sessionId]);
 
   // Load chat history from backend (initial + silent polling).
   const loadMessages = useCallback(() => {

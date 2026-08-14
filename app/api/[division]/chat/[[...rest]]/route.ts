@@ -9,6 +9,15 @@ function forwardHeaders(request: NextRequest): Record<string, string> {
   return headers;
 }
 
+// Only allow plain path segments (no traversal, no dots) before forwarding to
+// the chat backend so a crafted request can't escape the brand-scoped route.
+function buildSuffix(rest?: string[]): string | null {
+  if (!rest?.length) return "";
+  const safe = rest.every((segment) => /^[a-zA-Z0-9_-]+$/.test(segment));
+  if (!safe) return null;
+  return `/${rest.join("/")}`;
+}
+
 // Catch-all proxy for every /api/{division}/chat[/...rest] route (send, history,
 // read, presence, merge). The path suffix is forwarded to the backend verbatim.
 export async function POST(
@@ -21,9 +30,13 @@ export async function POST(
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }
 
+    const suffix = buildSuffix(rest);
+    if (suffix === null) {
+      return NextResponse.json({ success: false, message: "Invalid path" }, { status: 400 });
+    }
+
     const body = await request.json();
     const backendUrl = getChatUrl();
-    const suffix = rest?.length ? `/${rest.join("/")}` : "";
 
     const response = await fetch(`${backendUrl}/${division}/chat${suffix}`, {
       method: "POST",
@@ -55,10 +68,14 @@ export async function GET(
       return NextResponse.json({ success: false, message: "Unknown division" }, { status: 400 });
     }
 
+    const suffix = buildSuffix(rest);
+    if (suffix === null) {
+      return NextResponse.json({ success: false, message: "Invalid path" }, { status: 400 });
+    }
+
     const backendUrl = getChatUrl();
     const url = new URL(request.url);
     const qs = url.search;
-    const suffix = rest?.length ? `/${rest.join("/")}` : "";
 
     const response = await fetch(`${backendUrl}/${division}/chat${suffix}${qs}`, {
       headers: forwardHeaders(request),

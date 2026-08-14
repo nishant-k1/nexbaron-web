@@ -1,10 +1,18 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useRevealInView } from "@/hooks/use-reveal-in-view";
+
+const emptySubscribe = () => () => {};
+const useMounted = () =>
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
 type RevealVariant = "fade" | "slideUp" | "slideLeft" | "slideRight" | "scale" | "none";
 
@@ -34,11 +42,7 @@ export function SectionReveal({
 }: SectionRevealProps) {
   const prefersReducedMotion = useReducedMotion();
   const { ref, inView } = useRevealInView<HTMLElement>();
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
+  const hasMounted = useMounted();
 
   if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
@@ -79,11 +83,7 @@ export function StaggerContainer({
 }: StaggerProps) {
   const prefersReducedMotion = useReducedMotion();
   const { ref, inView } = useRevealInView<HTMLDivElement>();
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
+  const hasMounted = useMounted();
 
   if (prefersReducedMotion) {
     const Tag = tag;

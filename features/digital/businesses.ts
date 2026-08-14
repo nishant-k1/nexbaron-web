@@ -46,22 +46,24 @@ function resolveIcon(business: RawBusiness): ResolvedBusiness {
   return { ...business, icon: getIcon(business.icon) };
 }
 
-let cached: ResolvedBusiness[] | null = null;
+let cached: { at: number; data: ResolvedBusiness[] } | null = null;
+const CACHE_TTL_MS = 60 * 60 * 1000;
 
 export async function getBusinesses(): Promise<ResolvedBusiness[]> {
-  if (cached) return cached;
+  if (cached && Date.now() - cached.at < CACHE_TTL_MS) return cached.data;
   try {
     const response = await fetch(`${getApiUrl("digital")}/digital/businesses`, {
       headers: { Accept: "application/json" },
+      next: { revalidate: 3600 },
     });
     if (!response.ok) throw new Error(`Business catalog request failed: ${response.status}`);
     const data = (await response.json()) as BusinessCatalog;
-    cached = data.businesses.map(resolveIcon);
+    cached = { at: Date.now(), data: data.businesses.map(resolveIcon) };
   } catch {
     // Degrade gracefully to the static mirror when the API is unreachable.
-    cached = businessFallback.map(resolveIcon);
+    cached = { at: Date.now(), data: businessFallback.map(resolveIcon) };
   }
-  return cached;
+  return cached.data;
 }
 
 export async function getBusinessBySlug(slug: string): Promise<ResolvedBusiness | undefined> {

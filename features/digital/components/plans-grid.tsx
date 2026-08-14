@@ -32,7 +32,12 @@ export function PlansGrid({ plans }: { plans: Plan[] }) {
         ))}
       </div>
 
-      {signupPlan && <PlanSignupForm planId={signupPlan} onClose={() => setSignupPlan(null)} />}
+      {signupPlan && (
+        <PlanSignupForm
+          plan={plans.find((p) => p.id === signupPlan)!}
+          onClose={() => setSignupPlan(null)}
+        />
+      )}
     </>
   );
 }

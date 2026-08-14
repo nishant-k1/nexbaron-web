@@ -17,12 +17,9 @@ export function CustomerProjectTracker({ fallback }: CustomerProjectTrackerProps
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      setReady(true);
-      return;
-    }
+    if (!user) return;
     let cancelled = false;
-    fetchMyOrder("digital")
+    fetchMyOrder()
       .then((o) => {
         if (cancelled) return;
         setOrder(o || null);
@@ -36,6 +33,7 @@ export function CustomerProjectTracker({ fallback }: CustomerProjectTrackerProps
     };
   }, [user]);
 
+  if (!user) return <>{fallback}</>;
   if (!ready) return null;
   if (!order || !order.launchDate) return <>{fallback}</>;
 

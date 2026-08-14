@@ -20,6 +20,8 @@ interface DivisionConfig {
   label: string;
   tagline: string;
   whatsappNumber: string;
+  phone: string;
+  whatsappMessage: string;
   nav: NavItem[];
   social: {
     instagram: string;
@@ -48,6 +50,8 @@ export const divisions: Record<Division, DivisionConfig> = {
     label: "DIGITAL",
     tagline: "Plans • Websites • WhatsApp Growth",
     whatsappNumber: DIGITAL_WHATSAPP,
+    phone: DIGITAL_WHATSAPP ? `+${DIGITAL_WHATSAPP}` : "+919002785683",
+    whatsappMessage: "Hi! I'm interested in getting a website for my business. Can you help?",
     nav: [
       { href: "/digital/solutions", label: "Services" },
       { href: "/digital/who-we-help", label: "Who We Help" },
@@ -73,6 +77,8 @@ export const divisions: Record<Division, DivisionConfig> = {
     label: "PRINT",
     tagline: "Collaterals • Signage • Flex & Vinyl",
     whatsappNumber: PRINT_WHATSAPP,
+    phone: PRINT_WHATSAPP ? `+${PRINT_WHATSAPP}` : "+919899752254",
+    whatsappMessage: "Hi! I need a quote for some printing work. Can you help?",
     nav: [
       { href: "/print/products", label: "Services" },
       { href: "/print/about", label: "About" },

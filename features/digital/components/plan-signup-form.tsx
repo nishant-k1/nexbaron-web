@@ -3,13 +3,7 @@
 import { X, Loader2, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { formatINR, plans } from "@/features/digital/plans";
-
-const PLAN_NAMES: Record<string, string> = {
-  launch: "Launch",
-  growth: "Growth",
-  scale: "Scale",
-};
+import { formatINR, type Plan } from "@/features/digital/plans";
 
 interface FormData {
   name: string;
@@ -20,8 +14,8 @@ interface FormData {
   description: string;
 }
 
-export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: () => void }) {
-  const plan = plans.find((p) => p.id === planId);
+export function PlanSignupForm({ plan, onClose }: { plan: Plan; onClose: () => void }) {
+  const planId = plan.id;
   const [step, setStep] = useState<"form" | "submitting" | "done">("form");
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -115,9 +109,9 @@ export function PlanSignupForm({ planId, onClose }: { planId: string; onClose: (
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <div>
             <h2 id="plan-signup-title" className="text-lg font-bold text-white">
-              {step === "done" ? "Account Created" : `Get ${PLAN_NAMES[planId] || planId}`}
+              {step === "done" ? "Account Created" : `Get ${plan.name}`}
             </h2>
-            {plan && step !== "done" && (
+            {step !== "done" && (
               <p className="text-xs text-slate-400 mt-0.5">
                 {formatINR(plan.pricing?.setup ?? 0)} one-time +{" "}
                 {formatINR(plan.pricing?.monthly ?? 0)}/month

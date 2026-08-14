@@ -17,12 +17,12 @@ No tests. Husky: pre-commit runs lint-staged + typecheck; pre-push runs `check` 
 
 ## Architecture
 
-- **Next.js 14 App Router, React 18, TypeScript strict** (+`noUncheckedIndexedAccess`). Code lives at repo root: `app/` (routes), `features/` (business logic), `components/` (shared UI), `lib/`, `hooks/`, `theme/`. **No `src/` folder.**
+- **Next.js 16 App Router, React 19, TypeScript strict** (+`noUncheckedIndexedAccess`). Code lives at repo root: `app/` (routes), `features/` (business logic), `components/` (shared UI), `lib/`, `hooks/`, `theme/`. **No `src/` folder.**
 - **Division is derived from the URL path** (`lib/divisions.ts#getDivisionFromPath`) and scopes everything: nav, footer, accent colors (`lib/accents.ts` — digital=teal, print=amber), auth tokens, OG images, lead capture.
 - **State: React Context + localStorage/sessionStorage only** (no Redux/React Query). `AuthProvider` (`components/auth/auth-context.tsx`) validates the division-scoped token and exposes `openSignIn()` — sign-in happens entirely on the **Hub** (`NEXT_PUBLIC_HUB_URL/{division}/login`), never on this marketing site. `PlansProvider` (`features/digital/catalog.tsx`) merges static plan defaults with remote catalog (`GET /digital/catalog`, cached in localStorage 15min).
 - **API client** (`lib/api.ts`): native `fetch` via `apiRequest<T>()`, base `NEXT_PUBLIC_API_URL || http://localhost:3001`, Bearer token from the division-scoped localStorage key `nexbaron-auth-token-{division}`. Never add axios.
 - **Dark mode only** — design decision; `theme/theme-provider.tsx` sets `defaultTheme="dark"` / `enableSystem={false}`. Don't add light theme without sign-off.
-- Styling: Tailwind 3 with CSS-var tokens in `app/globals.css`; shadcn-style primitives in `components/ui/` (Radix + CVA + `cn()`); fonts Inter/Montserrat via next/font; framer-motion with reduced-motion support (`hooks/use-reveal-in-view.ts` works around a whileInView bug).
+- Styling: Tailwind 4 with CSS-var tokens in `app/globals.css`; shadcn-style primitives in `components/ui/` (Radix + CVA + `cn()`); fonts Inter/Montserrat via next/font; framer-motion with reduced-motion support (`hooks/use-reveal-in-view.ts` works around a whileInView bug).
 
 **Theme rules (MUST follow):**
 
@@ -39,7 +39,7 @@ No tests. Husky: pre-commit runs lint-staged + typecheck; pre-push runs `check` 
 /about, /privacy, /terms
 /digital/*                 landing, solutions, who-we-help, process, pricing (plan builder),
                            automation, results, why-nexbaron, faq, contact, onboarding?plan=
-/print/*                   landing, products (+SSG [slug] from lib/data/print-products.ts),
+/print/*                   landing, products (API-only catalog, dynamic [slug]),
                            quote (builder, sign-in-gated submit), specifications, quotes
 ```
 
@@ -74,9 +74,9 @@ Protected behavior (no middleware): `/digital/onboarding` shows a sign-in gate i
 ### Gotchas
 
 - `supply_demand_strategy.pine` at repo root is unrelated (TradingView script) — leave alone.
-- `metadataBase` icons reference missing `/favicon.ico` + `/logo.png` (only SVG favicons exist).
+- `metadataBase` icons reference `/favicon.svg` (root) plus `/favicon-digital.svg`/`favicon-print.svg` per division — all SVG, present in `public/`.
 - `docs/PRD-nexbaron-website.md` + `docs/nexbaron-digital-business-strategy.md` are the product source of truth.
-- Radix dialog/select deps are mostly unused (hand-rolled instead).
+- Radix `react-label`/`react-slot` are the only Radix deps (dialog/select were removed; UI is hand-rolled).
 
 ### Git
 

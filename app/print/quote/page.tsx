@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/auth/auth-context";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
+import { DatePickerField } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -96,15 +97,16 @@ export default function PrintQuotePage() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!user) return;
+  const [prevUserId, setPrevUserId] = useState<string | null>(null);
+  if (user && prevUserId !== user.id) {
+    setPrevUserId(user.id);
     setDraft((current) => ({
       ...current,
       name: current.name || user.name || "",
       email: current.email || user.email || "",
       phone: current.phone || user.phone || "",
     }));
-  }, [user]);
+  }
 
   useEffect(() => {
     if (!activeEditor) return;
@@ -456,13 +458,13 @@ export default function PrintQuotePage() {
                         value={draft.company}
                         onChange={(value) => updateDraft("company", value)}
                       />
-                      <QuoteInput
+                      <DatePickerField
                         label="Required By"
                         id="quote-deadline"
-                        type="date"
                         required
                         value={draft.deadline}
                         onChange={(value) => updateDraft("deadline", value)}
+                        accent="print"
                       />
                       <QuoteInput
                         label="Delivery Pincode"

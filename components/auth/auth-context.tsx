@@ -35,16 +35,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [initializedDivision, setInitializedDivision] = useState<Division | null>(null);
   const refreshGeneration = useRef(0);
 
+  const [lastDivision, setLastDivision] = useState<Division | null>(division);
+  if (lastDivision !== division) {
+    setLastDivision(division);
+    setUser(null);
+    setInitializedDivision(null);
+  }
+
   const refresh = useCallback(async () => {
     const generation = ++refreshGeneration.current;
     const requestedDivision = division;
-    setUser(null);
-    setInitializedDivision(null);
     if (!requestedDivision) return;
 
     const token = getToken(requestedDivision);
     if (!token) {
-      if (generation === refreshGeneration.current) setInitializedDivision(requestedDivision);
+      if (generation === refreshGeneration.current) {
+        void Promise.resolve().then(() => {
+          if (generation === refreshGeneration.current) setInitializedDivision(requestedDivision);
+        });
+      }
       return;
     }
     try {
@@ -72,7 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [division]);
 
   useEffect(() => {
-    void refresh();
+    void Promise.resolve().then(refresh);
   }, [refresh]);
 
   const signIn = useCallback((token: string, nextUser: AuthUser) => {

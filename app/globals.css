@@ -42,19 +42,19 @@ input[type="radio"] {
 }
 
 :root {
-  /* Brand Colors - Matching DiligenceSquared */
-  --color-primary: #2a4a55; /* rgb(42, 74, 85) - dark blue-grey with better contrast */
-  --color-secondary: #8a949c;
+  /* Brand colors */
+  --color-primary: #14b8a6; /* teal-500 */
+  --color-secondary: #64748b; /* slate-500 */
 
-  /* Neutral Colors - Matching DiligenceSquared */
-  --color-neutral-bg: #192d33; /* rgb(25, 45, 51) - dark blue-grey body */
-  --color-neutral-surface: #f1f9fa; /* rgb(241, 249, 250) - light grey sections */
+  /* Dark-only neutrals */
+  --color-neutral-bg: #192d33; /* original teal-tinted dark (corporate + digital) */
+  --color-neutral-surface: #1e293b; /* slate-800 */
   --color-neutral-foreground: #ffffff;
 
-  /* Semantic Colors - Updated for dark background */
-  --color-heading: #ffffff; /* White headings on dark background */
-  --color-body: #e0e0e0; /* Light grey body text on dark background */
-  --color-border: #2a3a40; /* Subtle border on dark background */
+  /* Semantic colors */
+  --color-heading: #ffffff;
+  --color-body: #e0e0e0;
+  --color-border: #2a3a40;
   --color-muted: #8a949c;
 
   /* Spacing */
@@ -112,7 +112,7 @@ body {
   min-height: 100vh;
 }
 
-/* Container max-width override to match DiligenceSquared design */
+/* Container max-width override */
 @media (min-width: 1024px) {
   .container {
     max-width: 1280px;
@@ -157,15 +157,6 @@ body {
 
   .text-body {
     color: var(--color-body);
-  }
-
-  /* Text colors for light sections */
-  .text-heading-dark {
-    color: #192d33; /* Dark heading on light background */
-  }
-
-  .text-body-dark {
-    color: #4a4a4a; /* Dark body text on light background */
   }
 
   .border-muted {
@@ -235,4 +226,12 @@ body {
     top: -6px;
     animation: travelDot 12s ease-in-out infinite;
   }
+}
+
+/* react-day-picker dark theme — filled accent selection on the calendar. */
+.rdp-selected .rdp-day_button,
+.rdp-selected .rdp-day_button:hover {
+  background-color: var(--rdp-accent-color);
+  color: #020617;
+  font-weight: 600;
 }

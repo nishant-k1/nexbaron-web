@@ -22,11 +22,17 @@ export default function PrintQuotesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const authKey = `${initialized ? "1" : "0"}:${user?.id ?? ""}`;
+  const [prevAuthKey, setPrevAuthKey] = useState(authKey);
+  if (prevAuthKey !== authKey) {
+    setPrevAuthKey(authKey);
+    setError(null);
+    if (initialized && user) setLoading(true);
+  }
+
   useEffect(() => {
     if (!initialized || !user) return;
     let cancelled = false;
-    setLoading(true);
-    setError(null);
     void getMyPrintQuotes()
       .then((data) => {
         if (!cancelled) setQuotes(data);
@@ -130,7 +136,7 @@ export default function PrintQuotesPage() {
                   <span
                     className={`self-start rounded-full border px-3 py-1 text-xs font-medium ${quote.status === "quoted" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300" : "border-amber-500/30 bg-amber-500/10 text-amber-300"}`}
                   >
-                    {STATUS_LABELS[quote.status]}
+                    {STATUS_LABELS[quote.status] ?? quote.status}
                   </span>
                 </div>
                 {quote.response?.price && (

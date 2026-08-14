@@ -21,14 +21,12 @@ export interface MyOrder {
   createdAt: string;
 }
 
-export async function fetchMyOrder(
-  division: "digital" | "print" = "digital",
-): Promise<MyOrder | null> {
-  if (!getToken(division)) return null;
+export async function fetchMyOrder(): Promise<MyOrder | null> {
+  if (!getToken("digital")) return null;
   const data = await apiRequest<{ success: boolean; order: MyOrder | null }>(
     "/digital/payments/orders/mine",
     { method: "GET" },
-    division,
+    "digital",
   );
   return data.order ?? null;
 }

@@ -116,13 +116,15 @@ export function PlansProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
 
-    const cached = readCache();
-    if (cached) {
-      setPlans(cached);
-      setLoading(false);
-    }
-
     (async () => {
+      const cached = readCache();
+      await Promise.resolve();
+      if (cancelled) return;
+      if (cached) {
+        setPlans(cached);
+        setLoading(false);
+      }
+
       try {
         const fetched = await fetchCatalog();
         writeCache(fetched);

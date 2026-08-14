@@ -2,6 +2,7 @@ import { type MetadataRoute } from "next";
 
 import { getBusinesses } from "@/features/digital/businesses";
 import { getServiceCatalog } from "@/features/digital/services";
+import { getPrintCatalog } from "@/features/print/catalog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com";
@@ -32,20 +33,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/digital/faq", priority: 0.7, changeFrequency: "monthly" },
     { path: "/digital/contact", priority: 0.7, changeFrequency: "monthly" },
     { path: "/print/products", priority: 0.8, changeFrequency: "monthly" },
-    { path: "/print/products/visiting-cards", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/card-holders", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/pamphlets-posters", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/tags", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/files", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/letter-heads", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/envelopes", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/digital-paper-printing", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/atm-pouches", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/bill-books", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/stickers-labels", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/pens", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/shooting-targets", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/print/products/sample-files", priority: 0.7, changeFrequency: "monthly" },
     { path: "/print/specifications", priority: 0.6, changeFrequency: "monthly" },
     { path: "/print/about", priority: 0.6, changeFrequency: "monthly" },
     { path: "/print/contact", priority: 0.6, changeFrequency: "monthly" },
@@ -70,7 +57,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly" as const,
   }));
 
-  return [...routes, ...serviceRoutes, ...businessRoutes].map((route) => ({
+  const printCatalog = await getPrintCatalog();
+  const printProductRoutes = printCatalog.products.map((p) => ({
+    path: `/print/products/${p.slug}`,
+    priority: 0.7,
+    changeFrequency: "monthly" as const,
+  }));
+
+  return [...routes, ...serviceRoutes, ...businessRoutes, ...printProductRoutes].map((route) => ({
     url: `${baseUrl}${route.path}`,
     changeFrequency: route.changeFrequency,
     priority: route.priority,

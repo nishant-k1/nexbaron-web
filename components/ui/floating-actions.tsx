@@ -5,36 +5,21 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { LiveChat } from "@/components/ui/live-chat";
-
-const CONTACTS: Record<string, { phone: string; whatsappMsg: string }> = {
-  digital: {
-    phone: "+919002785683",
-    whatsappMsg: "Hi! I'm interested in getting a website for my business. Can you help?",
-  },
-  print: {
-    phone: "+919899752254",
-    whatsappMsg: "Hi! I need a quote for some printing work. Can you help?",
-  },
-};
+import { divisions, type Division } from "@/lib/divisions";
 
 export function FloatingActions() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
 
-  const division = pathname.startsWith("/digital")
-    ? "digital"
-    : pathname.startsWith("/print")
-      ? "print"
-      : null;
+  const division = (
+    pathname.startsWith("/digital") ? "digital" : pathname.startsWith("/print") ? "print" : null
+  ) as Division | null;
 
-  const contact = division ? CONTACTS[division] : null;
+  const contact = division ? divisions[division] : null;
 
   useEffect(() => {
-    // Show after first scroll so it doesn't appear immediately on hero
     const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setVisible(true);
-      }
+      setVisible(window.scrollY > 300);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -68,7 +53,7 @@ export function FloatingActions() {
 
       {/* WhatsApp button */}
       <a
-        href={`https://wa.me/${contact.phone.replace(/[^\d]/g, "")}?text=${encodeURIComponent(contact.whatsappMsg)}`}
+        href={`https://wa.me/${contact.phone.replace(/[^\d]/g, "")}?text=${encodeURIComponent(contact.whatsappMessage)}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
