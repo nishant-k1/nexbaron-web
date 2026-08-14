@@ -7,6 +7,8 @@ import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { getBusinessBySlug, getBusinesses } from "@/features/digital/businesses";
 import { formatINR } from "@/features/digital/plans";
+import { generateBreadcrumbJsonLd } from "@/lib/breadcrumbs";
+import { SITE_URL } from "@/lib/business-profile";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 interface BusinessPageProps {
@@ -47,8 +49,18 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
   const Icon = business.icon;
   const hasPricing = business.services.length > 0;
 
+  const breadcrumbSchema = generateBreadcrumbJsonLd([
+    { name: "Nexbaron Digital", url: `${SITE_URL}/digital` },
+    { name: "Who We Help", url: `${SITE_URL}/digital/who-we-help` },
+    { name: business.label, url: `${SITE_URL}/digital/who-we-help/${slug}` },
+  ]);
+
   return (
     <div className="relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <PageHero
         accent="digital"
         eyebrow={business.category}

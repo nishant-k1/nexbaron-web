@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { buildLocalBusinessSchema, getBusinessProfile } from "@/lib/business-profile";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com";
@@ -30,23 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
-const localBusiness = {
-  "@context": "https://schema.org",
-  "@type": "Store",
-  name: "Nexbaron Print",
-  url: `${siteUrl}/print`,
-  telephone: "+919899752254",
-  priceRange: "₹₹",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Begusarai",
-    addressRegion: "Bihar",
-    postalCode: "851101",
-    addressCountry: "IN",
-  },
-};
+export default async function PrintLayout({ children }: { children: React.ReactNode }) {
+  const profile = await getBusinessProfile("print");
+  const localBusiness = buildLocalBusinessSchema(profile, "Store");
 
-export default function PrintLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <script

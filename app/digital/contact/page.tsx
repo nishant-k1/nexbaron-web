@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageHero } from "@/components/sections/page-hero";
+import { formatOpeningHours, formatPhone, getBusinessProfile } from "@/lib/business-profile";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
@@ -19,7 +20,9 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("digital"),
 };
 
-export default function DigitalContactPage() {
+export default async function DigitalContactPage() {
+  const profile = await getBusinessProfile("digital");
+
   return (
     <div className="relative overflow-hidden">
       <PageHero
@@ -66,10 +69,13 @@ export default function DigitalContactPage() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white">Phone</h3>
-                  <a href="tel:+919002785683" className="text-sm text-teal-400 hover:text-teal-300">
-                    +91 90027 85683
+                  <a
+                    href={`tel:${profile.phone}`}
+                    className="text-sm text-teal-400 hover:text-teal-300"
+                  >
+                    {formatPhone(profile.phone)}
                   </a>
-                  <p className="text-xs text-slate-500 mt-0.5">Monday – Saturday, 10 AM – 7 PM</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{formatOpeningHours(profile)}</p>
                 </div>
               </div>
 
@@ -111,10 +117,8 @@ export default function DigitalContactPage() {
                 </div>
                 <address className="not-italic">
                   <h3 className="text-sm font-semibold text-white">Office</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed mt-1">
-                    Flat No. 402, Vasavi Residency - 1, Green House Layout,
-                    <br />
-                    Doddathoguru, Electronic City Phase - 1, Bengaluru - 560100
+                  <p className="text-xs text-slate-400 leading-relaxed mt-1 whitespace-pre-line">
+                    {profile.address.display}
                   </p>
                 </address>
               </div>
@@ -124,7 +128,7 @@ export default function DigitalContactPage() {
             <div className="rounded-3xl overflow-hidden border border-white/10">
               <iframe
                 title="Nexbaron Digital Office Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.5!2d77.67!3d12.84!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDUwJzI0LjAiTiA3N8KwNDAnMTIuMCJF!5e0!3m2!1sen!2sin!4v1600000000000"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(profile.mapsQuery)}&z=16&output=embed`}
                 width="100%"
                 height="220"
                 style={{ border: 0 }}
@@ -133,6 +137,14 @@ export default function DigitalContactPage() {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(profile.mapsQuery)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-teal-400 hover:text-teal-300"
+            >
+              <MapPin className="w-3.5 h-3.5" /> Get Directions
+            </a>
           </div>
 
           <div className="lg:col-span-7">

@@ -5,6 +5,7 @@ import { SectionReveal } from "@/components/motion/section-reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import type { PublicService, ServiceSection } from "@/features/digital/services";
+import { getEntityId } from "@/lib/business-profile";
 import { getIcon } from "@/lib/icon-map";
 
 interface ServiceDetailProps {
@@ -22,7 +23,8 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
     "@type": "Service",
     name: service.label,
     description: service.description,
-    provider: { "@type": "Organization", name: "Nexbaron" },
+    provider: { "@id": getEntityId("digital"), name: "Nexbaron Digital" },
+    serviceType: section.title,
     areaServed: "IN",
   };
 

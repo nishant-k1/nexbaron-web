@@ -3,6 +3,8 @@
 import { Printer, Calculator } from "lucide-react";
 import Link from "next/link";
 
+import { formatPhone, type BusinessProfile } from "@/lib/business-profile";
+
 import { SocialLinks } from "./social-links";
 
 const printLinks = {
@@ -20,7 +22,7 @@ const printLinks = {
   ],
 };
 
-export function PrintFooter() {
+export function PrintFooter({ profile }: { profile: BusinessProfile }) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -52,11 +54,14 @@ export function PrintFooter() {
               </Link>
             </div>
             <div className="pt-3 space-y-1.5">
-              <address className="text-xs text-slate-400 not-italic">
-                Begusarai, Bihar - 851101
+              <address className="text-xs text-slate-400 not-italic whitespace-pre-line">
+                {profile.address.display}
               </address>
-              <a href="tel:+919899752254" className="text-xs text-amber-400 hover:text-amber-300">
-                +91 98997 52254
+              <a
+                href={`tel:${profile.phone}`}
+                className="text-xs text-amber-400 hover:text-amber-300"
+              >
+                {formatPhone(profile.phone)}
               </a>
             </div>
             <div className="pt-2">
@@ -131,15 +136,15 @@ export function PrintFooter() {
                 © {currentYear} Nexbaron Print Division (Nexbaron Private Limited). All rights
                 reserved.
               </p>
-              <p className="text-[11px] text-slate-600">GSTIN: 10AAKCN1234E1Z6</p>
+              <p className="text-[11px] text-slate-600">GSTIN: {profile.gstin}</p>
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
-              <a href="mailto:print@nexbaron.com" className="text-amber-400 hover:text-amber-300">
-                print@nexbaron.com
+              <a href={`mailto:${profile.email}`} className="text-amber-400 hover:text-amber-300">
+                {profile.email}
               </a>
               <span className="text-slate-700">•</span>
-              <a href="tel:+919899752254" className="text-amber-400 hover:text-amber-300">
-                +91 98997 52254
+              <a href={`tel:${profile.phone}`} className="text-amber-400 hover:text-amber-300">
+                {formatPhone(profile.phone)}
               </a>
             </div>
           </div>

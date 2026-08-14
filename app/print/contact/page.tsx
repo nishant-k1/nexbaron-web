@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageHero } from "@/components/sections/page-hero";
+import { formatOpeningHours, formatPhone, getBusinessProfile } from "@/lib/business-profile";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
@@ -19,7 +20,9 @@ export const metadata: Metadata = {
   twitter: divisionTwitter("print"),
 };
 
-export default function PrintContactPage() {
+export default async function PrintContactPage() {
+  const profile = await getBusinessProfile("print");
+
   return (
     <div className="relative overflow-hidden">
       <PageHero
@@ -65,12 +68,12 @@ export default function PrintContactPage() {
                 <div>
                   <h3 className="text-sm font-semibold text-white">Phone</h3>
                   <a
-                    href="tel:+919899752254"
+                    href={`tel:${profile.phone}`}
                     className="text-sm text-amber-400 hover:text-amber-300"
                   >
-                    +91 98997 52254
+                    {formatPhone(profile.phone)}
                   </a>
-                  <p className="text-xs text-slate-500 mt-0.5">Monday – Saturday, 10 AM – 7 PM</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{formatOpeningHours(profile)}</p>
                 </div>
               </div>
 
@@ -110,8 +113,8 @@ export default function PrintContactPage() {
                 </div>
                 <address className="not-italic">
                   <h3 className="text-sm font-semibold text-white">Location</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed mt-1">
-                    Begusarai, Bihar - 851101
+                  <p className="text-xs text-slate-400 leading-relaxed mt-1 whitespace-pre-line">
+                    {profile.address.display}
                   </p>
                 </address>
               </div>
@@ -121,7 +124,7 @@ export default function PrintContactPage() {
             <div className="rounded-3xl overflow-hidden border border-white/10">
               <iframe
                 title="Nexbaron Print Office Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28676.5!2d86.12!3d25.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDI1JzEyLjAiTiA4NsKwMDcnMTIuMCJF!5e0!3m2!1sen!2sin!4v1600000000000"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(profile.mapsQuery)}&z=16&output=embed`}
                 width="100%"
                 height="220"
                 style={{ border: 0 }}
@@ -130,6 +133,14 @@ export default function PrintContactPage() {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(profile.mapsQuery)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-400 hover:text-amber-300"
+            >
+              <MapPin className="w-3.5 h-3.5" /> Get Directions
+            </a>
           </div>
 
           <div className="lg:col-span-7">

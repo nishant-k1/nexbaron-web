@@ -3,6 +3,7 @@
 import { Monitor, MessageSquare } from "lucide-react";
 import Link from "next/link";
 
+import { formatPhone, type BusinessProfile } from "@/lib/business-profile";
 import { buildWhatsAppLink } from "@/lib/divisions";
 
 import { SocialLinks } from "./social-links";
@@ -22,7 +23,7 @@ const digitalLinks = {
   ],
 };
 
-export function DigitalFooter() {
+export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -58,13 +59,14 @@ export function DigitalFooter() {
               </a>
             </div>
             <div className="pt-3 space-y-1.5">
-              <address className="text-xs text-slate-400 leading-relaxed not-italic">
-                402, Vasavi Residency - 1, Green House Layout,
-                <br />
-                Doddathoguru, Electronic City Phase - 1, Bengaluru - 560100
+              <address className="text-xs text-slate-400 leading-relaxed not-italic whitespace-pre-line">
+                {profile.address.display}
               </address>
-              <a href="tel:+919002785683" className="text-xs text-teal-400 hover:text-teal-300">
-                +91 90027 85683
+              <a
+                href={`tel:${profile.phone}`}
+                className="text-xs text-teal-400 hover:text-teal-300"
+              >
+                {formatPhone(profile.phone)}
               </a>
             </div>
             <div className="pt-2">
@@ -196,15 +198,15 @@ export function DigitalFooter() {
                 © {currentYear} Nexbaron Digital Division (Nexbaron Private Limited). All rights
                 reserved.
               </p>
-              <p className="text-[11px] text-slate-600">GSTIN: 10AAKCN1234E1Z6</p>
+              <p className="text-[11px] text-slate-600">GSTIN: {profile.gstin}</p>
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
-              <a href="mailto:digital@nexbaron.com" className="text-teal-400 hover:text-teal-300">
-                digital@nexbaron.com
+              <a href={`mailto:${profile.email}`} className="text-teal-400 hover:text-teal-300">
+                {profile.email}
               </a>
               <span className="text-slate-700">•</span>
-              <a href="tel:+919002785683" className="text-teal-400 hover:text-teal-300">
-                +91 90027 85683
+              <a href={`tel:${profile.phone}`} className="text-teal-400 hover:text-teal-300">
+                {formatPhone(profile.phone)}
               </a>
             </div>
           </div>

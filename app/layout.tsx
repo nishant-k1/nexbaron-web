@@ -9,6 +9,13 @@ import GlobalMeshBackgroundDynamic from "@/components/motion/global-mesh-backgro
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Navigation } from "@/components/navigation/navigation";
 import { FloatingActions } from "@/components/ui/floating-actions";
+import {
+  getBusinessProfile,
+  getEntityId,
+  getOrganizationId,
+  SITE_URL,
+  type BusinessProfile,
+} from "@/lib/business-profile";
 import { ThemeProvider } from "@/theme/theme-provider";
 
 const inter = Inter({
@@ -55,7 +62,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Nexbaron Private Limited" }],
   creator: "Nexbaron Private Limited",
   publisher: "Nexbaron Private Limited",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -90,51 +97,70 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
+function organizationJsonLd(digital: BusinessProfile, print: BusinessProfile) {
+  return {
+    "@context": "https://schema.org",
+    "@id": getOrganizationId(),
+    "@type": "Organization",
+    name: "Nexbaron Private Limited",
+    url: SITE_URL,
+    logo: `${SITE_URL}/icon.svg`,
+    description:
+      "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital and Nexbaron Print.",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: digital.address.street,
+      addressLocality: digital.address.locality,
+      addressRegion: digital.address.region,
+      postalCode: digital.address.postalCode,
+      addressCountry: digital.address.country,
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: digital.phone,
+      contactType: "customer service",
+      availableLanguage: ["English", "Hindi"],
+    },
+    subOrganization: [
+      {
+        "@type": "Organization",
+        "@id": getEntityId("digital"),
+        name: digital.name,
+        url: `${SITE_URL}/digital`,
+      },
+      {
+        "@type": "Organization",
+        "@id": getEntityId("print"),
+        name: print.name,
+        url: `${SITE_URL}/print`,
+      },
+    ],
+    sameAs: [
+      "https://instagram.com/nexbarondigital",
+      "https://facebook.com/nexbarondigital",
+      "https://linkedin.com/company/nexbarondigital",
+      "https://instagram.com/nexbaronprint",
+      "https://facebook.com/nexbaronprint",
+      "https://linkedin.com/company/nexbaronprint",
+    ],
+  };
+}
+
+const websiteJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Nexbaron Private Limited",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com",
-  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/icon.svg`,
-  description:
-    "Nexbaron Private Limited operates two independent divisions: Nexbaron Digital and Nexbaron Print.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Flat No. 402, Vasavi Residency - 1, Green House Layout, Doddathoguru",
-    addressLocality: "Bengaluru",
-    addressRegion: "Karnataka",
-    postalCode: "560100",
-    addressCountry: "IN",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-90027-85683",
-    contactType: "customer service",
-    availableLanguage: ["English", "Hindi"],
-  },
-  subOrganization: [
-    {
-      "@type": "Organization",
-      name: "Nexbaron Digital",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/digital`,
-    },
-    {
-      "@type": "Organization",
-      name: "Nexbaron Print",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print`,
-    },
-  ],
-  sameAs: [
-    "https://instagram.com/nexbarondigital",
-    "https://facebook.com/nexbarondigital",
-    "https://linkedin.com/company/nexbarondigital",
-    "https://instagram.com/nexbaronprint",
-    "https://facebook.com/nexbaronprint",
-    "https://linkedin.com/company/nexbaronprint",
-  ],
+  "@id": `${SITE_URL}/#website`,
+  "@type": "WebSite",
+  url: SITE_URL,
+  name: "Nexbaron",
+  publisher: { "@id": getOrganizationId() },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const [digital, print] = await Promise.all([
+    getBusinessProfile("digital"),
+    getBusinessProfile("print"),
+  ]);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -142,7 +168,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://cdn.pixabay.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(digital, print)) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className={`${inter.variable} ${montserrat.variable} font-body`}>
@@ -158,7 +188,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <main id="main-content" className="flex-1">
                 {children}
               </main>
-              <Footer />
+              <Footer digital={digital} print={print} />
               <FloatingActions />
             </AuthProvider>
           </ThemeProvider>

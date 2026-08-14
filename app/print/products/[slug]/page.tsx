@@ -6,6 +6,7 @@ import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { getPrintCatalog, getProductIcon, type PrintProduct } from "@/features/print/catalog";
+import { getEntityId, SITE_URL } from "@/lib/business-profile";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 interface ProductPageProps {
@@ -54,11 +55,13 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
     name: product.label,
     description: product.description,
     category: product.category,
+    image: `${SITE_URL}/og-print.png`,
+    brand: { "@id": getEntityId("print"), name: "Nexbaron Print" },
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com"}/print/products/${product.slug}`,
+      url: `${SITE_URL}/print/products/${product.slug}`,
     },
   };
 

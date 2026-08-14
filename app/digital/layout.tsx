@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { PlansProvider } from "@/features/digital/catalog";
+import { buildLocalBusinessSchema, getBusinessProfile } from "@/lib/business-profile";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexbaron.com";
@@ -29,30 +30,10 @@ export const metadata: Metadata = {
   },
 };
 
-const localBusiness = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Nexbaron Digital",
-  url: `${siteUrl}/digital`,
-  telephone: "+919002785683",
-  priceRange: "₹₹",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Flat No. 402, Vasavi Residency - 1, Green House Layout, Doddathoguru",
-    addressLocality: "Bengaluru",
-    addressRegion: "Karnataka",
-    postalCode: "560100",
-    addressCountry: "IN",
-  },
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    opens: "10:00",
-    closes: "19:00",
-  },
-};
+export default async function DigitalLayout({ children }: { children: React.ReactNode }) {
+  const profile = await getBusinessProfile("digital");
+  const localBusiness = buildLocalBusinessSchema(profile, "ProfessionalService");
 
-export default function DigitalLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <script
