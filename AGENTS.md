@@ -1,6 +1,6 @@
 # AGENTS.md — nexbaron-web
 
-Public marketing + customer site for Nexbaron (divisions: **Digital** — growth plans; **Print** — commercial printing). Next.js 14 App Router. Backend is `nexbaron-api` (`/Users/nishantkumar/dev/nexbaron-api`); staff CRM is `nexbaron-crm`.
+Public marketing + customer site for Nexbaron (divisions: **Digital** — growth plans; **Print** — commercial printing). Next.js 16 App Router. Backend is `nexbaron-api` (`/Users/nishantkumar/dev/nexbaron-api`); staff CRM is `nexbaron-crm`.
 
 ## Commands
 
@@ -67,9 +67,9 @@ Protected behavior (no middleware): `/digital/onboarding` shows a sign-in gate i
 - Errors: `status: "idle"|"success"|"error"` state + inline banners; forms offer WhatsApp link fallback (`lib/divisions.ts#buildWhatsAppLink`).
 - SEO: per-page metadata, JSON-LD (`lib/breadcrumbs.ts`), `app/sitemap.ts`, `app/robots.ts`, division OG images (`lib/og.ts`).
 
-### Env (`.env.local`; no `.env.example` despite README)
+### Env (`.env.local`, mirroring `.env.example`)
 
-`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_API_URL_DIGITAL`/`_PRINT`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_HUB_URL` (Hub login/signup redirect base), `NEXT_PUBLIC_WHATSAPP_DIGITAL`/`_PRINT`. (Google sign-in client IDs/secrets apply to the Hub and CRM, not this repo.)
+`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_API_URL_DIGITAL`/`_PRINT`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_HUB_URL` (Hub login/signup redirect base), `NEXT_PUBLIC_CHAT_URL` (dedicated chat service, default `https://chat.nexbaron.com`), `NEXT_PUBLIC_GOOGLE_VERIFICATION`, `NEXT_PUBLIC_WHATSAPP_DIGITAL`/`_PRINT`. (Google sign-in client IDs/secrets apply to the Hub and CRM, not this repo.)
 
 ### Gotchas
 

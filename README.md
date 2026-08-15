@@ -1,10 +1,10 @@
 # Nexbaron Web
 
-Frontend application for Nexbaron Services Private Limited built with Next.js 14+, TypeScript, and TailwindCSS.
+Frontend application for Nexbaron Services Private Limited built with Next.js 16, TypeScript, and TailwindCSS.
 
 ## Features
 
-- ✅ Next.js 14+ App Router
+- ✅ Next.js 16 App Router
 - ✅ TypeScript
 - ✅ TailwindCSS with centralized theme system
 - ✅ Dark mode support
