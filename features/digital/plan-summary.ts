@@ -184,7 +184,7 @@ export function collectBuildServices(
   for (let i = 0; i < idx; i++) {
     // A lower tier is included only when it is a real ancestor of the chosen
     // plan, i.e. every tier between it and the chosen one is `inherited`
-    // (Launch ⊂ Growth ⊂ Scale). Standalone tiers (e.g. AI Growth) never pull
+    // (Launch ⊂ Growth ⊂ Scale). Standalone tiers (e.g. custom) never pull
     // in lower-tier services.
     let chainOk = true;
     for (let j = i + 1; j <= idx; j++) {
@@ -289,15 +289,15 @@ export function buildStageSchedule(launchDays: number): LaunchStageRow[] {
     {
       key: "kickoff",
       label: "Kickoff & content",
-      caption: "We send a short form for your business details, photos, and content.",
+      caption: "A short form collects your business details, photos, and content.",
       dayLabel: "Day 1",
       startDay: 1,
       endDay: 1,
     },
     {
       key: "build",
-      label: "Design & build",
-      caption: "We design and build your website and prepare your Google Business Profile.",
+      label: "Design & setup",
+      caption: "We design, build, and set up every service in your plan.",
       dayLabel: launchDays <= 4 ? `Days 2–${launchDays}` : `Days 2–${buildEnd}`,
       startDay: 2,
       endDay: buildEnd,
@@ -313,7 +313,7 @@ export function buildStageSchedule(launchDays: number): LaunchStageRow[] {
     {
       key: "launch",
       label: "Go live",
-      caption: "Your website is published and your Google Business Profile is submitted.",
+      caption: "Your services are live and your launch date is confirmed.",
       dayLabel: `Day ${launchDays}`,
       startDay: launchDays,
       endDay: launchDays,

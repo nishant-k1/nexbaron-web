@@ -186,33 +186,6 @@ export const plans: CatalogPlan[] = [
     },
   },
   {
-    id: "ai-growth",
-    name: "AI Growth",
-    tagline: "AI runs your reviews, chat, content, and leads on autopilot.",
-    icon: "Bot",
-    timeline: "AI live in 5–7 days",
-    services: [
-      fallbackService("ai-chatbot", "AI Chatbot — WhatsApp + Website 24/7 Auto-Reply"),
-      fallbackService(
-        "ai-lead-qualifier",
-        "AI Lead Qualifier — Auto-Questions + Scoring on WhatsApp",
-      ),
-      fallbackService("ai-content", "AI Content Writer — Blogs + Social Captions + Emails"),
-      fallbackService("ai-review-manager", "AI Review Manager — Auto-Replies + Monthly Summary"),
-    ],
-    addOns: [],
-    ctaLabel: "Get AI Growth",
-    minimumMonths: 3,
-    pricing: {
-      setup: 6050,
-      monthly: 7180,
-      annual: 71800,
-      ownSetup: 6050,
-      ownMonthly: 7180,
-      ownAnnual: 71800,
-    },
-  },
-  {
     id: "custom",
     name: "Custom",
     tagline: "Not finding what you need? Let's build it together.",
@@ -220,7 +193,10 @@ export const plans: CatalogPlan[] = [
     timeline: "We'll scope and quote within 2 days",
     services: [
       fallbackService("custom-mix", "Pick services from any plan"),
-      fallbackService("custom-new", "Request services not listed above"),
+      fallbackService(
+        "custom-new",
+        "Request services not listed above like Custom Software Development — Dashboards, CRMs, Internal Tools",
+      ),
       fallbackService("custom-quote", "Receive a custom quote within 48h"),
     ],
     addOns: [],

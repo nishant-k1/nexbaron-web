@@ -16,7 +16,7 @@ import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Pricing | Fixed-Price Growth Plans | Nexbaron Digital",
   description:
-    "Fixed-price plans for local businesses: Launch, Growth, Scale, and AI Growth. One-time build fee plus a simple monthly care plan. No hidden costs, no lock-in.",
+    "Fixed-price plans for local businesses: Launch, Growth, and Scale. One-time build fee plus a simple monthly care plan. No hidden costs, no lock-in.",
   alternates: { canonical: "/digital/pricing" },
   openGraph: {
     title: "Pricing | Nexbaron Digital",
@@ -25,40 +25,6 @@ export const metadata: Metadata = {
   },
   twitter: divisionTwitter("digital"),
 };
-
-interface ComparisonRow {
-  feature: string;
-  included: boolean[];
-}
-
-// A service is included in a plan's column when the plan is either the
-// service's own tier or genuinely inherits it — i.e. every tier between the
-// owning tier and that column is `inherited` (Launch ⊂ Growth ⊂ Scale).
-// Standalone tiers (e.g. AI Growth) never inherit lower-tier services.
-function buildComparisonRows(plans: Plan[]): ComparisonRow[] {
-  const standard = plans.filter((p) => p.id !== "custom");
-  const rows: ComparisonRow[] = [];
-  const seen = new Set<string>();
-  standard.forEach((plan, ownerIndex) => {
-    for (const svc of plan.services) {
-      if (seen.has(svc.id)) continue;
-      seen.add(svc.id);
-      const included = standard.map((_, colIndex) => {
-        if (colIndex === ownerIndex) return true;
-        let chainOk = true;
-        for (let j = ownerIndex + 1; j <= colIndex; j++) {
-          if (!standard[j]!.inherited) {
-            chainOk = false;
-            break;
-          }
-        }
-        return chainOk;
-      });
-      rows.push({ feature: svc.label, included });
-    }
-  });
-  return rows;
-}
 
 function LaunchTimelineSection({ plans }: { plans: Plan[] }) {
   const launchPlan = plans.find((p) => p.id === "launch") ?? plans[0]!;
@@ -105,7 +71,6 @@ function LaunchTimelineSection({ plans }: { plans: Plan[] }) {
 
 export default async function DigitalServicesPage() {
   const { plans } = await getPlanCatalog();
-  const comparisonRows = buildComparisonRows(plans);
 
   return (
     <div className="relative overflow-hidden">
@@ -114,7 +79,7 @@ export default async function DigitalServicesPage() {
         eyebrow="Pricing"
         title="Simple Pricing."
         highlight="No Hidden Costs."
-        description="Everything you need is included. Pick your plan, answer a few questions, and we build your website. Cancel anytime — the site is yours forever."
+        description="Everything you need is included. Pick your plan, answer a few questions, and we set everything up. Cancel anytime — your site and setup are yours forever."
         primaryCta={{ label: "Compare Plans Below", href: "#plans" }}
         secondaryCta={{ label: "Already Have a Website?", href: "/digital/contact" }}
       />
@@ -130,90 +95,12 @@ export default async function DigitalServicesPage() {
               Simple Plans. One Price Each.
             </h2>
             <p className="text-sm text-slate-300 mt-4">
-              Launch and Growth build your web presence, Scale adds a dedicated growth team, and AI
-              Growth runs your reviews, chat, content, and leads on autopilot. You can always move
-              up.
+              Launch builds your web presence, Growth gets you found and booked, and Scale adds a
+              dedicated growth team. You can always move up.
             </p>
           </div>
 
           <PlansGrid plans={plans} />
-        </section>
-
-        {/* Comparison Table */}
-        <section className="py-16 border-t border-white/10">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
-              Compare Plans
-            </span>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">What You Get</h2>
-            <p className="text-sm text-slate-300 mt-4">
-              Every lower tier carries into the one above it, and AI Growth stands on its own. Pick
-              the plan that matches where your business is today.
-            </p>
-          </div>
-
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-white/[0.03] border-b border-white/10">
-                  <th className="sticky left-0 bg-slate-950 text-left px-6 py-4 font-mono text-xs uppercase tracking-wider text-slate-400 z-10">
-                    Feature
-                  </th>
-                  {plans
-                    .filter((p) => p.id !== "custom")
-                    .map((plan) => (
-                      <th
-                        key={plan.id}
-                        className={`px-6 py-4 text-center font-heading font-semibold ${
-                          plan.featured ? "text-teal-300" : "text-white"
-                        }`}
-                      >
-                        {plan.name}
-                        {plan.featured && (
-                          <span className="block text-[10px] font-mono text-teal-400 mt-1">
-                            Most Popular
-                          </span>
-                        )}
-                      </th>
-                    ))}
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonRows.map((row, index) => (
-                  <tr
-                    key={row.feature}
-                    className={`border-b border-white/5 last:border-0 ${
-                      index % 2 === 0 ? "bg-transparent" : "bg-white/[0.02]"
-                    }`}
-                  >
-                    <td className="sticky left-0 bg-slate-950 px-6 py-3.5 text-slate-300 z-10">
-                      {row.feature}
-                    </td>
-                    {row.included.map((included, colIndex) => (
-                      <td key={colIndex} className="px-6 py-3.5 text-center">
-                        {included ? (
-                          <>
-                            <CheckCircle2
-                              className="w-4 h-4 text-teal-400 mx-auto"
-                              aria-hidden="true"
-                            />
-                            <span className="sr-only">Included</span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="text-slate-500 text-xs font-mono" aria-hidden="true">
-                              —
-                            </span>
-                            <span className="sr-only">Not included</span>
-                          </>
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </section>
 
         <LaunchTimelineSection plans={plans} />
