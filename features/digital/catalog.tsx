@@ -7,15 +7,15 @@ import { getApiUrl } from "@/lib/api";
 
 export interface ServiceItem {
   label: string;
-  costPrice: { setup: number; monthly: number; annual: number };
-  profitMargin: { setup: number; monthly: number; annual: number };
-  sellingPrice?: { setup?: number; monthly?: number; annual?: number };
+  costPrice: { setup: number; monthly: number; annual: number }; // INR
+  profitMarginPct: { setup: number; monthly: number; annual: number }; // markup percentage (40 = 40%)
+  sellingPrice?: { setup?: number; monthly?: number; annual?: number }; // optional INR override
 }
 
 export interface ServiceAggregate {
-  cost: { setup: number; monthly: number; annual: number };
-  selling: { setup: number; monthly: number; annual: number };
-  margin: { setup: number; monthly: number; annual: number };
+  cost: { setup: number; monthly: number; annual: number }; // INR
+  selling: { setup: number; monthly: number; annual: number }; // INR
+  marginPct: { setup: number; monthly: number; annual: number }; // effective margin percentage
 }
 
 export interface CatalogService {
