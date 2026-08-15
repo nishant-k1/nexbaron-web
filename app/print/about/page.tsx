@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
+import { formatPhone, getBusinessProfile } from "@/lib/business-profile";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -58,7 +59,9 @@ const values = [
   },
 ];
 
-export default function PrintAboutPage() {
+export default async function PrintAboutPage() {
+  const profile = await getBusinessProfile("print");
+
   return (
     <div className="relative overflow-hidden">
       <PageHero
@@ -135,10 +138,13 @@ export default function PrintAboutPage() {
                   name: "Based in Begusarai",
                   desc: (
                     <address className="not-italic">
-                      Begusarai, Bihar - 851101
+                      <span className="whitespace-pre-line">{profile.address.display}</span>
                       <br />
-                      <a href="tel:+919899752254" className="text-amber-400 hover:text-amber-300">
-                        +91 98997 52254
+                      <a
+                        href={`tel:${profile.phone}`}
+                        className="text-amber-400 hover:text-amber-300"
+                      >
+                        {formatPhone(profile.phone)}
                       </a>
                     </address>
                   ),

@@ -100,7 +100,7 @@ export default async function DigitalContactPage() {
                   <div className="mt-2">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/919002785683"
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/${profile.whatsappNumber}`}
                       alt="Scan to chat on WhatsApp"
                       width={100}
                       height={100}

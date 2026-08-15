@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { PageHero } from "@/components/sections/page-hero";
+import { formatPhone, getBusinessProfile } from "@/lib/business-profile";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -58,7 +59,9 @@ const values = [
   },
 ];
 
-export default function DigitalAboutPage() {
+export default async function DigitalAboutPage() {
+  const profile = await getBusinessProfile("digital");
+
   return (
     <div className="relative overflow-hidden">
       <PageHero
@@ -118,12 +121,13 @@ export default function DigitalAboutPage() {
                   name: "Based in Bengaluru",
                   desc: (
                     <address className="not-italic">
-                      Flat No. 402, Vasavi Residency - 1, Green House Layout,
+                      <span className="whitespace-pre-line">{profile.address.display}</span>
                       <br />
-                      Doddathoguru, Electronic City Phase - 1, Bengaluru - 560100
-                      <br />
-                      <a href="tel:+919002785683" className="text-teal-400 hover:text-teal-300">
-                        +91 90027 85683
+                      <a
+                        href={`tel:${profile.phone}`}
+                        className="text-teal-400 hover:text-teal-300"
+                      >
+                        {formatPhone(profile.phone)}
                       </a>
                     </address>
                   ),

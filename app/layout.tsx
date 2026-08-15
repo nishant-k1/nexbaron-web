@@ -16,6 +16,7 @@ import {
   SITE_URL,
   type BusinessProfile,
 } from "@/lib/business-profile";
+import { divisions } from "@/lib/divisions";
 import { ThemeProvider } from "@/theme/theme-provider";
 
 const inter = Inter({
@@ -136,12 +137,12 @@ function organizationJsonLd(digital: BusinessProfile, print: BusinessProfile) {
       },
     ],
     sameAs: [
-      "https://instagram.com/nexbarondigital",
-      "https://facebook.com/nexbarondigital",
-      "https://linkedin.com/company/nexbarondigital",
-      "https://instagram.com/nexbaronprint",
-      "https://facebook.com/nexbaronprint",
-      "https://linkedin.com/company/nexbaronprint",
+      divisions.digital.social.instagram,
+      divisions.digital.social.facebook,
+      divisions.digital.social.linkedin,
+      divisions.print.social.instagram,
+      divisions.print.social.facebook,
+      divisions.print.social.linkedin,
     ],
   };
 }

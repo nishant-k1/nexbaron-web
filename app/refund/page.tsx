@@ -1,32 +1,41 @@
 import { type Metadata } from "next";
 
 import { SectionReveal } from "@/components/motion/section-reveal";
+import { getBusinessProfile } from "@/lib/business-profile";
 
 export const metadata: Metadata = {
   title: "Refund & Cancellation Policy",
   description: "Refund and cancellation policy for Nexbaron Digital and Nexbaron Print orders.",
 };
 
-const sections = [
-  {
-    title: "Digital Services",
-    body: "Nexbaron Digital plans begin with a one-time build fee and a monthly care subscription. You may cancel your monthly subscription anytime after the minimum term; cancellation takes effect from the next billing cycle. The one-time build fee is refundable in full if you cancel within 24 hours of payment and before any build work has begun.",
-  },
-  {
-    title: "Print Orders",
-    body: "Nexbaron Print orders are manufactured to your specifications and generally cannot be resold. Custom print orders may be cancelled for a full refund before production begins. Once printing has started, orders are non-refundable except in cases of a manufacturing defect on our side.",
-  },
-  {
-    title: "Defective or Damaged Goods",
-    body: "If your print order arrives damaged or with a production defect, contact us within 7 days of delivery with photos. We will reprint the affected quantity at no cost or issue a proportionate refund.",
-  },
-  {
-    title: "How to Request a Refund",
-    body: "Email the relevant division — digital@nexbaron.com for digital services or print@nexbaron.com for print orders — with your order or invoice number. Approved refunds are returned to the original payment method within 7–10 business days.",
-  },
-];
+function buildSections(digitalEmail: string, printEmail: string) {
+  return [
+    {
+      title: "Digital Services",
+      body: "Nexbaron Digital plans begin with a one-time build fee and a monthly care subscription. You may cancel your monthly subscription anytime after the minimum term; cancellation takes effect from the next billing cycle. The one-time build fee is refundable in full if you cancel within 24 hours of payment and before any build work has begun.",
+    },
+    {
+      title: "Print Orders",
+      body: "Nexbaron Print orders are manufactured to your specifications and generally cannot be resold. Custom print orders may be cancelled for a full refund before production begins. Once printing has started, orders are non-refundable except in cases of a manufacturing defect on our side.",
+    },
+    {
+      title: "Defective or Damaged Goods",
+      body: "If your print order arrives damaged or with a production defect, contact us within 7 days of delivery with photos. We will reprint the affected quantity at no cost or issue a proportionate refund.",
+    },
+    {
+      title: "How to Request a Refund",
+      body: `Email the relevant division — ${digitalEmail} for digital services or ${printEmail} for print orders — with your order or invoice number. Approved refunds are returned to the original payment method within 7–10 business days.`,
+    },
+  ];
+}
 
-export default function RefundPage() {
+export default async function RefundPage() {
+  const [digital, print] = await Promise.all([
+    getBusinessProfile("digital"),
+    getBusinessProfile("print"),
+  ]);
+  const sections = buildSections(digital.email, print.email);
+
   return (
     <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-teal-500/10 via-slate-800/20 to-amber-500/10 rounded-full blur-[160px] pointer-events-none" />
