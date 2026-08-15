@@ -16,7 +16,7 @@ import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Pricing | Fixed-Price Growth Plans | Nexbaron Digital",
   description:
-    "Three fixed-price plans for local businesses: Launch, Growth, and Scale. One-time build fee plus a simple monthly care plan. No hidden costs, no lock-in.",
+    "Fixed-price plans for local businesses: Launch, Growth, Scale, and AI Growth. One-time build fee plus a simple monthly care plan. No hidden costs, no lock-in.",
   alternates: { canonical: "/digital/pricing" },
   openGraph: {
     title: "Pricing | Nexbaron Digital",
@@ -28,25 +28,33 @@ export const metadata: Metadata = {
 
 interface ComparisonRow {
   feature: string;
-  launch: boolean;
-  growth: boolean;
-  scale: boolean;
+  included: boolean[];
 }
 
+// A service is included in a plan's column when the plan is either the
+// service's own tier or genuinely inherits it — i.e. every tier between the
+// owning tier and that column is `inherited` (Launch ⊂ Growth ⊂ Scale).
+// Standalone tiers (e.g. AI Growth) never inherit lower-tier services.
 function buildComparisonRows(plans: Plan[]): ComparisonRow[] {
   const standard = plans.filter((p) => p.id !== "custom");
   const rows: ComparisonRow[] = [];
   const seen = new Set<string>();
-  standard.forEach((plan, index) => {
+  standard.forEach((plan, ownerIndex) => {
     for (const svc of plan.services) {
       if (seen.has(svc.id)) continue;
       seen.add(svc.id);
-      rows.push({
-        feature: svc.label,
-        launch: index <= 0,
-        growth: index <= 1,
-        scale: index <= 2,
+      const included = standard.map((_, colIndex) => {
+        if (colIndex === ownerIndex) return true;
+        let chainOk = true;
+        for (let j = ownerIndex + 1; j <= colIndex; j++) {
+          if (!standard[j]!.inherited) {
+            chainOk = false;
+            break;
+          }
+        }
+        return chainOk;
       });
+      rows.push({ feature: svc.label, included });
     }
   });
   return rows;
@@ -119,19 +127,17 @@ export default async function DigitalServicesPage() {
               Growth Plans
             </span>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-              Three Plans. One Price Each.
+              Simple Plans. One Price Each.
             </h2>
             <p className="text-sm text-slate-300 mt-4">
-              Each plan includes a website, hosting, and support. Pick the stage your business is at
-              — you can always move up.
+              Launch and Growth build your web presence, Scale adds a dedicated growth team, and AI
+              Growth runs your reviews, chat, content, and leads on autopilot. You can always move
+              up.
             </p>
           </div>
 
           <PlansGrid plans={plans} />
         </section>
-
-        {/* Launch Timeline */}
-        <LaunchTimelineSection plans={plans} />
 
         {/* Comparison Table */}
         <section className="py-16 border-t border-white/10">
@@ -141,8 +147,8 @@ export default async function DigitalServicesPage() {
             </span>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">What You Get</h2>
             <p className="text-sm text-slate-300 mt-4">
-              Same inclusions, three levels of growth. Pick the one that matches where your business
-              is today.
+              Every lower tier carries into the one above it, and AI Growth stands on its own. Pick
+              the plan that matches where your business is today.
             </p>
           </div>
 
@@ -183,7 +189,7 @@ export default async function DigitalServicesPage() {
                     <td className="sticky left-0 bg-slate-950 px-6 py-3.5 text-slate-300 z-10">
                       {row.feature}
                     </td>
-                    {[row.launch, row.growth, row.scale].map((included, colIndex) => (
+                    {row.included.map((included, colIndex) => (
                       <td key={colIndex} className="px-6 py-3.5 text-center">
                         {included ? (
                           <>
@@ -209,6 +215,8 @@ export default async function DigitalServicesPage() {
             </table>
           </div>
         </section>
+
+        <LaunchTimelineSection plans={plans} />
       </div>
     </div>
   );

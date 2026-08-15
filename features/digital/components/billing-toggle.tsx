@@ -38,7 +38,13 @@ export function BillingToggle({
         >
           {cycle === "monthly" ? "Monthly" : "Annual"}
           {cycle === "annual" && (
-            <span className="ml-1.5 text-[10px] font-bold text-emerald-400">2 mo free</span>
+            <span
+              className={`ml-1.5 text-[10px] font-bold ${
+                value === "annual" ? "text-slate-950/70" : "text-emerald-400"
+              }`}
+            >
+              2 mo free
+            </span>
           )}
         </button>
       ))}

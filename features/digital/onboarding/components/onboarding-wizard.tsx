@@ -48,7 +48,7 @@ import { buildWhatsAppLink } from "@/lib/divisions";
 import { getDraft, saveDraft, selectionToDraftState, type DraftFields } from "@/lib/draft";
 import { getIcon } from "@/lib/icon-map";
 
-type PlanId = "launch" | "growth" | "scale";
+type PlanId = "launch" | "growth" | "scale" | "ai-growth";
 
 const wizardSchema = z.object({
   plan: z.string().min(1, "Select a plan"),

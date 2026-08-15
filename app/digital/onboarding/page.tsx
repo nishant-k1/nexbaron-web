@@ -51,7 +51,7 @@ export default function DigitalOnboardingPage({
         ? "monthly"
         : undefined;
 
-  if (!initialPlan || !["launch", "growth", "scale"].includes(initialPlan)) {
+  if (!initialPlan || !["launch", "growth", "scale", "ai-growth"].includes(initialPlan)) {
     redirect("/digital/pricing");
   }
 

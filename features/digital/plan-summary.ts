@@ -74,7 +74,8 @@ export function computePrepared(
   let cumAnnual = 0;
   let cumSelectedCount = 0;
 
-  for (const plan of plans) {
+  for (let i = 0; i < plans.length; i++) {
+    const plan = plans[i]!;
     const selection = byId(plan.id);
 
     let ownSetup = 0;
@@ -147,9 +148,16 @@ export function computePrepared(
       inherited,
     });
 
-    cumSetup = oneTimeTotal;
-    cumMonthly = monthlyTotal;
-    cumAnnual = annualTotal;
+    const next = plans[i + 1];
+    if (plan.inherited || (next && next.inherited)) {
+      cumSetup = oneTimeTotal;
+      cumMonthly = monthlyTotal;
+      cumAnnual = annualTotal;
+    } else {
+      cumSetup = 0;
+      cumMonthly = 0;
+      cumAnnual = 0;
+    }
     cumSelectedCount =
       ownSelected + (plan.inherited && selection.inheritedOn ? cumSelectedCount : 0);
   }
@@ -173,12 +181,32 @@ export function collectBuildServices(
   const selection = byId(planId);
   const services: PlanService[] = [];
 
-  if (idx > 0) {
-    const lower = plans[idx - 1];
-    if (lower) {
-      const lowerSelection = byId(lower.id);
-      if (selection.inheritedOn || lowerSelection.inheritedOn) {
-        services.push(...collectBuildServices(plans, byId, lower.id));
+  for (let i = 0; i < idx; i++) {
+    // A lower tier is included only when it is a real ancestor of the chosen
+    // plan, i.e. every tier between it and the chosen one is `inherited`
+    // (Launch ⊂ Growth ⊂ Scale). Standalone tiers (e.g. AI Growth) never pull
+    // in lower-tier services.
+    let chainOk = true;
+    for (let j = i + 1; j <= idx; j++) {
+      const tier = plans[j];
+      if (!tier?.inherited) {
+        chainOk = false;
+        break;
+      }
+    }
+    if (!chainOk) continue;
+
+    const lower = plans[i]!;
+    const lowerSelection = byId(lower.id);
+    if (selection.inheritedOn || lowerSelection.inheritedOn) {
+      for (const s of lower.services) {
+        if (lowerSelection.selected.has(s.id)) services.push(s);
+      }
+      for (const a of lower.addOns) {
+        if (lowerSelection.addOns.has(a.id)) {
+          const count = Math.max(1, lowerSelection.addOnCounts[a.id] ?? 1);
+          for (let c = 0; c < count; c++) services.push(a);
+        }
       }
     }
   }
