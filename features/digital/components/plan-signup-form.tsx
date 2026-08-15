@@ -3,7 +3,12 @@
 import { X, Loader2, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { formatINR, type Plan } from "@/features/digital/plans";
+import {
+  cycleSuffix,
+  formatINR,
+  type BillingCycleChoice,
+  type Plan,
+} from "@/features/digital/plans";
 
 interface FormData {
   name: string;
@@ -14,8 +19,18 @@ interface FormData {
   description: string;
 }
 
-export function PlanSignupForm({ plan, onClose }: { plan: Plan; onClose: () => void }) {
+export function PlanSignupForm({
+  plan,
+  billingCycle,
+  onClose,
+}: {
+  plan: Plan;
+  billingCycle: BillingCycleChoice;
+  onClose: () => void;
+}) {
   const planId = plan.id;
+  const recurringAmount =
+    billingCycle === "annual" ? (plan.pricing?.annual ?? 0) : (plan.pricing?.monthly ?? 0);
   const [step, setStep] = useState<"form" | "submitting" | "done">("form");
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -75,7 +90,7 @@ export function PlanSignupForm({ plan, onClose }: { plan: Plan; onClose: () => v
       const res = await fetch("/api/digital/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, planId }),
+        body: JSON.stringify({ ...form, planId, billingCycle }),
       });
 
       const data = await res.json();
@@ -113,8 +128,8 @@ export function PlanSignupForm({ plan, onClose }: { plan: Plan; onClose: () => v
             </h2>
             {step !== "done" && (
               <p className="text-xs text-slate-400 mt-0.5">
-                {formatINR(plan.pricing?.setup ?? 0)} one-time +{" "}
-                {formatINR(plan.pricing?.monthly ?? 0)}/month
+                {formatINR(plan.pricing?.setup ?? 0)} one-time + {formatINR(recurringAmount)}
+                {cycleSuffix(billingCycle)}
               </p>
             )}
           </div>

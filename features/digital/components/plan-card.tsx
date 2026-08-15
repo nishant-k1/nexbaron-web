@@ -3,26 +3,39 @@
 import { ArrowRight, Check } from "lucide-react";
 
 import type { CatalogService } from "@/features/digital/catalog";
-import { formatINR, svcMonthly, svcSetup, type Plan } from "@/features/digital/plans";
+import {
+  cycleSuffix,
+  formatINR,
+  svcCycle,
+  svcSetup,
+  type BillingCycleChoice,
+  type Plan,
+} from "@/features/digital/plans";
 import { getIcon } from "@/lib/icon-map";
 
 interface PlanCardProps {
   plan: Plan;
+  billingCycle: BillingCycleChoice;
   onSelectPlan: () => void;
 }
 
-function priceLabel(svc: CatalogService): string {
+function priceLabel(svc: CatalogService, cycle: BillingCycleChoice): string {
   const ot = svcSetup(svc);
-  const mo = svcMonthly(svc);
-  if (ot && mo) return `${formatINR(ot)} one-time + ${formatINR(mo)}/mo`;
-  if (mo) return `${formatINR(mo)}/mo`;
+  const rec = svcCycle(svc, cycle);
+  if (ot && rec) return `${formatINR(ot)} one-time + ${formatINR(rec)}${cycleSuffix(cycle)}`;
+  if (rec) return `${formatINR(rec)}${cycleSuffix(cycle)}`;
   if (ot) return `${formatINR(ot)} one-time`;
   return "";
 }
 
-export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
+export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
   const Icon = getIcon(plan.icon);
   const isCustom = plan.id === "custom";
+  const annual = billingCycle === "annual";
+  const recurringAmount = annual ? (plan.pricing?.annual ?? 0) : (plan.pricing?.monthly ?? 0);
+  const annualSavings = annual
+    ? (plan.pricing?.monthly ?? 0) * 12 - (plan.pricing?.annual ?? 0)
+    : 0;
 
   return (
     <div
@@ -64,12 +77,19 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
             </span>
             <span className="text-xs text-slate-400 ml-1">one-time</span>
             <div className="text-sm text-slate-300 mt-0.5">
-              + {formatINR(plan.pricing?.monthly ?? 0)}
-              <span className="text-xs text-slate-400">/month</span>
+              + {formatINR(recurringAmount)}
+              <span className="text-xs text-slate-400">{cycleSuffix(billingCycle)}</span>
+              {annual && annualSavings > 0 && (
+                <span className="ml-2 text-[10px] font-semibold text-emerald-400">
+                  Save {formatINR(annualSavings)}/yr
+                </span>
+              )}
             </div>
             {plan.minimumMonths && (
               <div className="text-[10px] text-slate-400 mt-1">
-                {plan.minimumMonths}-month minimum · cancel anytime after
+                {annual
+                  ? "Annual care · billed once a year"
+                  : `${plan.minimumMonths}-month minimum · cancel anytime after`}
               </div>
             )}
           </>
@@ -84,9 +104,14 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
             <div className="min-w-0">
               <span className="text-sm text-slate-400">{plan.inherited.label}</span>
               <span className="block text-[11px] text-slate-400 mt-0.5">
-                +{formatINR((plan.pricing?.setup ?? 0) - (plan.pricing?.ownSetup ?? 0))} one-time ·
-                +{formatINR((plan.pricing?.monthly ?? 0) - (plan.pricing?.ownMonthly ?? 0))}
-                /mo
+                +{formatINR((plan.pricing?.setup ?? 0) - (plan.pricing?.ownSetup ?? 0))} one-time ·{" "}
+                +
+                {formatINR(
+                  annual
+                    ? (plan.pricing?.annual ?? 0) - (plan.pricing?.ownAnnual ?? 0)
+                    : (plan.pricing?.monthly ?? 0) - (plan.pricing?.ownMonthly ?? 0),
+                )}
+                {cycleSuffix(billingCycle)}
               </span>
             </div>
           </div>
@@ -104,7 +129,7 @@ export function PlanCard({ plan, onSelectPlan }: PlanCardProps) {
               </span>
               {!isCustom && (
                 <span className="block text-[11px] text-slate-400 tabular-nums mt-0.5">
-                  {priceLabel(svc)}
+                  {priceLabel(svc, billingCycle)}
                 </span>
               )}
             </div>

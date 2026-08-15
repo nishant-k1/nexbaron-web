@@ -1,5 +1,7 @@
 import { apiRequest } from "@/lib/api";
 
+export type BillingCycleChoice = "monthly" | "annual";
+
 export interface CheckoutCustomer {
   name: string;
   email?: string;
@@ -30,7 +32,11 @@ export interface CreateCheckoutResponse {
   razorpayOrderId: string;
   razorpayKeyId: string;
   devMode?: boolean;
+  billingCycle: BillingCycleChoice;
   amount: number;
+  setupTotal: number;
+  monthlyTotal: number;
+  annualTotal: number;
   launchDate: string;
   launchDays: number;
   timelineMode?: "phased";
@@ -60,6 +66,7 @@ export interface VerifyPaymentResponse {
 
 export async function createCheckout(payload: {
   planId: string;
+  billingCycle: BillingCycleChoice;
   selections: CheckoutSelections;
   customer: CheckoutCustomer;
 }): Promise<CreateCheckoutResponse> {

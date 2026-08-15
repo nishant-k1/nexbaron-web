@@ -1,5 +1,6 @@
 import {
   DEFAULT_EXPECTATIONS,
+  svcAnnual,
   svcMonthly,
   svcSetup,
   type Plan,
@@ -20,6 +21,7 @@ export interface InheritedView {
   label: string;
   setup: number;
   monthly: number;
+  annual: number;
   active: boolean;
   anySelected: boolean;
 }
@@ -28,6 +30,7 @@ export interface PreparedPlan {
   plan: Plan;
   oneTimeTotal: number;
   monthlyTotal: number;
+  annualTotal: number;
   serviceSelection: Record<string, boolean>;
   addOnSelection: Record<string, boolean>;
   addOnCounts: Record<string, number>;
@@ -68,6 +71,7 @@ export function computePrepared(
 
   let cumSetup = 0;
   let cumMonthly = 0;
+  let cumAnnual = 0;
   let cumSelectedCount = 0;
 
   for (const plan of plans) {
@@ -75,38 +79,45 @@ export function computePrepared(
 
     let ownSetup = 0;
     let ownMonthly = 0;
+    let ownAnnual = 0;
     let ownSelected = 0;
     for (const svc of plan.services) {
       if (selection.selected.has(svc.id)) {
         ownSetup += svcSetup(svc);
         ownMonthly += svcMonthly(svc);
+        ownAnnual += svcAnnual(svc);
         ownSelected += 1;
       }
     }
 
     let addSetup = 0;
     let addMonthly = 0;
+    let addAnnual = 0;
     for (const addOn of plan.addOns) {
       if (selection.addOns.has(addOn.id)) {
         const count = Math.max(1, selection.addOnCounts[addOn.id] ?? 1);
         addSetup += svcSetup(addOn) * count;
         addMonthly += svcMonthly(addOn) * count;
+        addAnnual += svcAnnual(addOn) * count;
       }
     }
 
     let inherited: InheritedView | null = null;
     let inheritedSetup = 0;
     let inheritedMonthly = 0;
+    let inheritedAnnual = 0;
     if (plan.inherited) {
       const active = selection.inheritedOn;
       if (active) {
         inheritedSetup = cumSetup;
         inheritedMonthly = cumMonthly;
+        inheritedAnnual = cumAnnual;
       }
       inherited = {
         label: plan.inherited.label,
         setup: cumSetup,
         monthly: cumMonthly,
+        annual: cumAnnual,
         active,
         anySelected: cumSelectedCount > 0,
       };
@@ -114,6 +125,7 @@ export function computePrepared(
 
     const oneTimeTotal = ownSetup + addSetup + inheritedSetup;
     const monthlyTotal = ownMonthly + addMonthly + inheritedMonthly;
+    const annualTotal = ownAnnual + addAnnual + inheritedAnnual;
 
     const serviceSelection: Record<string, boolean> = {};
     for (const svc of plan.services) {
@@ -128,6 +140,7 @@ export function computePrepared(
       plan,
       oneTimeTotal,
       monthlyTotal,
+      annualTotal,
       serviceSelection,
       addOnSelection,
       addOnCounts: selection.addOnCounts,
@@ -136,6 +149,7 @@ export function computePrepared(
 
     cumSetup = oneTimeTotal;
     cumMonthly = monthlyTotal;
+    cumAnnual = annualTotal;
     cumSelectedCount =
       ownSelected + (plan.inherited && selection.inheritedOn ? cumSelectedCount : 0);
   }

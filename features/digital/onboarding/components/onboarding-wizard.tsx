@@ -26,13 +26,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { usePlans } from "@/features/digital/catalog";
+import { BillingToggle } from "@/features/digital/components/billing-toggle";
 import { PlanServicesEditor } from "@/features/digital/components/plan-services-editor";
 import {
   createCheckout,
   verifyPayment,
   type VerifyPaymentResponse,
 } from "@/features/digital/payments";
-import { loadPlanSelection } from "@/features/digital/plan-selection";
+import { loadPlanSelection, savePlanSelection } from "@/features/digital/plan-selection";
 import {
   buildStageSchedule,
   computeLaunchTimeline,
@@ -41,7 +42,7 @@ import {
   selectionFromSaved,
   type PlanSelection,
 } from "@/features/digital/plan-summary";
-import { formatINR } from "@/features/digital/plans";
+import { formatINR, cycleSuffix, type BillingCycleChoice } from "@/features/digital/plans";
 import { loadRazorpayScript, type RazorpayPaymentResponse } from "@/features/digital/razorpay";
 import { buildWhatsAppLink } from "@/lib/divisions";
 import { getDraft, saveDraft, selectionToDraftState, type DraftFields } from "@/lib/draft";
@@ -76,7 +77,13 @@ const visitorActions = [
   "Send an enquiry",
 ];
 
-export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
+export function OnboardingWizard({
+  initialPlan,
+  initialBilling,
+}: {
+  initialPlan?: string;
+  initialBilling?: BillingCycleChoice;
+}) {
   const router = useRouter();
   const { user, initialized, openSignIn } = useAuth();
   const { plans } = usePlans();
@@ -105,6 +112,21 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
       plans.map((plan) => [plan.id, selectionFromSaved(plan, loaded?.plans[plan.id])]),
     );
   });
+
+  const [billingCycle, setBillingCycle] = useState<BillingCycleChoice>(() => {
+    if (initialBilling === "annual" || initialBilling === "monthly") return initialBilling;
+    return loadPlanSelection()?.billingCycle ?? "monthly";
+  });
+
+  const setBilling = (cycle: BillingCycleChoice) => {
+    setBillingCycle(cycle);
+    const prev = loadPlanSelection();
+    savePlanSelection({
+      planId: prev?.planId ?? activePlanId,
+      billingCycle: cycle,
+      plans: prev?.plans ?? {},
+    });
+  };
 
   const getSelection = useCallback(
     (id: string): PlanSelection => selections[id] ?? createDefaultSelection(getPlan(id)),
@@ -201,6 +223,8 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
         if (cancelled) return;
         setLoadedDraft(true);
         if (draft) {
+          if (draft.billingCycle)
+            setBillingCycle(draft.billingCycle === "annual" ? "annual" : "monthly");
           if (draft.planId) setActivePlanId((draft.planId as PlanId) || "launch");
           setSelections((prev) => ({
             ...prev,
@@ -269,6 +293,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
       try {
         await saveDraft({
           planId,
+          billingCycle,
           plans: Object.fromEntries(
             plans.map((plan) => [plan.id, selectionToDraftState(getSelection(plan.id))]),
           ),
@@ -329,6 +354,8 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     plan: chosen.plan,
     oneTimeTotal: chosen.oneTimeTotal,
     monthlyTotal: chosen.monthlyTotal,
+    annualTotal: chosen.annualTotal,
+    recurringTotal: billingCycle === "annual" ? chosen.annualTotal : chosen.monthlyTotal,
     services: chosen.plan.services.filter((s) => chosen.serviceSelection[s.id]),
     addOns: chosen.plan.addOns
       .filter((s) => chosen.addOnSelection[s.id])
@@ -338,6 +365,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     inheritedPrice: {
       setup: chosen.inherited?.setup ?? 0,
       monthly: chosen.inherited?.monthly ?? 0,
+      annual: chosen.inherited?.annual ?? 0,
     },
   };
 
@@ -388,6 +416,7 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
     try {
       const checkout = await createCheckout({
         planId,
+        billingCycle,
         selections: {
           planId,
           plans: Object.fromEntries(
@@ -640,8 +669,8 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                         <span className="text-xs text-slate-400 ml-1 font-normal">one-time</span>
                       </div>
                       <div className="text-sm text-slate-300 mt-0.5">
-                        + {formatINR(summary.monthlyTotal)}
-                        <span className="text-xs text-slate-400">/month</span>
+                        + {formatINR(summary.recurringTotal)}
+                        <span className="text-xs text-slate-400">{cycleSuffix(billingCycle)}</span>
                       </div>
                       <div className="text-[10px] font-mono text-teal-400 mt-2">{launchLabel}</div>
                     </div>
@@ -657,6 +686,10 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                   </div>
                 </div>
 
+                <div className="mt-3">
+                  <BillingToggle value={billingCycle} onChange={setBilling} />
+                </div>
+
                 {summary.inheritedActive && summary.inheritedLabel && (
                   <div className="mt-3 p-4 rounded-xl border border-teal-500/20 bg-teal-500/5">
                     <div className="text-xs font-semibold text-teal-200">
@@ -664,7 +697,12 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                     </div>
                     <div className="text-[10px] font-mono text-teal-500/80 mt-0.5">
                       {formatINR(summary.inheritedPrice.setup)} one-time ·{" "}
-                      {formatINR(summary.inheritedPrice.monthly)}/month
+                      {formatINR(
+                        billingCycle === "annual"
+                          ? summary.inheritedPrice.annual
+                          : summary.inheritedPrice.monthly,
+                      )}
+                      {cycleSuffix(billingCycle)}
                     </div>
                   </div>
                 )}
@@ -921,13 +959,16 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
             </div>
 
             <div className="rounded-2xl border border-teal-500/30 bg-teal-500/10 p-6">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
                 <span className="text-sm font-semibold text-white">
                   <Rocket className="w-4 h-4 inline mr-2 text-teal-400" />
                   {plan.name} Plan
                 </span>
-                <span className="text-xs font-mono text-teal-300">{launchLabel}</span>
+                <div className="w-full sm:w-auto">
+                  <BillingToggle value={billingCycle} onChange={setBilling} accent="digital" />
+                </div>
               </div>
+              <span className="text-xs font-mono text-teal-300">{launchLabel}</span>
               <div className="flex flex-wrap items-end justify-between gap-4 mt-4">
                 <div>
                   <div className="text-3xl font-heading font-extrabold text-white">
@@ -935,16 +976,22 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                     <span className="text-xs text-slate-400 ml-1 font-normal">one-time</span>
                   </div>
                   <div className="text-sm text-slate-300 mt-1">
-                    + {formatINR(summary.monthlyTotal)}
-                    <span className="text-xs text-slate-400">/month</span>
+                    + {formatINR(summary.recurringTotal)}
+                    <span className="text-xs text-slate-400">{cycleSuffix(billingCycle)}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs text-slate-400">Pay now</div>
+                  <div className="text-xs text-slate-400">
+                    {billingCycle === "annual" ? "Pay today" : "Pay now"}
+                  </div>
                   <div className="text-xl font-heading font-bold text-teal-300">
                     {formatINR(summary.oneTimeTotal)}
                   </div>
-                  <div className="text-[11px] text-slate-400">Monthly care billed from month 2</div>
+                  <div className="text-[11px] text-slate-400">
+                    {billingCycle === "annual"
+                      ? "Full year of care billed once a year"
+                      : "Monthly care billed from month 2"}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1080,8 +1127,13 @@ export function OnboardingWizard({ initialPlan }: { initialPlan?: string }) {
                         </span>
                       </div>
                       <div className="text-xs text-slate-300 mt-0.5">
-                        + {formatINR(prep.monthlyTotal)}
-                        <span className="text-[10px] text-slate-400">/month</span>
+                        +{" "}
+                        {formatINR(
+                          billingCycle === "annual" ? prep.annualTotal : prep.monthlyTotal,
+                        )}
+                        <span className="text-[10px] text-slate-400">
+                          {cycleSuffix(billingCycle)}
+                        </span>
                       </div>
                       <div className="text-[10px] font-mono text-teal-400 mt-2">
                         {prep.plan.timelineMode === "phased"

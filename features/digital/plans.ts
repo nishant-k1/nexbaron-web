@@ -35,12 +35,26 @@ export function formatINR(n: number): string {
   }).format(n);
 }
 
+export type BillingCycleChoice = "monthly" | "annual";
+
 export function svcSetup(svc: CatalogService): number {
   return svc.aggregate?.selling.setup ?? 0;
 }
 
 export function svcMonthly(svc: CatalogService): number {
   return svc.aggregate?.selling.monthly ?? 0;
+}
+
+export function svcAnnual(svc: CatalogService): number {
+  return svc.aggregate?.selling.annual ?? 0;
+}
+
+export function svcCycle(svc: CatalogService, cycle: BillingCycleChoice): number {
+  return cycle === "annual" ? svcAnnual(svc) : svcMonthly(svc);
+}
+
+export function cycleSuffix(cycle: BillingCycleChoice): string {
+  return cycle === "annual" ? "/year" : "/month";
 }
 
 function fallbackService(
@@ -80,10 +94,10 @@ export const plans: CatalogPlan[] = [
     pricing: {
       setup: 13870,
       monthly: 1154,
-      annual: 0,
+      annual: 7540,
       ownSetup: 13870,
       ownMonthly: 1154,
-      ownAnnual: 0,
+      ownAnnual: 7540,
     },
   },
   {
@@ -126,10 +140,10 @@ export const plans: CatalogPlan[] = [
     pricing: {
       setup: 15570,
       monthly: 12809,
-      annual: 0,
+      annual: 34590,
       ownSetup: 1700,
       ownMonthly: 11655,
-      ownAnnual: 0,
+      ownAnnual: 27050,
     },
   },
   {
@@ -165,10 +179,10 @@ export const plans: CatalogPlan[] = [
     pricing: {
       setup: 15570,
       monthly: 31844,
-      annual: 0,
+      annual: 52440,
       ownSetup: 0,
       ownMonthly: 19035,
-      ownAnnual: 0,
+      ownAnnual: 17850,
     },
   },
   {

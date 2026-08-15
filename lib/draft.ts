@@ -1,4 +1,5 @@
 import type { PlanSelection } from "@/features/digital/plan-summary";
+import type { BillingCycleChoice } from "@/features/digital/plans";
 import { apiRequest } from "@/lib/api";
 
 export interface DraftFields {
@@ -23,6 +24,7 @@ export interface DraftPlanState {
 
 export interface ServerDraft {
   planId: string;
+  billingCycle: BillingCycleChoice;
   planSelection: DraftPlanState;
   plans: Record<string, DraftPlanState>;
   fields: DraftFields;
@@ -32,6 +34,7 @@ export interface ServerDraft {
 
 export type DraftPayload = Partial<{
   planId: string;
+  billingCycle: BillingCycleChoice;
   planSelection: DraftPlanState;
   plans: Record<string, DraftPlanState>;
   fields: DraftFields;

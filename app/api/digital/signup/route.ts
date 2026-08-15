@@ -7,7 +7,7 @@ const HUB_URL = process.env.NEXT_PUBLIC_HUB_URL || "https://hub.nexbaron.com";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, company, address, description, planId } = body;
+    const { name, email, phone, company, address, description, planId, billingCycle } = body;
 
     if (!name?.trim() || !email?.trim() || !phone?.trim()) {
       return NextResponse.json(
@@ -15,6 +15,8 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
+
+    const normalizedCycle = billingCycle === "annual" ? "annual" : "monthly";
 
     const backendUrl = getApiUrl("digital");
 
@@ -53,9 +55,10 @@ export async function POST(request: NextRequest) {
       }),
     }).catch(() => {});
 
+    const params = new URLSearchParams({ plan: planId ?? "", billing: normalizedCycle });
     const hubUrl = signupData.token
-      ? `${HUB_URL}/digital?token=${signupData.token}`
-      : `${HUB_URL}/digital/login`;
+      ? `${HUB_URL}/digital?token=${signupData.token}&${params.toString()}`
+      : `${HUB_URL}/digital/login?${params.toString()}`;
 
     return NextResponse.json({ success: true, hubUrl });
   } catch (error) {

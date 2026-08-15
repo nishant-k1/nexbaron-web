@@ -41,9 +41,15 @@ const steps = [
 export default function DigitalOnboardingPage({
   searchParams,
 }: {
-  searchParams: { plan?: string };
+  searchParams: { plan?: string; billing?: string };
 }) {
   const initialPlan = searchParams.plan;
+  const initialBilling =
+    searchParams.billing === "annual"
+      ? "annual"
+      : searchParams.billing === "monthly"
+        ? "monthly"
+        : undefined;
 
   if (!initialPlan || !["launch", "growth", "scale"].includes(initialPlan)) {
     redirect("/digital/pricing");
@@ -111,7 +117,7 @@ export default function DigitalOnboardingPage({
 
           <div className="lg:col-span-8">
             <div id="onboarding" className="scroll-mt-28">
-              <OnboardingWizard initialPlan={initialPlan} />
+              <OnboardingWizard initialPlan={initialPlan} initialBilling={initialBilling} />
             </div>{" "}
           </div>
         </div>
