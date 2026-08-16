@@ -2,12 +2,9 @@
 
 import { ArrowRight, Check } from "lucide-react";
 
-import type { CatalogService } from "@/features/digital/catalog";
 import {
   cycleSuffix,
   formatINR,
-  svcCycle,
-  svcSetup,
   type BillingCycleChoice,
   type Plan,
 } from "@/features/digital/plans";
@@ -19,23 +16,12 @@ interface PlanCardProps {
   onSelectPlan: () => void;
 }
 
-function priceLabel(svc: CatalogService, cycle: BillingCycleChoice): string {
-  const ot = svcSetup(svc);
-  const rec = svcCycle(svc, cycle);
-  if (ot && rec) return `${formatINR(ot)} one-time + ${formatINR(rec)}${cycleSuffix(cycle)}`;
-  if (rec) return `${formatINR(rec)}${cycleSuffix(cycle)}`;
-  if (ot) return `${formatINR(ot)} one-time`;
-  return "";
-}
-
 export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
   const Icon = getIcon(plan.icon);
   const isCustom = plan.id === "custom";
+  const hasPricing = Boolean(plan.pricing);
   const annual = billingCycle === "annual";
   const recurringAmount = annual ? (plan.pricing?.annual ?? 0) : (plan.pricing?.monthly ?? 0);
-  const annualSavings = annual
-    ? (plan.pricing?.monthly ?? 0) * 12 - (plan.pricing?.annual ?? 0)
-    : 0;
 
   return (
     <div
@@ -63,7 +49,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
 
       {/* Price */}
       <div className="mb-4">
-        {isCustom ? (
+        {isCustom || !hasPricing ? (
           <div className="space-y-1">
             <span className="text-xl font-heading font-extrabold text-teal-300">
               Let&apos;s Talk
@@ -79,17 +65,12 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
             <div className="text-sm text-slate-300 mt-0.5">
               + {formatINR(recurringAmount)}
               <span className="text-xs text-slate-400">{cycleSuffix(billingCycle)}</span>
-              {annual && annualSavings > 0 && (
-                <span className="ml-2 text-[10px] font-semibold text-emerald-400">
-                  Save {formatINR(annualSavings)}/yr
-                </span>
-              )}
             </div>
-            {plan.minimumMonths && (
+            {plan.pricing?.minimumMonths && (
               <div className="text-[10px] text-slate-400 mt-1">
                 {annual
                   ? "Annual care · billed once a year"
-                  : `${plan.minimumMonths}-month minimum · cancel anytime after`}
+                  : `${plan.pricing.minimumMonths}-month minimum · cancel anytime after`}
               </div>
             )}
           </>
@@ -98,22 +79,10 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
 
       {/* Features list */}
       <div className="mb-6 pt-4 border-t border-white/10 space-y-2.5 flex-1">
-        {plan.inherited && (
+        {plan.inherited && hasPricing && (
           <div className="flex items-start gap-2.5 pb-2.5 border-b border-white/5">
             <Check className="w-4 h-4 text-teal-500/60 shrink-0 mt-0.5" />
-            <div className="min-w-0">
-              <span className="text-sm text-slate-400">{plan.inherited.label}</span>
-              <span className="block text-[11px] text-slate-400 mt-0.5">
-                +{formatINR((plan.pricing?.setup ?? 0) - (plan.pricing?.ownSetup ?? 0))} one-time ·{" "}
-                +
-                {formatINR(
-                  annual
-                    ? (plan.pricing?.annual ?? 0) - (plan.pricing?.ownAnnual ?? 0)
-                    : (plan.pricing?.monthly ?? 0) - (plan.pricing?.ownMonthly ?? 0),
-                )}
-                {cycleSuffix(billingCycle)}
-              </span>
-            </div>
+            <span className="text-sm text-slate-400">{plan.inherited.label}</span>
           </div>
         )}
         {plan.services.map((svc) => (
@@ -127,10 +96,8 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
               >
                 {svc.label}
               </span>
-              {!isCustom && (
-                <span className="block text-[11px] text-slate-400 tabular-nums mt-0.5">
-                  {priceLabel(svc, billingCycle)}
-                </span>
+              {svc.description && (
+                <span className="block text-[11px] text-slate-400 mt-0.5">{svc.description}</span>
               )}
             </div>
           </div>

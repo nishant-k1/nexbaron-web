@@ -20,10 +20,12 @@ export function PricingPreview({ plans }: { plans: Plan[] }) {
         >
           <h3 className="text-lg font-heading font-bold text-white mb-1">{plan.name}</h3>
           <div className="text-3xl font-heading font-extrabold text-teal-300 mb-1">
-            {formatINR(plan.pricing?.setup ?? 0)}
+            {plan.pricing ? formatINR(plan.pricing.setup) : "Let's Talk"}
           </div>
           <div className="text-xs text-slate-500 mb-4">
-            + {formatINR(plan.pricing?.monthly ?? 0)} monthly care
+            {plan.pricing
+              ? `+ ${formatINR(plan.pricing.monthly)} monthly care`
+              : "Scoped after consultation"}
           </div>
           <p className="text-sm text-slate-400 leading-relaxed mb-4">{plan.tagline}</p>
           <Link

@@ -14,13 +14,13 @@ import type { Plan } from "@/features/digital/plans";
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Pricing | Fixed-Price Growth Plans | Nexbaron Digital",
+  title: "Pricing | Growth Plans | Nexbaron Digital",
   description:
-    "Fixed-price plans for local businesses: Launch, Growth, and Scale. One-time build fee plus a simple monthly care plan. No hidden costs, no lock-in.",
+    "Growth plan inclusions for local businesses: Launch, Growth, Scale, and Custom. Pricing is scoped after consultation based on your requirements.",
   alternates: { canonical: "/digital/pricing" },
   openGraph: {
     title: "Pricing | Nexbaron Digital",
-    description: "One-time build. Simple monthly care. No hidden costs, no lock-in.",
+    description: "Plan inclusions scoped around your business requirements.",
     ...divisionOpenGraph("digital"),
   },
   twitter: divisionTwitter("digital"),
@@ -77,9 +77,9 @@ export default async function DigitalServicesPage() {
       <PageHero
         accent="digital"
         eyebrow="Pricing"
-        title="Simple Pricing."
-        highlight="No Hidden Costs."
-        description="Everything you need is included. Pick your plan, answer a few questions, and we set everything up. Cancel anytime — your site and setup are yours forever."
+        title="Choose the right growth plan."
+        highlight="Scope it with us."
+        description="See what each plan includes, then talk to us for a quote based on your exact requirements. No forced package, no hidden work."
         primaryCta={{ label: "Compare Plans Below", href: "#plans" }}
         secondaryCta={{ label: "Already Have a Website?", href: "/digital/contact" }}
       />
@@ -92,11 +92,11 @@ export default async function DigitalServicesPage() {
               Growth Plans
             </span>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-              Simple Plans. One Price Each.
+              Simple Plans. Scoped Pricing.
             </h2>
             <p className="text-sm text-slate-300 mt-4">
-              Launch builds your web presence, Growth gets you found and booked, and Scale adds a
-              dedicated growth team. You can always move up.
+              Launch builds your web presence, Growth gets you found, and Scale adds paid growth
+              campaigns. Each inclusion is loaded from the API plan catalog.
             </p>
           </div>
 

@@ -18,7 +18,9 @@ export function PlansGrid({ plans }: { plans: Plan[] }) {
   const router = useRouter();
 
   const handlePlanSelect = (planId: string) => {
-    if (planId === "custom") {
+    const plan = plans.find((p) => p.id === planId);
+
+    if (planId === "custom" || !plan?.pricing) {
       router.push("/digital/contact");
       return;
     }
@@ -31,9 +33,11 @@ export function PlansGrid({ plans }: { plans: Plan[] }) {
 
   return (
     <>
-      <div className="flex justify-center mb-10">
-        <BillingToggle value={billingCycle} onChange={setBillingCycle} />
-      </div>
+      {plans.some((plan) => plan.pricing) && (
+        <div className="flex justify-center mb-10">
+          <BillingToggle value={billingCycle} onChange={setBillingCycle} />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         {plans.map((plan) => (

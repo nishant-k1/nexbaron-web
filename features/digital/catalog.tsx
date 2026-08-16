@@ -2,26 +2,34 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-import { plans as staticPlans } from "@/features/digital/plans";
 import { getApiUrl } from "@/lib/api";
 
 export interface ServiceItem {
   label: string;
-  costPrice: { setup: number; monthly: number; annual: number }; // INR
-  profitMarginPct: { setup: number; monthly: number; annual: number }; // markup percentage (40 = 40%)
+  costPrice: { setup: number; monthly: number; annual: number }; // INR — vendor/pass-through COGS
+  labourHours?: { setup?: number; monthly?: number; annual?: number }; // our hours per tier
+  hourlyCost?: number; // override for the global labour rate
+  markupPct: { setup: number; monthly: number; annual: number }; // markup percentage (40 = 40%)
   sellingPrice?: { setup?: number; monthly?: number; annual?: number }; // optional INR override
 }
 
 export interface ServiceAggregate {
-  cost: { setup: number; monthly: number; annual: number }; // INR
+  vendor: { setup: number; monthly: number; annual: number }; // INR
+  labour: { setup: number; monthly: number; annual: number }; // INR
+  cost: { setup: number; monthly: number; annual: number }; // INR — vendor + labour
   selling: { setup: number; monthly: number; annual: number }; // INR
-  marginPct: { setup: number; monthly: number; annual: number }; // effective margin percentage
+  grossMarginPct: { setup: number | null; monthly: number | null; annual: number | null }; // null = no modeled cost
+  costCoveredPct: { setup: number; monthly: number; annual: number }; // % of selling backed by modeled cost
 }
 
 export interface CatalogService {
   id: string;
   label: string;
   description?: string;
+  domain?: string;
+  category?: string;
+  service?: string;
+  scope?: Record<string, unknown>;
   items: ServiceItem[];
   clientCostNote?: string;
   aggregate?: ServiceAggregate;
@@ -36,10 +44,8 @@ export interface CatalogService {
 export interface PlanPricing {
   setup: number;
   monthly: number;
-  annual: number;
-  ownSetup: number;
-  ownMonthly: number;
-  ownAnnual: number;
+  annual?: number;
+  minimumMonths?: number;
 }
 
 export interface CatalogPlan {
@@ -50,13 +56,13 @@ export interface CatalogPlan {
   icon: string;
   featured?: boolean;
   inherited?: { label: string };
+  inheritsFrom?: string;
   services: CatalogService[];
   addOns: CatalogService[];
   ctaLabel: string;
   timelineMode?: "phased";
   foundationDays?: number;
   expectations?: { label: string; note: string }[];
-  minimumMonths?: number;
   pricing?: PlanPricing;
 }
 
@@ -65,7 +71,7 @@ interface PlansContextValue {
   loading: boolean;
 }
 
-const CACHE_KEY = "nexbaron-digital-catalog";
+const CACHE_KEY = "nexbaron-digital-catalog-v2";
 const CACHE_TTL = 15 * 60 * 1000;
 
 function readCache(): CatalogPlan[] | null {
@@ -110,7 +116,7 @@ export function usePlans(): PlansContextValue {
 }
 
 export function PlansProvider({ children }: { children: ReactNode }) {
-  const [plans, setPlans] = useState<CatalogPlan[]>(staticPlans);
+  const [plans, setPlans] = useState<CatalogPlan[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

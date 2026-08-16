@@ -65,132 +65,104 @@ function fallbackService(
   return { id, label, items: [], ...opts };
 }
 
-// Pricing mirrors the values computed by the backend enrichCatalog. Do not
-// rely on these for checkout — the server recomputes everything on create-order.
+// Mirrors the API's digital/content/plans.ts. Do not rely on these for
+// checkout — the server recomputes everything on create-order.
 export const plans: CatalogPlan[] = [
   {
     id: "launch",
     name: "Launch",
-    tagline: "A professional website for your business.",
+    tagline: "Build a professional online presence for your business.",
     icon: "Rocket",
-    timeline: "Live in 2–3 days",
+    timeline: "Scoped after consultation",
+    pricing: { setup: 4999, monthly: 999, annual: 11988, minimumMonths: 12 },
     services: [
-      fallbackService("website", "Website — Up to 5 Pages", { deliverDays: 1, stage: "build" }),
-      fallbackService("whatsapp", "WhatsApp Chat Button", { deliverDays: 0, stage: "build" }),
-      fallbackService("gbp", "Google Business Profile — Setup & Verify", {
-        deliverDays: 0.5,
-        parallel: true,
-        stage: "setup",
+      fallbackService("engineering-website-business-website", "Business Website", {
+        description: "Pages: 5",
       }),
-      fallbackService("analytics", "Visit Analytics", {
-        deliverDays: 0.5,
-        parallel: true,
-        stage: "setup",
+      fallbackService("engineering-integrations-whatsapp-integration", "WhatsApp Integration", {
+        description: "Type: contact",
       }),
+      fallbackService("engineering-analytics-web-analytics", "Web Analytics", {
+        description: "Type: basic",
+      }),
+      fallbackService(
+        "digital-marketing-seo-google-business-profile",
+        "Google Business Profile Management",
+        { description: "Type: setup" },
+      ),
     ],
     addOns: [],
-    ctaLabel: "Get Launch",
-    minimumMonths: 3,
-    pricing: {
-      setup: 13580,
-      monthly: 1154,
-      annual: 11540,
-      ownSetup: 13580,
-      ownMonthly: 1154,
-      ownAnnual: 11540,
-    },
+    ctaLabel: "Discuss Launch",
   },
   {
     id: "growth",
     name: "Growth",
-    tagline: "Get found on Google and booked on WhatsApp.",
+    tagline: "Get found online and turn visibility into enquiries.",
     icon: "TrendingUp",
-    timeline: "Live in 2–3 days · ranking builds over 4–8 weeks",
+    timeline: "Monthly growth plan",
     featured: true,
     inherited: { label: "Everything in Launch" },
     services: [
-      fallbackService("gbp-optimise", "Google Business Profile — Optimize & Rank", {
-        deliverDays: 0.5,
-        stage: "setup",
+      fallbackService("digital-marketing-seo-seo", "SEO", { description: "Type: localBusiness" }),
+      fallbackService(
+        "digital-marketing-social-media-social-media-management",
+        "Social Media Management",
+        { description: "Posts Per Month: 8" },
+      ),
+      fallbackService(
+        "digital-marketing-content-marketing-social-media-creatives",
+        "Social Media Creatives",
+        { description: "Creatives Per Month: 8" },
+      ),
+      fallbackService("digital-marketing-lead-generation-lead-generation", "Lead Generation", {
+        description: "Campaigns Per Month: 1",
       }),
-      fallbackService("local-seo", "Local SEO — Google Maps Ranking", { stage: "setup" }),
-      fallbackService("whatsapp-book", "WhatsApp Business — Auto-reply & Booking", {
-        deliverDays: 0.5,
-        stage: "setup",
+      fallbackService("digital-marketing-analytics-conversion-tracking", "Conversion Tracking", {
+        description: "Type: standard",
       }),
-      fallbackService("reviews", "Review Generation & Management", {
-        deliverDays: 0.25,
-        parallel: true,
-        stage: "setup",
-      }),
-      fallbackService("social", "Social Media — 8 Posts/month", {
-        deliverDays: 0.25,
-        parallel: true,
-        stage: "setup",
-      }),
-      fallbackService("seo-report", "Monthly SEO Health Report", {
-        deliverDays: 0.25,
-        parallel: true,
-        stage: "setup",
+      fallbackService("digital-marketing-analytics-campaign-reporting", "Campaign Reporting", {
+        description: "Frequency: monthly",
       }),
     ],
     addOns: [],
-    ctaLabel: "Get Growth",
-    minimumMonths: 3,
-    pricing: {
-      setup: 15280,
-      monthly: 12704,
-      annual: 127040,
-      ownSetup: 1700,
-      ownMonthly: 11550,
-      ownAnnual: 115500,
-    },
+    ctaLabel: "Discuss Growth",
+    pricing: { setup: 4999, monthly: 6999, annual: 83988, minimumMonths: 12 },
   },
   {
     id: "scale",
     name: "Scale",
-    tagline: "A dedicated team managing your online growth.",
+    tagline: "Scale campaigns, content, and reporting with a dedicated growth system.",
     icon: "Building2",
-    timeline: "Kick-off call within 3 days",
+    timeline: "Monthly scale plan",
     timelineMode: "phased",
     foundationDays: 30,
     inherited: { label: "Everything in Growth" },
     services: [
-      fallbackService("account-manager", "Dedicated Growth Manager"),
-      fallbackService("unlimited-updates", "Content & Page Updates — Unlimited"),
-      fallbackService("social-reels", "Social Media — Reels & Stories"),
-      fallbackService("google-ads-management", "Google Ads Management — Search, Maps & Video", {
-        deliverDays: 1,
-        stage: "build",
+      fallbackService("digital-marketing-paid-advertising-google-ads", "Google Ads Management", {
+        description: "Campaigns: 2 · Remarketing: Included",
+      }),
+      fallbackService("digital-marketing-paid-advertising-meta-ads", "Meta Ads Management", {
+        description: "Campaigns: 2 · Remarketing: Included",
       }),
       fallbackService(
-        "meta-ads-management",
-        "Meta Ads Management — Facebook + Instagram + WhatsApp + Messenger",
+        "digital-marketing-content-marketing-short-form-video",
+        "Short-Form Video Content",
+        { description: "Videos Per Month: 4" },
       ),
-      fallbackService(
-        "email-marketing",
-        "Email Marketing Management — Campaigns + Optimization + Reporting",
-      ),
-      fallbackService("competitor", "Competitor & Market Analysis"),
+      fallbackService("digital-marketing-analytics-marketing-analytics", "Marketing Analytics", {
+        description: "Frequency: monthly",
+      }),
     ],
     addOns: [],
-    ctaLabel: "Get Scale",
-    minimumMonths: 3,
-    pricing: {
-      setup: 15280,
-      monthly: 31739,
-      annual: 317390,
-      ownSetup: 0,
-      ownMonthly: 19035,
-      ownAnnual: 190350,
-    },
+    ctaLabel: "Discuss Scale",
+    pricing: { setup: 4999, monthly: 11999, annual: 143988, minimumMonths: 12 },
   },
   {
     id: "custom",
     name: "Custom",
     tagline: "Not finding what you need? Let's build it together.",
     icon: "MessageSquare",
-    timeline: "We'll scope and quote within 2 days",
+    timeline: "We'll scope and quote after consultation",
     services: [
       fallbackService("custom-mix", "Pick services from any plan"),
       fallbackService(
