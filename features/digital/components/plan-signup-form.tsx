@@ -127,7 +127,7 @@ export function PlanSignupForm({
               {step === "done" ? "Account Created" : `Get ${plan.name}`}
             </h2>
             {step !== "done" && (
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-300 mt-0.5">
                 {formatINR(plan.pricing?.setup ?? 0)} one-time + {formatINR(recurringAmount)}
                 {cycleSuffix(billingCycle)}
               </p>
@@ -137,7 +137,7 @@ export function PlanSignupForm({
             ref={closeButtonRef}
             onClick={onClose}
             aria-label="Close"
-            className="cursor-pointer text-slate-400 hover:text-white"
+            className="cursor-pointer text-slate-300 hover:text-white"
           >
             <X className="w-5 h-5" />
           </button>
@@ -158,7 +158,7 @@ export function PlanSignupForm({
               </svg>
             </div>
             <h3 className="text-lg font-bold text-white">You&apos;re all set!</h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-slate-300">
               Your account has been created. You can now manage your plan, track progress, and make
               payments from your dashboard.
             </p>

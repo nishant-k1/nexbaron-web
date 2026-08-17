@@ -111,7 +111,7 @@ export default function PrintSpecificationsPage() {
                     {stock.note}
                   </span>
                 </div>
-                <p className="text-sm text-slate-300 md:col-span-2">{stock.use}</p>
+                <p className="text-sm text-slate-200 md:col-span-2">{stock.use}</p>
               </div>
             ))}
           </div>
@@ -135,7 +135,7 @@ export default function PrintSpecificationsPage() {
                 <h3 className="text-lg font-heading font-semibold text-white mb-1">
                   {finish.name}
                 </h3>
-                <p className="text-sm text-slate-300">{finish.detail}</p>
+                <p className="text-sm text-slate-200">{finish.detail}</p>
               </div>
             ))}
           </div>
@@ -162,12 +162,12 @@ export default function PrintSpecificationsPage() {
                     <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-xs font-mono text-slate-400">{item.step}</span>
+                    <span className="text-xs font-mono text-slate-300">{item.step}</span>
                   </div>
                   <h3 className="text-lg font-heading font-semibold text-white mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
+                  <p className="text-sm text-slate-200 leading-relaxed">{item.description}</p>
                 </div>
               );
             })}

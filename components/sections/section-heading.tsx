@@ -18,7 +18,7 @@ export function SectionHeading({ accent: a, eyebrow, title, description }: Secti
         {eyebrow}
       </span>
       <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">{title}</h2>
-      {description && <p className="text-sm text-slate-300 leading-relaxed mt-3">{description}</p>}
+      {description && <p className="text-sm text-slate-200 leading-relaxed mt-3">{description}</p>}
     </div>
   );
 }

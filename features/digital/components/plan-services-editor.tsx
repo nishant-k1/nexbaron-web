@@ -76,7 +76,7 @@ export function PlanServicesEditor({
               className={`block text-xs font-medium ${
                 inheritedOn && inherited.anySelected
                   ? "text-teal-200"
-                  : "text-slate-400 line-through"
+                  : "text-slate-300 line-through"
               }`}
             >
               {inherited.label}
@@ -127,7 +127,7 @@ export function PlanServicesEditor({
               <span className="flex-1 min-w-0">
                 <span
                   className={`block text-xs ${
-                    isSelected ? "text-slate-200" : "text-slate-400 line-through"
+                    isSelected ? "text-slate-200" : "text-slate-300 line-through"
                   }`}
                 >
                   {service.label}
@@ -248,7 +248,7 @@ export function PlanServicesEditor({
                   <span className="flex-1 min-w-0">
                     <span
                       className={`block text-xs ${
-                        isSelected ? "text-slate-200" : "text-slate-400"
+                        isSelected ? "text-slate-200" : "text-slate-300"
                       }`}
                     >
                       {addOn.label}

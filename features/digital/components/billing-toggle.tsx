@@ -17,7 +17,7 @@ export function BillingToggle({
 }: BillingToggleProps) {
   const active =
     accent === "digital" ? "bg-teal-500 text-slate-950" : "bg-amber-500 text-slate-950";
-  const idle = "text-slate-400 hover:text-slate-200";
+  const idle = "text-slate-300 hover:text-slate-200";
 
   return (
     <div

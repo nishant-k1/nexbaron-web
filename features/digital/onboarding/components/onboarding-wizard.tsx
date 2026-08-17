@@ -334,7 +334,7 @@ export function OnboardingWizard({
           <Lock className="w-8 h-8 text-teal-400" />
         </div>
         <h2 className="text-2xl font-heading font-bold text-white mb-3">Sign in to continue</h2>
-        <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+        <p className="text-sm text-slate-200 max-w-md mx-auto leading-relaxed">
           You need an account to save your progress and complete your{" "}
           {getPlan(planId as string).name} plan. Login or create one in a few seconds.
         </p>
@@ -517,7 +517,7 @@ export function OnboardingWizard({
         <h2 className="text-2xl font-heading font-bold text-white mb-3">
           Payment Received. Your Launch Is Booked.
         </h2>
-        <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+        <p className="text-sm text-slate-200 max-w-md mx-auto leading-relaxed">
           Your {plan.name} plan is confirmed and your GST invoice is on its way to your email.
           {paidOrder?.launchDate && (
             <span className="text-teal-300 font-semibold">
@@ -527,7 +527,7 @@ export function OnboardingWizard({
           )}
         </p>
         {paidOrder?.invoiceNumber && (
-          <div className="mt-4 inline-block px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono text-slate-300">
+          <div className="mt-4 inline-block px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono text-slate-200">
             Invoice {paidOrder.invoiceNumber}
           </div>
         )}
@@ -634,7 +634,7 @@ export function OnboardingWizard({
               <h2 className="text-2xl font-heading font-bold text-white mb-1">
                 Your Business Details
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-300">
                 About 10 minutes. Everything is plain English.
               </p>
             </div>
@@ -666,11 +666,11 @@ export function OnboardingWizard({
                       </div>
                       <div className="text-xl font-heading font-extrabold text-white">
                         {formatINR(summary.oneTimeTotal)}
-                        <span className="text-xs text-slate-400 ml-1 font-normal">one-time</span>
+                        <span className="text-xs text-slate-300 ml-1 font-normal">one-time</span>
                       </div>
-                      <div className="text-sm text-slate-300 mt-0.5">
+                      <div className="text-sm text-slate-200 mt-0.5">
                         + {formatINR(summary.recurringTotal)}
-                        <span className="text-xs text-slate-400">{cycleSuffix(billingCycle)}</span>
+                        <span className="text-xs text-slate-300">{cycleSuffix(billingCycle)}</span>
                       </div>
                       <div className="text-[10px] font-mono text-teal-400 mt-2">{launchLabel}</div>
                     </div>
@@ -877,7 +877,7 @@ export function OnboardingWizard({
               <h2 className="text-2xl font-heading font-bold text-white mb-1">
                 Your Photos & Business Details
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-300">
                 Skip this and send everything on WhatsApp later — nothing here blocks your order.
               </p>
             </div>
@@ -887,12 +887,12 @@ export function OnboardingWizard({
                 <Label htmlFor="logo">Your Logo (optional)</Label>
                 <div className="mt-2 p-6 rounded-2xl border border-dashed border-white/20 bg-white/[0.02] text-center">
                   <Upload className="w-6 h-6 text-teal-400 mx-auto mb-2" />
-                  <p className="text-xs text-slate-400 mb-1">Logo file (PNG / JPG / SVG)</p>
+                  <p className="text-xs text-slate-300 mb-1">Logo file (PNG / JPG / SVG)</p>
                   <input
                     id="logo"
                     type="file"
                     accept="image/*,.svg"
-                    className="text-xs text-slate-300 file:mr-3 file:rounded-lg file:border-0 file:bg-teal-500/20 file:text-teal-300 file:px-3 file:py-1.5 file:text-xs file:font-semibold hover:file:bg-teal-500/30 cursor-pointer"
+                    className="text-xs text-slate-200 file:mr-3 file:rounded-lg file:border-0 file:bg-teal-500/20 file:text-teal-300 file:px-3 file:py-1.5 file:text-xs file:font-semibold hover:file:bg-teal-500/30 cursor-pointer"
                     onChange={(e) =>
                       setLogoFiles(Array.from(e.target.files ?? []).map((f) => f.name))
                     }
@@ -910,7 +910,7 @@ export function OnboardingWizard({
                 <Label htmlFor="photos">Business Photos (optional)</Label>
                 <div className="mt-2 p-6 rounded-2xl border border-dashed border-white/20 bg-white/[0.02] text-center">
                   <Upload className="w-6 h-6 text-teal-400 mx-auto mb-2" />
-                  <p className="text-xs text-slate-400 mb-1">
+                  <p className="text-xs text-slate-300 mb-1">
                     Photos of your shop, work, or products
                   </p>
                   <input
@@ -918,7 +918,7 @@ export function OnboardingWizard({
                     type="file"
                     accept="image/*"
                     multiple
-                    className="text-xs text-slate-300 file:mr-3 file:rounded-lg file:border-0 file:bg-teal-500/20 file:text-teal-300 file:px-3 file:py-1.5 file:text-xs file:font-semibold hover:file:bg-teal-500/30 cursor-pointer"
+                    className="text-xs text-slate-200 file:mr-3 file:rounded-lg file:border-0 file:bg-teal-500/20 file:text-teal-300 file:px-3 file:py-1.5 file:text-xs file:font-semibold hover:file:bg-teal-500/30 cursor-pointer"
                     onChange={(e) =>
                       setPhotoFiles(Array.from(e.target.files ?? []).map((f) => f.name))
                     }
@@ -952,7 +952,7 @@ export function OnboardingWizard({
           <div className="space-y-6">
             <div>
               <h2 className="text-2xl font-heading font-bold text-white mb-1">Payment</h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-300">
                 Pay securely online with UPI, debit/credit card, or netbanking. Your GST invoice is
                 emailed instantly after payment.
               </p>
@@ -973,21 +973,21 @@ export function OnboardingWizard({
                 <div>
                   <div className="text-3xl font-heading font-extrabold text-white">
                     {formatINR(summary.oneTimeTotal)}
-                    <span className="text-xs text-slate-400 ml-1 font-normal">one-time</span>
+                    <span className="text-xs text-slate-300 ml-1 font-normal">one-time</span>
                   </div>
-                  <div className="text-sm text-slate-300 mt-1">
+                  <div className="text-sm text-slate-200 mt-1">
                     + {formatINR(summary.recurringTotal)}
-                    <span className="text-xs text-slate-400">{cycleSuffix(billingCycle)}</span>
+                    <span className="text-xs text-slate-300">{cycleSuffix(billingCycle)}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs text-slate-400">
+                  <div className="text-xs text-slate-300">
                     {billingCycle === "annual" ? "Pay today" : "Pay now"}
                   </div>
                   <div className="text-xl font-heading font-bold text-teal-300">
                     {formatINR(summary.oneTimeTotal)}
                   </div>
-                  <div className="text-[11px] text-slate-400">
+                  <div className="text-[11px] text-slate-300">
                     {billingCycle === "annual"
                       ? "Full year of care billed once a year"
                       : "Monthly care billed from month 2"}
@@ -997,7 +997,7 @@ export function OnboardingWizard({
             </div>
 
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-              <ul className="space-y-2 text-xs text-slate-300">
+              <ul className="space-y-2 text-xs text-slate-200">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
                   Secure online payment — UPI, cards, or netbanking via Razorpay.
@@ -1032,7 +1032,7 @@ export function OnboardingWizard({
             variant="ghost"
             onClick={goBack}
             disabled={step === 0}
-            className="cursor-pointer cursor-pointer font-semibold text-slate-300 hover:text-white disabled:opacity-40"
+            className="cursor-pointer cursor-pointer font-semibold text-slate-200 hover:text-white disabled:opacity-40"
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Back
           </Button>
@@ -1077,7 +1077,7 @@ export function OnboardingWizard({
             <div className="cursor-pointer relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl bg-slate-900 border border-teal-500/30 shadow-2xl shadow-teal-500/10 p-6 md:p-8">
               <button
                 onClick={() => setShowUpdateDialog(false)}
-                className="cursor-pointer absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors"
+                className="cursor-pointer absolute top-4 right-4 p-2 text-slate-300 hover:text-white transition-colors"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
@@ -1085,7 +1085,7 @@ export function OnboardingWizard({
               <h3 className="text-lg font-heading font-bold text-white mb-2">
                 Choose Your Package
               </h3>
-              <p className="text-sm text-slate-400 leading-relaxed mb-6">
+              <p className="text-sm text-slate-300 leading-relaxed mb-6">
                 Pick the package that fits you best, or fine-tune what&apos;s included. Your
                 business details stay as they are.
               </p>
@@ -1122,16 +1122,16 @@ export function OnboardingWizard({
                       </div>
                       <div className="text-lg font-heading font-extrabold text-white">
                         {formatINR(prep.oneTimeTotal)}
-                        <span className="text-[10px] text-slate-400 ml-1 font-normal">
+                        <span className="text-[10px] text-slate-300 ml-1 font-normal">
                           one-time
                         </span>
                       </div>
-                      <div className="text-xs text-slate-300 mt-0.5">
+                      <div className="text-xs text-slate-200 mt-0.5">
                         +{" "}
                         {formatINR(
                           billingCycle === "annual" ? prep.annualTotal : prep.monthlyTotal,
                         )}
-                        <span className="text-[10px] text-slate-400">
+                        <span className="text-[10px] text-slate-300">
                           {cycleSuffix(billingCycle)}
                         </span>
                       </div>
@@ -1166,7 +1166,7 @@ export function OnboardingWizard({
                 <button
                   type="button"
                   onClick={() => setShowUpdateDialog(false)}
-                  className="cursor-pointer text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                  className="cursor-pointer text-xs text-slate-500 hover:text-slate-200 transition-colors"
                 >
                   Cancel
                 </button>

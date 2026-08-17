@@ -313,7 +313,7 @@ export function LiveChat() {
               <p className="text-sm font-semibold text-white">
                 Nexbaron {division === "digital" ? "Digital" : "Print"}
               </p>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-slate-200">
                 {isLoggedIn ? "Replies appear here" : "Log in to save chat history"}
               </p>
             </div>
@@ -329,7 +329,7 @@ export function LiveChat() {
                 <p className="text-sm text-white font-medium mb-1">
                   Welcome! What should we call you?
                 </p>
-                <p className="text-xs text-slate-300 mb-4">
+                <p className="text-xs text-slate-200 mb-4">
                   {isLoggedIn
                     ? "Your chat history is saved to your account."
                     : "Log in to save chat history across sessions."}
@@ -384,7 +384,7 @@ export function LiveChat() {
             ) : (
               <>
                 {messages.length === 0 && (
-                  <p className="text-xs text-slate-400 text-center py-4">
+                  <p className="text-xs text-slate-300 text-center py-4">
                     Send us a message — we&apos;re here to help.
                   </p>
                 )}
@@ -430,7 +430,7 @@ export function LiveChat() {
                       ))}
                       <div
                         className={`text-xs mt-1 flex items-center gap-1 ${
-                          msg.sender === "user" ? "text-slate-700" : "text-slate-400"
+                          msg.sender === "user" ? "text-slate-700" : "text-slate-300"
                         }`}
                       >
                         {new Date(msg.timestamp).toLocaleTimeString([], {
@@ -462,7 +462,7 @@ export function LiveChat() {
                         style={{ animationDelay: "300ms" }}
                         aria-hidden="true"
                       />
-                      <span className="text-[11px] text-slate-300 ml-1">typing…</span>
+                      <span className="text-[11px] text-slate-200 ml-1">typing…</span>
                     </div>
                   </div>
                 )}

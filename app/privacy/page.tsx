@@ -39,13 +39,13 @@ export default function PrivacyPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionReveal>
           <div className="max-w-3xl mx-auto">
-            <span className="text-xs uppercase font-mono tracking-widest text-slate-300 font-semibold px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block mb-4">
+            <span className="text-xs uppercase font-mono tracking-widest text-slate-200 font-semibold px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block mb-4">
               Nexbaron Private Limited
             </span>
             <h1 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-6">
               Privacy Policy
             </h1>
-            <p className="text-slate-300 text-sm leading-relaxed mb-12">
+            <p className="text-slate-200 text-sm leading-relaxed mb-12">
               Last updated: 2026. This policy explains how Nexbaron Private Limited, including its
               divisions Nexbaron Digital and Nexbaron Print, handles personal information.
             </p>
@@ -59,7 +59,7 @@ export default function PrivacyPage() {
                   <h2 className="text-lg font-heading font-semibold text-white mb-3">
                     {section.title}
                   </h2>
-                  <p className="text-sm text-slate-300 leading-relaxed">{section.body}</p>
+                  <p className="text-sm text-slate-200 leading-relaxed">{section.body}</p>
                 </div>
               ))}
             </div>

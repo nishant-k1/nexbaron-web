@@ -64,7 +64,7 @@ export function DigitalNavigation() {
 
             <Link
               href={divisions.digital.otherDivision.href}
-              className="hidden lg:inline-flex text-xs font-mono text-slate-400 hover:text-amber-400 transition-colors ml-3"
+              className="hidden lg:inline-flex text-xs font-mono text-slate-300 hover:text-amber-400 transition-colors ml-3"
             >
               {divisions.digital.otherDivision.label}
             </Link>
@@ -80,7 +80,7 @@ export function DigitalNavigation() {
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={`text-sm font-medium transition-colors hover:text-teal-300 ${
-                    isActive ? "text-teal-400 font-semibold" : "text-slate-300"
+                    isActive ? "text-teal-400 font-semibold" : "text-slate-200"
                   }`}
                 >
                   {item.label}
@@ -104,7 +104,7 @@ export function DigitalNavigation() {
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="cursor-pointer md:hidden p-2 text-slate-300 hover:text-white"
+            className="cursor-pointer md:hidden p-2 text-slate-200 hover:text-white"
             aria-label={isOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
@@ -132,7 +132,7 @@ export function DigitalNavigation() {
               </Link>
               <button
                 onClick={() => setIsOpen(false)}
-                className="cursor-pointer p-2 text-slate-300 hover:text-white"
+                className="cursor-pointer p-2 text-slate-200 hover:text-white"
                 aria-label="Close navigation"
               >
                 <X className="w-6 h-6" />
@@ -167,7 +167,7 @@ export function DigitalNavigation() {
               <UserMenu fullWidth />
               <Link
                 href={divisions.digital.otherDivision.href}
-                className="block text-center text-xs font-mono text-slate-400 hover:text-amber-400 transition-colors pt-2"
+                className="block text-center text-xs font-mono text-slate-300 hover:text-amber-400 transition-colors pt-2"
               >
                 {divisions.digital.otherDivision.label}
               </Link>

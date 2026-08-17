@@ -80,12 +80,12 @@ export default async function DigitalAboutPage() {
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-6">
                 Why We Started Nexbaron Digital
               </h2>
-              <p className="text-lg text-slate-300 leading-relaxed mb-4">
+              <p className="text-lg text-slate-200 leading-relaxed mb-4">
                 Most small businesses in India know they need to be online. But between confusing
                 agencies, hidden costs, and websites that take months to launch — it feels
                 impossible to get started.
               </p>
-              <p className="text-lg text-slate-300 leading-relaxed">
+              <p className="text-lg text-slate-200 leading-relaxed">
                 We built Nexbaron Digital to change that. Fixed-price plans. A confirmed launch date
                 before you pay. And a team that actually answers when you call. Because growing your
                 business online shouldn&apos;t be complicated.
@@ -102,7 +102,7 @@ export default async function DigitalAboutPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
               The People Behind the Pixels
             </h2>
-            <p className="text-sm text-slate-300 text-center max-w-xl mx-auto mb-12">
+            <p className="text-sm text-slate-200 text-center max-w-xl mx-auto mb-12">
               We&apos;re a small, hands-on team. When you work with Nexbaron, you work directly with
               the people building your digital presence — no account managers, no handoffs.
             </p>
@@ -153,7 +153,7 @@ export default async function DigitalAboutPage() {
                       <Icon className="w-4 h-4 text-teal-400" />
                       <h3 className="text-lg font-heading font-semibold text-white">{item.name}</h3>
                     </div>
-                    <p className="text-sm text-slate-300 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-slate-200 leading-relaxed">{item.desc}</p>
                   </div>
                 );
               })}
@@ -183,7 +183,7 @@ export default async function DigitalAboutPage() {
                     <h3 className="text-lg font-heading font-semibold text-white mb-2">
                       {value.title}
                     </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">{value.description}</p>
+                    <p className="text-sm text-slate-200 leading-relaxed">{value.description}</p>
                   </div>
                 );
               })}

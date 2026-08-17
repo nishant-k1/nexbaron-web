@@ -198,7 +198,7 @@ export default function PrintQuotePage() {
               <h1 className="text-3xl sm:text-5xl font-heading font-bold text-white">
                 Build Your Commercial Print Quote
               </h1>
-              <p className="text-slate-300 text-sm sm:text-base">
+              <p className="text-slate-200 text-sm sm:text-base">
                 Choose from the current Print catalog. Our team confirms final pricing and
                 turnaround.
               </p>
@@ -217,7 +217,7 @@ export default function PrintQuotePage() {
             {!catalog && !catalogError && (
               <div
                 role="status"
-                className="flex items-center justify-center gap-2 py-12 text-sm text-slate-300"
+                className="flex items-center justify-center gap-2 py-12 text-sm text-slate-200"
               >
                 <Loader2 className="w-4 h-4 animate-spin" /> Loading the Print catalog...
               </div>
@@ -307,7 +307,7 @@ export default function PrintQuotePage() {
                             </div>
                             <span
                               className={`text-sm font-medium ${
-                                isSelected ? "text-amber-400" : "text-slate-300"
+                                isSelected ? "text-amber-400" : "text-slate-200"
                               }`}
                             >
                               {item.label}
@@ -334,7 +334,7 @@ export default function PrintQuotePage() {
                                     type="button"
                                     onClick={() => commitQuantity(qty - 1)}
                                     aria-label="Decrease quantity"
-                                    className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                                    className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-200 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
                                   >
                                     −
                                   </button>
@@ -367,7 +367,7 @@ export default function PrintQuotePage() {
                                       }}
                                       className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                     />
-                                    <span className="text-xs text-slate-400 mt-0.5 tracking-wider uppercase">
+                                    <span className="text-xs text-slate-300 mt-0.5 tracking-wider uppercase">
                                       units
                                     </span>
                                   </div>
@@ -375,7 +375,7 @@ export default function PrintQuotePage() {
                                     type="button"
                                     onClick={() => commitQuantity(qty + 1)}
                                     aria-label="Increase quantity"
-                                    className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                                    className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-200 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
                                   >
                                     +
                                   </button>
@@ -391,7 +391,7 @@ export default function PrintQuotePage() {
                                         className={`cursor-pointer flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
                                           active
                                             ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
-                                            : "bg-white/[0.03] text-slate-400 hover:text-slate-300 hover:bg-white/[0.05]"
+                                            : "bg-white/[0.03] text-slate-300 hover:text-slate-200 hover:bg-white/[0.05]"
                                         }`}
                                       >
                                         {preset}
@@ -418,7 +418,7 @@ export default function PrintQuotePage() {
                       <p className="text-lg font-semibold text-emerald-300 mb-1">
                         Quote request received
                       </p>
-                      <p className="text-sm text-slate-300">
+                      <p className="text-sm text-slate-200">
                         {quoteNumber && (
                           <>
                             Reference{" "}
@@ -480,7 +480,7 @@ export default function PrintQuotePage() {
                         />
                       </div>
                       <div className="pt-2">
-                        <p className="text-xs text-slate-300 font-semibold uppercase tracking-wider mb-3">
+                        <p className="text-xs text-slate-200 font-semibold uppercase tracking-wider mb-3">
                           Delivery Address
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -610,7 +610,7 @@ function SummaryRow({
   accent?: boolean;
 }) {
   return (
-    <div className="flex justify-between gap-4 text-slate-300">
+    <div className="flex justify-between gap-4 text-slate-200">
       <span>{label}</span>
       <span className={`font-mono text-right ${accent ? "text-amber-400" : "text-white"}`}>
         {value}

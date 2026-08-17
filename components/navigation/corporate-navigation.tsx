@@ -43,7 +43,7 @@ export function CorporateNavigation() {
             <div>
               <span className="text-lg font-heading font-extrabold text-white tracking-tight">
                 Nexbaron{" "}
-                <span className="text-sm text-slate-300 font-mono font-semibold">GROUP</span>
+                <span className="text-sm text-slate-200 font-mono font-semibold">GROUP</span>
               </span>
             </div>
           </Link>
@@ -52,7 +52,7 @@ export function CorporateNavigation() {
           <div className="hidden md:flex items-center gap-3">
             <Link
               href="/about"
-              className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              className="text-sm font-medium text-slate-200 hover:text-white transition-colors"
             >
               About
             </Link>
@@ -75,7 +75,7 @@ export function CorporateNavigation() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="cursor-pointer md:hidden p-2 text-slate-300 hover:text-white"
+            className="cursor-pointer md:hidden p-2 text-slate-200 hover:text-white"
             aria-label="Toggle Navigation"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

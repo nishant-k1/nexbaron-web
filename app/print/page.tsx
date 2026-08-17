@@ -67,7 +67,7 @@ export default async function PrintLandingPage() {
                 </span>
               </h1>
 
-              <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto leading-relaxed">
                 From visiting cards and letterheads to bill books, stickers, and specialty print —
                 14 print services under one roof, finished to a premium standard.
               </p>
@@ -100,21 +100,21 @@ export default async function PrintLandingPage() {
                   <div className="text-4xl font-heading font-extrabold text-amber-400">
                     500,000+
                   </div>
-                  <div className="text-sm text-slate-300">Cards Printed</div>
+                  <div className="text-sm text-slate-200">Cards Printed</div>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                   <div className="text-4xl font-heading font-extrabold text-orange-400">14</div>
-                  <div className="text-sm text-slate-300">Print Services</div>
+                  <div className="text-sm text-slate-200">Print Services</div>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                   <div className="text-4xl font-heading font-extrabold text-amber-300">
                     24 Hours
                   </div>
-                  <div className="text-sm text-slate-300">Express Delivery</div>
+                  <div className="text-sm text-slate-200">Express Delivery</div>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                   <div className="text-4xl font-heading font-extrabold text-yellow-400">100%</div>
-                  <div className="text-sm text-slate-300">Quality Match</div>
+                  <div className="text-sm text-slate-200">Quality Match</div>
                 </div>
               </div>
             </div>
@@ -155,7 +155,7 @@ export default async function PrintLandingPage() {
                   <h3 className="text-lg font-heading font-semibold text-white mb-3">
                     {prod.label}
                   </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed mb-6">{prod.description}</p>
+                  <p className="text-sm text-slate-200 leading-relaxed mb-6">{prod.description}</p>
 
                   <span className="inline-flex items-center text-xs font-semibold text-amber-400 group-hover:text-amber-300">
                     View Details & Get a Quote
@@ -184,7 +184,7 @@ export default async function PrintLandingPage() {
           <h2 className="text-3xl font-heading font-bold text-white">
             Need Bulk Printing or a Custom Quote?
           </h2>
-          <p className="text-sm text-slate-300">
+          <p className="text-sm text-slate-200">
             Use our instant quote builder to select product, quantity, stock, and finishing options
             for an instant estimate.
           </p>

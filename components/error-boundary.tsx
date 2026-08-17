@@ -45,7 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </svg>
             </div>
             <h2 className="text-lg font-bold text-white mb-2">Something went wrong</h2>
-            <p className="text-sm text-slate-300 mb-4">
+            <p className="text-sm text-slate-200 mb-4">
               An unexpected error occurred. Try refreshing the page.
             </p>
             <button

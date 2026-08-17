@@ -35,7 +35,7 @@ export default function CorporateGatewayPage() {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/10 backdrop-blur-md">
             <Building2 className="w-4 h-4 text-teal-400" />
-            <span className="text-xs uppercase font-mono tracking-widest text-slate-300 font-semibold">
+            <span className="text-xs uppercase font-mono tracking-widest text-slate-200 font-semibold">
               Nexbaron Private Limited
             </span>
           </div>
@@ -45,7 +45,7 @@ export default function CorporateGatewayPage() {
               Divisions.
             </span>
           </h1>
-          <p className="text-lg text-slate-300 leading-relaxed">
+          <p className="text-lg text-slate-200 leading-relaxed">
             Select your destination below to access dedicated commercial services, pricing, and
             project consultation tailored to your exact business needs.
           </p>
@@ -74,26 +74,26 @@ export default function CorporateGatewayPage() {
                 <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
                   Nexbaron Digital
                 </h2>
-                <p className="text-slate-300 text-sm leading-relaxed mb-8">
+                <p className="text-slate-200 text-sm leading-relaxed mb-8">
                   The complete digital growth partner for small businesses, clinics, restaurants,
                   law firms, CA practices, gyms, and local services. We build high-converting
                   websites, get you found on Google, and answer every customer enquiry on WhatsApp.
                 </p>
 
                 <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
-                  <div className="flex items-center gap-3 text-sm text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>Business Websites & Enquiry-Capturing Pages</span>
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>Google Business Profile & Local Visibility</span>
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>WhatsApp Automation That Answers 24/7</span>
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>Hosting, Speed & Security Handled for You</span>
                   </div>
@@ -136,26 +136,26 @@ export default function CorporateGatewayPage() {
                 <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
                   Nexbaron Print
                 </h2>
-                <p className="text-slate-300 text-sm leading-relaxed mb-8">
+                <p className="text-slate-200 text-sm leading-relaxed mb-8">
                   Premium commercial print specialist. We produce visiting cards, card holders,
                   letterheads & envelopes, pamphlets & posters, bill books, tags, files, stickers &
                   labels, and branded promotional merchandise.
                 </p>
 
                 <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-xs text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
                     <span>Premium Visiting Cards & Card Holders</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-xs text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
                     <span>Letterheads, Envelopes & Bill Books</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-xs text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
                     <span>Pamphlets, Posters, Tags & Labels</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-xs text-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
                     <span>Branded Pens, ATM Pouches & More</span>
                   </div>
@@ -180,7 +180,7 @@ export default function CorporateGatewayPage() {
 
         {/* Corporate Legitimacy Strip */}
         <div className="border-t border-white/10 pt-12 text-center">
-          <p className="text-xs uppercase font-mono tracking-widest text-slate-300 mb-6">
+          <p className="text-xs uppercase font-mono tracking-widest text-slate-200 mb-6">
             Nexbaron Private Limited — Registered & GST-Compliant
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
@@ -188,28 +188,28 @@ export default function CorporateGatewayPage() {
               <Building2 className="w-5 h-5 text-teal-400 shrink-0" />
               <div>
                 <div className="text-sm font-semibold text-white">GSTIN-Registered</div>
-                <div className="text-sm text-slate-300">Nexbaron Private Limited</div>
+                <div className="text-sm text-slate-200">Nexbaron Private Limited</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
               <Receipt className="w-5 h-5 text-cyan-400 shrink-0" />
               <div>
                 <div className="text-sm font-semibold text-white">GST Invoice</div>
-                <div className="text-sm text-slate-300">On every payment</div>
+                <div className="text-sm text-slate-200">On every payment</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
               <Tag className="w-5 h-5 text-amber-400 shrink-0" />
               <div>
                 <div className="text-sm font-semibold text-white">Fixed Pricing</div>
-                <div className="text-sm text-slate-300">Published, no hidden costs</div>
+                <div className="text-sm text-slate-200">Published, no hidden costs</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
               <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
               <div>
                 <div className="text-sm font-semibold text-white">You Own It</div>
-                <div className="text-sm text-slate-300">
+                <div className="text-sm text-slate-200">
                   Website, domain & content — always yours
                 </div>
               </div>

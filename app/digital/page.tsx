@@ -166,7 +166,7 @@ export default async function DigitalLandingPage() {
                 </span>{" "}
                 Every Day.
               </h1>
-              <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto leading-relaxed">
                 We help restaurants, clinics, salons, law firms, and local shops get more customers
                 — a website, Google visibility, and 24/7 WhatsApp booking in one simple plan. Fixed
                 price. No jargon. No lock-in.
@@ -205,7 +205,7 @@ export default async function DigitalLandingPage() {
                     className="flex items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/5"
                   >
                     <span className="text-teal-400 text-sm">✓</span>
-                    <span className="text-xs text-slate-300 font-medium">{signal}</span>
+                    <span className="text-xs text-slate-200 font-medium">{signal}</span>
                   </div>
                 ))}
               </div>
@@ -225,7 +225,7 @@ export default async function DigitalLandingPage() {
                     &#9733;
                   </span>
                 ))}
-                <span className="text-sm text-slate-300 ml-2">Google Review</span>
+                <span className="text-sm text-slate-200 ml-2">Google Review</span>
               </div>
               <p className="text-slate-200 text-lg md:text-xl leading-relaxed italic max-w-2xl">
                 &ldquo;I had zero online presence. Nexbaron built my website in 6 days, got me on
@@ -238,7 +238,7 @@ export default async function DigitalLandingPage() {
                 </div>
                 <div>
                   <p className="text-lg font-heading font-semibold text-white">Dr. Mehta</p>
-                  <p className="text-sm text-slate-300">Dental Clinic, Mumbai</p>
+                  <p className="text-sm text-slate-200">Dental Clinic, Mumbai</p>
                 </div>
               </div>
             </div>
@@ -277,7 +277,7 @@ export default async function DigitalLandingPage() {
                     <h3 className="text-lg font-heading font-semibold text-white mb-1">
                       {ind.name}
                     </h3>
-                    <p className="text-sm text-slate-300">{ind.detail}</p>
+                    <p className="text-sm text-slate-200">{ind.detail}</p>
                   </div>
                 </div>
               );
@@ -306,7 +306,7 @@ export default async function DigitalLandingPage() {
                 <div className="text-4xl font-heading font-extrabold text-teal-400">
                   {stat.value}
                 </div>
-                <div className="text-sm text-slate-300 mt-2">{stat.label}</div>
+                <div className="text-sm text-slate-200 mt-2">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -360,7 +360,7 @@ export default async function DigitalLandingPage() {
           <h2 className="text-3xl font-heading font-bold text-white mb-4">
             Ready to Launch Your Business Online?
           </h2>
-          <p className="text-sm text-slate-300 mb-8">
+          <p className="text-sm text-slate-200 mb-8">
             Pick a plan, complete a 10-minute form, and your website goes live in 7 days — with
             Google visibility and WhatsApp booking included.
           </p>

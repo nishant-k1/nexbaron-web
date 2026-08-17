@@ -91,7 +91,7 @@ export default function WhyNexbaronPage() {
                     <h3 className="text-lg font-heading font-semibold text-white mb-3">
                       {reason.title}
                     </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">{reason.description}</p>
+                    <p className="text-sm text-slate-200 leading-relaxed">{reason.description}</p>
                   </div>
                 </SectionReveal>
               );

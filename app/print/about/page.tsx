@@ -80,12 +80,12 @@ export default async function PrintAboutPage() {
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-6">
                 Why We Started Nexbaron Print
               </h2>
-              <p className="text-lg text-slate-300 leading-relaxed mb-4">
+              <p className="text-lg text-slate-200 leading-relaxed mb-4">
                 Getting business cards or brochures printed shouldn&apos;t mean chasing vendors,
                 negotiating prices, and hoping the quality turns out okay. We&apos;ve all been
                 there.
               </p>
-              <p className="text-lg text-slate-300 leading-relaxed">
+              <p className="text-lg text-slate-200 leading-relaxed">
                 Nexbaron Print exists to make commercial printing simple, reliable, and
                 high-quality. You tell us what you need — we quote honestly, manufacture to spec,
                 and deliver on time. Every single order.
@@ -102,7 +102,7 @@ export default async function PrintAboutPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
               The People Behind the Press
             </h2>
-            <p className="text-sm text-slate-300 text-center max-w-xl mx-auto mb-12">
+            <p className="text-sm text-slate-200 text-center max-w-xl mx-auto mb-12">
               We&apos;re a hands-on print operation. When you place an order, it&apos;s handled by
               people who care about paper stock, finish, and deadlines — not a faceless production
               line.
@@ -118,7 +118,7 @@ export default async function PrintAboutPage() {
                   Himanshu Kumar
                 </h3>
                 <p className="text-sm text-amber-400 font-medium mb-3">Founder & Print Director</p>
-                <p className="text-slate-300 text-sm leading-relaxed max-w-lg mx-auto">
+                <p className="text-slate-200 text-sm leading-relaxed max-w-lg mx-auto">
                   Built Nexbaron Print on one principle: quality you can feel. Personally inspects
                   every order before dispatch. Believes a visiting card should make someone stop and
                   look twice.
@@ -172,7 +172,7 @@ export default async function PrintAboutPage() {
                       <Icon className="w-4 h-4 text-amber-400" />
                       <h3 className="text-lg font-heading font-semibold text-white">{item.name}</h3>
                     </div>
-                    <p className="text-sm text-slate-300 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-slate-200 leading-relaxed">{item.desc}</p>
                   </div>
                 );
               })}
@@ -202,7 +202,7 @@ export default async function PrintAboutPage() {
                     <h3 className="text-lg font-heading font-semibold text-white mb-2">
                       {value.title}
                     </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">{value.description}</p>
+                    <p className="text-sm text-slate-200 leading-relaxed">{value.description}</p>
                   </div>
                 );
               })}

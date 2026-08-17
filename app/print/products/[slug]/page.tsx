@@ -135,7 +135,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl space-y-4">
               {product.overview.map((paragraph) => (
-                <p key={paragraph} className="text-base md:text-lg text-slate-300 leading-relaxed">
+                <p key={paragraph} className="text-base md:text-lg text-slate-200 leading-relaxed">
                   {paragraph}
                 </p>
               ))}
@@ -160,7 +160,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
                 </h3>
                 <ul className="space-y-3">
                   {section.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-slate-300">
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-slate-200">
                       <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                       {item}
                     </li>
@@ -241,7 +241,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
                         +
                       </span>
                     </summary>
-                    <p className="px-5 pb-4 text-sm text-slate-300 leading-relaxed">{faq.answer}</p>
+                    <p className="px-5 pb-4 text-sm text-slate-200 leading-relaxed">{faq.answer}</p>
                   </details>
                 ))}
               </div>

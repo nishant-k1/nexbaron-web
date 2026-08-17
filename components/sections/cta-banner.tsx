@@ -29,7 +29,7 @@ export function CTABanner({
     >
       <div className="max-w-3xl mx-auto space-y-6">
         <h2 className="text-3xl font-heading font-bold text-white">{title}</h2>
-        <p className="text-sm text-slate-300">{description}</p>
+        <p className="text-sm text-slate-200">{description}</p>
         <Button
           asChild
           size="lg"

@@ -46,11 +46,11 @@ function LaunchTimelineSection({ plans }: { plans: Plan[] }) {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
               A No Hidden Costs. Not a Guess.
             </h2>
-            <p className="text-sm text-slate-300 mt-4 leading-relaxed">
+            <p className="text-sm text-slate-200 mt-4 leading-relaxed">
               The moment you pay, we commit to a real calendar date and you can watch your progress
               live. Add or remove services on the cards above and the date updates automatically.
             </p>
-            <ul className="mt-6 space-y-3 text-sm text-slate-300">
+            <ul className="mt-6 space-y-3 text-sm text-slate-200">
               {demo.expectations.map((e) => (
                 <li key={e.label} className="flex gap-3">
                   <CheckCircle2 className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
@@ -101,7 +101,7 @@ export default async function DigitalServicesPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
               Simple Plans. Scoped Pricing.
             </h2>
-            <p className="text-sm text-slate-300 mt-4">
+            <p className="text-sm text-slate-200 mt-4">
               Launch builds your web presence, Growth gets you found, and Scale adds paid growth
               campaigns. Each inclusion is loaded from the API plan catalog.
             </p>

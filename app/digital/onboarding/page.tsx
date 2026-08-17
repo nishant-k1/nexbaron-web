@@ -84,7 +84,7 @@ export default function DigitalOnboardingPage({
                           <span className="font-mono text-teal-400 mr-1.5">0{index + 1}</span>
                           {step.title}
                         </h3>
-                        <p className="text-sm text-slate-300 leading-relaxed">{step.description}</p>
+                        <p className="text-sm text-slate-200 leading-relaxed">{step.description}</p>
                       </div>
                     </div>
                   );
@@ -96,7 +96,7 @@ export default function DigitalOnboardingPage({
               <h2 className="text-xl font-heading font-bold text-white mb-4">
                 Prefer to Talk First?
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed mb-4">
+              <p className="text-sm text-slate-200 leading-relaxed mb-4">
                 We&apos;ll guide you through these steps on WhatsApp — and it often goes faster with
                 our help.
               </p>

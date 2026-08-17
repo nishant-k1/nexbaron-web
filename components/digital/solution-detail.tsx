@@ -45,7 +45,7 @@ export function SolutionDetail({
               <h2 className="text-2xl md:text-3xl font-heading font-bold text-white">
                 What&apos;s Included
               </h2>
-              <p className="text-sm text-slate-300 mt-1">{section.subtitle}</p>
+              <p className="text-sm text-slate-200 mt-1">{section.subtitle}</p>
             </div>
           </div>
 
@@ -66,7 +66,7 @@ export function SolutionDetail({
                       <h3 className="text-lg font-heading font-semibold text-white mb-2 group-hover:text-teal-300 transition-colors">
                         {service.label}
                       </h3>
-                      <p className="text-sm text-slate-300 leading-relaxed">
+                      <p className="text-sm text-slate-200 leading-relaxed">
                         {service.description}
                       </p>
                     </div>

@@ -54,20 +54,20 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
             <span className="text-2xl font-heading font-extrabold text-teal-300">
               Let&apos;s Talk
             </span>
-            <p className="text-base text-slate-300 leading-relaxed">{plan.tagline}</p>
+            <p className="text-base text-slate-200 leading-relaxed">{plan.tagline}</p>
           </div>
         ) : (
           <>
             <span className="text-3xl font-heading font-extrabold text-white">
               {formatINR(plan.pricing?.setup ?? 0)}
             </span>
-            <span className="text-base text-slate-300 ml-1">one-time</span>
-            <div className="text-base text-slate-300 mt-1">
+            <span className="text-base text-slate-200 ml-1">one-time</span>
+            <div className="text-base text-slate-200 mt-1">
               + {formatINR(recurringAmount)}
-              <span className="text-base text-slate-300">{cycleSuffix(billingCycle)}</span>
+              <span className="text-base text-slate-200">{cycleSuffix(billingCycle)}</span>
             </div>
             {plan.pricing?.minimumMonths && (
-              <div className="text-sm text-slate-400 mt-1.5">
+              <div className="text-sm text-slate-300 mt-1.5">
                 {annual
                   ? "Annual care · billed once a year"
                   : `${plan.pricing.minimumMonths}-month minimum · cancel anytime after`}
@@ -82,7 +82,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
         {plan.inherited && hasPricing && (
           <div className="flex items-start gap-3 pb-4 border-b border-white/5">
             <Check className="w-5 h-5 text-teal-500/60 shrink-0 mt-0.5" />
-            <span className="text-base text-slate-300">{plan.inherited.label}</span>
+            <span className="text-base text-slate-200">{plan.inherited.label}</span>
           </div>
         )}
         {plan.services.map((svc) => (
@@ -92,7 +92,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
             />
             <div className="min-w-0">
               <span
-                className={`text-base leading-relaxed ${isCustom ? "text-slate-400" : "text-slate-300"}`}
+                className={`text-base leading-relaxed ${isCustom ? "text-slate-300" : "text-slate-200"}`}
               >
                 {svc.label}
               </span>
@@ -100,7 +100,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
                 <span className="block text-sm text-teal-400/80 mt-1">{svc.scope}</span>
               )}
               {svc.description && (
-                <span className="block text-sm text-slate-300 mt-1">{svc.description}</span>
+                <span className="block text-sm text-slate-200 mt-1">{svc.description}</span>
               )}
             </div>
           </div>

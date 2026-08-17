@@ -83,7 +83,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                 key={problem}
                 className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md"
               >
-                <p className="text-sm text-slate-300 leading-relaxed">{problem}</p>
+                <p className="text-sm text-slate-200 leading-relaxed">{problem}</p>
               </div>
             ))}
           </div>
@@ -104,7 +104,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
                 What You Get
               </h2>
-              <p className="text-sm text-slate-300 mt-1">
+              <p className="text-sm text-slate-200 mt-1">
                 The {planLabel(business.recommendedPlan)} package, tailored to{" "}
                 {business.label.toLowerCase()}.
               </p>
@@ -125,7 +125,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                       <CheckCircle2 className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
                       <div className="min-w-0">
                         <h3 className="text-sm font-semibold text-white">{svc.label}</h3>
-                        <p className="text-xs font-mono text-slate-400 mt-1">
+                        <p className="text-xs font-mono text-slate-300 mt-1">
                           {setup > 0 && `${formatINR(setup)} one-time`}
                           {setup > 0 && monthly > 0 && " + "}
                           {monthly > 0 && `${formatINR(monthly)}/mo`}
@@ -145,7 +145,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                       <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                       <div className="min-w-0">
                         <h3 className="text-sm font-semibold text-white">{svc.label}</h3>
-                        <p className="text-xs font-mono text-slate-400 mt-1">
+                        <p className="text-xs font-mono text-slate-300 mt-1">
                           {setup > 0 && `${formatINR(setup)} one-time`}
                           {setup > 0 && monthly > 0 && " + "}
                           {monthly > 0 && `${formatINR(monthly)}/mo`}
@@ -163,11 +163,11 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                   </span>
                   <div className="text-2xl font-heading font-extrabold text-white mt-1">
                     {formatINR(business.pricing.setup)}
-                    <span className="text-xs text-slate-300 font-normal ml-1">one-time</span>
-                    <span className="text-sm text-slate-300 font-normal">
+                    <span className="text-xs text-slate-200 font-normal ml-1">one-time</span>
+                    <span className="text-sm text-slate-200 font-normal">
                       {" + "}
                       {formatINR(business.pricing.monthly)}
-                      <span className="text-xs text-slate-300">/mo</span>
+                      <span className="text-xs text-slate-200">/mo</span>
                     </span>
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
               </div>
             </>
           ) : (
-            <p className="text-sm text-slate-300">
+            <p className="text-sm text-slate-200">
               Pricing is available on the {planLabel(business.recommendedPlan)} plan page.
             </p>
           )}

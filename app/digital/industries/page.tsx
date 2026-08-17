@@ -56,13 +56,13 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
           {business.category}
         </span>
         <h3 className="text-lg font-heading font-semibold text-white mb-3">{business.label}</h3>
-        <p className="text-sm text-slate-300 leading-relaxed mb-5">{business.tagline}</p>
+        <p className="text-sm text-slate-200 leading-relaxed mb-5">{business.tagline}</p>
 
         <div className="space-y-2.5 mb-4">
           {business.problems.slice(0, 3).map((problem) => (
             <div key={problem} className="flex items-start gap-2.5">
               <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-              <span className="text-sm text-slate-300">{problem}</span>
+              <span className="text-sm text-slate-200">{problem}</span>
             </div>
           ))}
         </div>
@@ -73,7 +73,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
               Recommended: {planLabel(business.recommendedPlan)}
             </span>
             {hasPricing && (
-              <span className="text-xs font-mono text-slate-300">
+              <span className="text-xs font-mono text-slate-200">
                 {formatINR(business.pricing.setup)} + {formatINR(business.pricing.monthly)}/mo
               </span>
             )}

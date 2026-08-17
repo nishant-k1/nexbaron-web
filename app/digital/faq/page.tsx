@@ -111,7 +111,7 @@ export default function FAQPage() {
                     +
                   </span>
                 </summary>
-                <p className="text-sm text-slate-300 leading-relaxed pt-3">{faq.answer}</p>
+                <p className="text-sm text-slate-200 leading-relaxed pt-3">{faq.answer}</p>
               </details>
             ))}
           </div>

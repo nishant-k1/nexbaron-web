@@ -27,7 +27,7 @@ export function PricingPreview({ plans }: { plans: Plan[] }) {
               ? `+ ${formatINR(plan.pricing.monthly)} monthly care`
               : "Scoped after consultation"}
           </div>
-          <p className="text-sm text-slate-400 leading-relaxed mb-4">{plan.tagline}</p>
+          <p className="text-sm text-slate-300 leading-relaxed mb-4">{plan.tagline}</p>
           <Link
             href="/digital/pricing#plans"
             className={`inline-flex items-center gap-1.5 text-xs font-semibold ${

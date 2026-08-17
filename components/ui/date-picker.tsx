@@ -26,12 +26,12 @@ const dayPickerClassNames: Partial<ClassNames> = {
   month_caption: "text-slate-200 font-semibold text-sm",
   caption_label: "text-slate-200 font-semibold text-sm",
   button_previous:
-    "cursor-pointer flex items-center justify-center w-8 h-8 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
+    "cursor-pointer flex items-center justify-center w-8 h-8 text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
   button_next:
-    "cursor-pointer flex items-center justify-center w-8 h-8 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
+    "cursor-pointer flex items-center justify-center w-8 h-8 text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
   chevron: "fill-current w-4 h-4",
-  weekdays: "text-slate-400",
-  weekday: "text-slate-400",
+  weekdays: "text-slate-300",
+  weekday: "text-slate-300",
   day: "text-slate-200 w-11 h-11",
   day_button: "cursor-pointer rounded-full hover:bg-white/10 transition-colors w-10 h-10",
   outside: "text-slate-500",
@@ -138,7 +138,7 @@ export function DatePickerField({
             open ? ACCENT_RING[accent] : "hover:border-accent/50"
           } ${value ? "text-heading" : "text-muted"}`}
         >
-          <CalendarDays className="w-4 h-4 shrink-0 text-slate-400" />
+          <CalendarDays className="w-4 h-4 shrink-0 text-slate-300" />
           <span className="truncate">{value ? formatDisplay(value) : "Select date"}</span>
         </button>
 

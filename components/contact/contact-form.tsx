@@ -93,7 +93,7 @@ export function ContactForm({ division, heading, subheading }: ContactFormProps)
         </div>
         <h2 className="text-2xl font-heading font-bold text-white">{heading}</h2>
       </div>
-      {subheading && <p className="text-sm text-slate-300 mb-6 ml-[52px]">{subheading}</p>}
+      {subheading && <p className="text-sm text-slate-200 mb-6 ml-[52px]">{subheading}</p>}
 
       {status === "success" && (
         <div

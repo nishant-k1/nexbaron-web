@@ -51,7 +51,7 @@ export function PageHero({
                 </span>
               )}
             </h1>
-            <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed">
               {description}
             </p>
             {(primaryCta || secondaryCta) && (

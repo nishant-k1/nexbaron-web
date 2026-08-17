@@ -64,7 +64,7 @@ export default async function SolutionsPage() {
                         <h3 className="text-lg font-heading font-semibold text-white mb-2">
                           {service.label}
                         </h3>
-                        <p className="text-sm text-slate-300 leading-relaxed">
+                        <p className="text-sm text-slate-200 leading-relaxed">
                           {service.description}
                         </p>
                         <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-400 mt-4">

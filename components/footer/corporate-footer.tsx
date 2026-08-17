@@ -11,7 +11,7 @@ export function CorporateFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative text-slate-300 mt-auto border-t border-white/10 bg-slate-950/95 backdrop-blur-xl">
+    <footer className="relative text-slate-200 mt-auto border-t border-white/10 bg-slate-950/95 backdrop-blur-xl">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Company Info */}
@@ -19,10 +19,10 @@ export function CorporateFooter() {
             <Link href="/" className="flex items-center gap-2">
               <BrandMark />
               <span className="text-xl font-heading font-bold text-white tracking-tight">
-                Nexbaron <span className="text-xs text-slate-300 font-mono">PRIVATE LIMITED</span>
+                Nexbaron <span className="text-xs text-slate-200 font-mono">PRIVATE LIMITED</span>
               </span>
             </Link>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-200 leading-relaxed">
               Nexbaron Private Limited is a multi-disciplinary technology & commercial
               infrastructure company delivering end-to-end digital solutions and physical print
               collateral.
@@ -49,7 +49,7 @@ export function CorporateFooter() {
               <Monitor className="w-4 h-4" />
               Nexbaron Digital
             </h3>
-            <ul className="space-y-2 text-xs text-slate-300">
+            <ul className="space-y-2 text-xs text-slate-200">
               <li>
                 <Link href="/digital/pricing" className="hover:text-white">
                   Pricing
@@ -89,7 +89,7 @@ export function CorporateFooter() {
               <Printer className="w-4 h-4" />
               Nexbaron Print
             </h3>
-            <ul className="space-y-2 text-xs text-slate-300">
+            <ul className="space-y-2 text-xs text-slate-200">
               <li>
                 <Link href="/print/products/visiting-cards" className="hover:text-white">
                   Visiting Cards & Stationery
@@ -120,10 +120,10 @@ export function CorporateFooter() {
 
           {/* Group Corporate */}
           <div>
-            <h3 className="text-xs uppercase font-mono font-semibold text-slate-300 tracking-wider mb-4">
+            <h3 className="text-xs uppercase font-mono font-semibold text-slate-200 tracking-wider mb-4">
               Corporate & Support
             </h3>
-            <ul className="space-y-2 text-xs text-slate-300">
+            <ul className="space-y-2 text-xs text-slate-200">
               <li>
                 <Link href="/about" className="hover:text-white">
                   About Nexbaron
@@ -138,18 +138,18 @@ export function CorporateFooter() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-300">
           <p>© {currentYear} Nexbaron Private Limited. All rights reserved.</p>
           <div className="flex items-center gap-4 font-mono text-xs">
-            <Link href="/privacy" className="hover:text-slate-300">
+            <Link href="/privacy" className="hover:text-slate-200">
               Privacy Policy
             </Link>
             <span>•</span>
-            <Link href="/terms" className="hover:text-slate-300">
+            <Link href="/terms" className="hover:text-slate-200">
               Terms of Service
             </Link>
             <span>•</span>
-            <Link href="/sitemap.xml" className="hover:text-slate-300">
+            <Link href="/sitemap.xml" className="hover:text-slate-200">
               Sitemap
             </Link>
           </div>
