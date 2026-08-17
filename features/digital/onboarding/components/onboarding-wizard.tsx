@@ -722,7 +722,7 @@ export function OnboardingWizard({
                 <Input
                   id="businessName"
                   placeholder="e.g. Sharma Sweets"
-                  className="mt-2 rounded-lg"
+                  className="mt-2 rounded-xl"
                   aria-invalid={errors.businessName ? "true" : "false"}
                   {...register("businessName")}
                 />
@@ -739,7 +739,7 @@ export function OnboardingWizard({
                 <Input
                   id="ownerName"
                   placeholder="Full name"
-                  className="mt-2 rounded-lg"
+                  className="mt-2 rounded-xl"
                   aria-invalid={errors.ownerName ? "true" : "false"}
                   {...register("ownerName")}
                 />
@@ -757,7 +757,7 @@ export function OnboardingWizard({
                   id="phone"
                   type="tel"
                   placeholder="10-digit mobile number"
-                  className="mt-2 rounded-lg"
+                  className="mt-2 rounded-xl"
                   aria-invalid={errors.phone ? "true" : "false"}
                   {...register("phone")}
                 />
@@ -773,7 +773,7 @@ export function OnboardingWizard({
                   id="email"
                   type="email"
                   placeholder="you@business.com"
-                  className="mt-2 rounded-lg"
+                  className="mt-2 rounded-xl"
                   aria-invalid={errors.email ? "true" : "false"}
                   {...register("email")}
                 />
@@ -790,7 +790,7 @@ export function OnboardingWizard({
                 <Input
                   id="city"
                   placeholder="Your city"
-                  className="mt-2 rounded-lg"
+                  className="mt-2 rounded-xl"
                   aria-invalid={errors.city ? "true" : "false"}
                   {...register("city")}
                 />
@@ -810,7 +810,7 @@ export function OnboardingWizard({
                 id="services"
                 rows={3}
                 placeholder="e.g. Haircuts, colouring, facials — or samosas, sweets, catering"
-                className="mt-2 rounded-lg"
+                className="mt-2 rounded-xl"
                 aria-invalid={errors.services ? "true" : "false"}
                 {...register("services")}
               />
@@ -827,7 +827,7 @@ export function OnboardingWizard({
                 <Input
                   id="hours"
                   placeholder="e.g. Mon–Sat, 10am to 8pm"
-                  className="mt-2 rounded-lg"
+                  className="mt-2 rounded-xl"
                   {...register("hours")}
                 />
               </div>
@@ -836,7 +836,7 @@ export function OnboardingWizard({
                 <Input
                   id="address"
                   placeholder="Shop / office address"
-                  className="mt-2 rounded-lg"
+                  className="mt-2 rounded-xl"
                   {...register("address")}
                 />
               </div>
@@ -848,7 +848,7 @@ export function OnboardingWizard({
               </Label>
               <select
                 id="visitorAction"
-                className="mt-2 flex h-10 w-full border border-white/10 bg-slate-800 px-3 py-2 text-sm text-white placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg aria-[invalid=true]:border-red-500 [&>option]:text-slate-900"
+                className="mt-2 flex h-10 w-full border border-border bg-neutral-bg px-3 py-2.5 text-sm text-heading placeholder:text-muted focus-visible:outline-none focus-visible:border-accent/50 rounded-xl aria-[invalid=true]:border-red-500 [&>option]:text-heading"
                 aria-invalid={errors.visitorAction ? "true" : "false"}
                 defaultValue=""
                 {...register("visitorAction")}
@@ -941,7 +941,7 @@ export function OnboardingWizard({
                 id="notes"
                 rows={3}
                 placeholder="Special requests, references, things to avoid..."
-                className="mt-2 rounded-lg"
+                className="mt-2 rounded-xl"
                 {...register("notes")}
               />
             </div>

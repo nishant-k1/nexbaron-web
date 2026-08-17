@@ -74,7 +74,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
   ];
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
@@ -130,20 +130,22 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
         secondaryCta={{ label: "View Full Catalog", href: "/print/products" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {product.overview.length > 0 && (
-          <section className="py-16 max-w-3xl">
-            <div className="space-y-4">
+      {product.overview.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl space-y-4">
               {product.overview.map((paragraph) => (
                 <p key={paragraph} className="text-base md:text-lg text-slate-300 leading-relaxed">
                   {paragraph}
                 </p>
               ))}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        <section className="py-16">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {detailSections.map((section) => (
               <div
@@ -167,9 +169,11 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="print"
             eyebrow="Why Nexbaron Print"
@@ -189,10 +193,12 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {product.howItWorks.length > 0 && (
-          <section className="py-16 border-t border-white/10">
+      {product.howItWorks.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
               How It Works
             </h2>
@@ -209,44 +215,48 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
                 </li>
               ))}
             </ol>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        {product.faqs.length > 0 && (
-          <section className="py-16 border-t border-white/10 max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-3">
-              {product.faqs.map((faq) => (
-                <details
-                  key={faq.question}
-                  className="group rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden"
-                >
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 text-sm font-semibold text-white hover:text-amber-300 transition-colors">
-                    {faq.question}
-                    <span
-                      className="text-amber-400 shrink-0 group-open:rotate-45 transition-transform"
-                      aria-hidden="true"
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="px-5 pb-4 text-sm text-slate-300 leading-relaxed">{faq.answer}</p>
-                </details>
-              ))}
+      {product.faqs.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-3">
+                {product.faqs.map((faq) => (
+                  <details
+                    key={faq.question}
+                    className="group rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden"
+                  >
+                    <summary className="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 text-sm font-semibold text-white hover:text-amber-300 transition-colors">
+                      {faq.question}
+                      <span
+                        className="text-amber-400 shrink-0 group-open:rotate-45 transition-transform"
+                        aria-hidden="true"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <p className="px-5 pb-4 text-sm text-slate-300 leading-relaxed">{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        <CTABanner
-          accent="print"
-          title={`Need ${product.label}?`}
-          description="Configure dimensions, quantity, and finishing in the instant quote builder — get an estimated price in seconds."
-          ctaLabel="Launch Quote Builder"
-          href={`/print/quote?product=${product.id}`}
-        />
-      </div>
+      <CTABanner
+        accent="print"
+        title={`Need ${product.label}?`}
+        description="Configure dimensions, quantity, and finishing in the instant quote builder — get an estimated price in seconds."
+        ctaLabel="Launch Quote Builder"
+        href={`/print/quote?product=${product.id}`}
+      />
     </div>
   );
 }

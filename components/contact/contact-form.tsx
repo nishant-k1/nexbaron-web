@@ -133,7 +133,7 @@ export function ContactForm({ division, heading, subheading }: ContactFormProps)
             <Input
               id="name"
               placeholder="Your full name"
-              className="pl-10 rounded-lg"
+              className="pl-10 rounded-xl"
               aria-invalid={errors.name ? "true" : "false"}
               {...register("name")}
             />
@@ -154,7 +154,7 @@ export function ContactForm({ division, heading, subheading }: ContactFormProps)
                 id="email"
                 type="email"
                 placeholder="you@business.com"
-                className="pl-10 rounded-lg"
+                className="pl-10 rounded-xl"
                 aria-invalid={errors.email ? "true" : "false"}
                 {...register("email")}
               />
@@ -174,7 +174,7 @@ export function ContactForm({ division, heading, subheading }: ContactFormProps)
                 id="phone"
                 type="tel"
                 placeholder="Your phone number"
-                className="pl-10 rounded-lg"
+                className="pl-10 rounded-xl"
                 aria-invalid={errors.phone ? "true" : "false"}
                 {...register("phone")}
               />
@@ -195,7 +195,7 @@ export function ContactForm({ division, heading, subheading }: ContactFormProps)
             id="message"
             rows={5}
             placeholder="Tell us about your requirement or question..."
-            className="mt-2 rounded-lg"
+            className="mt-2 rounded-xl"
             aria-invalid={errors.message ? "true" : "false"}
             {...register("message")}
           />

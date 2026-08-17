@@ -33,37 +33,42 @@ function LaunchTimelineSection({ plans }: { plans: Plan[] }) {
   const stages = buildStageSchedule(demo.launchDays);
 
   return (
-    <section id="launch-timeline" className="py-16 border-t border-white/10 scroll-mt-28">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        <div className="max-w-xl">
-          <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
-            Your Launch Timeline
-          </span>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-            A No Hidden Costs. Not a Guess.
-          </h2>
-          <p className="text-sm text-slate-300 mt-4 leading-relaxed">
-            The moment you pay, we commit to a real calendar date and you can watch your progress
-            live. Add or remove services on the cards above and the date updates automatically.
-          </p>
-          <ul className="mt-6 space-y-3 text-sm text-slate-300">
-            {demo.expectations.map((e) => (
-              <li key={e.label} className="flex gap-3">
-                <CheckCircle2 className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
-                <span>
-                  <span className="font-semibold text-white">{e.label} — </span>
-                  {e.note}
-                </span>
-              </li>
-            ))}
-          </ul>
+    <section
+      id="launch-timeline"
+      className="min-h-screen flex items-center justify-center py-16 scroll-mt-28"
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="max-w-xl">
+            <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
+              Your Launch Timeline
+            </span>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
+              A No Hidden Costs. Not a Guess.
+            </h2>
+            <p className="text-sm text-slate-300 mt-4 leading-relaxed">
+              The moment you pay, we commit to a real calendar date and you can watch your progress
+              live. Add or remove services on the cards above and the date updates automatically.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm text-slate-300">
+              {demo.expectations.map((e) => (
+                <li key={e.label} className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
+                  <span>
+                    <span className="font-semibold text-white">{e.label} — </span>
+                    {e.note}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <LaunchTracker
+            launchDays={demo.launchDays}
+            launchDate={demo.launchDate}
+            stages={stages}
+            prefix="Illustrative Launch Date"
+          />
         </div>
-        <LaunchTracker
-          launchDays={demo.launchDays}
-          launchDate={demo.launchDate}
-          stages={stages}
-          prefix="Illustrative Launch Date"
-        />
       </div>
     </section>
   );
@@ -73,7 +78,7 @@ export default async function DigitalServicesPage() {
   const { plans } = await getPlanCatalog();
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="Pricing"
@@ -84,9 +89,11 @@ export default async function DigitalServicesPage() {
         secondaryCta={{ label: "Already Have a Website?", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {/* Growth Plans */}
-        <section id="plans" className="py-16 scroll-mt-28">
+      <section
+        id="plans"
+        className="min-h-screen flex items-center justify-center py-16 scroll-mt-28"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
               Growth Plans
@@ -101,10 +108,10 @@ export default async function DigitalServicesPage() {
           </div>
 
           <PlansGrid plans={plans} />
-        </section>
+        </div>
+      </section>
 
-        <LaunchTimelineSection plans={plans} />
-      </div>
+      <LaunchTimelineSection plans={plans} />
     </div>
   );
 }

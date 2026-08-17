@@ -27,7 +27,7 @@ export function PageHero({
   const classes = accent[a];
 
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div
         className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] ${classes.glow} rounded-full blur-[150px] pointer-events-none`}
       />

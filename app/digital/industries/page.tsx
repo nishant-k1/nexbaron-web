@@ -96,7 +96,7 @@ export default async function DigitalIndustriesPage() {
   }
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="Industries"
@@ -107,13 +107,13 @@ export default async function DigitalIndustriesPage() {
         secondaryCta={{ label: "See Pricing", href: "/digital/pricing" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {categories.map((category) => (
-          <section
-            key={category}
-            id={category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
-            className="py-12 scroll-mt-28"
-          >
+      {categories.map((category) => (
+        <section
+          key={category}
+          id={category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
+          className="min-h-screen flex items-center justify-center py-16 scroll-mt-28"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3 mb-8">
               <h2 className="text-2xl font-heading font-bold text-white">{category}</h2>
               <div className="flex-1 h-px bg-white/10" />
@@ -126,17 +126,17 @@ export default async function DigitalIndustriesPage() {
                   <BusinessCard key={business.id} business={business} />
                 ))}
             </div>
-          </section>
-        ))}
+          </div>
+        </section>
+      ))}
 
-        <CTABanner
-          accent="digital"
-          title="Don't see your industry?"
-          description="Every local business gets more customers with the same three things: found on Google, easy to contact, and looking professional. Tell us what you do and we'll recommend a plan."
-          ctaLabel="Get a Plan Recommendation"
-          href="/digital/pricing"
-        />
-      </div>
+      <CTABanner
+        accent="digital"
+        title="Don't see your industry?"
+        description="Every local business gets more customers with the same three things: found on Google, easy to contact, and looking professional. Tell us what you do and we'll recommend a plan."
+        ctaLabel="Get a Plan Recommendation"
+        href="/digital/pricing"
+      />
     </div>
   );
 }

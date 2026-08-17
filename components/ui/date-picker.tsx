@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DayPicker, type ClassNames } from "react-day-picker";
 
 import "react-day-picker/style.css";
@@ -23,18 +23,17 @@ type DatePickerAccent = keyof typeof ACCENT_COLORS;
 
 const dayPickerClassNames: Partial<ClassNames> = {
   root: "font-body",
-  month_caption: "text-slate-200",
+  month_caption: "text-slate-200 font-semibold text-sm",
   caption_label: "text-slate-200 font-semibold text-sm",
-  nav: "gap-1",
   button_previous:
-    "cursor-pointer text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
+    "cursor-pointer flex items-center justify-center w-8 h-8 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
   button_next:
-    "cursor-pointer text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
-  chevron: "fill-current",
+    "cursor-pointer flex items-center justify-center w-8 h-8 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
+  chevron: "fill-current w-4 h-4",
   weekdays: "text-slate-500",
   weekday: "text-slate-500",
-  day: "text-slate-200",
-  day_button: "cursor-pointer rounded-full hover:bg-white/10 transition-colors",
+  day: "text-slate-200 w-11 h-11",
+  day_button: "cursor-pointer rounded-full hover:bg-white/10 transition-colors w-10 h-10",
   outside: "text-slate-600",
   disabled: "opacity-40 cursor-not-allowed",
 };
@@ -135,9 +134,9 @@ export function DatePickerField({
           aria-haspopup="dialog"
           aria-expanded={open}
           onClick={() => setOpen((prev) => !prev)}
-          className={`cursor-pointer flex h-10 w-full items-center gap-2 border px-3 py-2 text-sm rounded-xl transition-colors ${
-            open ? ACCENT_RING[accent] : "border-white/10 bg-slate-800 hover:border-white/20"
-          } ${value ? "text-white" : "text-slate-500"}`}
+          className={`cursor-pointer flex w-full items-center gap-2 border border-border bg-neutral-bg px-3 py-2.5 text-sm rounded-xl transition-colors ${
+            open ? ACCENT_RING[accent] : "hover:border-accent/50"
+          } ${value ? "text-heading" : "text-muted"}`}
         >
           <CalendarDays className="w-4 h-4 shrink-0 text-slate-400" />
           <span className="truncate">{value ? formatDisplay(value) : "Select date"}</span>
@@ -151,7 +150,7 @@ export function DatePickerField({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: -6 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="absolute left-0 top-full z-30 mt-2 origin-top-left rounded-2xl border border-white/10 bg-slate-900 p-3 shadow-2xl shadow-black/50 backdrop-blur-xl"
+              className="absolute left-0 top-full z-30 mt-2 origin-top-left min-w-[320px] rounded-2xl border border-white/10 bg-slate-900 p-3 shadow-2xl shadow-black/50 backdrop-blur-xl"
               style={accentStyle}
             >
               <DayPicker
@@ -160,6 +159,7 @@ export function DatePickerField({
                 onSelect={handleSelect}
                 defaultMonth={selectedDate ?? new Date()}
                 disabled={{ before: new Date() }}
+                navLayout="around"
                 classNames={dayPickerClassNames}
                 components={{
                   Chevron: ({ orientation }) =>
@@ -168,6 +168,25 @@ export function DatePickerField({
                     ) : (
                       <ChevronRight className="w-4 h-4" />
                     ),
+                  Month: ({ children, className }) => {
+                    const childArray = React.Children.toArray(children);
+                    const prevButton = childArray[0];
+                    const caption = childArray[1];
+                    const nextButton = childArray[2];
+                    const grid = childArray.slice(3);
+                    return (
+                      <div className={className}>
+                        <div className="flex items-center justify-between mb-2">
+                          <div>{caption}</div>
+                          <div className="flex items-center gap-1">
+                            {prevButton}
+                            {nextButton}
+                          </div>
+                        </div>
+                        {grid}
+                      </div>
+                    );
+                  },
                 }}
               />
             </motion.div>

@@ -343,7 +343,7 @@ export function LiveChat() {
                     }}
                     placeholder="Your name *"
                     aria-label="Your name"
-                    className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                    className="w-full px-3 py-2.5 text-sm bg-neutral-bg border border-border rounded-xl text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
                     autoFocus
                   />
                   <input
@@ -355,7 +355,7 @@ export function LiveChat() {
                     type="tel"
                     placeholder="Phone"
                     aria-label="Phone number"
-                    className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                    className="w-full px-3 py-2.5 text-sm bg-neutral-bg border border-border rounded-xl text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
                   />
                   <input
                     value={email}
@@ -366,7 +366,7 @@ export function LiveChat() {
                     type="email"
                     placeholder="Email"
                     aria-label="Email"
-                    className="w-full px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                    className="w-full px-3 py-2.5 text-sm bg-neutral-bg border border-border rounded-xl text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
                   />
                   {formError && (
                     <p className="text-[11px] text-red-400 text-center" role="alert">
@@ -487,7 +487,7 @@ export function LiveChat() {
                 placeholder="Type your message..."
                 aria-label="Type your message"
                 disabled={sending}
-                className="flex-1 px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50 disabled:opacity-50"
+                className="flex-1 px-3 py-2.5 text-sm bg-neutral-bg border border-border rounded-xl text-heading placeholder:text-muted focus:outline-none focus:border-accent/50 disabled:opacity-50"
               />
               <button
                 type="submit"

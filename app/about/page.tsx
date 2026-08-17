@@ -26,7 +26,7 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
       {/* Hero */}
-      <section className="relative text-white pt-32 pb-16 md:pt-40">
+      <section className="relative min-h-screen flex items-center justify-center text-white pt-32 pb-16 md:pt-40">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <h1 className="text-4xl md:text-5xl font-heading font-normal mb-4">
@@ -41,7 +41,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="py-section">
+      <section className="min-h-screen flex items-center justify-center py-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="max-w-4xl mx-auto">
@@ -65,7 +65,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-section">
+      <section className="min-h-screen flex items-center justify-center py-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="max-w-4xl mx-auto">
@@ -108,7 +108,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-section">
+      <section className="min-h-screen flex items-center justify-center py-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="max-w-4xl mx-auto">

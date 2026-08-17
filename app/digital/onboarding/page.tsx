@@ -56,7 +56,7 @@ export default function DigitalOnboardingPage({
   }
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="Start Your Plan"

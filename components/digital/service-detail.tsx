@@ -65,7 +65,7 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -113,21 +113,23 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {service.overview.length > 0 && (
-          <section className="py-8 max-w-3xl">
-            <div className="space-y-4">
+      {service.overview.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl space-y-4">
               {service.overview.map((paragraph) => (
                 <p key={paragraph} className="text-base md:text-lg text-slate-300 leading-relaxed">
                   {paragraph}
                 </p>
               ))}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        {service.benefits.length > 0 && (
-          <section className="py-8">
+      {service.benefits.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3 mb-10">
               <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
                 <Icon className="w-6 h-6" />
@@ -152,11 +154,13 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
                 </SectionReveal>
               ))}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        {service.howItWorks.length > 0 && (
-          <section className="py-8 border-t border-white/10">
+      {service.howItWorks.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
               How It Works
             </h2>
@@ -173,38 +177,44 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
                 </li>
               ))}
             </ol>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        {service.faqs.length > 0 && (
-          <section className="py-8 border-t border-white/10 max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-3">
-              {service.faqs.map((faq) => (
-                <details
-                  key={faq.question}
-                  className="group rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden"
-                >
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 text-sm font-semibold text-white hover:text-teal-300 transition-colors">
-                    {faq.question}
-                    <span
-                      className="text-teal-400 shrink-0 group-open:rotate-45 transition-transform"
-                      aria-hidden="true"
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="px-5 pb-4 text-sm text-slate-300 leading-relaxed">{faq.answer}</p>
-                </details>
-              ))}
+      {service.faqs.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-3">
+                {service.faqs.map((faq) => (
+                  <details
+                    key={faq.question}
+                    className="group rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden"
+                  >
+                    <summary className="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 text-sm font-semibold text-white hover:text-teal-300 transition-colors">
+                      {faq.question}
+                      <span
+                        className="text-teal-400 shrink-0 group-open:rotate-45 transition-transform"
+                        aria-hidden="true"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <p className="px-5 pb-4 text-sm text-slate-300 leading-relaxed">{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        {related.length > 0 && (
-          <section className="py-8 border-t border-white/10">
+      {related.length > 0 && (
+        <section className="min-h-screen flex items-center justify-center py-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
               More in {section.title}
             </h2>
@@ -230,27 +240,31 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
                 );
               })}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        <div className="mt-12 flex items-center justify-center">
-          <Link
-            href={`/digital/${section.slug}`}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-teal-400 hover:text-teal-300"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to {section.title}
-          </Link>
+      <div className="min-h-[20vh] flex items-center justify-center py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center">
+            <Link
+              href={`/digital/${section.slug}`}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-teal-400 hover:text-teal-300"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to {section.title}
+            </Link>
+          </div>
         </div>
-
-        <CTABanner
-          accent="digital"
-          title="Ready to get started?"
-          description="Pick a plan and we'll handle everything — from building your digital presence to keeping it growing every month."
-          ctaLabel="See Pricing"
-          href="/digital/pricing"
-        />
       </div>
+
+      <CTABanner
+        accent="digital"
+        title="Ready to get started?"
+        description="Pick a plan and we'll handle everything — from building your digital presence to keeping it growing every month."
+        ctaLabel="See Pricing"
+        href="/digital/pricing"
+      />
     </div>
   );
 }

@@ -63,7 +63,7 @@ export default async function PrintAboutPage() {
   const profile = await getBusinessProfile("print");
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="print"
         eyebrow="About Us"
@@ -73,7 +73,7 @@ export default async function PrintAboutPage() {
       />
 
       {/* Mission */}
-      <section className="py-16 md:py-20">
+      <section className="min-h-screen flex items-center justify-center py-16 md:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <div className="max-w-3xl mx-auto text-center">
@@ -96,7 +96,7 @@ export default async function PrintAboutPage() {
       </section>
 
       {/* Meet the Humans */}
-      <section className="py-16 md:py-20">
+      <section className="min-h-screen flex items-center justify-center py-16 md:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
@@ -180,7 +180,7 @@ export default async function PrintAboutPage() {
       </section>
 
       {/* What we believe */}
-      <section className="py-16 md:py-20 bg-white/[0.02]">
+      <section className="min-h-screen flex items-center justify-center py-16 md:py-20 bg-white/[0.02]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-12 text-center">

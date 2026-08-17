@@ -80,7 +80,7 @@ const process = [
 
 export default function PrintSpecificationsPage() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="print"
         eyebrow="Specifications"
@@ -91,8 +91,8 @@ export default function PrintSpecificationsPage() {
         secondaryCta={{ label: "Browse Products", href: "/print/products" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <section className="py-16">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="print"
             eyebrow="Paper & Materials"
@@ -115,9 +115,11 @@ export default function PrintSpecificationsPage() {
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="print"
             eyebrow="Finishing"
@@ -135,9 +137,11 @@ export default function PrintSpecificationsPage() {
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="print"
             eyebrow="Production Flow"
@@ -164,16 +168,16 @@ export default function PrintSpecificationsPage() {
               );
             })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <CTABanner
-          accent="print"
-          title="Ready to Order?"
-          description="Express 24-hour turnaround available on stock items. Build your quote now."
-          ctaLabel="Build Instant Quote"
-          href="/print/quote"
-        />
-      </div>
+      <CTABanner
+        accent="print"
+        title="Ready to Order?"
+        description="Express 24-hour turnaround available on stock items. Build your quote now."
+        ctaLabel="Build Instant Quote"
+        href="/print/quote"
+      />
     </div>
   );
 }

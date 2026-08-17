@@ -66,7 +66,7 @@ const reasons = [
 
 export default function WhyNexbaronPage() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="Why Nexbaron"
@@ -77,34 +77,36 @@ export default function WhyNexbaronPage() {
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {reasons.map((reason) => {
-            const Icon = reason.icon;
-            return (
-              <SectionReveal key={reason.title}>
-                <div className="p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06]">
-                  <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 w-fit mb-4">
-                    <Icon className="w-5 h-5" />
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {reasons.map((reason) => {
+              const Icon = reason.icon;
+              return (
+                <SectionReveal key={reason.title}>
+                  <div className="p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06]">
+                    <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 w-fit mb-4">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-xl font-heading font-semibold text-white mb-3">
+                      {reason.title}
+                    </h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{reason.description}</p>
                   </div>
-                  <h3 className="text-xl font-heading font-semibold text-white mb-3">
-                    {reason.title}
-                  </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">{reason.description}</p>
-                </div>
-              </SectionReveal>
-            );
-          })}
+                </SectionReveal>
+              );
+            })}
+          </div>
         </div>
+      </section>
 
-        <CTABanner
-          accent="digital"
-          title="Ready to see the difference?"
-          description="Pick a plan and experience what fixed-price, no-lock-in digital growth feels like."
-          ctaLabel="See Pricing"
-          href="/digital/pricing"
-        />
-      </div>
+      <CTABanner
+        accent="digital"
+        title="Ready to see the difference?"
+        description="Pick a plan and experience what fixed-price, no-lock-in digital growth feels like."
+        ctaLabel="See Pricing"
+        href="/digital/pricing"
+      />
     </div>
   );
 }

@@ -25,7 +25,7 @@ export function CTABanner({
 
   return (
     <section
-      className={`mt-16 p-10 rounded-3xl bg-gradient-to-r ${classes.bannerGradient} border text-center relative overflow-hidden`}
+      className={`min-h-screen flex items-center justify-center p-10 rounded-3xl bg-gradient-to-r ${classes.bannerGradient} text-center relative overflow-hidden`}
     >
       <div className="max-w-2xl mx-auto space-y-6">
         <h2 className="text-3xl font-heading font-bold text-white">{title}</h2>

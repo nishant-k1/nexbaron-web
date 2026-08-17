@@ -27,7 +27,7 @@ export default async function SolutionsPage() {
   const catalog = await getServiceCatalog();
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="Solutions"
@@ -38,11 +38,15 @@ export default async function SolutionsPage() {
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {catalog.sections.map((section) => {
-          const services = catalog.services.filter((s) => s.section === section.id);
-          return (
-            <section key={section.id} id={section.id} className="py-16 scroll-mt-28">
+      {catalog.sections.map((section) => {
+        const services = catalog.services.filter((s) => s.section === section.id);
+        return (
+          <section
+            key={section.id}
+            id={section.id}
+            className="min-h-screen flex items-center justify-center py-16 scroll-mt-28"
+          >
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <SectionHeading accent="digital" eyebrow={section.title} title={section.subtitle} />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,18 +76,18 @@ export default async function SolutionsPage() {
                   );
                 })}
               </div>
-            </section>
-          );
-        })}
+            </div>
+          </section>
+        );
+      })}
 
-        <CTABanner
-          accent="digital"
-          title="Ready to grow?"
-          description="Pick a plan and we'll handle everything — from building your digital presence to keeping it growing every month."
-          ctaLabel="See Pricing"
-          href="/digital/pricing"
-        />
-      </div>
+      <CTABanner
+        accent="digital"
+        title="Ready to grow?"
+        description="Pick a plan and we'll handle everything — from building your digital presence to keeping it growing every month."
+        ctaLabel="See Pricing"
+        href="/digital/pricing"
+      />
     </div>
   );
 }

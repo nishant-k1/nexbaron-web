@@ -24,7 +24,7 @@ export default async function DigitalContactPage() {
   const profile = await getBusinessProfile("digital");
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="Contact Us"

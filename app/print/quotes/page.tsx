@@ -52,7 +52,7 @@ export default function PrintQuotesPage() {
 
   return (
     <div className="min-h-[70vh] pt-32 pb-24 md:pt-40">
-      <div className="container mx-auto max-w-4xl px-4 sm:px-6">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10">
           <div>
             <p className="text-xs font-mono uppercase tracking-widest text-amber-400 mb-3">

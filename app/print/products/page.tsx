@@ -24,7 +24,7 @@ export default async function PrintProductsPage() {
   const catalog = await getPrintCatalog();
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="print"
         eyebrow="Print Catalog"
@@ -38,12 +38,12 @@ export default async function PrintProductsPage() {
         secondaryCta={{ label: "View Specifications", href: "/print/specifications" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {catalog.categories.map((category, catIdx) => (
-          <section
-            key={category}
-            className={`py-14 ${catIdx > 0 ? "border-t border-white/10" : ""}`}
-          >
+      {catalog.categories.map((category, catIdx) => (
+        <section
+          key={category}
+          className={`min-h-screen flex items-center justify-center py-16 ${catIdx > 0 ? "" : ""}`}
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3 mb-8">
               <span className="text-xs font-mono text-amber-400">
                 {String(catIdx + 1).padStart(2, "0")}
@@ -92,17 +92,17 @@ export default async function PrintProductsPage() {
                   );
                 })}
             </div>
-          </section>
-        ))}
+          </div>
+        </section>
+      ))}
 
-        <CTABanner
-          accent="print"
-          title="Know What You Need?"
-          description="Configure product, quantity, and finishing directly in the instant quote builder."
-          ctaLabel="Open Quote Builder"
-          href="/print/quote"
-        />
-      </div>
+      <CTABanner
+        accent="print"
+        title="Know What You Need?"
+        description="Configure product, quantity, and finishing directly in the instant quote builder."
+        ctaLabel="Open Quote Builder"
+        href="/print/quote"
+      />
     </div>
   );
 }

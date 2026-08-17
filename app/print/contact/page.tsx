@@ -24,7 +24,7 @@ export default async function PrintContactPage() {
   const profile = await getBusinessProfile("print");
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="print"
         eyebrow="Contact Us"

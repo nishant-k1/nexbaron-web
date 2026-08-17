@@ -62,7 +62,7 @@ const journeySteps = [
 
 export default function ResultsPage() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="What to Expect"

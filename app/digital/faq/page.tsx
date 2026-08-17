@@ -83,7 +83,7 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -97,8 +97,8 @@ export default function FAQPage() {
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <section>
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.02]">
             {faqs.map((faq) => (
               <details key={faq.question} className="group px-6 py-5">
@@ -132,16 +132,16 @@ export default function FAQPage() {
               </Link>
             </Button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <CTABanner
-          accent="digital"
-          title="Ready to start?"
-          description="Published prices, clear timelines, and no lock-in. Pick a plan and everything on these pages is exactly what you get."
-          ctaLabel="See Pricing"
-          href="/digital/pricing"
-        />
-      </div>
+      <CTABanner
+        accent="digital"
+        title="Ready to start?"
+        description="Published prices, clear timelines, and no lock-in. Pick a plan and everything on these pages is exactly what you get."
+        ctaLabel="See Pricing"
+        href="/digital/pricing"
+      />
     </div>
   );
 }

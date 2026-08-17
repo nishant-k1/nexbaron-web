@@ -110,6 +110,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y proximity;
 }
 
 /* Container max-width override */
@@ -234,4 +236,9 @@ body {
   background-color: var(--rdp-accent-color);
   color: #020617;
   font-weight: 600;
+}
+
+/* Alternating section backgrounds for visual separation — exclude rdp internals */
+section:not(.rdp-month):nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.08);
 }

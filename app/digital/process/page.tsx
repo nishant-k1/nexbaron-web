@@ -335,7 +335,7 @@ const carePlans = [
 
 export default function DigitalProcessPage() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow="Our Process"
@@ -346,8 +346,8 @@ export default function DigitalProcessPage() {
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <section className="py-16">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="How It Works"
@@ -369,9 +369,11 @@ export default function DigitalProcessPage() {
               </Link>
             </Button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Right After Purchase"
@@ -398,9 +400,11 @@ export default function DigitalProcessPage() {
               </div>
             }
           />
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="After Launch"
@@ -431,9 +435,11 @@ export default function DigitalProcessPage() {
               );
             })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="What's Included"
@@ -459,9 +465,11 @@ export default function DigitalProcessPage() {
               );
             })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Your Part"
@@ -482,9 +490,11 @@ export default function DigitalProcessPage() {
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Timelines"
@@ -513,9 +523,11 @@ export default function DigitalProcessPage() {
               );
             })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Revisions"
@@ -536,9 +548,11 @@ export default function DigitalProcessPage() {
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Communication"
@@ -564,9 +578,11 @@ export default function DigitalProcessPage() {
               );
             })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Monthly Care"
@@ -598,16 +614,16 @@ export default function DigitalProcessPage() {
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <CTABanner
-          accent="digital"
-          title="Ready to Start?"
-          description="Pick a plan, and everything on this page is exactly what you get. No surprises between here and your digital presence going live."
-          ctaLabel="See Pricing"
-          href="/digital/pricing#plans"
-        />
-      </div>
+      <CTABanner
+        accent="digital"
+        title="Ready to Start?"
+        description="Pick a plan, and everything on this page is exactly what you get. No surprises between here and your digital presence going live."
+        ctaLabel="See Pricing"
+        href="/digital/pricing#plans"
+      />
     </div>
   );
 }

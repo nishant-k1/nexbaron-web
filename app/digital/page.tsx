@@ -145,75 +145,78 @@ export default async function DigitalLandingPage() {
   const { plans } = await getPlanCatalog();
 
   return (
-    <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
-      {/* Background Ambient Glow */}
+    <div className="relative">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-teal-500/15 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Digital Hero */}
-        <SectionReveal>
-          <div className="max-w-4xl mx-auto text-center space-y-8 mb-20">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping" />
-              <span className="text-xs uppercase font-mono tracking-widest text-teal-300 font-semibold">
-                Fixed-Price Growth Plans
-              </span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
-              Your Business, Found on Google.{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400">
-                Booked on WhatsApp.
-              </span>{" "}
-              Every Day.
-            </h1>
-            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              We help restaurants, clinics, salons, law firms, and local shops get more customers —
-              a website, Google visibility, and 24/7 WhatsApp booking in one simple plan. Fixed
-              price. No jargon. No lock-in.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-              <Button
-                asChild
-                size="lg"
-                className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-7 rounded-xl shadow-lg shadow-teal-500/20"
-              >
-                <Link href="/digital/pricing" className="flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5" />
-                  Choose Your Plan
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-10 py-7 rounded-xl backdrop-blur-md"
-              >
-                <Link href="/digital/industries">Industries</Link>
-              </Button>
-            </div>{" "}
-            {/* Trust Signals */}
-            <div className="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center max-w-4xl mx-auto">
-              {[
-                "50+ businesses launched",
-                "Average launch: 7 days",
-                "Google Business verified",
-                "WhatsApp Business Partner",
-                "Hosted securely",
-              ].map((signal) => (
-                <div
-                  key={signal}
-                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/5"
+        <section className="min-h-screen flex items-center justify-center pt-32 pb-16 md:pt-40 md:pb-24">
+          <SectionReveal>
+            <div className="max-w-4xl mx-auto text-center space-y-8 mb-20">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping" />
+                <span className="text-xs uppercase font-mono tracking-widest text-teal-300 font-semibold">
+                  Fixed-Price Growth Plans
+                </span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
+                Your Business, Found on Google.{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400">
+                  Booked on WhatsApp.
+                </span>{" "}
+                Every Day.
+              </h1>
+              <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                We help restaurants, clinics, salons, law firms, and local shops get more customers
+                — a website, Google visibility, and 24/7 WhatsApp booking in one simple plan. Fixed
+                price. No jargon. No lock-in.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+                <Button
+                  asChild
+                  size="lg"
+                  className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-7 rounded-xl shadow-lg shadow-teal-500/20"
                 >
-                  <span className="text-teal-400 text-sm">✓</span>
-                  <span className="text-xs text-slate-300 font-medium">{signal}</span>
-                </div>
-              ))}
+                  <Link href="/digital/pricing" className="flex items-center gap-2">
+                    <MessageSquare className="w-5 h-5" />
+                    Choose Your Plan
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-10 py-7 rounded-xl backdrop-blur-md"
+                >
+                  <Link href="/digital/industries">Industries</Link>
+                </Button>
+              </div>{" "}
+              <div className="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center max-w-4xl mx-auto">
+                {[
+                  "50+ businesses launched",
+                  "Average launch: 7 days",
+                  "Google Business verified",
+                  "WhatsApp Business Partner",
+                  "Hosted securely",
+                ].map((signal) => (
+                  <div
+                    key={signal}
+                    className="flex items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/5"
+                  >
+                    <span className="text-teal-400 text-sm">✓</span>
+                    <span className="text-xs text-slate-300 font-medium">{signal}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </SectionReveal>
-        {/* Social Proof */}
-        <section className="py-16 border-t border-white/10">
+          </SectionReveal>
+        </section>
+      </div>
+
+      {/* Social Proof */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <div className="p-8 rounded-2xl bg-gradient-to-r from-teal-500/10 to-cyan-500/5 border border-teal-500/20">
               <div className="flex items-center gap-1.5 mb-4">
@@ -240,9 +243,12 @@ export default async function DigitalLandingPage() {
               </div>
             </div>
           </div>
-        </section>{" "}
-        {/* Tailored Industries */}
-        <section className="py-16 border-t border-white/10">
+        </div>
+      </section>
+
+      {/* Tailored Industries */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
               Industries
@@ -275,9 +281,12 @@ export default async function DigitalLandingPage() {
               );
             })}
           </div>
-        </section>
-        {/* Results */}
-        <section className="py-16 border-t border-white/10">
+        </div>
+      </section>
+
+      {/* Results */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Results"
@@ -299,9 +308,12 @@ export default async function DigitalLandingPage() {
               </div>
             ))}
           </div>
-        </section>
-        {/* Process Timeline */}
-        <section className="py-16 border-t border-white/10">
+        </div>
+      </section>
+
+      {/* Process Timeline */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="How It Works"
@@ -323,9 +335,12 @@ export default async function DigitalLandingPage() {
               </Link>
             </Button>
           </div>
-        </section>{" "}
-        {/* Pricing Preview */}
-        <section className="py-16 border-t border-white/10">
+        </div>
+      </section>
+
+      {/* Pricing Preview */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Pricing"
@@ -334,40 +349,44 @@ export default async function DigitalLandingPage() {
           />
           <PricingPreview plans={plans} />
           <PricingPreviewCta />
-        </section>
-        {/* Final CTA */}
-        <section className="py-16 border-t border-white/10">
-          <div className="max-w-2xl mx-auto text-center p-10 rounded-3xl bg-gradient-to-r from-teal-500/20 via-cyan-500/10 to-slate-950 border border-teal-500/30">
-            <h2 className="text-3xl font-heading font-bold text-white mb-4">
-              Ready to Launch Your Business Online?
-            </h2>
-            <p className="text-slate-300 mb-8">
-              Pick a plan, complete a 10-minute form, and your website goes live in 7 days — with
-              Google visibility and WhatsApp booking included.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button
-                asChild
-                size="lg"
-                className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
-              >
-                <Link href="/digital/pricing#plans" className="flex items-center gap-2">
-                  Choose Your Plan <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-8 rounded-xl backdrop-blur-md"
-              >
-                <Link href="/digital/contact">Talk to Us First</Link>
-              </Button>
-            </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="max-w-2xl mx-auto text-center p-10 rounded-3xl bg-gradient-to-r from-teal-500/20 via-cyan-500/10 to-slate-950 border border-teal-500/30">
+          <h2 className="text-3xl font-heading font-bold text-white mb-4">
+            Ready to Launch Your Business Online?
+          </h2>
+          <p className="text-slate-300 mb-8">
+            Pick a plan, complete a 10-minute form, and your website goes live in 7 days — with
+            Google visibility and WhatsApp booking included.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button
+              asChild
+              size="lg"
+              className="cursor-pointer bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold px-10 py-3.5 rounded-xl shadow-lg shadow-teal-500/20"
+            >
+              <Link href="/digital/pricing#plans" className="flex items-center gap-2">
+                Choose Your Plan <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-8 rounded-xl backdrop-blur-md"
+            >
+              <Link href="/digital/contact">Talk to Us First</Link>
+            </Button>
           </div>
-        </section>
-        {/* FAQ */}
-        <section className="py-16 border-t border-white/10">
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="FAQ"
@@ -415,8 +434,8 @@ export default async function DigitalLandingPage() {
               </details>
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

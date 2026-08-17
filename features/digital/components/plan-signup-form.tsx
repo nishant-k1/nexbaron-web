@@ -173,7 +173,7 @@ export function PlanSignupForm({
           /* Form */
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
             <div>
-              <label htmlFor="signup-name" className="block text-xs text-slate-400 mb-1">
+              <label htmlFor="signup-name" className="block text-xs text-muted mb-1">
                 Your Name *
               </label>
               <input
@@ -182,13 +182,13 @@ export function PlanSignupForm({
                 onChange={(e) => update("name", e.target.value)}
                 placeholder="Full name"
                 required
-                className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                className="w-full px-3 py-2.5 bg-neutral-bg border border-border rounded-xl text-sm text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="signup-email" className="block text-xs text-slate-400 mb-1">
+                <label htmlFor="signup-email" className="block text-xs text-muted mb-1">
                   Email *
                 </label>
                 <input
@@ -198,11 +198,11 @@ export function PlanSignupForm({
                   onChange={(e) => update("email", e.target.value)}
                   placeholder="you@business.com"
                   required
-                  className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                  className="w-full px-3 py-2.5 bg-neutral-bg border border-border rounded-xl text-sm text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
                 />
               </div>
               <div>
-                <label htmlFor="signup-phone" className="block text-xs text-slate-400 mb-1">
+                <label htmlFor="signup-phone" className="block text-xs text-muted mb-1">
                   Phone *
                 </label>
                 <input
@@ -212,13 +212,13 @@ export function PlanSignupForm({
                   onChange={(e) => update("phone", e.target.value)}
                   placeholder="+91 98765 43210"
                   required
-                  className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                  className="w-full px-3 py-2.5 bg-neutral-bg border border-border rounded-xl text-sm text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="signup-company" className="block text-xs text-slate-400 mb-1">
+              <label htmlFor="signup-company" className="block text-xs text-muted mb-1">
                 Company / Business Name
               </label>
               <input
@@ -226,12 +226,12 @@ export function PlanSignupForm({
                 value={form.company}
                 onChange={(e) => update("company", e.target.value)}
                 placeholder="Your business name"
-                className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                className="w-full px-3 py-2.5 bg-neutral-bg border border-border rounded-xl text-sm text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
               />
             </div>
 
             <div>
-              <label htmlFor="signup-address" className="block text-xs text-slate-400 mb-1">
+              <label htmlFor="signup-address" className="block text-xs text-muted mb-1">
                 Business Address
               </label>
               <input
@@ -239,12 +239,12 @@ export function PlanSignupForm({
                 value={form.address}
                 onChange={(e) => update("address", e.target.value)}
                 placeholder="Area, city"
-                className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50"
+                className="w-full px-3 py-2.5 bg-neutral-bg border border-border rounded-xl text-sm text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
               />
             </div>
 
             <div>
-              <label htmlFor="signup-description" className="block text-xs text-slate-400 mb-1">
+              <label htmlFor="signup-description" className="block text-xs text-muted mb-1">
                 About Your Business
               </label>
               <textarea

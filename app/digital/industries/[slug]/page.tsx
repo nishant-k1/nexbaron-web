@@ -56,7 +56,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
   ]);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
@@ -74,9 +74,9 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {/* Problems we solve */}
-        <section className="py-16">
+      {/* Problems we solve */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {business.problems.map((problem) => (
               <div
@@ -90,10 +90,12 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
           <p className="text-center text-sm font-semibold text-teal-300 mt-8">
             We fix all of it — for one fixed price.
           </p>
-        </section>
+        </div>
+      </section>
 
-        {/* What you get */}
-        <section className="py-16 border-t border-white/10">
+      {/* What you get */}
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
               <Icon className="w-6 h-6" />
@@ -182,16 +184,16 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
               Pricing is available on the {planLabel(business.recommendedPlan)} plan page.
             </p>
           )}
-        </section>
+        </div>
+      </section>
 
-        <CTABanner
-          accent="digital"
-          title={`Ready to grow your ${business.label.toLowerCase()}?`}
-          description="Pick the plan and we'll handle everything — from building your presence to keeping it growing every month."
-          ctaLabel="See Pricing"
-          href="/digital/pricing"
-        />
-      </div>
+      <CTABanner
+        accent="digital"
+        title={`Ready to grow your ${business.label.toLowerCase()}?`}
+        description="Pick the plan and we'll handle everything — from building your presence to keeping it growing every month."
+        ctaLabel="See Pricing"
+        href="/digital/pricing"
+      />
     </div>
   );
 }

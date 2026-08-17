@@ -25,7 +25,7 @@ export function SolutionDetail({
   const Icon = getIcon(section.icon);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <PageHero
         accent="digital"
         eyebrow={eyebrow}
@@ -35,8 +35,8 @@ export function SolutionDetail({
         secondaryCta={{ label: "Talk to Us", href: "/digital/contact" }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <section className="py-16">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-10">
             <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
               <Icon className="w-6 h-6" />
@@ -75,9 +75,11 @@ export function SolutionDetail({
               );
             })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 border-t border-white/10">
+      <section className="min-h-screen flex items-center justify-center py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             accent="digital"
             eyebrow="Why Nexbaron"
@@ -93,16 +95,16 @@ export function SolutionDetail({
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <CTABanner
-          accent="digital"
-          title="Ready to grow your business?"
-          description="Pick a plan and we'll handle everything — from building your digital presence to keeping it growing every month."
-          ctaLabel="See Pricing"
-          href="/digital/pricing"
-        />
-      </div>
+      <CTABanner
+        accent="digital"
+        title="Ready to grow your business?"
+        description="Pick a plan and we'll handle everything — from building your digital presence to keeping it growing every month."
+        ctaLabel="See Pricing"
+        href="/digital/pricing"
+      />
     </div>
   );
 }
