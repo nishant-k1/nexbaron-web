@@ -7,7 +7,7 @@ import { accent, type Accent } from "@/lib/accents";
 
 interface PageHeroProps {
   accent: Accent;
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   highlight?: string;
   description: string;
@@ -17,7 +17,6 @@ interface PageHeroProps {
 
 export function PageHero({
   accent: a,
-  eyebrow,
   title,
   highlight,
   description,
@@ -34,13 +33,6 @@ export function PageHero({
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionReveal>
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <span
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border backdrop-blur-md ${classes.pill}`}
-            >
-              <span className="text-xs uppercase font-mono tracking-widest font-semibold">
-                {eyebrow}
-              </span>
-            </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-white leading-tight">
               {title}{" "}
               {highlight && (
