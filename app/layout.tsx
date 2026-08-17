@@ -6,6 +6,7 @@ import { AuthProvider } from "@/components/auth/auth-context";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { Footer } from "@/components/footer/footer";
 import GlobalMeshBackgroundDynamic from "@/components/motion/global-mesh-background-dynamic";
+import { PageTransition } from "@/components/motion/page-transition";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Navigation } from "@/components/navigation/navigation";
 import { FloatingActions } from "@/components/ui/floating-actions";
@@ -187,7 +188,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </a>
               <Navigation />
               <main id="main-content" className="flex-1">
-                {children}
+                <PageTransition>{children}</PageTransition>
               </main>
               <Footer digital={digital} print={print} />
               <FloatingActions />

@@ -24,6 +24,17 @@ export function PrintNavigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
@@ -102,41 +113,64 @@ export function PrintNavigation() {
           </button>
         </div>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Menu Fullscreen */}
         {isOpen && (
           <div
             id="mobile-menu"
-            className="lg:hidden mt-4 rounded-2xl bg-slate-950/95 border border-amber-500/30 p-6 space-y-4 backdrop-blur-2xl shadow-2xl"
+            className="lg:hidden fixed inset-0 top-0 left-0 z-50 bg-slate-950 flex flex-col"
           >
-            <div className="pb-3 border-b border-white/10 flex justify-between items-center">
-              <span className="text-xs font-mono text-amber-400 uppercase">Nexbaron Print</span>
+            <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
               <Link
-                href={divisions.print.otherDivision.href}
-                className="text-xs font-mono text-slate-500 hover:text-teal-400 transition-colors"
+                href="/print"
+                className="flex items-center gap-2.5"
+                onClick={() => setIsOpen(false)}
               >
-                {divisions.print.otherDivision.label}
+                <BrandMark variant="print" />
+                <span className="text-lg font-heading font-extrabold text-white tracking-tight flex items-center gap-1.5">
+                  Nexbaron <span className="text-amber-400 font-mono text-sm">PRINT</span>
+                </span>
               </Link>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="cursor-pointer p-2 text-slate-300 hover:text-white"
+                aria-label="Close navigation"
+              >
+                <X className="w-6 h-6" />
+              </button>
             </div>
-            <div className="space-y-3">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block text-base font-medium text-slate-200 hover:text-amber-400 py-1"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-            <div className="pt-4 border-t border-white/10 space-y-3">
+
+            <nav className="flex-1 overflow-auto px-6 py-6 space-y-1">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`block text-lg font-medium py-3 border-b border-white/5 ${isActive ? "text-amber-400 font-semibold" : "text-slate-200 hover:text-amber-400"}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <div className="px-6 pb-8 pt-4 border-t border-white/10 space-y-3">
               <Link
                 href="/print/quote"
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl text-sm font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/25"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/25"
               >
                 Get Free Quote
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-              <UserMenu />
+              <UserMenu fullWidth />
+              <Link
+                href={divisions.print.otherDivision.href}
+                className="block text-center text-xs font-mono text-slate-500 hover:text-teal-400 transition-colors pt-2"
+              >
+                {divisions.print.otherDivision.label}
+              </Link>
             </div>
           </div>
         )}
