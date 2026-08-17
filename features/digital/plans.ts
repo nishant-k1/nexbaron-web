@@ -104,7 +104,7 @@ export const plans: CatalogPlan[] = [
       }),
     ],
     addOns: [],
-    ctaLabel: "Discuss Starter",
+    ctaLabel: "Choose Starter",
   },
   {
     id: "launch",
@@ -151,7 +151,7 @@ export const plans: CatalogPlan[] = [
       }),
     ],
     addOns: [],
-    ctaLabel: "Discuss Launch",
+    ctaLabel: "Choose Launch",
   },
   {
     id: "growth",
@@ -200,7 +200,7 @@ export const plans: CatalogPlan[] = [
       }),
     ],
     addOns: [],
-    ctaLabel: "Discuss Growth",
+    ctaLabel: "Choose Growth",
     pricing: { setup: 49999, monthly: 4999, annual: 59988, minimumMonths: 12 },
   },
   {
@@ -250,7 +250,7 @@ export const plans: CatalogPlan[] = [
       }),
     ],
     addOns: [],
-    ctaLabel: "Discuss Scale",
+    ctaLabel: "Choose Scale",
     pricing: { setup: 99999, monthly: 9999, annual: 119988, minimumMonths: 12 },
   },
   {
