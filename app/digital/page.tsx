@@ -217,28 +217,28 @@ export default async function DigitalLandingPage() {
       {/* Social Proof */}
       <section className="min-h-screen flex items-center justify-center py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="p-8 rounded-2xl bg-gradient-to-r from-teal-500/10 to-cyan-500/5 border border-teal-500/20">
-              <div className="flex items-center gap-1.5 mb-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="p-10 rounded-2xl bg-gradient-to-r from-teal-500/10 to-cyan-500/5 border border-teal-500/20">
+              <div className="flex items-center gap-1.5 mb-5">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <span key={i} className="text-amber-400 text-base">
+                  <span key={i} className="text-amber-400 text-xl">
                     &#9733;
                   </span>
                 ))}
-                <span className="text-xs text-slate-400 ml-2">Google Review</span>
+                <span className="text-sm text-slate-300 ml-2">Google Review</span>
               </div>
-              <p className="text-slate-200 text-base leading-relaxed italic max-w-xl">
+              <p className="text-slate-200 text-lg md:text-xl leading-relaxed italic max-w-2xl">
                 &ldquo;I had zero online presence. Nexbaron built my website in 6 days, got me on
                 Google, and now customers book appointments on WhatsApp — I don&apos;t even pick up
                 the phone anymore.&rdquo;
               </p>
-              <div className="flex items-center gap-4 mt-6">
-                <div className="w-11 h-11 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold text-sm">
+              <div className="flex items-center gap-4 mt-8">
+                <div className="w-14 h-14 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold text-lg">
                   DM
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">Dr. Mehta</p>
-                  <p className="text-xs text-slate-400">Dental Clinic, Mumbai</p>
+                  <p className="text-lg font-heading font-semibold text-white">Dr. Mehta</p>
+                  <p className="text-sm text-slate-300">Dental Clinic, Mumbai</p>
                 </div>
               </div>
             </div>
