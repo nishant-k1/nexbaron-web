@@ -125,7 +125,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                       <CheckCircle2 className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
                       <div className="min-w-0">
                         <h3 className="text-sm font-semibold text-white">{svc.label}</h3>
-                        <p className="text-[11px] font-mono text-slate-400 mt-1">
+                        <p className="text-xs font-mono text-slate-400 mt-1">
                           {setup > 0 && `${formatINR(setup)} one-time`}
                           {setup > 0 && monthly > 0 && " + "}
                           {monthly > 0 && `${formatINR(monthly)}/mo`}
@@ -145,7 +145,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                       <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                       <div className="min-w-0">
                         <h3 className="text-sm font-semibold text-white">{svc.label}</h3>
-                        <p className="text-[11px] font-mono text-slate-400 mt-1">
+                        <p className="text-xs font-mono text-slate-400 mt-1">
                           {setup > 0 && `${formatINR(setup)} one-time`}
                           {setup > 0 && monthly > 0 && " + "}
                           {monthly > 0 && `${formatINR(monthly)}/mo`}

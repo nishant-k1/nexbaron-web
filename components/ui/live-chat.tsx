@@ -313,7 +313,7 @@ export function LiveChat() {
               <p className="text-sm font-semibold text-white">
                 Nexbaron {division === "digital" ? "Digital" : "Print"}
               </p>
-              <p className="text-[10px] text-slate-300">
+              <p className="text-xs text-slate-300">
                 {isLoggedIn ? "Replies appear here" : "Log in to save chat history"}
               </p>
             </div>
@@ -429,7 +429,7 @@ export function LiveChat() {
                         </div>
                       ))}
                       <div
-                        className={`text-[10px] mt-1 flex items-center gap-1 ${
+                        className={`text-xs mt-1 flex items-center gap-1 ${
                           msg.sender === "user" ? "text-slate-700" : "text-slate-400"
                         }`}
                       >

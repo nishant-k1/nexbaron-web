@@ -116,7 +116,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
               <span className="text-xs font-medium text-white block">
                 Need Digital Marketing & Web Apps?
               </span>
-              <p className="text-[11px] text-slate-300">
+              <p className="text-xs text-slate-300">
                 Websites, Google Business Profile, WhatsApp CRM, and SEO.
               </p>
               <Link
@@ -138,7 +138,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
               </p>
               <p className="text-[11px] text-slate-500">GSTIN: {profile.gstin}</p>
             </div>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
               <a href={`mailto:${profile.email}`} className="text-amber-400 hover:text-amber-300">
                 {profile.email}
               </a>
@@ -148,7 +148,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
               </a>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-slate-400">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs text-slate-400">
             <Link href="/privacy" className="hover:text-slate-300">
               Privacy Policy
             </Link>

@@ -81,19 +81,19 @@ export default function CorporateGatewayPage() {
                 </p>
 
                 <div className="space-y-3 mb-8 border-t border-white/10 pt-6">
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>Business Websites & Enquiry-Capturing Pages</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>Google Business Profile & Local Visibility</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>WhatsApp Automation That Answers 24/7</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 text-sm text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
                     <span>Hosting, Speed & Security Handled for You</span>
                   </div>
@@ -187,29 +187,29 @@ export default function CorporateGatewayPage() {
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
               <Building2 className="w-5 h-5 text-teal-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">GSTIN-Registered</div>
-                <div className="text-xs text-slate-300">Nexbaron Private Limited</div>
+                <div className="text-sm font-semibold text-white">GSTIN-Registered</div>
+                <div className="text-sm text-slate-300">Nexbaron Private Limited</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
               <Receipt className="w-5 h-5 text-cyan-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">GST Invoice</div>
-                <div className="text-xs text-slate-300">On every payment</div>
+                <div className="text-sm font-semibold text-white">GST Invoice</div>
+                <div className="text-sm text-slate-300">On every payment</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
               <Tag className="w-5 h-5 text-amber-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">Fixed Pricing</div>
-                <div className="text-xs text-slate-300">Published, no hidden costs</div>
+                <div className="text-sm font-semibold text-white">Fixed Pricing</div>
+                <div className="text-sm text-slate-300">Published, no hidden costs</div>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
               <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
               <div>
-                <div className="text-xs font-semibold text-white">You Own It</div>
-                <div className="text-xs text-slate-300">
+                <div className="text-sm font-semibold text-white">You Own It</div>
+                <div className="text-sm text-slate-300">
                   Website, domain & content — always yours
                 </div>
               </div>

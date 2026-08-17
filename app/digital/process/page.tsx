@@ -388,7 +388,7 @@ export default function DigitalProcessPage() {
                     key={item.day}
                     className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all backdrop-blur-md group"
                   >
-                    <div className="text-[10px] font-mono font-semibold text-teal-400 mb-3">
+                    <div className="text-xs font-mono font-semibold text-teal-400 mb-3">
                       {item.day}
                     </div>
                     <h3 className="text-lg font-heading font-semibold text-white mb-2">
@@ -423,7 +423,7 @@ export default function DigitalProcessPage() {
                     <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="text-[10px] font-mono font-semibold text-teal-400">
+                    <span className="text-xs font-mono font-semibold text-teal-400">
                       {item.month}
                     </span>
                   </div>

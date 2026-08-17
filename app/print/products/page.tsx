@@ -68,7 +68,7 @@ export default async function PrintProductsPage() {
                         <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 group-hover:scale-110 transition-transform">
                           <Icon className="w-5 h-5" />
                         </div>
-                        <span className="text-[10px] font-mono text-amber-300 px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/20">
+                        <span className="text-xs font-mono text-amber-300 px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/20">
                           {product.badge}
                         </span>
                       </div>
@@ -83,7 +83,7 @@ export default async function PrintProductsPage() {
                           View Details
                           <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                         </span>
-                        <span className="inline-flex items-center text-[11px] font-mono text-slate-400">
+                        <span className="inline-flex items-center text-xs font-mono text-slate-400">
                           <Calculator className="w-3.5 h-3.5 mr-1.5" />
                           Quote in seconds
                         </span>

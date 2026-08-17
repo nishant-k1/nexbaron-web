@@ -47,7 +47,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
           <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 group-hover:scale-110 transition-transform">
             <Icon className="w-6 h-6" />
           </div>
-          <span className="text-[10px] font-mono text-teal-300 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20">
+          <span className="text-xs font-mono text-teal-300 px-2.5 py-1 rounded bg-teal-500/10 border border-teal-500/20">
             {business.tier === "tier1" ? "Small Business" : "Growing Business"}
           </span>
         </div>
@@ -73,7 +73,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
               Recommended: {planLabel(business.recommendedPlan)}
             </span>
             {hasPricing && (
-              <span className="text-[11px] font-mono text-slate-300">
+              <span className="text-xs font-mono text-slate-300">
                 {formatINR(business.pricing.setup)} + {formatINR(business.pricing.monthly)}/mo
               </span>
             )}

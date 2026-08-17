@@ -64,7 +64,7 @@ export function DigitalNavigation() {
 
             <Link
               href={divisions.digital.otherDivision.href}
-              className="hidden lg:inline-flex text-[11px] font-mono text-slate-400 hover:text-amber-400 transition-colors ml-3"
+              className="hidden lg:inline-flex text-xs font-mono text-slate-400 hover:text-amber-400 transition-colors ml-3"
             >
               {divisions.digital.otherDivision.label}
             </Link>

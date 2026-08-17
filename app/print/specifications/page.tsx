@@ -107,7 +107,7 @@ export default function PrintSpecificationsPage() {
               >
                 <div>
                   <h3 className="text-lg font-heading font-semibold text-white">{stock.name}</h3>
-                  <span className="text-[10px] font-mono text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-block mt-1">
+                  <span className="text-xs font-mono text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-block mt-1">
                     {stock.note}
                   </span>
                 </div>

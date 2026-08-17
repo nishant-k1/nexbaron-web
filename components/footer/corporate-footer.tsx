@@ -140,7 +140,7 @@ export function CorporateFooter() {
 
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
           <p>© {currentYear} Nexbaron Private Limited. All rights reserved.</p>
-          <div className="flex items-center gap-4 font-mono text-[11px]">
+          <div className="flex items-center gap-4 font-mono text-xs">
             <Link href="/privacy" className="hover:text-slate-300">
               Privacy Policy
             </Link>

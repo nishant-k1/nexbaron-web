@@ -313,7 +313,7 @@ export default function PrintQuotePage() {
                               {item.label}
                             </span>
                             {isSelected && (
-                              <span className="ml-auto text-[11px] font-mono text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                              <span className="ml-auto text-xs font-mono text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">
                                 {qty.toLocaleString("en-IN")} units
                               </span>
                             )}
@@ -367,7 +367,7 @@ export default function PrintQuotePage() {
                                       }}
                                       className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                     />
-                                    <span className="text-[10px] text-slate-400 mt-0.5 tracking-wider uppercase">
+                                    <span className="text-xs text-slate-400 mt-0.5 tracking-wider uppercase">
                                       units
                                     </span>
                                   </div>
@@ -388,7 +388,7 @@ export default function PrintQuotePage() {
                                         key={preset}
                                         type="button"
                                         onClick={() => commitQuantity(preset)}
-                                        className={`cursor-pointer flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all ${
+                                        className={`cursor-pointer flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
                                           active
                                             ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
                                             : "bg-white/[0.03] text-slate-400 hover:text-slate-300 hover:bg-white/[0.05]"
