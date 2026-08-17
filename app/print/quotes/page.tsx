@@ -59,7 +59,7 @@ export default function PrintQuotesPage() {
               Nexbaron Print
             </p>
             <h1 className="text-3xl sm:text-5xl font-heading font-bold text-white">Your Quotes</h1>
-            <p className="text-sm text-slate-400 mt-3">Track requests and confirmed pricing.</p>
+            <p className="text-sm text-slate-300 mt-3">Track requests and confirmed pricing.</p>
           </div>
           <Button
             asChild
@@ -72,7 +72,7 @@ export default function PrintQuotesPage() {
         </div>
 
         {!initialized || loading ? (
-          <div role="status" className="flex justify-center py-20 text-slate-400">
+          <div role="status" className="flex justify-center py-20 text-slate-300">
             <Loader2 className="w-5 h-5 animate-spin mr-2" /> Loading quotes...
           </div>
         ) : !user ? (
@@ -81,7 +81,7 @@ export default function PrintQuotesPage() {
             <h2 className="text-xl font-heading font-bold text-white mb-2">
               Sign in to view your quotes
             </h2>
-            <p className="text-sm text-slate-400 mb-6">
+            <p className="text-sm text-slate-300 mb-6">
               Use your Nexbaron Print account to see quote updates.
             </p>
             <Button
@@ -104,7 +104,7 @@ export default function PrintQuotesPage() {
             <h2 className="text-xl font-heading font-bold text-white mb-2">
               No quote requests yet
             </h2>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-slate-300">
               Build a request and the Print team will prepare your pricing.
             </p>
           </div>
@@ -121,7 +121,7 @@ export default function PrintQuotesPage() {
                     <p className="text-lg font-semibold text-white mt-1">
                       {formatProduct(quote.selection.product)}
                     </p>
-                    <p className="text-xs text-slate-400 mt-2">
+                    <p className="text-xs text-slate-300 mt-2">
                       Requested{" "}
                       {new Date(quote.createdAt).toLocaleDateString("en-IN", {
                         day: "numeric",
@@ -141,7 +141,7 @@ export default function PrintQuotesPage() {
                 </div>
                 {quote.response?.price && (
                   <div className="mt-5 pt-4 border-t border-white/10 flex justify-between items-center">
-                    <span className="text-sm text-slate-400">Confirmed price</span>
+                    <span className="text-sm text-slate-300">Confirmed price</span>
                     <span className="text-xl font-mono font-bold text-emerald-300">
                       ₹{quote.response.price.toLocaleString("en-IN")}
                     </span>

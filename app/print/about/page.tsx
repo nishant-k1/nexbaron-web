@@ -102,7 +102,7 @@ export default async function PrintAboutPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
               The People Behind the Press
             </h2>
-            <p className="text-sm text-slate-400 text-center max-w-xl mx-auto mb-12">
+            <p className="text-sm text-slate-300 text-center max-w-xl mx-auto mb-12">
               We&apos;re a hands-on print operation. When you place an order, it&apos;s handled by
               people who care about paper stock, finish, and deadlines — not a faceless production
               line.
@@ -172,7 +172,7 @@ export default async function PrintAboutPage() {
                       <Icon className="w-4 h-4 text-amber-400" />
                       <h3 className="text-lg font-heading font-semibold text-white">{item.name}</h3>
                     </div>
-                    <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-slate-300 leading-relaxed">{item.desc}</p>
                   </div>
                 );
               })}
@@ -202,7 +202,7 @@ export default async function PrintAboutPage() {
                     <h3 className="text-lg font-heading font-semibold text-white mb-2">
                       {value.title}
                     </h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">{value.description}</p>
+                    <p className="text-sm text-slate-300 leading-relaxed">{value.description}</p>
                   </div>
                 );
               })}

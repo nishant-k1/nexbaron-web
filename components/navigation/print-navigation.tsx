@@ -64,7 +64,7 @@ export function PrintNavigation() {
 
             <Link
               href={divisions.print.otherDivision.href}
-              className="hidden lg:inline-flex text-[11px] font-mono text-slate-500 hover:text-teal-400 transition-colors ml-3"
+              className="hidden lg:inline-flex text-[11px] font-mono text-slate-400 hover:text-teal-400 transition-colors ml-3"
             >
               {divisions.print.otherDivision.label}
             </Link>
@@ -167,7 +167,7 @@ export function PrintNavigation() {
               <UserMenu fullWidth />
               <Link
                 href={divisions.print.otherDivision.href}
-                className="block text-center text-xs font-mono text-slate-500 hover:text-teal-400 transition-colors pt-2"
+                className="block text-center text-xs font-mono text-slate-400 hover:text-teal-400 transition-colors pt-2"
               >
                 {divisions.print.otherDivision.label}
               </Link>

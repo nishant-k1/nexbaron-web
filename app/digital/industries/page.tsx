@@ -62,7 +62,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
           {business.problems.slice(0, 3).map((problem) => (
             <div key={problem} className="flex items-start gap-2.5">
               <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-              <span className="text-sm text-slate-400">{problem}</span>
+              <span className="text-sm text-slate-300">{problem}</span>
             </div>
           ))}
         </div>
@@ -73,7 +73,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
               Recommended: {planLabel(business.recommendedPlan)}
             </span>
             {hasPricing && (
-              <span className="text-[11px] font-mono text-slate-400">
+              <span className="text-[11px] font-mono text-slate-300">
                 {formatINR(business.pricing.setup)} + {formatINR(business.pricing.monthly)}/mo
               </span>
             )}

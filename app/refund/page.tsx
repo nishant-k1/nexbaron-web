@@ -43,7 +43,7 @@ export default async function RefundPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionReveal>
           <div className="max-w-3xl mx-auto">
-            <span className="text-xs uppercase font-mono tracking-widest text-slate-400 font-semibold px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block mb-4">
+            <span className="text-xs uppercase font-mono tracking-widest text-slate-300 font-semibold px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 inline-block mb-4">
               Nexbaron Private Limited
             </span>
             <h1 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-6">

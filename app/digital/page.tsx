@@ -225,7 +225,7 @@ export default async function DigitalLandingPage() {
                     &#9733;
                   </span>
                 ))}
-                <span className="text-xs text-slate-500 ml-2">Google Review</span>
+                <span className="text-xs text-slate-400 ml-2">Google Review</span>
               </div>
               <p className="text-slate-200 text-base leading-relaxed italic max-w-xl">
                 &ldquo;I had zero online presence. Nexbaron built my website in 6 days, got me on
@@ -277,7 +277,7 @@ export default async function DigitalLandingPage() {
                     <h3 className="text-lg font-heading font-semibold text-white mb-1">
                       {ind.name}
                     </h3>
-                    <p className="text-sm text-slate-400">{ind.detail}</p>
+                    <p className="text-sm text-slate-300">{ind.detail}</p>
                   </div>
                 </div>
               );

@@ -55,7 +55,7 @@ export default async function DigitalContactPage() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white">Response Time</h3>
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-slate-300">
                     We reply to every enquiry the same day — usually within 2–3 hours during
                     business hours.
                   </p>
@@ -75,7 +75,7 @@ export default async function DigitalContactPage() {
                   >
                     {formatPhone(profile.phone)}
                   </a>
-                  <p className="text-sm text-slate-400 mt-0.5">{formatOpeningHours(profile)}</p>
+                  <p className="text-sm text-slate-300 mt-0.5">{formatOpeningHours(profile)}</p>
                 </div>
               </div>
 
@@ -117,7 +117,7 @@ export default async function DigitalContactPage() {
                 </div>
                 <address className="not-italic">
                   <h3 className="text-sm font-semibold text-white">Office</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed mt-1 whitespace-pre-line">
+                  <p className="text-sm text-slate-300 leading-relaxed mt-1 whitespace-pre-line">
                     {profile.address.display}
                   </p>
                 </address>

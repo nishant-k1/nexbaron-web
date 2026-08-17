@@ -30,11 +30,11 @@ const dayPickerClassNames: Partial<ClassNames> = {
   button_next:
     "cursor-pointer flex items-center justify-center w-8 h-8 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors",
   chevron: "fill-current w-4 h-4",
-  weekdays: "text-slate-500",
-  weekday: "text-slate-500",
+  weekdays: "text-slate-400",
+  weekday: "text-slate-400",
   day: "text-slate-200 w-11 h-11",
   day_button: "cursor-pointer rounded-full hover:bg-white/10 transition-colors w-10 h-10",
-  outside: "text-slate-600",
+  outside: "text-slate-500",
   disabled: "opacity-40 cursor-not-allowed",
 };
 

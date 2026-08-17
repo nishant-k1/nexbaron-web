@@ -94,7 +94,7 @@ export default function ResultsPage() {
                     </h4>
                     <ul className="space-y-2">
                       {result.before.map((item) => (
-                        <li key={item} className="flex items-start gap-2 text-sm text-slate-400">
+                        <li key={item} className="flex items-start gap-2 text-sm text-slate-300">
                           <span className="text-red-400 mt-0.5">✕</span>
                           {item}
                         </li>

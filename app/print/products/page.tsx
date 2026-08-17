@@ -75,7 +75,7 @@ export default async function PrintProductsPage() {
                       <h3 className="text-lg font-heading font-semibold text-white mb-2">
                         {product.label}
                       </h3>
-                      <p className="text-sm text-slate-400 leading-relaxed mb-5">
+                      <p className="text-sm text-slate-300 leading-relaxed mb-5">
                         {product.tagline}
                       </p>
                       <div className="mt-auto flex items-center justify-between">
@@ -83,7 +83,7 @@ export default async function PrintProductsPage() {
                           View Details
                           <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                         </span>
-                        <span className="inline-flex items-center text-[11px] font-mono text-slate-500">
+                        <span className="inline-flex items-center text-[11px] font-mono text-slate-400">
                           <Calculator className="w-3.5 h-3.5 mr-1.5" />
                           Quote in seconds
                         </span>

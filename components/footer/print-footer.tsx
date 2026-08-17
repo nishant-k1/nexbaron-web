@@ -39,7 +39,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
                 Nexbaron <span className="text-amber-400 font-mono text-sm">PRINT</span>
               </span>
             </Link>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed">
               Premium physical marketing collaterals: visiting cards, card holders, pamphlets &
               posters, tags, files, letterheads, envelopes, bill books, stickers & labels, branded
               pens and more.
@@ -54,7 +54,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
               </Link>
             </div>
             <div className="pt-3 space-y-1.5">
-              <address className="text-xs text-slate-400 not-italic whitespace-pre-line">
+              <address className="text-xs text-slate-300 not-italic whitespace-pre-line">
                 {profile.address.display}
               </address>
               <a
@@ -79,7 +79,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-white transition-colors"
+                    className="text-xs text-slate-300 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -98,7 +98,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-white transition-colors"
+                    className="text-xs text-slate-300 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -109,14 +109,14 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
 
           {/* Division Switch */}
           <div className="space-y-4">
-            <h3 className="text-xs uppercase font-mono font-semibold text-slate-400 tracking-wider">
+            <h3 className="text-xs uppercase font-mono font-semibold text-slate-300 tracking-wider">
               Looking for Websites?
             </h3>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
               <span className="text-xs font-medium text-white block">
                 Need Digital Marketing & Web Apps?
               </span>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-slate-300">
                 Websites, Google Business Profile, WhatsApp CRM, and SEO.
               </p>
               <Link
@@ -130,13 +130,13 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-slate-500">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-slate-400">
             <div className="space-y-1">
               <p>
                 © {currentYear} Nexbaron Print Division (Nexbaron Private Limited). All rights
                 reserved.
               </p>
-              <p className="text-[11px] text-slate-600">GSTIN: {profile.gstin}</p>
+              <p className="text-[11px] text-slate-500">GSTIN: {profile.gstin}</p>
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
               <a href={`mailto:${profile.email}`} className="text-amber-400 hover:text-amber-300">
@@ -148,7 +148,7 @@ export function PrintFooter({ profile }: { profile: BusinessProfile }) {
               </a>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-slate-500">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-slate-400">
             <Link href="/privacy" className="hover:text-slate-300">
               Privacy Policy
             </Link>

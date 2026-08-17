@@ -40,7 +40,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
                 Nexbaron <span className="text-teal-400 font-mono text-sm">DIGITAL</span>
               </span>
             </Link>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed">
               Fixed-price growth plans for local businesses. No jargon, no lock-in, no vanishing
               after launch.
             </p>
@@ -59,7 +59,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               </a>
             </div>
             <div className="pt-3 space-y-1.5">
-              <address className="text-xs text-slate-400 leading-relaxed not-italic whitespace-pre-line">
+              <address className="text-xs text-slate-300 leading-relaxed not-italic whitespace-pre-line">
                 {profile.address.display}
               </address>
               <a
@@ -84,7 +84,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-white transition-colors"
+                    className="text-xs text-slate-300 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -102,7 +102,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               <li>
                 <Link
                   href="/digital/pricing"
-                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                  className="text-xs text-slate-300 hover:text-white transition-colors"
                 >
                   Pricing
                 </Link>
@@ -110,7 +110,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               <li>
                 <Link
                   href="/digital/process"
-                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                  className="text-xs text-slate-300 hover:text-white transition-colors"
                 >
                   Our Process
                 </Link>
@@ -118,7 +118,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               <li>
                 <Link
                   href="/digital/why-nexbaron"
-                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                  className="text-xs text-slate-300 hover:text-white transition-colors"
                 >
                   Why Nexbaron
                 </Link>
@@ -126,7 +126,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               <li>
                 <Link
                   href="/digital/results"
-                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                  className="text-xs text-slate-300 hover:text-white transition-colors"
                 >
                   Results
                 </Link>
@@ -134,7 +134,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               <li>
                 <Link
                   href="/digital/faq"
-                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                  className="text-xs text-slate-300 hover:text-white transition-colors"
                 >
                   Questions & Answers
                 </Link>
@@ -142,7 +142,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               <li>
                 <Link
                   href="/digital/contact"
-                  className="text-xs text-slate-400 hover:text-white transition-colors"
+                  className="text-xs text-slate-300 hover:text-white transition-colors"
                 >
                   Contact
                 </Link>
@@ -160,7 +160,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-white transition-colors"
+                    className="text-xs text-slate-300 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -171,14 +171,14 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
 
           {/* Division Switch & Contact Info */}
           <div className="space-y-4">
-            <h3 className="text-xs uppercase font-mono font-semibold text-slate-400 tracking-wider">
+            <h3 className="text-xs uppercase font-mono font-semibold text-slate-300 tracking-wider">
               Other Services
             </h3>
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
               <span className="text-xs font-medium text-white block">
                 Need Physical Marketing Materials?
               </span>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-slate-300">
                 Visiting cards, letterheads, bill books, labels, and commercial print.
               </p>
               <Link
@@ -192,13 +192,13 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-slate-500">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-slate-400">
             <div className="space-y-1">
               <p>
                 © {currentYear} Nexbaron Digital Division (Nexbaron Private Limited). All rights
                 reserved.
               </p>
-              <p className="text-[11px] text-slate-600">GSTIN: {profile.gstin}</p>
+              <p className="text-[11px] text-slate-500">GSTIN: {profile.gstin}</p>
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
               <a href={`mailto:${profile.email}`} className="text-teal-400 hover:text-teal-300">
@@ -210,7 +210,7 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
               </a>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-slate-500">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-slate-400">
             <Link href="/privacy" className="hover:text-slate-300">
               Privacy Policy
             </Link>

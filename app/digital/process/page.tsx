@@ -520,7 +520,7 @@ export default function DigitalProcessPage() {
                   <div className="text-xl font-heading font-bold text-teal-300 mb-1">
                     {item.value}
                   </div>
-                  <p className="text-sm text-slate-400 leading-relaxed">{item.note}</p>
+                  <p className="text-sm text-slate-300 leading-relaxed">{item.note}</p>
                 </div>
               );
             })}
@@ -604,7 +604,7 @@ export default function DigitalProcessPage() {
                 <h3 className="text-lg font-semibold text-white mb-1">{plan.name}</h3>
                 <div className="text-2xl font-heading font-bold text-teal-300 mb-1">
                   {plan.price}
-                  <span className="text-xs text-slate-400 font-normal ml-1">{plan.note}</span>
+                  <span className="text-xs text-slate-300 font-normal ml-1">{plan.note}</span>
                 </div>
                 <p className="text-sm text-slate-300 leading-relaxed mb-4">{plan.description}</p>
                 <a

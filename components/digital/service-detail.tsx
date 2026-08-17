@@ -81,7 +81,7 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" className="absolute top-24 md:top-28 z-10">
-          <ol className="flex items-center gap-2 text-xs text-slate-400">
+          <ol className="flex items-center gap-2 text-xs text-slate-300">
             <li>
               <Link href="/digital/solutions" className="hover:text-teal-300 transition-colors">
                 Solutions
@@ -138,7 +138,7 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
                 <h2 className="text-2xl md:text-3xl font-heading font-bold text-white">
                   Why It Helps Your Business
                 </h2>
-                <p className="text-sm text-slate-400 mt-1">{service.description}</p>
+                <p className="text-sm text-slate-300 mt-1">{service.description}</p>
               </div>
             </div>
 
@@ -233,7 +233,7 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
                     <h3 className="text-lg font-heading font-semibold text-white mb-1 group-hover:text-teal-300 transition-colors">
                       {item.label}
                     </h3>
-                    <p className="text-sm text-slate-400 leading-relaxed line-clamp-2">
+                    <p className="text-sm text-slate-300 leading-relaxed line-clamp-2">
                       {item.description}
                     </p>
                   </Link>

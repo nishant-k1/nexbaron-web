@@ -217,7 +217,7 @@ export default function PrintQuotePage() {
             {!catalog && !catalogError && (
               <div
                 role="status"
-                className="flex items-center justify-center gap-2 py-12 text-sm text-slate-400"
+                className="flex items-center justify-center gap-2 py-12 text-sm text-slate-300"
               >
                 <Loader2 className="w-4 h-4 animate-spin" /> Loading the Print catalog...
               </div>
@@ -367,7 +367,7 @@ export default function PrintQuotePage() {
                                       }}
                                       className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                     />
-                                    <span className="text-[10px] text-slate-500 mt-0.5 tracking-wider uppercase">
+                                    <span className="text-[10px] text-slate-400 mt-0.5 tracking-wider uppercase">
                                       units
                                     </span>
                                   </div>
@@ -391,7 +391,7 @@ export default function PrintQuotePage() {
                                         className={`cursor-pointer flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all ${
                                           active
                                             ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
-                                            : "bg-white/[0.03] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]"
+                                            : "bg-white/[0.03] text-slate-400 hover:text-slate-300 hover:bg-white/[0.05]"
                                         }`}
                                       >
                                         {preset}
@@ -480,7 +480,7 @@ export default function PrintQuotePage() {
                         />
                       </div>
                       <div className="pt-2">
-                        <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-3">
+                        <p className="text-xs text-slate-300 font-semibold uppercase tracking-wider mb-3">
                           Delivery Address
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

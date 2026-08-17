@@ -45,7 +45,7 @@ export function SolutionDetail({
               <h2 className="text-2xl md:text-3xl font-heading font-bold text-white">
                 What&apos;s Included
               </h2>
-              <p className="text-sm text-slate-400 mt-1">{section.subtitle}</p>
+              <p className="text-sm text-slate-300 mt-1">{section.subtitle}</p>
             </div>
           </div>
 

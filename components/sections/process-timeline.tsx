@@ -123,7 +123,7 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
                       ? "bg-teal-500/20 border-teal-400 text-teal-300 shadow-[0_0_20px_rgba(45,212,191,0.4)] scale-110"
                       : isPast
                         ? "bg-teal-500/10 border-teal-500/40 text-teal-400"
-                        : "bg-slate-950 border-white/10 text-slate-500"
+                        : "bg-slate-950 border-white/10 text-slate-400"
                   }`}
                 >
                   {step.number}

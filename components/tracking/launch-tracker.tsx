@@ -82,14 +82,14 @@ export function LaunchTracker({
           <div className="flex items-center gap-3">
             <CalendarCheck className="w-5 h-5 text-teal-400" />
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-400">{prefix}</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">{prefix}</p>
               <p className="text-xl font-heading font-semibold text-white">
                 {formatCalendarDate(launchDate)}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2 text-sm text-slate-300">
-            <Clock className="w-4 h-4 text-slate-400" />
+            <Clock className="w-4 h-4 text-slate-300" />
             {daysLeft > 0 ? `${daysLeft} days to launch` : "Launch day"}
           </div>
         </div>
@@ -134,7 +134,7 @@ export function LaunchTracker({
                   <h4
                     className={
                       state === "upcoming"
-                        ? "text-sm font-semibold text-slate-400"
+                        ? "text-sm font-semibold text-slate-300"
                         : "text-sm font-semibold text-white"
                     }
                   >
@@ -144,7 +144,7 @@ export function LaunchTracker({
                     {row.dayLabel}
                   </span>
                 </div>
-                <p className="text-sm text-slate-400 leading-snug mt-1">{row.caption}</p>
+                <p className="text-sm text-slate-300 leading-snug mt-1">{row.caption}</p>
               </div>
             </li>
           );

@@ -43,7 +43,7 @@ export function CorporateNavigation() {
             <div>
               <span className="text-lg font-heading font-extrabold text-white tracking-tight">
                 Nexbaron{" "}
-                <span className="text-sm text-slate-400 font-mono font-semibold">GROUP</span>
+                <span className="text-sm text-slate-300 font-mono font-semibold">GROUP</span>
               </span>
             </div>
           </Link>
