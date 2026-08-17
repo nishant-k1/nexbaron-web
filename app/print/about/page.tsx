@@ -125,7 +125,7 @@ export default async function PrintAboutPage() {
             </div>
 
             {/* Team & Workspace Vibe */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
                 {
                   initials: "ST",
@@ -186,7 +186,7 @@ export default async function PrintAboutPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-12 text-center">
               What We Believe
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {values.map((value) => {
                 const Icon = value.icon;
                 return (

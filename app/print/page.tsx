@@ -95,7 +95,7 @@ export default async function PrintLandingPage() {
               </div>
 
               {/* Quick Metrics */}
-              <div className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center max-w-3xl mx-auto">
+              <div className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center max-w-4xl mx-auto">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                   <div className="text-2xl font-bold text-amber-400 font-mono">500,000+</div>
                   <div className="text-xs text-slate-400">Cards Printed</div>

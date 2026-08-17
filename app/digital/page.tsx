@@ -192,7 +192,7 @@ export default async function DigitalLandingPage() {
                   <Link href="/digital/industries">Industries</Link>
                 </Button>
               </div>{" "}
-              <div className="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center max-w-4xl mx-auto">
+              <div className="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center max-w-5xl mx-auto">
                 {[
                   "50+ businesses launched",
                   "Average launch: 7 days",
@@ -293,7 +293,7 @@ export default async function DigitalLandingPage() {
             title="What Our Customers See"
             description="Real outcomes from businesses like yours — not promises, proof."
           />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-4xl mx-auto">
             {[
               { value: "50+", label: "Businesses Launched" },
               { value: "4.9", label: "Google Rating" },
@@ -354,7 +354,7 @@ export default async function DigitalLandingPage() {
 
       {/* Final CTA */}
       <section className="min-h-screen flex items-center justify-center py-16">
-        <div className="max-w-2xl mx-auto text-center p-10 rounded-3xl bg-gradient-to-r from-teal-500/20 via-cyan-500/10 to-slate-950 border border-teal-500/30">
+        <div className="max-w-3xl mx-auto text-center p-10 rounded-3xl bg-gradient-to-r from-teal-500/20 via-cyan-500/10 to-slate-950 border border-teal-500/30">
           <h2 className="text-3xl font-heading font-bold text-white mb-4">
             Ready to Launch Your Business Online?
           </h2>
@@ -393,7 +393,7 @@ export default async function DigitalLandingPage() {
             title="Questions Business Owners Ask"
             description="Straight answers. No jargon. No fine print."
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
             {[
               {
                 q: "Do I own my website? Can I cancel anytime?",
