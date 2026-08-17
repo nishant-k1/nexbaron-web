@@ -144,16 +144,16 @@ export default async function DigitalAboutPage() {
                 return (
                   <div
                     key={item.name}
-                    className="p-6 rounded-xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all text-center"
+                    className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all"
                   >
-                    <div className="w-12 h-12 rounded-full bg-teal-500/10 border border-teal-500/30 mx-auto mb-3 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-teal-500/10 border border-teal-500/30 mb-4 flex items-center justify-center">
                       <span className="text-sm font-bold text-teal-400">{item.initials}</span>
                     </div>
-                    <div className="flex items-center justify-center gap-1.5 mb-2">
+                    <div className="flex items-center gap-2 mb-2">
                       <Icon className="w-4 h-4 text-teal-400" />
-                      <h3 className="text-sm font-semibold text-white">{item.name}</h3>
+                      <h3 className="text-lg font-heading font-bold text-white">{item.name}</h3>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
                 );
               })}
@@ -169,7 +169,7 @@ export default async function DigitalAboutPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-12 text-center">
               What We Believe
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {values.map((value) => {
                 const Icon = value.icon;
                 return (
