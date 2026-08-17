@@ -42,7 +42,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
         <div>
           <h3 className="text-lg font-heading font-semibold text-white">{plan.name}</h3>
           {plan.featured && (
-            <span className="text-[10px] font-semibold text-teal-400">Most popular</span>
+            <span className="text-xs font-semibold text-teal-400">Most popular</span>
           )}
         </div>
       </div>
@@ -54,20 +54,20 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
             <span className="text-xl font-heading font-extrabold text-teal-300">
               Let&apos;s Talk
             </span>
-            <p className="text-xs text-slate-400 leading-relaxed">{plan.tagline}</p>
+            <p className="text-sm text-slate-300 leading-relaxed">{plan.tagline}</p>
           </div>
         ) : (
           <>
             <span className="text-2xl font-heading font-extrabold text-white">
               {formatINR(plan.pricing?.setup ?? 0)}
             </span>
-            <span className="text-xs text-slate-400 ml-1">one-time</span>
+            <span className="text-sm text-slate-300 ml-1">one-time</span>
             <div className="text-sm text-slate-300 mt-0.5">
               + {formatINR(recurringAmount)}
-              <span className="text-xs text-slate-400">{cycleSuffix(billingCycle)}</span>
+              <span className="text-sm text-slate-300">{cycleSuffix(billingCycle)}</span>
             </div>
             {plan.pricing?.minimumMonths && (
-              <div className="text-[10px] text-slate-400 mt-1">
+              <div className="text-xs text-slate-400 mt-1">
                 {annual
                   ? "Annual care · billed once a year"
                   : `${plan.pricing.minimumMonths}-month minimum · cancel anytime after`}
@@ -82,7 +82,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
         {plan.inherited && hasPricing && (
           <div className="flex items-start gap-2.5 pb-2.5 border-b border-white/5">
             <Check className="w-4 h-4 text-teal-500/60 shrink-0 mt-0.5" />
-            <span className="text-sm text-slate-400">{plan.inherited.label}</span>
+            <span className="text-sm text-slate-300">{plan.inherited.label}</span>
           </div>
         )}
         {plan.services.map((svc) => (
@@ -97,10 +97,10 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
                 {svc.label}
               </span>
               {svc.scope && (
-                <span className="block text-[11px] text-teal-400/60 mt-0.5">{svc.scope}</span>
+                <span className="block text-xs text-teal-400/80 mt-0.5">{svc.scope}</span>
               )}
               {svc.description && (
-                <span className="block text-[11px] text-slate-400 mt-0.5">{svc.description}</span>
+                <span className="block text-xs text-slate-300 mt-0.5">{svc.description}</span>
               )}
             </div>
           </div>
