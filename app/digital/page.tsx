@@ -189,7 +189,7 @@ export default async function DigitalLandingPage() {
                 variant="outline"
                 className="cursor-pointer border-white/20 text-white hover:bg-white/10 px-10 py-7 rounded-xl backdrop-blur-md"
               >
-                <Link href="/digital/who-we-help">Who We Help</Link>
+                <Link href="/digital/industries">Industries</Link>
               </Button>
             </div>{" "}
             {/* Trust Signals */}
@@ -245,7 +245,7 @@ export default async function DigitalLandingPage() {
         <section className="py-16 border-t border-white/10">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs uppercase font-mono tracking-widest text-teal-400 font-semibold px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 inline-block mb-3">
-              Who We Help
+              Industries
             </span>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
               Built for Businesses Like Yours

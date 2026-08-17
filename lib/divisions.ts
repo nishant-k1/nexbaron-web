@@ -54,7 +54,7 @@ export const divisions: Record<Division, DivisionConfig> = {
     whatsappMessage: "Hi! I'm interested in getting a website for my business. Can you help?",
     nav: [
       { href: "/digital/solutions", label: "Services" },
-      { href: "/digital/who-we-help", label: "Who We Help" },
+      { href: "/digital/industries", label: "Industries" },
       { href: "/digital/about", label: "About" },
       { href: "/digital/contact", label: "Contact" },
     ],

@@ -9,12 +9,12 @@ import { getBusinesses, type ResolvedBusiness } from "@/features/digital/busines
 import { divisionOpenGraph, divisionTwitter } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Who We Help | Growth Plans for Local Businesses | Nexbaron Digital",
+  title: "Industries | Growth Plans for Local Businesses | Nexbaron Digital",
   description:
     "How we help clinics, restaurants, law & CA firms, salons, gyms, real estate, and startups get more customers — with a clear recommended plan for each.",
-  alternates: { canonical: "/digital/who-we-help" },
+  alternates: { canonical: "/digital/industries" },
   openGraph: {
-    title: "Who We Help | Nexbaron Digital",
+    title: "Industries | Nexbaron Digital",
     description: "A clear recommended plan for every type of local business.",
     ...divisionOpenGraph("digital"),
   },
@@ -40,7 +40,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
   return (
     <SectionReveal>
       <Link
-        href={`/digital/who-we-help/${business.slug}`}
+        href={`/digital/industries/${business.slug}`}
         className="h-full group p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06] flex flex-col"
       >
         <div className="flex items-center justify-between mb-6">
@@ -99,7 +99,7 @@ export default async function DigitalIndustriesPage() {
     <div className="relative overflow-hidden">
       <PageHero
         accent="digital"
-        eyebrow="Who We Help"
+        eyebrow="Industries"
         title="Your Business."
         highlight="Your Growth Plan."
         description="Every industry grows differently. Pick yours below, and we'll show you the problems we solve and the plan built for it."

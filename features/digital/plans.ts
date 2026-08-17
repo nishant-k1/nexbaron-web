@@ -69,27 +69,86 @@ function fallbackService(
 // checkout — the server recomputes everything on create-order.
 export const plans: CatalogPlan[] = [
   {
+    id: "starter",
+    name: "Starter",
+    tagline: "A simple website to get your business online and discoverable.",
+    icon: "Globe",
+    timeline: "Typically 5–7 business days",
+    pricing: { setup: 8999, monthly: 499, annual: 4990, minimumMonths: 3 },
+    services: [
+      fallbackService("starter-business-website", "Business Website", {
+        scope: "up to 5 pages",
+        description: "Business website — up to 5 standard pages",
+      }),
+      fallbackService("starter-domain-setup", "Domain Setup", {
+        scope: "1 domain",
+        description: "Domain connection and configuration",
+      }),
+      fallbackService("starter-contact-form", "Contact Form", {
+        scope: "1 standard form",
+        description: "Contact/enquiry form",
+      }),
+      fallbackService("starter-google-business-profile", "Google Business Profile", {
+        description: "Google Business Profile creation",
+      }),
+      fallbackService("starter-basic-seo", "Basic SEO", {
+        scope: "5 pages",
+        description: "Basic SEO setup for 5 pages",
+      }),
+      fallbackService("starter-search-console", "Search Console", {
+        description: "Google Search Console setup and verification",
+      }),
+      fallbackService("starter-social-media-setup", "Social Media Setup", {
+        scope: "up to 2 platforms",
+        description: "Social Media Account Setup — up to 2 platforms",
+      }),
+    ],
+    addOns: [],
+    ctaLabel: "Discuss Starter",
+  },
+  {
     id: "launch",
     name: "Launch",
-    tagline: "Build a professional online presence for your business.",
+    tagline: "Get your business online.",
     icon: "Rocket",
     timeline: "Scoped after consultation",
-    pricing: { setup: 4999, monthly: 999, annual: 11988, minimumMonths: 12 },
+    pricing: { setup: 24999, monthly: 1999, annual: 23988, minimumMonths: 12 },
     services: [
-      fallbackService("engineering-website-business-website", "Business Website", {
-        description: "Pages: 5",
+      fallbackService("launch-business-website", "Business Website", {
+        scope: "up to 5 pages",
+        description: "Business website — up to 5 standard pages",
       }),
-      fallbackService("engineering-integrations-whatsapp-integration", "WhatsApp Integration", {
-        description: "Type: contact",
+      fallbackService("launch-domain-setup", "Domain Setup", {
+        scope: "1 domain",
+        description: "Domain connection and configuration",
       }),
-      fallbackService("engineering-analytics-web-analytics", "Web Analytics", {
-        description: "Type: basic",
+      fallbackService("launch-business-email", "Business Email", {
+        scope: "1 mailbox",
+        description: "Business email setup — 1 mailbox",
       }),
-      fallbackService(
-        "digital-marketing-seo-google-business-profile",
-        "Google Business Profile Management",
-        { description: "Type: setup" },
-      ),
+      fallbackService("launch-contact-form", "Contact Form", {
+        description: "Contact/enquiry form",
+      }),
+      fallbackService("launch-whatsapp-chat", "WhatsApp Chat", {
+        description: "Floating WhatsApp Chat Button",
+      }),
+      fallbackService("launch-basic-seo", "Basic SEO", {
+        scope: "5 pages",
+        description: "Basic SEO setup for 5 pages",
+      }),
+      fallbackService("launch-google-maps", "Google Maps", {
+        description: "Google Maps Embed",
+      }),
+      fallbackService("launch-google-business-profile", "Google Business Profile", {
+        description: "Google Business Profile creation",
+      }),
+      fallbackService("launch-search-console", "Search Console", {
+        description: "Google Search Console setup",
+      }),
+      fallbackService("launch-social-media-setup", "Social Media Setup", {
+        scope: "up to 2 platforms",
+        description: "Social Media Account Setup — up to 2 platforms",
+      }),
     ],
     addOns: [],
     ctaLabel: "Discuss Launch",
@@ -97,79 +156,119 @@ export const plans: CatalogPlan[] = [
   {
     id: "growth",
     name: "Growth",
-    tagline: "Get found online and turn visibility into enquiries.",
+    tagline: "Turn your website into a lead-generation channel.",
     icon: "TrendingUp",
     timeline: "Monthly growth plan",
     featured: true,
     inherited: { label: "Everything in Launch" },
     services: [
-      fallbackService("digital-marketing-seo-seo", "SEO", { description: "Type: localBusiness" }),
-      fallbackService(
-        "digital-marketing-social-media-social-media-management",
-        "Social Media Management",
-        { description: "Posts Per Month: 8" },
-      ),
-      fallbackService(
-        "digital-marketing-content-marketing-social-media-creatives",
-        "Social Media Creatives",
-        { description: "Creatives Per Month: 8" },
-      ),
-      fallbackService("digital-marketing-lead-generation-lead-generation", "Lead Generation", {
-        description: "Campaigns Per Month: 1",
+      fallbackService("growth-expanded-pages", "Expanded Pages", {
+        scope: "10 standard + 2 location pages",
+        description: "Up to 10 standard pages + 2 Additional Location Pages for SEO",
       }),
-      fallbackService("digital-marketing-analytics-conversion-tracking", "Conversion Tracking", {
-        description: "Type: standard",
+      fallbackService("growth-onpage-seo", "On-Page SEO", {
+        scope: "up to 10 pages",
+        description: "On-Page SEO Optimization for up to 10 pages",
       }),
-      fallbackService("digital-marketing-analytics-campaign-reporting", "Campaign Reporting", {
-        description: "Frequency: monthly",
+      fallbackService("growth-custom-forms", "Custom Forms", {
+        scope: "1 additional form",
+        description: "Up to 1 additional custom form",
+      }),
+      fallbackService("growth-blog-publishing", "Blog Publishing", {
+        scope: "1 SEO article/month, up to 1,000 words",
+        description: "Blog setup and publishing",
+      }),
+      fallbackService("growth-lead-capture", "Lead Capture", {
+        description: "WhatsApp and Email lead capture",
+      }),
+      fallbackService("growth-live-chat", "Live Chat", {
+        description: "Floating Live Chat button",
+      }),
+      fallbackService("growth-social-media-posts", "Social Media Posts", {
+        scope: "2 graphic posts + 1 short/month",
+        description: "Social Media Post Creation & Publishing",
+      }),
+      fallbackService("growth-conversion-tracking", "Conversion Tracking", {
+        description: "Google Conversion Tracking Setup",
+      }),
+      fallbackService("growth-local-citations", "Local Citations", {
+        scope: "up to 2 directories",
+        description: "Local Citation Setup",
+      }),
+      fallbackService("growth-schema-markup", "Schema Markup", {
+        description: "Schema Markup & Structured Data",
       }),
     ],
     addOns: [],
     ctaLabel: "Discuss Growth",
-    pricing: { setup: 4999, monthly: 6999, annual: 83988, minimumMonths: 12 },
+    pricing: { setup: 49999, monthly: 4999, annual: 59988, minimumMonths: 12 },
   },
   {
     id: "scale",
     name: "Scale",
-    tagline: "Scale campaigns, content, and reporting with a dedicated growth system.",
+    tagline: "Build systems that help you manage and automate growth.",
     icon: "Building2",
     timeline: "Monthly scale plan",
     timelineMode: "phased",
     foundationDays: 30,
     inherited: { label: "Everything in Growth" },
     services: [
-      fallbackService("digital-marketing-paid-advertising-google-ads", "Google Ads Management", {
-        description: "Campaigns: 2 · Remarketing: Included",
+      fallbackService("scale-expanded-pages", "Expanded Pages", {
+        scope: "15 standard + 5 location pages",
+        description: "Up to 15 standard pages + 5 Additional Location Pages for SEO",
       }),
-      fallbackService("digital-marketing-paid-advertising-meta-ads", "Meta Ads Management", {
-        description: "Campaigns: 2 · Remarketing: Included",
+      fallbackService("scale-advanced-seo", "Advanced SEO", {
+        description: "Advanced SEO setup",
       }),
-      fallbackService(
-        "digital-marketing-content-marketing-short-form-video",
-        "Short-Form Video Content",
-        { description: "Videos Per Month: 4" },
-      ),
-      fallbackService("digital-marketing-analytics-marketing-analytics", "Marketing Analytics", {
-        description: "Frequency: monthly",
+      fallbackService("scale-custom-forms", "Custom Forms", {
+        scope: "2 additional forms",
+        description: "Up to 2 additional custom forms",
+      }),
+      fallbackService("scale-meta-tracking", "Meta Tracking", {
+        description: "Meta Conversion Tracking Setup",
+      }),
+      fallbackService("scale-lead-management", "Lead Management", {
+        description: "Lead Management System",
+      }),
+      fallbackService("scale-automation", "Multi-channel Automation", {
+        description: "Email and WhatsApp automation",
+      }),
+      fallbackService("scale-followup-automation", "Follow-up Automation", {
+        description: "Lead follow-up automation",
+      }),
+      fallbackService("scale-blog-publishing", "Blog Publishing", {
+        scope: "2 SEO articles/month, up to 1,000 words each",
+        description: "Blog setup and publishing",
+      }),
+      fallbackService("scale-local-citations", "Local Citations", {
+        scope: "up to 5 directories",
+        description: "Local Citation Setup",
+      }),
+      fallbackService("scale-social-media-posts", "Social Media Posts", {
+        scope: "4 graphic posts + 2 shorts/month",
+        description: "Social Media Post Creation & Publishing",
       }),
     ],
     addOns: [],
     ctaLabel: "Discuss Scale",
-    pricing: { setup: 4999, monthly: 11999, annual: 143988, minimumMonths: 12 },
+    pricing: { setup: 99999, monthly: 9999, annual: 119988, minimumMonths: 12 },
   },
   {
     id: "custom",
     name: "Custom",
-    tagline: "Not finding what you need? Let's build it together.",
+    tagline: "Build exactly what your business requires.",
     icon: "MessageSquare",
     timeline: "We'll scope and quote after consultation",
     services: [
-      fallbackService("custom-mix", "Pick services from any plan"),
-      fallbackService(
-        "custom-new",
-        "Request services not listed above like Custom Software Development — Dashboards, CRMs, Internal Tools",
-      ),
-      fallbackService("custom-quote", "Receive a custom quote within 48h"),
+      fallbackService("custom-mix", "Mixed Services", {
+        description: "Pick services from any plan",
+      }),
+      fallbackService("custom-development", "Custom Development", {
+        description: "Request services not listed above like Custom Software Development",
+      }),
+      fallbackService("custom-quote", "Custom Quote", {
+        description: "Receive a custom quote within 48h",
+      }),
     ],
     addOns: [],
     ctaLabel: "Contact Us",

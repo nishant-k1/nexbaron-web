@@ -32,11 +32,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/digital/industries",
-        destination: "/digital/who-we-help",
-        permanent: true,
-      },
-      {
         source: "/print/bulk-orders",
         destination: "/print/quote",
         permanent: true,

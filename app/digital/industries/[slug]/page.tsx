@@ -23,11 +23,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: BusinessPageProps): Promise<Metadata> {
   const { slug } = await params;
   const business = await getBusinessBySlug(slug);
-  if (!business) return { title: "Who We Help | Nexbaron Digital" };
+  if (!business) return { title: "Industries | Nexbaron Digital" };
   return {
     title: `${business.label} | Websites & Growth | Nexbaron Digital`,
     description: `${business.tagline} ${business.problems.join(" ")}`,
-    alternates: { canonical: `/digital/who-we-help/${slug}` },
+    alternates: { canonical: `/digital/industries/${slug}` },
     openGraph: {
       title: `${business.label} | Nexbaron Digital`,
       description: business.tagline,
@@ -51,8 +51,8 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
 
   const breadcrumbSchema = generateBreadcrumbJsonLd([
     { name: "Nexbaron Digital", url: `${SITE_URL}/digital` },
-    { name: "Who We Help", url: `${SITE_URL}/digital/who-we-help` },
-    { name: business.label, url: `${SITE_URL}/digital/who-we-help/${slug}` },
+    { name: "Industries", url: `${SITE_URL}/digital/industries` },
+    { name: business.label, url: `${SITE_URL}/digital/industries/${slug}` },
   ]);
 
   return (

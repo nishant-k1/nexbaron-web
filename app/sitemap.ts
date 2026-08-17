@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/print", priority: 0.9, changeFrequency: "weekly" },
     { path: "/print/quote", priority: 0.9, changeFrequency: "weekly" },
     { path: "/digital/pricing", priority: 0.8, changeFrequency: "monthly" },
-    { path: "/digital/who-we-help", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/digital/industries", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/automation", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/solutions", priority: 0.8, changeFrequency: "monthly" },
     { path: "/digital/web-design", priority: 0.8, changeFrequency: "monthly" },
@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const businesses = await getBusinesses();
   const businessRoutes = businesses.map((b) => ({
-    path: `/digital/who-we-help/${b.slug}`,
+    path: `/digital/industries/${b.slug}`,
     priority: 0.7,
     changeFrequency: "monthly" as const,
   }));

@@ -29,7 +29,7 @@ export interface CatalogService {
   domain?: string;
   category?: string;
   service?: string;
-  scope?: Record<string, unknown>;
+  scope?: string;
   items: ServiceItem[];
   clientCostNote?: string;
   aggregate?: ServiceAggregate;

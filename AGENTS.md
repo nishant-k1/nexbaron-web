@@ -37,13 +37,13 @@ No tests. Husky: pre-commit runs lint-staged + typecheck; pre-push runs `check` 
 ```
 /                          corporate gateway (division split cards)
 /about, /privacy, /terms
-/digital/*                 landing, solutions, who-we-help, process, pricing (plan builder),
+/digital/*                 landing, solutions, industries, process, pricing (plan builder),
                            automation, results, why-nexbaron, faq, contact, onboarding?plan=
 /print/*                   landing, products (API-only catalog, dynamic [slug]),
                            quote (builder, sign-in-gated submit), specifications, quotes
 ```
 
-Next API routes (proxies/handlers): `app/api/[division]/contact/route.ts` (proxy to backend lead endpoints), `app/api/digital/signup/route.ts` (creates the account + lead, then redirects to the Hub with the new token). Redirects in `next.config.js` (`/digital/services|plans` -> pricing, `/digital/industries` -> who-we-help).
+Next API routes (proxies/handlers): `app/api/[division]/contact/route.ts` (proxy to backend lead endpoints), `app/api/digital/signup/route.ts` (creates the account + lead, then redirects to the Hub with the new token). Redirects in `next.config.js` (`/digital/services|plans` -> pricing, `/print/bulk-orders` -> quote).
 
 ### Auth (sign-in happens on the Hub)
 

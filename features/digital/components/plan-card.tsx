@@ -96,6 +96,9 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
               >
                 {svc.label}
               </span>
+              {svc.scope && (
+                <span className="block text-[11px] text-teal-400/60 mt-0.5">{svc.scope}</span>
+              )}
               {svc.description && (
                 <span className="block text-[11px] text-slate-400 mt-0.5">{svc.description}</span>
               )}

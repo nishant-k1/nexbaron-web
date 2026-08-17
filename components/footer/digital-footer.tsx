@@ -15,11 +15,11 @@ const digitalLinks = {
     { href: "/digital/pricing#plans", label: "Scale" },
   ],
   industries: [
-    { href: "/digital/who-we-help/clinics", label: "Clinics & Healthcare" },
-    { href: "/digital/who-we-help/restaurants", label: "Restaurants & Cafes" },
-    { href: "/digital/who-we-help/real-estate", label: "Real Estate & Construction" },
-    { href: "/digital/who-we-help/law-ca", label: "Law & CA Firms" },
-    { href: "/digital/who-we-help/salons", label: "Salons, Spas & Gyms" },
+    { href: "/digital/industries/clinics", label: "Clinics & Healthcare" },
+    { href: "/digital/industries/restaurants", label: "Restaurants & Cafes" },
+    { href: "/digital/industries/real-estate", label: "Real Estate & Construction" },
+    { href: "/digital/industries/law-ca", label: "Law & CA Firms" },
+    { href: "/digital/industries/salons", label: "Salons, Spas & Gyms" },
   ],
 };
 
@@ -150,10 +150,10 @@ export function DigitalFooter({ profile }: { profile: BusinessProfile }) {
             </ul>
           </nav>
 
-          {/* Who We Help */}
-          <nav aria-label="Who we help">
+          {/* Industries */}
+          <nav aria-label="Industries">
             <h3 className="text-xs uppercase font-mono font-semibold text-teal-400 tracking-wider mb-4">
-              Who We Help
+              Industries
             </h3>
             <ul className="space-y-2.5">
               {digitalLinks.industries.map((link) => (
