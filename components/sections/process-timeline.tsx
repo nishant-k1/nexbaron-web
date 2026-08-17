@@ -81,6 +81,14 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
       >
         {/* Background line */}
         <div className="absolute inset-0 bg-white/10" />
+        {/* Progress line */}
+        {!prefersReducedMotion && activeIndex >= 0 && (
+          <motion.div
+            className="absolute top-0 left-0 w-full bg-gradient-to-b from-teal-400 to-teal-500/30 shadow-[0_0_12px_rgba(45,212,191,0.4)]"
+            animate={{ height: dotY }}
+            transition={{ type: "spring", stiffness: 70, damping: 14 }}
+          />
+        )}
         {/* Travel dot */}
         {!prefersReducedMotion && activeIndex >= 0 && (
           <motion.span
