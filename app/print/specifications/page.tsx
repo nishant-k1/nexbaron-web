@@ -106,7 +106,7 @@ export default function PrintSpecificationsPage() {
                 className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-amber-500/40 transition-all backdrop-blur-md grid grid-cols-1 md:grid-cols-3 gap-4 items-center"
               >
                 <div>
-                  <h3 className="text-base font-heading font-semibold text-white">{stock.name}</h3>
+                  <h3 className="text-lg font-heading font-semibold text-white">{stock.name}</h3>
                   <span className="text-[10px] font-mono text-amber-300 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 inline-block mt-1">
                     {stock.note}
                   </span>
@@ -132,7 +132,9 @@ export default function PrintSpecificationsPage() {
                 key={finish.name}
                 className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all"
               >
-                <h3 className="text-lg font-semibold text-white mb-1">{finish.name}</h3>
+                <h3 className="text-lg font-heading font-semibold text-white mb-1">
+                  {finish.name}
+                </h3>
                 <p className="text-sm text-slate-400">{finish.detail}</p>
               </div>
             ))}
@@ -162,8 +164,10 @@ export default function PrintSpecificationsPage() {
                     </div>
                     <span className="text-xs font-mono text-slate-500">{item.step}</span>
                   </div>
-                  <h3 className="text-sm font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.description}</p>
+                  <h3 className="text-lg font-heading font-semibold text-white mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-slate-400 leading-relaxed">{item.description}</p>
                 </div>
               );
             })}

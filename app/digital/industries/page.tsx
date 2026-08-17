@@ -62,7 +62,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
           {business.problems.slice(0, 3).map((problem) => (
             <div key={problem} className="flex items-start gap-2.5">
               <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-              <span className="text-xs text-slate-400">{problem}</span>
+              <span className="text-sm text-slate-400">{problem}</span>
             </div>
           ))}
         </div>
@@ -115,7 +115,7 @@ export default async function DigitalIndustriesPage() {
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3 mb-8">
-              <h2 className="text-2xl font-heading font-bold text-white">{category}</h2>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">{category}</h2>
               <div className="flex-1 h-px bg-white/10" />
             </div>
 

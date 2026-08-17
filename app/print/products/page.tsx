@@ -48,7 +48,7 @@ export default async function PrintProductsPage() {
               <span className="text-xs font-mono text-amber-400">
                 {String(catIdx + 1).padStart(2, "0")}
               </span>
-              <h2 className="text-2xl md:text-3xl font-heading font-bold text-white">{category}</h2>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">{category}</h2>
               <div className="flex-1 h-px bg-white/10" />
             </div>
 
@@ -75,7 +75,7 @@ export default async function PrintProductsPage() {
                       <h3 className="text-lg font-heading font-semibold text-white mb-2">
                         {product.label}
                       </h3>
-                      <p className="text-xs text-slate-400 leading-relaxed mb-5">
+                      <p className="text-sm text-slate-400 leading-relaxed mb-5">
                         {product.tagline}
                       </p>
                       <div className="mt-auto flex items-center justify-between">

@@ -102,7 +102,7 @@ export default async function DigitalAboutPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
               The People Behind the Pixels
             </h2>
-            <p className="text-slate-400 text-center max-w-xl mx-auto mb-12">
+            <p className="text-sm text-slate-400 text-center max-w-xl mx-auto mb-12">
               We&apos;re a small, hands-on team. When you work with Nexbaron, you work directly with
               the people building your digital presence — no account managers, no handoffs.
             </p>
@@ -151,7 +151,7 @@ export default async function DigitalAboutPage() {
                     </div>
                     <div className="flex items-center gap-2 mb-2">
                       <Icon className="w-4 h-4 text-teal-400" />
-                      <h3 className="text-lg font-heading font-bold text-white">{item.name}</h3>
+                      <h3 className="text-lg font-heading font-semibold text-white">{item.name}</h3>
                     </div>
                     <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
@@ -180,7 +180,7 @@ export default async function DigitalAboutPage() {
                     <div className="p-2.5 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 w-fit mb-4">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-lg font-heading font-bold text-white mb-2">
+                    <h3 className="text-lg font-heading font-semibold text-white mb-2">
                       {value.title}
                     </h3>
                     <p className="text-sm text-slate-400 leading-relaxed">{value.description}</p>

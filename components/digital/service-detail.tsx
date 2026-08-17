@@ -230,10 +230,10 @@ export function ServiceDetail({ service, section, related }: ServiceDetailProps)
                     <div className="p-2.5 rounded-lg bg-teal-500/10 border border-teal-500/30 text-teal-400 w-fit mb-3">
                       <ItemIcon className="w-4 h-4" />
                     </div>
-                    <h3 className="text-sm font-semibold text-white mb-1 group-hover:text-teal-300 transition-colors">
+                    <h3 className="text-lg font-heading font-semibold text-white mb-1 group-hover:text-teal-300 transition-colors">
                       {item.label}
                     </h3>
-                    <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">
+                    <p className="text-sm text-slate-400 leading-relaxed line-clamp-2">
                       {item.description}
                     </p>
                   </Link>

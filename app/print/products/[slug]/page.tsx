@@ -199,7 +199,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
       {product.howItWorks.length > 0 && (
         <section className="min-h-screen flex items-center justify-center py-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-10">
               How It Works
             </h2>
             <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -223,7 +223,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
         <section className="min-h-screen flex items-center justify-center py-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-10">
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-10">
                 Frequently Asked Questions
               </h2>
               <div className="space-y-3">

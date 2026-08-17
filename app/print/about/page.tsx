@@ -102,7 +102,7 @@ export default async function PrintAboutPage() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4 text-center">
               The People Behind the Press
             </h2>
-            <p className="text-slate-400 text-center max-w-xl mx-auto mb-12">
+            <p className="text-sm text-slate-400 text-center max-w-xl mx-auto mb-12">
               We&apos;re a hands-on print operation. When you place an order, it&apos;s handled by
               people who care about paper stock, finish, and deadlines — not a faceless production
               line.
@@ -114,7 +114,9 @@ export default async function PrintAboutPage() {
                 <div className="w-20 h-20 rounded-full bg-amber-500/20 border-2 border-amber-500/40 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-2xl font-bold text-amber-400">HK</span>
                 </div>
-                <h3 className="text-xl font-heading font-bold text-white mb-1">Himanshu Kumar</h3>
+                <h3 className="text-lg font-heading font-semibold text-white mb-1">
+                  Himanshu Kumar
+                </h3>
                 <p className="text-sm text-amber-400 font-medium mb-3">Founder & Print Director</p>
                 <p className="text-slate-300 text-sm leading-relaxed max-w-lg mx-auto">
                   Built Nexbaron Print on one principle: quality you can feel. Personally inspects
@@ -168,7 +170,7 @@ export default async function PrintAboutPage() {
                     </div>
                     <div className="flex items-center gap-2 mb-2">
                       <Icon className="w-4 h-4 text-amber-400" />
-                      <h3 className="text-lg font-heading font-bold text-white">{item.name}</h3>
+                      <h3 className="text-lg font-heading font-semibold text-white">{item.name}</h3>
                     </div>
                     <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
@@ -197,7 +199,7 @@ export default async function PrintAboutPage() {
                     <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 w-fit mb-4">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-lg font-heading font-bold text-white mb-2">
+                    <h3 className="text-lg font-heading font-semibold text-white mb-2">
                       {value.title}
                     </h3>
                     <p className="text-sm text-slate-400 leading-relaxed">{value.description}</p>

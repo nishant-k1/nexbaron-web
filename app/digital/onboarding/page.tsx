@@ -84,7 +84,7 @@ export default function DigitalOnboardingPage({
                           <span className="font-mono text-teal-400 mr-1.5">0{index + 1}</span>
                           {step.title}
                         </h3>
-                        <p className="text-xs text-slate-400 leading-relaxed">{step.description}</p>
+                        <p className="text-sm text-slate-400 leading-relaxed">{step.description}</p>
                       </div>
                     </div>
                   );

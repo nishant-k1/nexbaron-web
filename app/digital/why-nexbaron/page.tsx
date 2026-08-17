@@ -88,7 +88,7 @@ export default function WhyNexbaronPage() {
                     <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 w-fit mb-4">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-xl font-heading font-semibold text-white mb-3">
+                    <h3 className="text-lg font-heading font-semibold text-white mb-3">
                       {reason.title}
                     </h3>
                     <p className="text-sm text-slate-300 leading-relaxed">{reason.description}</p>

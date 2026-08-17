@@ -97,20 +97,24 @@ export default async function PrintLandingPage() {
               {/* Quick Metrics */}
               <div className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center max-w-4xl mx-auto">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                  <div className="text-2xl font-bold text-amber-400 font-mono">500,000+</div>
-                  <div className="text-xs text-slate-400">Cards Printed</div>
+                  <div className="text-4xl font-heading font-extrabold text-amber-400">
+                    500,000+
+                  </div>
+                  <div className="text-sm text-slate-300">Cards Printed</div>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                  <div className="text-2xl font-bold text-orange-400 font-mono">14</div>
-                  <div className="text-xs text-slate-400">Print Services</div>
+                  <div className="text-4xl font-heading font-extrabold text-orange-400">14</div>
+                  <div className="text-sm text-slate-300">Print Services</div>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                  <div className="text-2xl font-bold text-amber-300 font-mono">24 Hours</div>
-                  <div className="text-xs text-slate-400">Express Delivery</div>
+                  <div className="text-4xl font-heading font-extrabold text-amber-300">
+                    24 Hours
+                  </div>
+                  <div className="text-sm text-slate-300">Express Delivery</div>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                  <div className="text-2xl font-bold text-yellow-400 font-mono">100%</div>
-                  <div className="text-xs text-slate-400">Quality Match</div>
+                  <div className="text-4xl font-heading font-extrabold text-yellow-400">100%</div>
+                  <div className="text-sm text-slate-300">Quality Match</div>
                 </div>
               </div>
             </div>
@@ -148,7 +152,7 @@ export default async function PrintLandingPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-heading font-semibold text-white mb-3">
+                  <h3 className="text-lg font-heading font-semibold text-white mb-3">
                     {prod.label}
                   </h3>
                   <p className="text-sm text-slate-300 leading-relaxed mb-6">{prod.description}</p>

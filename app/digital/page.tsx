@@ -274,7 +274,9 @@ export default async function DigitalLandingPage() {
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">{ind.name}</h3>
+                    <h3 className="text-lg font-heading font-semibold text-white mb-1">
+                      {ind.name}
+                    </h3>
                     <p className="text-sm text-slate-400">{ind.detail}</p>
                   </div>
                 </div>
@@ -358,7 +360,7 @@ export default async function DigitalLandingPage() {
           <h2 className="text-3xl font-heading font-bold text-white mb-4">
             Ready to Launch Your Business Online?
           </h2>
-          <p className="text-slate-300 mb-8">
+          <p className="text-sm text-slate-300 mb-8">
             Pick a plan, complete a 10-minute form, and your website goes live in 7 days — with
             Google visibility and WhatsApp booking included.
           </p>
@@ -424,13 +426,13 @@ export default async function DigitalLandingPage() {
                 key={item.q}
                 className="p-5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all group cursor-pointer"
               >
-                <summary className="text-base font-semibold text-white list-none flex items-center justify-between gap-3">
+                <summary className="text-sm font-semibold text-white list-none flex items-center justify-between gap-3">
                   {item.q}
                   <span className="text-teal-400 text-lg shrink-0 group-open:rotate-45 transition-transform">
                     +
                   </span>
                 </summary>
-                <p className="text-base text-slate-200 leading-relaxed mt-3 ml-0">{item.a}</p>
+                <p className="text-sm text-slate-200 leading-relaxed mt-3 ml-0">{item.a}</p>
               </details>
             ))}
           </div>

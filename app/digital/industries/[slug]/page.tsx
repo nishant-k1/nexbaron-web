@@ -101,7 +101,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
               <Icon className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-2xl md:text-3xl font-heading font-bold text-white">
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
                 What You Get
               </h2>
               <p className="text-sm text-slate-400 mt-1">
