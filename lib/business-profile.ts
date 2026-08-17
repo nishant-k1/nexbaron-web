@@ -77,7 +77,7 @@ const fallback: Record<Division, BusinessProfile> = {
     geo: { lat: 12.850875, lng: 77.649625 },
     phone: "+919002785683",
     whatsappNumber: "919002785683",
-    email: "digital@nexbaron.com",
+    email: "nexbaron.digital@gmail.com",
     gstin: "10AAKCN1234E1Z6",
     openingHours: {
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -104,7 +104,7 @@ const fallback: Record<Division, BusinessProfile> = {
     geo: { lat: 25.555, lng: 86.16725 },
     phone: "+919899752254",
     whatsappNumber: "919899752254",
-    email: "print@nexbaron.com",
+    email: "nexbaron.print@gmail.com",
     gstin: "10AAKCN1234E1Z6",
     openingHours: {
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
