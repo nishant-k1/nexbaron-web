@@ -150,7 +150,7 @@ export function DatePickerField({
               initial={{ opacity: 0, scale: 0.96, y: -6 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: -6 }}
-              transition={{ duration: 0.16, ease: "easeOut" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="absolute left-0 top-full z-30 mt-2 origin-top-left rounded-2xl border border-white/10 bg-slate-900 p-3 shadow-2xl shadow-black/50 backdrop-blur-xl"
               style={accentStyle}
             >

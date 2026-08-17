@@ -324,7 +324,7 @@ export default function PrintQuotePage() {
                               initial={{ opacity: 0, scale: 0.95, y: -4 }}
                               animate={{ opacity: 1, scale: 1, y: 0 }}
                               exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                              transition={{ duration: 0.15, ease: "easeOut" }}
+                              transition={{ duration: 0.6, ease: "easeOut" }}
                               className="absolute left-0 right-0 top-full z-30 mt-1 mx-1 rounded-2xl bg-slate-900 border border-white/15 shadow-2xl shadow-black/40 backdrop-blur-xl p-4 space-y-2.5"
                             >
                               <div className="flex items-stretch gap-2">

@@ -123,14 +123,10 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
               </div>
 
               {/* Card */}
-              <motion.div
+              <div
                 className={
                   isEven ? "md:col-start-1 md:pr-0 md:text-right" : "md:col-start-2 md:pl-0"
                 }
-                initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
               >
                 {step.href ? (
                   <Link
@@ -156,7 +152,7 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
                     <p className="text-sm text-slate-300 leading-relaxed">{step.description}</p>
                   </div>
                 )}
-              </motion.div>
+              </div>
             </li>
           );
         })}

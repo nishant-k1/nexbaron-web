@@ -201,7 +201,7 @@ export function AnimatedMeshBackground({
         ref={canvasRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         className="absolute inset-0 w-full h-full"
         style={{ pointerEvents: "none", zIndex: 0 }}
         aria-hidden="true"
