@@ -200,6 +200,10 @@ export function PlanSignupForm({
                   required
                   className="w-full px-3 py-2.5 bg-neutral-bg border border-border rounded-xl text-sm text-heading placeholder:text-muted focus:outline-none focus:border-accent/50"
                 />
+                <p className="text-xs text-slate-400 mt-1">
+                  Use the same email you used in our contact form, live chat, or WhatsApp enquiry —
+                  we link your account to existing conversations.
+                </p>
               </div>
               <div>
                 <label htmlFor="signup-phone" className="block text-xs text-muted mb-1">
@@ -253,7 +257,7 @@ export function PlanSignupForm({
                 onChange={(e) => update("description", e.target.value)}
                 placeholder="What do you do? What do you want visitors to know?"
                 rows={3}
-                className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500/50 resize-none"
+                className="w-full px-3 py-2.5 bg-neutral-bg border border-border rounded-xl text-sm text-heading placeholder:text-muted focus:outline-none focus:border-accent/50 resize-none"
               />
             </div>
 
