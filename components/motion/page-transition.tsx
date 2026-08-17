@@ -7,11 +7,11 @@ import type { ReactNode } from "react";
 
 export function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
-    setIsTransitioning(true);
-    const timer = setTimeout(() => setIsTransitioning(false), 800);
+    setShowOverlay(true);
+    const timer = setTimeout(() => setShowOverlay(false), 500);
     return () => clearTimeout(timer);
   }, [pathname]);
 
@@ -23,18 +23,23 @@ export function PageTransition({ children }: { children: ReactNode }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.3 }}
         >
           {children}
         </motion.div>
       </AnimatePresence>
 
-      <motion.div
-        className="fixed inset-0 z-[9999] bg-black pointer-events-none"
-        initial={false}
-        animate={{ opacity: isTransitioning ? 1 : 0 }}
-        transition={{ duration: 0.8, ease: "easeInOut" }}
-      />
+      <AnimatePresence>
+        {showOverlay && (
+          <motion.div
+            className="fixed inset-0 z-[9999] bg-black pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }
