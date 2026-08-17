@@ -120,7 +120,7 @@ export default async function DigitalAboutPage() {
                   initials: "BL",
                   name: "Based in Bengaluru",
                   desc: (
-                    <address className="not-italic">
+                    <>
                       <span className="whitespace-pre-line">{profile.address.display}</span>
                       <br />
                       <a
@@ -129,7 +129,7 @@ export default async function DigitalAboutPage() {
                       >
                         {formatPhone(profile.phone)}
                       </a>
-                    </address>
+                    </>
                   ),
                   icon: MapPin,
                 },

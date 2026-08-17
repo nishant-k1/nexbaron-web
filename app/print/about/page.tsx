@@ -139,7 +139,7 @@ export default async function PrintAboutPage() {
                   initials: "BR",
                   name: "Based in Begusarai",
                   desc: (
-                    <address className="not-italic">
+                    <>
                       <span className="whitespace-pre-line">{profile.address.display}</span>
                       <br />
                       <a
@@ -148,7 +148,7 @@ export default async function PrintAboutPage() {
                       >
                         {formatPhone(profile.phone)}
                       </a>
-                    </address>
+                    </>
                   ),
                   icon: MapPin,
                 },
