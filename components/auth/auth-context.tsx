@@ -84,6 +84,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     void Promise.resolve().then(refresh);
   }, [refresh]);
 
+  // Auto-login via ?token= in URL (from Hub OTP verification redirect)
+  const tokenHandled = useRef(false);
+  useEffect(() => {
+    if (tokenHandled.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const tokenFromUrl = params.get("token");
+    if (!tokenFromUrl || !division) return;
+    tokenHandled.current = true;
+    const gen = ++refreshGeneration.current;
+    setToken(tokenFromUrl, division);
+    apiRequest<{ success: boolean; user: AuthUser }>(`/${division}/auth/me`, {}, division)
+      .then((data) => {
+        if (gen !== refreshGeneration.current) return;
+        if (data.user.division === division) {
+          setUser(data.user);
+        } else {
+          setToken(null, division);
+        }
+      })
+      .catch(() => {
+        setToken(null, division);
+      })
+      .finally(() => {
+        if (gen === refreshGeneration.current) {
+          setInitializedDivision(division);
+        }
+        const url = new URL(window.location.href);
+        url.searchParams.delete("token");
+        window.history.replaceState({}, "", url.toString());
+      });
+  }, [division]);
+
   const signIn = useCallback((token: string, nextUser: AuthUser) => {
     ++refreshGeneration.current;
     setToken(token, nextUser.division);
