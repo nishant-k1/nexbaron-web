@@ -130,14 +130,14 @@ export default async function PrintLandingPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.map((prod) => {
               const Icon = getProductIcon(prod.icon);
               return (
                 <Link
                   key={prod.slug}
                   href={`/print/products/${prod.slug}`}
-                  className="group p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-amber-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06]"
+                  className="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-amber-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06]"
                 >
                   <div className="flex items-center justify-between mb-6">
                     <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 group-hover:scale-110 transition-transform">

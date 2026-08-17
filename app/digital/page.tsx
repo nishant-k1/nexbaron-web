@@ -268,14 +268,14 @@ export default async function DigitalLandingPage() {
               return (
                 <div
                   key={idx}
-                  className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-teal-500/30 transition-all flex items-start gap-4"
+                  className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-teal-500/30 transition-all flex items-start gap-4"
                 >
                   <div className="p-3 rounded-lg bg-teal-500/10 text-teal-400 shrink-0">
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-white mb-1">{ind.name}</h3>
-                    <p className="text-xs text-slate-400">{ind.detail}</p>
+                    <h3 className="text-lg font-semibold text-white mb-1">{ind.name}</h3>
+                    <p className="text-sm text-slate-400">{ind.detail}</p>
                   </div>
                 </div>
               );
@@ -422,7 +422,7 @@ export default async function DigitalLandingPage() {
             ].map((item) => (
               <details
                 key={item.q}
-                className="p-5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all group cursor-pointer"
+                className="p-5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/30 transition-all group cursor-pointer"
               >
                 <summary className="text-base font-semibold text-white list-none flex items-center justify-between gap-3">
                   {item.q}

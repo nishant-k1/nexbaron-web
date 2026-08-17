@@ -146,11 +146,11 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
 
       <section className="min-h-screen flex items-center justify-center py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {detailSections.map((section) => (
               <div
                 key={section.title}
-                className="p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-amber-500/40 transition-all duration-300 backdrop-blur-md"
+                className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-amber-500/40 transition-all duration-300 backdrop-blur-md"
               >
                 <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 w-fit mb-5">
                   <Icon className="w-6 h-6" />
@@ -184,7 +184,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
             {product.features.map((feature) => (
               <div
                 key={feature}
-                className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all flex items-start gap-4"
+                className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all flex items-start gap-4"
               >
                 <div className="p-3 rounded-lg bg-amber-500/10 text-amber-400 shrink-0">
                   <Package className="w-5 h-5" />

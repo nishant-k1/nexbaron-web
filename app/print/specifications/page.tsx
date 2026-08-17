@@ -130,10 +130,10 @@ export default function PrintSpecificationsPage() {
             {finishes.map((finish) => (
               <div
                 key={finish.name}
-                className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all"
+                className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all"
               >
-                <h3 className="text-base font-semibold text-white mb-1">{finish.name}</h3>
-                <p className="text-xs text-slate-400">{finish.detail}</p>
+                <h3 className="text-lg font-semibold text-white mb-1">{finish.name}</h3>
+                <p className="text-sm text-slate-400">{finish.detail}</p>
               </div>
             ))}
           </div>

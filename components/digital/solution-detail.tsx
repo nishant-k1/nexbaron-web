@@ -56,7 +56,7 @@ export function SolutionDetail({
                 <Link
                   key={service.id}
                   href={`/digital/${section.slug}/${service.id}`}
-                  className="p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06] group"
+                  className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06] group"
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 shrink-0">

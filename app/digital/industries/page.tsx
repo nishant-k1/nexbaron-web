@@ -41,7 +41,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
     <SectionReveal>
       <Link
         href={`/digital/industries/${business.slug}`}
-        className="h-full group p-8 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06] flex flex-col"
+        className="h-full group p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-teal-500/40 transition-all duration-300 backdrop-blur-md hover:bg-white/[0.06] flex flex-col"
       >
         <div className="flex items-center justify-between mb-6">
           <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 group-hover:scale-110 transition-transform">
@@ -55,7 +55,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
         <span className="text-xs uppercase tracking-wider font-mono font-semibold text-teal-400 mb-2">
           {business.category}
         </span>
-        <h3 className="text-xl font-heading font-semibold text-white mb-3">{business.label}</h3>
+        <h3 className="text-lg font-heading font-semibold text-white mb-3">{business.label}</h3>
         <p className="text-sm text-slate-300 leading-relaxed mb-5">{business.tagline}</p>
 
         <div className="space-y-2.5 mb-4">
@@ -119,7 +119,7 @@ export default async function DigitalIndustriesPage() {
               <div className="flex-1 h-px bg-white/10" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {businesses
                 .filter((b) => b.category === category)
                 .map((business) => (
