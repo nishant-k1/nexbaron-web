@@ -26,7 +26,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
   return (
     <div
       id={plan.id}
-      className={`h-full flex flex-col p-6 rounded-2xl backdrop-blur-md border transition-all duration-300 scroll-mt-28 ${
+      className={`h-full flex flex-col p-7 rounded-2xl backdrop-blur-md border transition-all duration-300 scroll-mt-28 ${
         plan.featured
           ? "bg-teal-500/10 border-teal-500/40 shadow-2xl shadow-teal-500/10"
           : isCustom
@@ -35,12 +35,12 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
       }`}
     >
       {/* Header */}
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-3 mb-5">
         <div className="p-2.5 rounded-xl border bg-teal-500/10 border-teal-500/30 text-teal-400">
           <Icon className="w-5 h-5" />
         </div>
         <div>
-          <h3 className="text-lg font-heading font-semibold text-white">{plan.name}</h3>
+          <h3 className="text-xl font-heading font-bold text-white">{plan.name}</h3>
           {plan.featured && (
             <span className="text-xs font-semibold text-teal-400">Most popular</span>
           )}
@@ -48,26 +48,26 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
       </div>
 
       {/* Price */}
-      <div className="mb-4">
+      <div className="mb-5">
         {isCustom || !hasPricing ? (
-          <div className="space-y-1">
-            <span className="text-xl font-heading font-extrabold text-teal-300">
+          <div className="space-y-1.5">
+            <span className="text-2xl font-heading font-extrabold text-teal-300">
               Let&apos;s Talk
             </span>
-            <p className="text-sm text-slate-300 leading-relaxed">{plan.tagline}</p>
+            <p className="text-base text-slate-300 leading-relaxed">{plan.tagline}</p>
           </div>
         ) : (
           <>
-            <span className="text-2xl font-heading font-extrabold text-white">
+            <span className="text-3xl font-heading font-extrabold text-white">
               {formatINR(plan.pricing?.setup ?? 0)}
             </span>
-            <span className="text-sm text-slate-300 ml-1">one-time</span>
-            <div className="text-sm text-slate-300 mt-0.5">
+            <span className="text-base text-slate-300 ml-1">one-time</span>
+            <div className="text-base text-slate-300 mt-1">
               + {formatINR(recurringAmount)}
-              <span className="text-sm text-slate-300">{cycleSuffix(billingCycle)}</span>
+              <span className="text-base text-slate-300">{cycleSuffix(billingCycle)}</span>
             </div>
             {plan.pricing?.minimumMonths && (
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-sm text-slate-400 mt-1.5">
                 {annual
                   ? "Annual care · billed once a year"
                   : `${plan.pricing.minimumMonths}-month minimum · cancel anytime after`}
@@ -78,29 +78,29 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
       </div>
 
       {/* Features list */}
-      <div className="mb-6 pt-4 border-t border-white/10 space-y-2.5 flex-1">
+      <div className="mb-6 pt-5 border-t border-white/10 space-y-4 flex-1">
         {plan.inherited && hasPricing && (
-          <div className="flex items-start gap-2.5 pb-2.5 border-b border-white/5">
-            <Check className="w-4 h-4 text-teal-500/60 shrink-0 mt-0.5" />
-            <span className="text-sm text-slate-300">{plan.inherited.label}</span>
+          <div className="flex items-start gap-3 pb-4 border-b border-white/5">
+            <Check className="w-5 h-5 text-teal-500/60 shrink-0 mt-0.5" />
+            <span className="text-base text-slate-300">{plan.inherited.label}</span>
           </div>
         )}
         {plan.services.map((svc) => (
-          <div key={svc.id} className="flex items-start gap-2.5">
+          <div key={svc.id} className="flex items-start gap-3">
             <Check
-              className={`w-4 h-4 shrink-0 mt-0.5 ${isCustom ? "text-teal-400/60" : "text-teal-400"}`}
+              className={`w-5 h-5 shrink-0 mt-0.5 ${isCustom ? "text-teal-400/60" : "text-teal-400"}`}
             />
             <div className="min-w-0">
               <span
-                className={`text-sm leading-relaxed ${isCustom ? "text-slate-400" : "text-slate-300"}`}
+                className={`text-base leading-relaxed ${isCustom ? "text-slate-400" : "text-slate-300"}`}
               >
                 {svc.label}
               </span>
               {svc.scope && (
-                <span className="block text-xs text-teal-400/80 mt-0.5">{svc.scope}</span>
+                <span className="block text-sm text-teal-400/80 mt-1">{svc.scope}</span>
               )}
               {svc.description && (
-                <span className="block text-xs text-slate-300 mt-0.5">{svc.description}</span>
+                <span className="block text-sm text-slate-300 mt-1">{svc.description}</span>
               )}
             </div>
           </div>
@@ -112,7 +112,7 @@ export function PlanCard({ plan, billingCycle, onSelectPlan }: PlanCardProps) {
         <button
           type="button"
           onClick={onSelectPlan}
-          className={`w-full h-11 font-bold px-8 rounded-xl shadow-lg cursor-pointer transition-colors inline-flex items-center justify-center gap-2 ${
+          className={`w-full h-12 font-bold px-8 rounded-xl shadow-lg cursor-pointer transition-colors inline-flex items-center justify-center gap-2 text-base ${
             plan.featured
               ? "bg-teal-500 hover:bg-teal-400 text-slate-950 shadow-teal-500/20"
               : isCustom
