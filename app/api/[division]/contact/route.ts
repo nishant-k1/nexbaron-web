@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import { getApiUrl } from "@/lib/api";
+import logger from "@/lib/logger";
 
 export async function POST(
   request: NextRequest,
@@ -31,7 +32,9 @@ export async function POST(
     }));
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error("Contact form error:", error);
+    logger.error("Contact form error", {
+      error: error instanceof Error ? error : new Error(String(error)),
+    });
     return NextResponse.json(
       { success: false, message: "Failed to reach the contact service" },
       { status: 502 },

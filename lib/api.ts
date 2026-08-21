@@ -1,3 +1,5 @@
+import logger from "@/lib/logger";
+
 export type Division = "digital" | "print";
 
 const API_URL_FALLBACK = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
@@ -75,6 +77,12 @@ export async function apiRequest<T>(
 
   if (!response.ok) {
     const message = data?.message ?? `Request failed with status ${response.status}`;
+    logger.error("API request failed", {
+      path,
+      division,
+      status: response.status,
+      message,
+    });
     throw new Error(message);
   }
 

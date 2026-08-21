@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import { getChatUrl } from "@/lib/api";
+import logger from "@/lib/logger";
 
 function forwardHeaders(request: NextRequest): Record<string, string> {
   const headers: Record<string, string> = { "Content-Type": "application/json" };
@@ -50,7 +51,9 @@ export async function POST(
     }));
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error("Chat POST error:", error);
+    logger.error("Chat POST error", {
+      error: error instanceof Error ? error : new Error(String(error)),
+    });
     return NextResponse.json(
       { success: false, message: "Failed to send message" },
       { status: 502 },
@@ -87,7 +90,9 @@ export async function GET(
     }));
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error("Chat GET error:", error);
+    logger.error("Chat GET error", {
+      error: error instanceof Error ? error : new Error(String(error)),
+    });
     return NextResponse.json(
       { success: false, message: "Failed to load messages" },
       { status: 502 },

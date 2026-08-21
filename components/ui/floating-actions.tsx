@@ -4,6 +4,7 @@ import { Phone } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { ErrorBoundary } from "@/components/error-boundary";
 import { LiveChat } from "@/components/ui/live-chat";
 import { divisions, type Division } from "@/lib/divisions";
 
@@ -35,7 +36,9 @@ export function FloatingActions() {
     >
       {/* Live Chat */}
       <div className="relative">
-        <LiveChat />
+        <ErrorBoundary name="LiveChat">
+          <LiveChat />
+        </ErrorBoundary>
       </div>
 
       {/* Call button */}

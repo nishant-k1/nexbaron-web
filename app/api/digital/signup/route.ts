@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import { getApiUrl } from "@/lib/api";
+import logger from "@/lib/logger";
 
 const HUB_URL = process.env.NEXT_PUBLIC_HUB_URL || "https://hub.nexbaron.com";
 
@@ -62,7 +63,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, hubUrl });
   } catch (error) {
-    console.error("Signup error:", error);
+    logger.error("Signup error", {
+      error: error instanceof Error ? error : new Error(String(error)),
+    });
     return NextResponse.json(
       { success: false, message: "Something went wrong. Please try again." },
       { status: 500 },

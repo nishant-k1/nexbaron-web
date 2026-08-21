@@ -5,6 +5,7 @@ import { Loader2, MessageSquare } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-context";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Button } from "@/components/ui/button";
 import { DatePickerField } from "@/components/ui/date-picker";
@@ -186,382 +187,391 @@ export default function PrintQuotePage() {
   }
 
   return (
-    <div className="relative">
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-amber-500/10 rounded-full blur-[150px] pointer-events-none" />
-      <section className="py-32 md:py-40">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionReveal>
-            <div className="max-w-3xl mx-auto text-center mb-12 space-y-4">
-              <span className="text-xs uppercase font-mono tracking-widest text-amber-400 font-semibold px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 inline-block">
-                Print Quote Builder
-              </span>
-              <h1 className="text-3xl sm:text-5xl font-heading font-bold text-white">
-                Build Your Commercial Print Quote
-              </h1>
-              <p className="text-slate-200 text-sm sm:text-base">
-                Choose from the current Print catalog. Our team confirms final pricing and
-                turnaround.
-              </p>
-            </div>
-          </SectionReveal>
-
-          <div className="space-y-8">
-            {catalogError && (
-              <div
-                role="alert"
-                className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200"
-              >
-                {catalogError} Please refresh the page to try again.
+    <ErrorBoundary name="PrintQuotePage">
+      <div className="relative">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-amber-500/10 rounded-full blur-[150px] pointer-events-none" />
+        <section className="py-32 md:py-40">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionReveal>
+              <div className="max-w-3xl mx-auto text-center mb-12 space-y-4">
+                <span className="text-xs uppercase font-mono tracking-widest text-amber-400 font-semibold px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 inline-block">
+                  Print Quote Builder
+                </span>
+                <h1 className="text-3xl sm:text-5xl font-heading font-bold text-white">
+                  Build Your Commercial Print Quote
+                </h1>
+                <p className="text-slate-200 text-sm sm:text-base">
+                  Choose from the current Print catalog. Our team confirms final pricing and
+                  turnaround.
+                </p>
               </div>
-            )}
-            {!catalog && !catalogError && (
-              <div
-                role="status"
-                className="flex items-center justify-center gap-2 py-12 text-sm text-slate-200"
-              >
-                <Loader2 className="w-4 h-4 animate-spin" /> Loading the Print catalog...
-              </div>
-            )}
+            </SectionReveal>
 
-            {catalog && (
-              <>
-                <div>
-                  <StepLabel>1. Select Products & Quantities</StepLabel>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {catalog.products.map((item) => {
-                      const isSelected = draft.selectedProducts.includes(item.id);
-                      const qty = draft.quantities[item.id] || item.minQuantity;
-                      const isEditing = editingQuantities[item.id] !== undefined;
-                      const displayValue = isEditing ? editingQuantities[item.id] : String(qty);
-                      const isPopoverOpen = activeEditor === item.id;
-
-                      const commitQuantity = (value: number) => {
-                        const clamped = Math.max(item.minQuantity, Math.min(100000, value));
-                        setDraft((d) => ({
-                          ...d,
-                          quantities: { ...d.quantities, [item.id]: clamped },
-                        }));
-                        setEditingQuantities((prev) => {
-                          const next = { ...prev };
-                          delete next[item.id];
-                          return next;
-                        });
-                      };
-
-                      return (
-                        <div
-                          key={item.id}
-                          className={`relative rounded-2xl border transition-all ${
-                            isSelected
-                              ? "bg-gradient-to-b from-amber-500/[0.06] to-transparent border-amber-500/30 shadow-lg shadow-amber-500/5"
-                              : "bg-white/[0.02] border-white/[0.06] hover:border-white/[0.15]"
-                          }`}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => {
-                              if (isSelected) {
-                                setActiveEditor(null);
-                                const selected = draft.selectedProducts.filter(
-                                  (id) => id !== item.id,
-                                );
-                                const quantities = { ...draft.quantities };
-                                delete quantities[item.id];
-                                setDraft((d) => ({ ...d, selectedProducts: selected, quantities }));
-                              } else {
-                                setActiveEditor(item.id);
-                                const quantities = {
-                                  ...draft.quantities,
-                                  [item.id]: item.minQuantity,
-                                };
-                                setDraft((d) => ({
-                                  ...d,
-                                  selectedProducts: [...draft.selectedProducts, item.id],
-                                  quantities,
-                                }));
-                              }
-                            }}
-                            aria-pressed={isSelected}
-                            className="cursor-pointer w-full text-left p-3.5 flex items-center gap-2.5"
-                          >
-                            <div
-                              className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
-                                isSelected ? "bg-amber-500 border-amber-500" : "border-white/[0.2]"
-                              }`}
-                            >
-                              {isSelected && (
-                                <svg
-                                  className="w-2.5 h-2.5 text-slate-950"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                  strokeWidth="4"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M5 13l4 4L19 7"
-                                  />
-                                </svg>
-                              )}
-                            </div>
-                            <span
-                              className={`text-sm font-medium ${
-                                isSelected ? "text-amber-400" : "text-slate-200"
-                              }`}
-                            >
-                              {item.label}
-                            </span>
-                            {isSelected && (
-                              <span className="ml-auto text-xs font-mono text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                                {qty.toLocaleString("en-IN")} units
-                              </span>
-                            )}
-                          </button>
-
-                          <AnimatePresence>
-                            {isPopoverOpen && (
-                              <motion.div
-                                ref={popoverRef}
-                                initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                                transition={{ duration: 0.6, ease: "easeOut" }}
-                                className="absolute left-0 right-0 top-full z-30 mt-1 mx-1 rounded-2xl bg-slate-900 border border-white/15 shadow-2xl shadow-black/40 backdrop-blur-xl p-4 space-y-2.5"
-                              >
-                                <div className="flex items-stretch gap-2">
-                                  <button
-                                    type="button"
-                                    onClick={() => commitQuantity(qty - 1)}
-                                    aria-label="Decrease quantity"
-                                    className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-200 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
-                                  >
-                                    −
-                                  </button>
-                                  <div className="flex-1 rounded-xl bg-white/[0.06] border border-white/10 flex flex-col items-center justify-center py-1.5">
-                                    <input
-                                      type="number"
-                                      min={item.minQuantity}
-                                      max={100000}
-                                      step={1}
-                                      inputMode="numeric"
-                                      placeholder={String(item.minQuantity)}
-                                      aria-label={`Quantity for ${item.label}`}
-                                      value={displayValue}
-                                      onChange={(e) => {
-                                        setEditingQuantities((prev) => ({
-                                          ...prev,
-                                          [item.id]: e.target.value,
-                                        }));
-                                      }}
-                                      onBlur={() => {
-                                        const raw = editingQuantities[item.id];
-                                        if (raw === undefined) return;
-                                        const n = Number(raw);
-                                        commitQuantity(Number.isNaN(n) ? item.minQuantity : n);
-                                      }}
-                                      onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                          (e.target as HTMLInputElement).blur();
-                                        }
-                                      }}
-                                      className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                    />
-                                    <span className="text-xs text-slate-300 mt-0.5 tracking-wider uppercase">
-                                      units
-                                    </span>
-                                  </div>
-                                  <button
-                                    type="button"
-                                    onClick={() => commitQuantity(qty + 1)}
-                                    aria-label="Increase quantity"
-                                    className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-200 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
-                                  >
-                                    +
-                                  </button>
-                                </div>
-                                <div className="flex gap-1.5">
-                                  {[1, 10, 50, 100, 500].map((preset) => {
-                                    const active = qty === preset;
-                                    return (
-                                      <button
-                                        key={preset}
-                                        type="button"
-                                        onClick={() => commitQuantity(preset)}
-                                        className={`cursor-pointer flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                                          active
-                                            ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
-                                            : "bg-white/[0.03] text-slate-300 hover:text-slate-200 hover:bg-white/[0.05]"
-                                        }`}
-                                      >
-                                        {preset}
-                                      </button>
-                                    );
-                                  })}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      );
-                    })}
-                  </div>
+            <div className="space-y-8">
+              {catalogError && (
+                <div
+                  role="alert"
+                  className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200"
+                >
+                  {catalogError} Please refresh the page to try again.
                 </div>
+              )}
+              {!catalog && !catalogError && (
+                <div
+                  role="status"
+                  className="flex items-center justify-center gap-2 py-12 text-sm text-slate-200"
+                >
+                  <Loader2 className="w-4 h-4 animate-spin" /> Loading the Print catalog...
+                </div>
+              )}
 
-                <div>
-                  <StepLabel>2. Delivery & Contact Details</StepLabel>
-                  {submitStatus === "success" ? (
-                    <div
-                      role="status"
-                      className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center"
-                    >
-                      <p className="text-lg font-semibold text-emerald-300 mb-1">
-                        Quote request received
-                      </p>
-                      <p className="text-sm text-slate-200">
-                        {quoteNumber && (
-                          <>
-                            Reference{" "}
-                            <span className="font-mono text-emerald-300">{quoteNumber}</span>.{" "}
-                          </>
-                        )}
-                        Track updates from Your Quotes in the account menu.
-                      </p>
+              {catalog && (
+                <>
+                  <div>
+                    <StepLabel>1. Select Products & Quantities</StepLabel>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {catalog.products.map((item) => {
+                        const isSelected = draft.selectedProducts.includes(item.id);
+                        const qty = draft.quantities[item.id] || item.minQuantity;
+                        const isEditing = editingQuantities[item.id] !== undefined;
+                        const displayValue = isEditing ? editingQuantities[item.id] : String(qty);
+                        const isPopoverOpen = activeEditor === item.id;
+
+                        const commitQuantity = (value: number) => {
+                          const clamped = Math.max(item.minQuantity, Math.min(100000, value));
+                          setDraft((d) => ({
+                            ...d,
+                            quantities: { ...d.quantities, [item.id]: clamped },
+                          }));
+                          setEditingQuantities((prev) => {
+                            const next = { ...prev };
+                            delete next[item.id];
+                            return next;
+                          });
+                        };
+
+                        return (
+                          <div
+                            key={item.id}
+                            className={`relative rounded-2xl border transition-all ${
+                              isSelected
+                                ? "bg-gradient-to-b from-amber-500/[0.06] to-transparent border-amber-500/30 shadow-lg shadow-amber-500/5"
+                                : "bg-white/[0.02] border-white/[0.06] hover:border-white/[0.15]"
+                            }`}
+                          >
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (isSelected) {
+                                  setActiveEditor(null);
+                                  const selected = draft.selectedProducts.filter(
+                                    (id) => id !== item.id,
+                                  );
+                                  const quantities = { ...draft.quantities };
+                                  delete quantities[item.id];
+                                  setDraft((d) => ({
+                                    ...d,
+                                    selectedProducts: selected,
+                                    quantities,
+                                  }));
+                                } else {
+                                  setActiveEditor(item.id);
+                                  const quantities = {
+                                    ...draft.quantities,
+                                    [item.id]: item.minQuantity,
+                                  };
+                                  setDraft((d) => ({
+                                    ...d,
+                                    selectedProducts: [...draft.selectedProducts, item.id],
+                                    quantities,
+                                  }));
+                                }
+                              }}
+                              aria-pressed={isSelected}
+                              className="cursor-pointer w-full text-left p-3.5 flex items-center gap-2.5"
+                            >
+                              <div
+                                className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                                  isSelected
+                                    ? "bg-amber-500 border-amber-500"
+                                    : "border-white/[0.2]"
+                                }`}
+                              >
+                                {isSelected && (
+                                  <svg
+                                    className="w-2.5 h-2.5 text-slate-950"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M5 13l4 4L19 7"
+                                    />
+                                  </svg>
+                                )}
+                              </div>
+                              <span
+                                className={`text-sm font-medium ${
+                                  isSelected ? "text-amber-400" : "text-slate-200"
+                                }`}
+                              >
+                                {item.label}
+                              </span>
+                              {isSelected && (
+                                <span className="ml-auto text-xs font-mono text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                                  {qty.toLocaleString("en-IN")} units
+                                </span>
+                              )}
+                            </button>
+
+                            <AnimatePresence>
+                              {isPopoverOpen && (
+                                <motion.div
+                                  ref={popoverRef}
+                                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                                  transition={{ duration: 0.6, ease: "easeOut" }}
+                                  className="absolute left-0 right-0 top-full z-30 mt-1 mx-1 rounded-2xl bg-slate-900 border border-white/15 shadow-2xl shadow-black/40 backdrop-blur-xl p-4 space-y-2.5"
+                                >
+                                  <div className="flex items-stretch gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => commitQuantity(qty - 1)}
+                                      aria-label="Decrease quantity"
+                                      className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-200 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                                    >
+                                      −
+                                    </button>
+                                    <div className="flex-1 rounded-xl bg-white/[0.06] border border-white/10 flex flex-col items-center justify-center py-1.5">
+                                      <input
+                                        type="number"
+                                        min={item.minQuantity}
+                                        max={100000}
+                                        step={1}
+                                        inputMode="numeric"
+                                        placeholder={String(item.minQuantity)}
+                                        aria-label={`Quantity for ${item.label}`}
+                                        value={displayValue}
+                                        onChange={(e) => {
+                                          setEditingQuantities((prev) => ({
+                                            ...prev,
+                                            [item.id]: e.target.value,
+                                          }));
+                                        }}
+                                        onBlur={() => {
+                                          const raw = editingQuantities[item.id];
+                                          if (raw === undefined) return;
+                                          const n = Number(raw);
+                                          commitQuantity(Number.isNaN(n) ? item.minQuantity : n);
+                                        }}
+                                        onKeyDown={(e) => {
+                                          if (e.key === "Enter") {
+                                            (e.target as HTMLInputElement).blur();
+                                          }
+                                        }}
+                                        className="w-full bg-transparent text-2xl font-bold text-white text-center tabular-nums focus:outline-none leading-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                      />
+                                      <span className="text-xs text-slate-300 mt-0.5 tracking-wider uppercase">
+                                        units
+                                      </span>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => commitQuantity(qty + 1)}
+                                      aria-label="Increase quantity"
+                                      className="cursor-pointer w-12 shrink-0 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-200 text-lg font-medium flex items-center justify-center hover:bg-white/[0.12] hover:text-white hover:border-white/[0.15] transition-all active:scale-[0.97]"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                  <div className="flex gap-1.5">
+                                    {[1, 10, 50, 100, 500].map((preset) => {
+                                      const active = qty === preset;
+                                      return (
+                                        <button
+                                          key={preset}
+                                          type="button"
+                                          onClick={() => commitQuantity(preset)}
+                                          className={`cursor-pointer flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                                            active
+                                              ? "bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30"
+                                              : "bg-white/[0.03] text-slate-300 hover:text-slate-200 hover:bg-white/[0.05]"
+                                          }`}
+                                        >
+                                          {preset}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        );
+                      })}
                     </div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <QuoteInput
-                          label="Name"
-                          id="quote-name"
-                          required
-                          value={draft.name}
-                          onChange={(value) => updateDraft("name", value)}
-                        />
-                        <QuoteInput
-                          label="Email"
-                          id="quote-email"
-                          type="email"
-                          required
-                          value={draft.email}
-                          onChange={(value) => updateDraft("email", value)}
-                        />
-                        <QuoteInput
-                          label="WhatsApp Number"
-                          id="quote-phone"
-                          type="tel"
-                          required
-                          value={draft.phone}
-                          onChange={(value) => updateDraft("phone", value)}
-                        />
-                        <QuoteInput
-                          label="Company"
-                          id="quote-company"
-                          value={draft.company}
-                          onChange={(value) => updateDraft("company", value)}
-                        />
-                        <DatePickerField
-                          label="Required By"
-                          id="quote-deadline"
-                          required
-                          value={draft.deadline}
-                          onChange={(value) => updateDraft("deadline", value)}
-                          accent="print"
-                        />
-                        <QuoteInput
-                          label="Delivery Pincode"
-                          id="quote-pincode"
-                          inputMode="numeric"
-                          required
-                          value={draft.deliveryPincode}
-                          onChange={(value) =>
-                            updateDraft("deliveryPincode", value.replace(/\D/g, "").slice(0, 6))
-                          }
-                        />
-                      </div>
-                      <div className="pt-2">
-                        <p className="text-xs text-slate-200 font-semibold uppercase tracking-wider mb-3">
-                          Delivery Address
+                  </div>
+
+                  <div>
+                    <StepLabel>2. Delivery & Contact Details</StepLabel>
+                    {submitStatus === "success" ? (
+                      <div
+                        role="status"
+                        className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center"
+                      >
+                        <p className="text-lg font-semibold text-emerald-300 mb-1">
+                          Quote request received
                         </p>
+                        <p className="text-sm text-slate-200">
+                          {quoteNumber && (
+                            <>
+                              Reference{" "}
+                              <span className="font-mono text-emerald-300">{quoteNumber}</span>
+                              .{" "}
+                            </>
+                          )}
+                          Track updates from Your Quotes in the account menu.
+                        </p>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleSubmit} className="space-y-5">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="md:col-span-2">
+                          <QuoteInput
+                            label="Name"
+                            id="quote-name"
+                            required
+                            value={draft.name}
+                            onChange={(value) => updateDraft("name", value)}
+                          />
+                          <QuoteInput
+                            label="Email"
+                            id="quote-email"
+                            type="email"
+                            required
+                            value={draft.email}
+                            onChange={(value) => updateDraft("email", value)}
+                          />
+                          <QuoteInput
+                            label="WhatsApp Number"
+                            id="quote-phone"
+                            type="tel"
+                            required
+                            value={draft.phone}
+                            onChange={(value) => updateDraft("phone", value)}
+                          />
+                          <QuoteInput
+                            label="Company"
+                            id="quote-company"
+                            value={draft.company}
+                            onChange={(value) => updateDraft("company", value)}
+                          />
+                          <DatePickerField
+                            label="Required By"
+                            id="quote-deadline"
+                            required
+                            value={draft.deadline}
+                            onChange={(value) => updateDraft("deadline", value)}
+                            accent="print"
+                          />
+                          <QuoteInput
+                            label="Delivery Pincode"
+                            id="quote-pincode"
+                            inputMode="numeric"
+                            required
+                            value={draft.deliveryPincode}
+                            onChange={(value) =>
+                              updateDraft("deliveryPincode", value.replace(/\D/g, "").slice(0, 6))
+                            }
+                          />
+                        </div>
+                        <div className="pt-2">
+                          <p className="text-xs text-slate-200 font-semibold uppercase tracking-wider mb-3">
+                            Delivery Address
+                          </p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="md:col-span-2">
+                              <QuoteInput
+                                label="Address"
+                                id="quote-address"
+                                value={draft.address}
+                                onChange={(value) => updateDraft("address", value)}
+                              />
+                            </div>
                             <QuoteInput
-                              label="Address"
-                              id="quote-address"
-                              value={draft.address}
-                              onChange={(value) => updateDraft("address", value)}
+                              label="City"
+                              id="quote-city"
+                              value={draft.city}
+                              onChange={(value) => updateDraft("city", value)}
+                            />
+                            <QuoteInput
+                              label="State"
+                              id="quote-state"
+                              value={draft.state}
+                              onChange={(value) => updateDraft("state", value)}
                             />
                           </div>
-                          <QuoteInput
-                            label="City"
-                            id="quote-city"
-                            value={draft.city}
-                            onChange={(value) => updateDraft("city", value)}
-                          />
-                          <QuoteInput
-                            label="State"
-                            id="quote-state"
-                            value={draft.state}
-                            onChange={(value) => updateDraft("state", value)}
+                        </div>
+                        <div>
+                          <Label htmlFor="quote-notes">Notes (optional)</Label>
+                          <Textarea
+                            id="quote-notes"
+                            rows={4}
+                            className="mt-2 rounded-xl"
+                            placeholder="Sizes, artwork status, delivery instructions, or other requirements"
+                            value={draft.notes}
+                            onChange={(event) => updateDraft("notes", event.target.value)}
                           />
                         </div>
-                      </div>
-                      <div>
-                        <Label htmlFor="quote-notes">Notes (optional)</Label>
-                        <Textarea
-                          id="quote-notes"
-                          rows={4}
-                          className="mt-2 rounded-xl"
-                          placeholder="Sizes, artwork status, delivery instructions, or other requirements"
-                          value={draft.notes}
-                          onChange={(event) => updateDraft("notes", event.target.value)}
-                        />
-                      </div>
 
-                      <div className="text-sm bg-white/[0.03] border border-white/10 rounded-xl p-4 space-y-1.5">
-                        {selectedItems.length > 0 ? (
-                          selectedItems.map((it) => (
-                            <SummaryRow
-                              key={it.id}
-                              label={it.label}
-                              value={`${it.quantity.toLocaleString("en-IN")} units`}
-                            />
-                          ))
-                        ) : (
-                          <SummaryRow label="Products" value="None selected" />
-                        )}
-                      </div>
+                        <div className="text-sm bg-white/[0.03] border border-white/10 rounded-xl p-4 space-y-1.5">
+                          {selectedItems.length > 0 ? (
+                            selectedItems.map((it) => (
+                              <SummaryRow
+                                key={it.id}
+                                label={it.label}
+                                value={`${it.quantity.toLocaleString("en-IN")} units`}
+                              />
+                            ))
+                          ) : (
+                            <SummaryRow label="Products" value="None selected" />
+                          )}
+                        </div>
 
-                      {submitError && (
-                        <p className="text-sm text-red-400" role="alert">
-                          {submitError}
-                        </p>
-                      )}
-                      <Button
-                        type="submit"
-                        size="lg"
-                        disabled={isSubmitting || Boolean(catalogError)}
-                        className="cursor-pointer w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-amber-500/20 disabled:opacity-60"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sending...
-                          </>
-                        ) : (
-                          <>
-                            <MessageSquare className="w-4 h-4 mr-2" /> Send Request
-                          </>
+                        {submitError && (
+                          <p className="text-sm text-red-400" role="alert">
+                            {submitError}
+                          </p>
                         )}
-                      </Button>
-                    </form>
-                  )}
-                </div>
-              </>
-            )}
+                        <Button
+                          type="submit"
+                          size="lg"
+                          disabled={isSubmitting || Boolean(catalogError)}
+                          className="cursor-pointer w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 rounded-xl shadow-lg shadow-amber-500/20 disabled:opacity-60"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sending...
+                            </>
+                          ) : (
+                            <>
+                              <MessageSquare className="w-4 h-4 mr-2" /> Send Request
+                            </>
+                          )}
+                        </Button>
+                      </form>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </ErrorBoundary>
   );
 }
 

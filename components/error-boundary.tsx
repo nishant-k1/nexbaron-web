@@ -2,9 +2,12 @@
 
 import { Component, type ReactNode } from "react";
 
+import logger from "@/lib/logger";
+
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  name?: string;
 }
 
 interface State {
@@ -20,6 +23,13 @@ export class ErrorBoundary extends Component<Props, State> {
 
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
+  }
+
+  override componentDidCatch(error: Error, info: { componentStack?: string }) {
+    logger.error(`ErrorBoundary${this.props.name ? ` (${this.props.name})` : ""} caught error`, {
+      error,
+      componentStack: info.componentStack,
+    });
   }
 
   override render() {
