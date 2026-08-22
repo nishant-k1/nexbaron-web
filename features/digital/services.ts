@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/lib/api";
+import logger from "@/lib/logger";
 
 export interface ServiceSection {
   id: string;
@@ -29,21 +30,31 @@ export interface ServiceCatalog {
 
 // Server-side services fetch — powers the public solutions/service pages.
 // The API is the source of truth and groups services by customer need.
+// This is resilient: when the API is unreachable (e.g. during a build with no
+// running API), it returns an empty catalog instead of crashing the build.
+// At runtime with the API available, the ISR cache serves the real data.
 export async function getServiceCatalog(): Promise<ServiceCatalog> {
   const apiUrl = getApiUrl("digital");
-  const response = await fetch(`${apiUrl}/digital/services`, {
-    headers: { Accept: "application/json" },
-    next: { revalidate: 3600 },
-  });
+  try {
+    const response = await fetch(`${apiUrl}/digital/services`, {
+      headers: { Accept: "application/json" },
+      next: { revalidate: 3600 },
+    });
 
-  if (!response.ok) throw new Error(`Services request failed: ${response.status}`);
+    if (!response.ok) throw new Error(`Services request failed: ${response.status}`);
 
-  const data = (await response.json()) as ServiceCatalog;
-  if (!Array.isArray(data.sections) || !Array.isArray(data.services)) {
-    throw new Error("Empty services catalog");
+    const data = (await response.json()) as ServiceCatalog;
+    if (!Array.isArray(data.sections) || !Array.isArray(data.services)) {
+      throw new Error("Empty services catalog");
+    }
+
+    return data;
+  } catch (err) {
+    logger.warn("getServiceCatalog: API unavailable, using empty fallback", {
+      error: err instanceof Error ? err.message : String(err),
+    });
+    return { version: "", sections: [], services: [] };
   }
-
-  return data;
 }
 
 export function getServicesBySection(sectionId: string, catalog: ServiceCatalog): PublicService[] {
