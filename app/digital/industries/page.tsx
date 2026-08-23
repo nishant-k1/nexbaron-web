@@ -79,7 +79,7 @@ function BusinessCard({ business }: { business: ResolvedBusiness }) {
             )}
           </div>
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-400 group-hover:text-teal-300">
-            See the package
+            See the plan
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </span>
         </div>

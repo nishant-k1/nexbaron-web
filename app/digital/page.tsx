@@ -80,7 +80,7 @@ const targetIndustries = [
 const steps = [
   {
     number: "Step 1",
-    title: "Choose your package",
+    title: "Choose your plan",
     description: "Pick Launch, Growth, or Scale. No sales call, no pressure.",
     href: "/digital/pricing",
   },

@@ -105,7 +105,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                 What You Get
               </h2>
               <p className="text-sm text-slate-200 mt-1">
-                The {planLabel(business.recommendedPlan)} package, tailored to{" "}
+                The {planLabel(business.recommendedPlan)} plan, tailored to{" "}
                 {business.label.toLowerCase()}.
               </p>
             </div>
@@ -159,7 +159,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
               <div className="mt-8 p-6 rounded-2xl bg-teal-500/10 border border-teal-500/30 flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <span className="text-xs font-mono text-teal-400 uppercase tracking-wider">
-                    Estimated {planLabel(business.recommendedPlan)} package
+                    Estimated {planLabel(business.recommendedPlan)} plan
                   </span>
                   <div className="text-2xl font-heading font-extrabold text-white mt-1">
                     {formatINR(business.pricing.setup)}

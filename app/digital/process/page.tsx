@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 const steps = [
   {
     number: "Step 1",
-    title: "Choose your package",
+    title: "Choose your plan",
     description: "Pick Launch, Growth, or Scale. No sales call, no pressure.",
     href: "/digital/pricing",
   },
@@ -109,7 +109,7 @@ const steps = [
 const firstWeek = [
   {
     day: "Day 0",
-    title: "Choose your package",
+    title: "Choose your plan",
     description:
       "You get an instant confirmation on WhatsApp and email — your plan and the link to the onboarding form.",
   },
