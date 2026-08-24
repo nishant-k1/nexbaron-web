@@ -1,5 +1,7 @@
 # AGENTS.md — nexbaron-web
 
+> **Root contract:** See `nexbaron/AGENTS.md` §0 — **API is single source of truth (MANDATORY).** `nexbaron-web` must never hardcode business data; all copy relevant to pricing/business logic comes from `nexbaron-api` catalog endpoints.
+
 Public marketing + customer site for Nexbaron (divisions: **Digital** — growth plans; **Print** — commercial printing). Next.js 16 App Router. Backend is `nexbaron-api` (`/Users/nishantkumar/dev/nexbaron-api`); staff CRM is `nexbaron-crm`.
 
 ## Commands
