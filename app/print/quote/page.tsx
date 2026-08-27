@@ -211,9 +211,18 @@ export default function PrintQuotePage() {
               {catalogError && (
                 <div
                   role="alert"
-                  className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200"
+                  className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex items-center justify-between gap-4"
                 >
-                  {catalogError} Please refresh the page to try again.
+                  <p className="text-sm text-red-200">
+                    {catalogError} Please refresh the page to try again.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => window.location.reload()}
+                    className="cursor-pointer shrink-0 px-4 py-2 rounded-xl bg-red-500 text-white text-xs font-semibold hover:bg-red-400 transition-colors"
+                  >
+                    Retry
+                  </button>
                 </div>
               )}
               {!catalog && !catalogError && (

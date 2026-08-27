@@ -1,4 +1,4 @@
-import { Printer, Calculator, ArrowRight } from "lucide-react";
+import { Printer, Calculator, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { type Metadata } from "next";
 import Link from "next/link";
 
@@ -175,6 +175,47 @@ export default async function PrintLandingPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Why Nexbaron Print */}
+      <section className="py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionReveal>
+            <div className="max-w-3xl mx-auto">
+              <div className="p-8 sm:p-10 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-amber-500/20 transition-colors">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
+                    <ShieldCheck className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-mono font-semibold tracking-widest uppercase text-amber-400">
+                    Why Nexbaron Print
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-heading font-bold text-white mb-3">
+                  Order with Total Confidence
+                </h3>
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed mb-8">
+                  Every order goes through a quality-checked production flow with a design review
+                  before it reaches the press.
+                </p>
+                <div className="space-y-3 border-t border-white/10 pt-6">
+                  <div className="flex items-center gap-3 text-sm text-slate-200">
+                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Bulk distribution pricing</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-slate-200">
+                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Print-ready file review included</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-slate-200">
+                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Fast delivery</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SectionReveal>
         </div>
       </section>
 

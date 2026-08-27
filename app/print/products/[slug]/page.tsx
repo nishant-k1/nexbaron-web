@@ -222,7 +222,7 @@ export default async function PrintProductPage({ params }: ProductPageProps) {
       {product.faqs.length > 0 && (
         <section className="min-h-screen flex items-center justify-center py-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
+            <div className="w-full">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-10">
                 Frequently Asked Questions
               </h2>

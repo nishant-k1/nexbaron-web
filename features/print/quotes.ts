@@ -68,7 +68,18 @@ export interface PrintQuote {
 }
 
 export async function getPrintCatalog(): Promise<PrintCatalog> {
-  return apiRequest<PrintCatalog>("/print/catalog", {}, "print");
+  try {
+    return await apiRequest<PrintCatalog>("/print/catalog", {}, "print");
+  } catch (error) {
+    // Dev fallback: single API instance on 3001 now serves /print/catalog
+    // If print division URL is unreachable (e.g. 3002 not running), retry via digital URL
+    const message = error instanceof Error ? error.message : String(error);
+    const isNetworkError = message.includes("Failed to fetch") || message.includes("ECONNREFUSED");
+    if (isNetworkError) {
+      return apiRequest<PrintCatalog>("/print/catalog", {}, "digital");
+    }
+    throw error;
+  }
 }
 
 export async function submitPrintQuote(input: PrintQuoteInput): Promise<SubmitQuoteResponse> {
