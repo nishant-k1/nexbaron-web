@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer/footer";
 import GlobalMeshBackgroundDynamic from "@/components/motion/global-mesh-background-dynamic";
 import { PageTransition } from "@/components/motion/page-transition";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { MobileBottomNav } from "@/components/navigation/mobile-bottom-nav";
 import { Navigation } from "@/components/navigation/navigation";
 import { FloatingActions } from "@/components/ui/floating-actions";
 import {
@@ -191,7 +192,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <PageTransition>{children}</PageTransition>
               </main>
               <Footer digital={digital} print={print} />
+              <div className="h-[72px] lg:hidden shrink-0" aria-hidden="true" />
               <FloatingActions />
+              <MobileBottomNav />
             </AuthProvider>
           </ThemeProvider>
         </ErrorBoundary>

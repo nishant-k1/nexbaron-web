@@ -3,7 +3,7 @@
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { UserMenu } from "@/components/auth/user-menu";
 import { BrandMark } from "@/components/brand/brand-mark";
@@ -14,6 +14,10 @@ const navItems = divisions.digital.nav;
 export function DigitalNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [dragY, setDragY] = useState(0);
+  const dragStartY = useRef<number | null>(null);
+  const draggingY = useRef(false);
+  const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -26,12 +30,30 @@ export function DigitalNavigation() {
 
   useEffect(() => {
     if (isOpen) {
+      const y = window.scrollY;
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${y}px`;
+      document.body.style.width = "100%";
+      document.body.style.overscrollBehavior = "none";
     } else {
+      const top = document.body.style.top;
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overscrollBehavior = "";
+      if (top) window.scrollTo(0, parseInt(top || "0") * -1);
     }
     return () => {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overscrollBehavior = "";
     };
   }, [isOpen]);
 
@@ -40,6 +62,35 @@ export function DigitalNavigation() {
     setPrevPathname(pathname);
     setIsOpen(false);
   }
+
+  // drag to close — handle + any swipe when list is at top
+  const onDragStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+    dragStartY.current = touch.clientY;
+    draggingY.current = true;
+  };
+  const onDragMove = (e: React.TouchEvent) => {
+    if (!draggingY.current || dragStartY.current === null) return;
+    const touch = e.touches[0];
+    if (!touch) return;
+    const delta = touch.clientY - dragStartY.current;
+    const navEl = navRef.current;
+    if (navEl && navEl.scrollTop > 0 && delta < 0) return;
+    if (Math.abs(delta) < 8) return;
+    const maxUp = typeof window !== "undefined" ? window.innerHeight : 800;
+    const clamped = Math.max(-maxUp, Math.min(delta, 120));
+    setDragY(clamped);
+    if (Math.abs(clamped) > 10) e.preventDefault();
+  };
+  const onDragEnd = () => {
+    if (!draggingY.current) return;
+    draggingY.current = false;
+    if (dragY < -50 || dragY > 90) setIsOpen(false);
+    setDragY(0);
+    dragStartY.current = null;
+  };
+  const dragStyle = dragY !== 0 ? { transform: `translateY(${dragY}px)` } : undefined;
 
   return (
     <header
@@ -113,12 +164,26 @@ export function DigitalNavigation() {
           </button>
         </div>
 
-        {/* Mobile Menu Fullscreen */}
+        {/* Mobile Menu Fullscreen — drag up to close */}
         {isOpen && (
           <div
             id="mobile-menu"
-            className="md:hidden fixed inset-0 top-0 left-0 z-50 bg-slate-950 flex flex-col"
+            className="md:hidden fixed inset-0 top-0 left-0 z-[60] bg-slate-950 flex flex-col h-[100dvh] overscroll-contain"
+            style={{ WebkitOverflowScrolling: "touch", ...dragStyle }}
+            onTouchStart={onDragStart}
+            onTouchMove={onDragMove}
+            onTouchEnd={onDragEnd}
           >
+            {/* drag handle — swipe up/down to close */}
+            <div
+              className="flex justify-center pt-3 pb-2 shrink-0 touch-manipulation"
+              onTouchStart={onDragStart}
+              onTouchMove={onDragMove}
+              onTouchEnd={onDragEnd}
+              aria-hidden="true"
+            >
+              <div className="w-10 h-1.5 rounded-full bg-white/30" />
+            </div>
             <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
               <Link
                 href="/digital"
@@ -139,7 +204,10 @@ export function DigitalNavigation() {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-auto px-6 py-6 space-y-1">
+            <nav
+              ref={navRef}
+              className="flex-1 overflow-y-auto overscroll-contain px-6 py-6 space-y-1 touch-pan-y"
+            >
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
