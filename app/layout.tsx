@@ -10,6 +10,7 @@ import { PageTransition } from "@/components/motion/page-transition";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { MobileBottomNav } from "@/components/navigation/mobile-bottom-nav";
 import { Navigation } from "@/components/navigation/navigation";
+import { RegisterPWA } from "@/components/pwa/register-pwa";
 import { FloatingActions } from "@/components/ui/floating-actions";
 import {
   getBusinessProfile,
@@ -179,6 +180,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body className={`${inter.variable} ${montserrat.variable} font-body`}>
+        <RegisterPWA />
         <ScrollProgress />
         <ErrorBoundary>
           <ThemeProvider>
