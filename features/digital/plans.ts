@@ -74,7 +74,7 @@ export const plans: CatalogPlan[] = [
     tagline: "A simple website to get your business online and discoverable.",
     icon: "Globe",
     timeline: "Typically 5–7 business days",
-    pricing: { setup: 8999, monthly: 499, annual: 4990, minimumMonths: 3 },
+    pricing: { setup: 8999, monthly: 599, annual: 4990, minimumMonths: 3 },
     services: [
       fallbackService("starter-business-website", "Business Website", {
         scope: "up to 5 pages",
@@ -109,10 +109,10 @@ export const plans: CatalogPlan[] = [
   {
     id: "launch",
     name: "Launch",
-    tagline: "Get your business online.",
+    tagline: "Build a professional digital presence.",
     icon: "Rocket",
-    timeline: "Scoped after consultation",
-    pricing: { setup: 24999, monthly: 1999, annual: 23988, minimumMonths: 12 },
+    timeline: "Typically 7–14 business days",
+    pricing: { setup: 14999, monthly: 999, annual: 9990, minimumMonths: 3 },
     services: [
       fallbackService("launch-business-website", "Business Website", {
         scope: "up to 5 pages",
@@ -156,7 +156,7 @@ export const plans: CatalogPlan[] = [
   {
     id: "growth",
     name: "Growth",
-    tagline: "Turn your website into a lead-generation channel.",
+    tagline: "Turn your digital presence into a lead-generation channel",
     icon: "TrendingUp",
     timeline: "Monthly growth plan",
     featured: true,
@@ -201,7 +201,7 @@ export const plans: CatalogPlan[] = [
     ],
     addOns: [],
     ctaLabel: "Choose Growth",
-    pricing: { setup: 49999, monthly: 4999, annual: 59988, minimumMonths: 12 },
+    pricing: { setup: 29999, monthly: 2999, annual: 29990, minimumMonths: 3 },
   },
   {
     id: "scale",
@@ -251,7 +251,7 @@ export const plans: CatalogPlan[] = [
     ],
     addOns: [],
     ctaLabel: "Choose Scale",
-    pricing: { setup: 99999, monthly: 9999, annual: 119988, minimumMonths: 12 },
+    pricing: { setup: 59999, monthly: 5999, annual: 59990, minimumMonths: 3 },
   },
   {
     id: "custom",
