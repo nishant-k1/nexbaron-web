@@ -66,6 +66,7 @@ export async function apiRequest<T>(
   division: Division = "digital",
 ): Promise<T> {
   const response = await fetch(`${getApiUrl(division)}${path}`, {
+    credentials: "include",
     ...options,
     headers: {
       ...getAuthHeaders(division),

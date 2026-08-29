@@ -42,6 +42,7 @@ export function PlanSignupForm({
   });
   const [error, setError] = useState("");
   const [hubUrl, setHubUrl] = useState("");
+  const [isExisting, setIsExisting] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -96,8 +97,8 @@ export function PlanSignupForm({
       const data = await res.json();
 
       if (data.success && data.hubUrl) {
-        localStorage.setItem("nexbaron-plan-id", planId);
         setHubUrl(data.hubUrl);
+        setIsExisting(Boolean(data.existing));
         setStep("done");
       } else {
         setError(data.message || "Something went wrong. Please try again.");
@@ -124,7 +125,11 @@ export function PlanSignupForm({
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <div>
             <h2 id="plan-signup-title" className="text-lg font-bold text-white">
-              {step === "done" ? "Account Created" : `Get ${plan.name}`}
+              {step === "done"
+                ? isExisting
+                  ? "Already have an account"
+                  : "Account Created"
+                : `Get ${plan.name}`}
             </h2>
             {step !== "done" && (
               <p className="text-xs text-slate-300 mt-0.5">
@@ -157,16 +162,19 @@ export function PlanSignupForm({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-white">You&apos;re all set!</h3>
+            <h3 className="text-lg font-bold text-white">
+              {isExisting ? "You already have an account" : "You're all set!"}
+            </h3>
             <p className="text-sm text-slate-300">
-              Your account has been created. You can now manage your plan, track progress, and make
-              payments from your dashboard.
+              {isExisting
+                ? `We found an account for that email. Your choice (${plan.name} ${cycleSuffix(billingCycle)}) is saved — sign in to the Hub and we'll show it highlighted. Request a proposal with one click.`
+                : "Your account has been created. You can now manage your plan, track progress, and make payments from your dashboard."}
             </p>
             <a
               href={hubUrl}
               className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 text-slate-950 rounded-xl font-bold hover:bg-teal-400 transition-colors"
             >
-              Go to Dashboard <ArrowRight className="w-4 h-4" />
+              {isExisting ? "Sign in to Hub" : "Go to Dashboard"} <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         ) : (

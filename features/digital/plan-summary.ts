@@ -8,6 +8,9 @@ import {
   type TimelineExpectation,
 } from "@/features/digital/plans";
 
+// Server is SSOT for pricing/timeline; these client helpers mirror
+// nexbaron-api/src/features/digital/catalog/** and are re-validated on checkout.
+// Keep LAUNCH_FIXED_DAYS and inheritance logic in sync with the API.
 export const LAUNCH_FIXED_DAYS = 4;
 
 export interface PlanSelection {

@@ -56,12 +56,33 @@ export async function POST(request: NextRequest) {
       }),
     }).catch(() => {});
 
+    // Persist plan intent to User.planConfig (API SSOT) for new accounts so Hub can
+    // recover even if ?plan= is lost (e.g. direct login, closed tab). Best-effort.
+    if (signupData.token && planId) {
+      await fetch(`${backendUrl}/digital/auth/save-plan`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${signupData.token}`,
+        },
+        body: JSON.stringify({ planId, billingCycle: normalizedCycle }),
+      }).catch(() => {});
+    }
+
+    const isExisting = signupRes.status === 409;
     const params = new URLSearchParams({ plan: planId ?? "", billing: normalizedCycle });
     const hubUrl = signupData.token
       ? `${HUB_URL}/digital?token=${signupData.token}&${params.toString()}`
       : `${HUB_URL}/digital/login?${params.toString()}`;
 
-    return NextResponse.json({ success: true, hubUrl });
+    return NextResponse.json({
+      success: true,
+      hubUrl,
+      existing: isExisting,
+      message: isExisting
+        ? "Account already exists. Please sign in to add this plan to your account."
+        : undefined,
+    });
   } catch (error) {
     logger.error("Signup error", {
       error: error instanceof Error ? error : new Error(String(error)),

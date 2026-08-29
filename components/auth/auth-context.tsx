@@ -23,7 +23,7 @@ interface AuthContextValue {
   signIn: (token: string, user: AuthUser) => void;
   signOut: () => void;
   refresh: () => Promise<void>;
-  openSignIn: () => void;
+  openSignIn: (opts?: { planId?: string; billingCycle?: string }) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -47,15 +47,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const requestedDivision = division;
     if (!requestedDivision) return;
 
-    const token = getToken(requestedDivision);
-    if (!token) {
-      if (generation === refreshGeneration.current) {
-        void Promise.resolve().then(() => {
-          if (generation === refreshGeneration.current) setInitializedDivision(requestedDivision);
-        });
-      }
-      return;
-    }
     try {
       const data = await apiRequest<{ success: boolean; user: AuthUser }>(
         `/${requestedDivision}/auth/me`,
@@ -68,10 +59,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setToken(null, requestedDivision);
         setUser(null);
       } else {
+        // If user authenticated via cookie, persist token for subsequent Bearer calls (dev convenience)
+        const existing = getToken(requestedDivision);
+        if (!existing) {
+          // No local token but cookie auth succeeded — keep user; token remains cookie-only
+        }
         setUser(data.user);
       }
     } catch {
       if (generation === refreshGeneration.current) {
+        // Only clear local token; cookie may still be valid but /me already failed
         setToken(null, requestedDivision);
         setUser(null);
       }
@@ -130,12 +127,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [division]);
 
   // Sign-in happens on the Hub (OTP + Google), not on the marketing site.
-  const openSignIn = useCallback(() => {
-    if (!division) return;
-    // Full cross-app navigation to the Hub, not an internal Next.js page.
-    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-    window.location.assign(`${HUB_URL}/${division}/login`);
-  }, [division]);
+  // Preserve plan intent if the user arrived via pricing ?plan=&billing=
+  const openSignIn = useCallback(
+    (opts?: { planId?: string; billingCycle?: string }) => {
+      if (!division) return;
+      const params = new URLSearchParams();
+      const planId = opts?.planId ?? new URLSearchParams(window.location.search).get("plan") ?? "";
+      const billing =
+        opts?.billingCycle ?? new URLSearchParams(window.location.search).get("billing") ?? "";
+      if (planId) params.set("plan", planId);
+      if (billing) params.set("billing", billing);
+      const qs = params.toString() ? `?${params.toString()}` : "";
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+      window.location.assign(`${HUB_URL}/${division}/login${qs}`);
+    },
+    [division],
+  );
 
   const value = useMemo(
     () => ({
