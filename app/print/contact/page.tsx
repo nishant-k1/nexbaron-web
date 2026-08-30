@@ -61,86 +61,98 @@ export default async function PrintContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
-                  <PhoneCall className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white">Phone</h3>
-                  <a
-                    href={`tel:${profile.phone}`}
-                    className="text-sm text-amber-400 hover:text-amber-300"
-                  >
-                    {formatPhone(profile.phone)}
-                  </a>
-                  <p className="text-sm text-slate-200 mt-0.5">{formatOpeningHours(profile)}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
-                  <MessageSquare className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white">WhatsApp</h3>
-                  <a
-                    href={buildWhatsAppLink(
-                      "print",
-                      "Hi Nexbaron Print, I have a question about your printing services",
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-amber-400 hover:text-amber-300"
-                  >
-                    Start a conversation
-                  </a>
-                  <div className="mt-2">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/${profile.whatsappNumber}`}
-                      alt="Scan to chat on WhatsApp"
-                      width={100}
-                      height={100}
-                      className="rounded-lg border border-white/10"
-                    />
+              {profile ? (
+                <>
+                  <div className="flex items-start gap-3">
+                    <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
+                      <PhoneCall className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-white">Phone</h3>
+                      <a
+                        href={`tel:${profile.phone}`}
+                        className="text-sm text-amber-400 hover:text-amber-300"
+                      >
+                        {formatPhone(profile.phone)}
+                      </a>
+                      <p className="text-sm text-slate-200 mt-0.5">{formatOpeningHours(profile)}</p>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <address className="not-italic">
-                  <h3 className="text-sm font-semibold text-white">Location</h3>
-                  <p className="text-sm text-slate-200 leading-relaxed mt-1 whitespace-pre-line">
-                    {profile.address.display}
-                  </p>
-                </address>
-              </div>
+                  <div className="flex items-start gap-3">
+                    <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
+                      <MessageSquare className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-white">WhatsApp</h3>
+                      <a
+                        href={buildWhatsAppLink(
+                          "print",
+                          "Hi Nexbaron Print, I have a question about your printing services",
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-amber-400 hover:text-amber-300"
+                      >
+                        Start a conversation
+                      </a>
+                      <div className="mt-2">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/${profile.whatsappNumber}`}
+                          alt="Scan to chat on WhatsApp"
+                          width={100}
+                          height={100}
+                          className="rounded-lg border border-white/10"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <address className="not-italic">
+                      <h3 className="text-sm font-semibold text-white">Location</h3>
+                      <p className="text-sm text-slate-200 leading-relaxed mt-1 whitespace-pre-line">
+                        {profile.address.display}
+                      </p>
+                    </address>
+                  </div>
+                </>
+              ) : (
+                <p className="text-sm text-slate-200">
+                  Contact information is currently unavailable.
+                </p>
+              )}
             </div>
 
             {/* Google Maps */}
-            <div className="rounded-3xl overflow-hidden border border-white/10">
-              <iframe
-                title="Nexbaron Print Office Location"
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(profile.mapsQuery)}&z=16&output=embed`}
-                width="100%"
-                height="220"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-            <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(profile.mapsQuery)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-400 hover:text-amber-300"
-            >
-              <MapPin className="w-3.5 h-3.5" /> Get Directions
-            </a>
+            {profile && (
+              <>
+                <div className="rounded-3xl overflow-hidden border border-white/10">
+                  <iframe
+                    title="Nexbaron Print Office Location"
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(profile.mapsQuery)}&z=16&output=embed`}
+                    width="100%"
+                    height="220"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(profile.mapsQuery)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-400 hover:text-amber-300"
+                >
+                  <MapPin className="w-3.5 h-3.5" /> Get Directions
+                </a>
+              </>
+            )}
           </div>
 
           <div className="lg:col-span-7">

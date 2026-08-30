@@ -1,5 +1,4 @@
 import {
-  DEFAULT_EXPECTATIONS,
   svcAnnual,
   svcMonthly,
   svcSetup,
@@ -243,7 +242,7 @@ export function computeLaunchTimeline(
 ): LaunchTimeline {
   const plan = plans.find((p) => p.id === planId);
   if (!plan) {
-    return { launchDays: 7, launchDate: addDays(from, 7), expectations: DEFAULT_EXPECTATIONS };
+    return { launchDays: 7, launchDate: addDays(from, 7), expectations: [] };
   }
 
   if (plan.timelineMode === "phased") {
@@ -251,7 +250,7 @@ export function computeLaunchTimeline(
     return {
       launchDays: days,
       launchDate: addDays(from, days),
-      expectations: [...(plan.expectations ?? []), ...DEFAULT_EXPECTATIONS],
+      expectations: plan.expectations ?? [],
     };
   }
 
@@ -264,7 +263,7 @@ export function computeLaunchTimeline(
   return {
     launchDays,
     launchDate: addDays(from, launchDays),
-    expectations: [...(plan.expectations ?? []), ...DEFAULT_EXPECTATIONS],
+    expectations: plan.expectations ?? [],
   };
 }
 

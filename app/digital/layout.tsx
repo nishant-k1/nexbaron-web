@@ -36,10 +36,12 @@ export default async function DigitalLayout({ children }: { children: React.Reac
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
-      />
+      {localBusiness && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
+        />
+      )}
       <PlansProvider>{children}</PlansProvider>
     </>
   );

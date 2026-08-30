@@ -26,13 +26,6 @@ export interface PrintCatalog {
   products: PrintProduct[];
 }
 
-const fallbackCategories = [
-  "Stationery & Cards",
-  "Marketing & Labels",
-  "Business & Billing",
-  "Specialty Print",
-];
-
 function normalizeProducts(products: PrintProduct[]): PrintProduct[] {
   return products.map((p) => ({
     ...p,
@@ -42,9 +35,8 @@ function normalizeProducts(products: PrintProduct[]): PrintProduct[] {
   }));
 }
 
-// Server-side catalog fetch — single source of truth lives in the API. Prices
-// and display data are never duplicated here; this degrades to an empty list
-// when the print runtime is unreachable.
+// Server-side catalog fetch — single source of truth lives in the API. No
+// static fallback; returns empty catalog when the print runtime is unreachable.
 export async function getPrintCatalog(): Promise<PrintCatalog> {
   try {
     const response = await fetch(`${getApiUrl("print")}/print/catalog`, {
@@ -56,14 +48,14 @@ export async function getPrintCatalog(): Promise<PrintCatalog> {
     return {
       version: data.version ?? "1.0.0",
       currency: data.currency ?? "INR",
-      categories: Array.isArray(data.categories) ? data.categories : [...fallbackCategories],
+      categories: Array.isArray(data.categories) ? data.categories : [],
       products: Array.isArray(data.products) ? normalizeProducts(data.products) : [],
     };
   } catch {
     return {
       version: "1.0.0",
       currency: "INR",
-      categories: [...fallbackCategories],
+      categories: [],
       products: [],
     };
   }

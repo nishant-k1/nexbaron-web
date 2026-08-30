@@ -119,7 +119,7 @@ export default async function DigitalAboutPage() {
                 {
                   initials: "BL",
                   name: "Based in Bengaluru",
-                  desc: (
+                  desc: profile ? (
                     <>
                       <span className="whitespace-pre-line">{profile.address.display}</span>
                       <br />
@@ -130,6 +130,8 @@ export default async function DigitalAboutPage() {
                         {formatPhone(profile.phone)}
                       </a>
                     </>
+                  ) : (
+                    "Contact information is currently unavailable."
                   ),
                   icon: MapPin,
                 },

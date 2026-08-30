@@ -59,80 +59,10 @@ export function formatOpeningHours(profile: BusinessProfile): string {
   return `${range}, ${formatTime(opens)} – ${formatTime(closes)}`;
 }
 
-// Static mirror of the API business profiles (degraded fallback only).
-const fallback: Record<Division, BusinessProfile> = {
-  digital: {
-    slug: "digital",
-    name: "Nexbaron Digital",
-    address: {
-      street:
-        "402, Vasavi Residency - 1, Green House Layout, Doddathoguru, Electronic City Phase - 1",
-      locality: "Bengaluru",
-      region: "Karnataka",
-      postalCode: "560100",
-      country: "IN",
-      display:
-        "402, Vasavi Residency - 1, Green House Layout,\nDoddathoguru, Electronic City Phase - 1, Bengaluru - 560100",
-    },
-    geo: { lat: 12.850875, lng: 77.649625 },
-    phone: "+919002785683",
-    whatsappNumber: "919002785683",
-    email: "nexbaron.digital@gmail.com",
-    gstin: "10AAKCN1234E1Z6",
-    openingHours: {
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "10:00",
-      closes: "19:00",
-    },
-    areaServed: ["Bengaluru"],
-    priceRange: "₹₹",
-    sameAs: [],
-    logo: "/icon.svg",
-    mapsQuery: "12.850875,77.649625",
-  },
-  print: {
-    slug: "print",
-    name: "Nexbaron Print",
-    address: {
-      street: "",
-      locality: "Begusarai",
-      region: "Bihar",
-      postalCode: "851101",
-      country: "IN",
-      display: "Begusarai, Bihar - 851101",
-    },
-    geo: { lat: 25.555, lng: 86.16725 },
-    phone: "+919899752254",
-    whatsappNumber: "919899752254",
-    email: "nexbaron.print@gmail.com",
-    gstin: "10AAKCN1234E1Z6",
-    openingHours: {
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "10:00",
-      closes: "19:00",
-    },
-    areaServed: [
-      "Begusarai",
-      "Patna",
-      "Samastipur",
-      "Khagaria",
-      "Lakhisarai",
-      "Munger",
-      "Bhagalpur",
-      "Hyderabad",
-      "Chennai",
-      "Mumbai",
-      "Pune",
-      "Delhi NCR",
-    ],
-    priceRange: "₹₹",
-    sameAs: [],
-    logo: "/icon.svg",
-    mapsQuery: "25.555,86.16725",
-  },
-};
-
-export async function getBusinessProfile(division: Division): Promise<BusinessProfile> {
+// No static fallback — API is the single source of truth. If unreachable,
+// callers must handle null. ISR (revalidate: 3600) caches the last successful
+// response so SEO is resilient to short API outages.
+export async function getBusinessProfile(division: Division): Promise<BusinessProfile | null> {
   try {
     const response = await fetch(`${getApiUrl(division)}/${division}/business`, {
       headers: { Accept: "application/json" },
@@ -143,15 +73,17 @@ export async function getBusinessProfile(division: Division): Promise<BusinessPr
     if (!data.profile) throw new Error("Empty business profile");
     return data.profile;
   } catch {
-    return fallback[division];
+    return null;
   }
 }
 
 // Builds the schema.org LocalBusiness / ProfessionalService / Store JSON-LD.
+// Returns null if profile is unavailable — callers should skip rendering.
 export function buildLocalBusinessSchema(
-  profile: BusinessProfile,
+  profile: BusinessProfile | null,
   schemaType: "ProfessionalService" | "Store",
-): Record<string, unknown> {
+): Record<string, unknown> | null {
+  if (!profile) return null;
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@id": getEntityId(profile.slug),

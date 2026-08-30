@@ -138,7 +138,7 @@ export default async function PrintAboutPage() {
                 {
                   initials: "BR",
                   name: "Based in Begusarai",
-                  desc: (
+                  desc: profile ? (
                     <>
                       <span className="whitespace-pre-line">{profile.address.display}</span>
                       <br />
@@ -149,6 +149,8 @@ export default async function PrintAboutPage() {
                         {formatPhone(profile.phone)}
                       </a>
                     </>
+                  ) : (
+                    "Contact information is currently unavailable."
                   ),
                   icon: MapPin,
                 },

@@ -8,15 +8,21 @@ import { CorporateFooter } from "./corporate-footer";
 import { DigitalFooter } from "./digital-footer";
 import { PrintFooter } from "./print-footer";
 
-export function Footer({ digital, print }: { digital: BusinessProfile; print: BusinessProfile }) {
+export function Footer({
+  digital,
+  print,
+}: {
+  digital: BusinessProfile | null;
+  print: BusinessProfile | null;
+}) {
   const pathname = usePathname();
 
   if (pathname.startsWith("/digital")) {
-    return <DigitalFooter profile={digital} />;
+    return digital ? <DigitalFooter profile={digital} /> : <CorporateFooter />;
   }
 
   if (pathname.startsWith("/print")) {
-    return <PrintFooter profile={print} />;
+    return print ? <PrintFooter profile={print} /> : <CorporateFooter />;
   }
 
   return <CorporateFooter />;

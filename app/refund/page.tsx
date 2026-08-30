@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Refund and cancellation policy for Nexbaron Digital and Nexbaron Print orders.",
 };
 
-function buildSections(digitalEmail: string, printEmail: string) {
+function buildSections(digitalEmail: string | null, printEmail: string | null) {
   return [
     {
       title: "Digital Services",
@@ -24,7 +24,10 @@ function buildSections(digitalEmail: string, printEmail: string) {
     },
     {
       title: "How to Request a Refund",
-      body: `Email the relevant division — ${digitalEmail} for digital services or ${printEmail} for print orders — with your order or invoice number. Approved refunds are returned to the original payment method within 7–10 business days.`,
+      body:
+        digitalEmail && printEmail
+          ? `Email the relevant division — ${digitalEmail} for digital services or ${printEmail} for print orders — with your order or invoice number. Approved refunds are returned to the original payment method within 7–10 business days.`
+          : "Contact the relevant division with your order or invoice number to request a refund. Approved refunds are returned to the original payment method within 7–10 business days.",
     },
   ];
 }
@@ -34,7 +37,7 @@ export default async function RefundPage() {
     getBusinessProfile("digital"),
     getBusinessProfile("print"),
   ]);
-  const sections = buildSections(digital.email, print.email);
+  const sections = buildSections(digital?.email ?? null, print?.email ?? null);
 
   return (
     <div className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">

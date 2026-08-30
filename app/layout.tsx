@@ -101,7 +101,8 @@ export const metadata: Metadata = {
   },
 };
 
-function organizationJsonLd(digital: BusinessProfile, print: BusinessProfile) {
+function organizationJsonLd(digital: BusinessProfile | null, print: BusinessProfile | null) {
+  if (!digital || !print) return null;
   return {
     "@context": "https://schema.org",
     "@id": getOrganizationId(),
@@ -165,15 +166,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     getBusinessProfile("print"),
   ]);
 
+  const organizationSchema = organizationJsonLd(digital, print);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="dns-prefetch" href="https://cdn.pixabay.com" />
         <link rel="preconnect" href="https://cdn.pixabay.com" crossOrigin="anonymous" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(digital, print)) }}
-        />
+        {organizationSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}

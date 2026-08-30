@@ -37,10 +37,12 @@ export default async function PrintLayout({ children }: { children: React.ReactN
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
-      />
+      {localBusiness && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
+        />
+      )}
       {children}
     </>
   );
